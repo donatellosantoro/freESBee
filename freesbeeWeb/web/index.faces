@@ -1,0 +1,4 @@
+<%-- 
+Non eliminare questo file in quanto serve a
+tomcat per inoltrare la richiesta a index.jsf
+--%>

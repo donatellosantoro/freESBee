@@ -1,0 +1,84 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+<!-- STEP2 -->
+<h:form id="formStep2" rendered="#{vistaAccordoCollaborazione.step==2}" enctype="multipart/form-data">
+    <a4j:region selfRendered="true">
+        <rich:panel style="width:410px;" id="NuovoAccordoCollaborazione">  
+            <f:facet name="header">  
+                <h:panelGroup  style="width:410px">  
+                    <h:outputText styleClass="headerProfilo" value="#{vistaAccordoCollaborazione.step}/3"/>    
+                    <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione_add.png"  styleClass="linkPicture" />
+                        <h:outputText value="#{msg.nuovoAccordoCollaborazione_title}"/>   
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>  
+            <h:outputText value="#{msg.nuovoAccordoCollaborazione_info_oneWSDL}" styleClass="infoText" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'oneWSDL'}"/>
+            <h:outputText value="#{msg.nuovoAccordoCollaborazione_info_twoWSDL}" styleClass="infoText" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'twoWSDL'}"/>
+            <h:outputText value="#{msg.nuovoAccordoCollaborazione_info_accordoServizio}" styleClass="infoText" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'accordoServizio'}"/>
+            
+            <rich:messages styleClass="errorText"/>
+            <h:outputText value="#{controlloAccordoCollaborazione.errore}" rendered="#{controlloAccordoCollaborazione.errore != null}" styleClass="errorText"/>
+            <h:outputText id="boxSuccesso" value="#{controlloAccordoCollaborazione.successo}" rendered="#{controlloAccordoCollaborazione.successo != null}" styleClass="confirmText"/>
+            
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="3">
+                    <h:outputText value="#{msg.nuovoAccordoCollaborazione_fileWSDLErogatore}" rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}"/>
+                    <t:inputFileUpload id="fileWSDLErogatore" value="#{vistaAccordoCollaborazione.fileWsdlErogatore}" storage="file" required="true" rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}"/>
+                    <h:panelGroup rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}">
+                        <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="help1" showDelay="200">
+                            <h:outputText value="#{msg.nuovoAccordoCollaborazione_tooltip_fileWSDLErogatore}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                    <h:outputText value="#{msg.nuovoAccordoCollaborazione_fileWSDLFruitore}" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'twoWSDL'}"/>
+                    <t:inputFileUpload id="fileWSDLFruitore" value="#{vistaAccordoCollaborazione.fileWsdlFruitore}" storage="file" required="true" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'twoWSDL'}"/>
+                    <h:panelGroup rendered="#{vistaAccordoCollaborazione.sceltaInput == 'twoWSDL'}">
+                        <h:graphicImage id="help2" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="help2" showDelay="200">
+                            <h:outputText value="#{msg.nuovoAccordoCollaborazione_tooltip_fileWSDLFruitore}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                    
+                    <h:outputText value="#{msg.nuovoAccordoCollaborazione_fileAS}" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'accordoServizio'}"/>
+                    <t:inputFileUpload id="fileAS" value="#{vistaAccordoCollaborazione.fileAS}" storage="file" required="true" rendered="#{vistaAccordoCollaborazione.sceltaInput == 'accordoServizio'}"/>
+                    <h:panelGroup rendered="#{vistaAccordoCollaborazione.sceltaInput == 'accordoServizio'}">
+                        <h:graphicImage id="help3" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="help3" showDelay="200">
+                            <h:outputText value="#{msg.nuovoAccordoCollaborazione_tooltip_fileAS}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                    
+                    <h:outputText value="#{msg.nuovoAccordoCollaborazione_fileTypes}" rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}"/>
+                    <t:inputFileUpload id="fileTypes" value="#{vistaAccordoCollaborazione.fileTypes}" storage="file" required="false" rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}" />
+                    <h:panelGroup rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}">
+                        <h:graphicImage id="help4" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="help4" showDelay="200" >
+                            <h:outputText value="#{msg.nuovoAccordoCollaborazione_tooltip_fileTypes}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                </h:panelGrid>
+                
+                <h:panelGroup styleClass="pulsantiWizard">  
+                    <h:panelGroup styleClass="pulsantiWizard">
+                        <h:commandLink action="#{controlloAccordoCollaborazione.annulla}" immediate="true">               
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{controlloAccordoCollaborazione.nuovoAccordo}" immediate="true">               
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_indietro}.png"  styleClass="linkPicture"/>
+                        </h:commandLink>
+                        <h:commandLink action="#{controlloAccordoCollaborazione.caricaFile}">               
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_avanti}.png"  styleClass="linkPicture"/>
+                        </h:commandLink>                        
+                    </h:panelGroup>                    
+                </h:panelGroup>
+                
+            </h:panelGroup>
+        </rich:panel>
+    </a4j:region>
+</h:form>

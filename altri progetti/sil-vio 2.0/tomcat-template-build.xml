@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tomcat-template-build">
+
+ <!-- ***************************************************
+               Task per Tomcat
+               NOTA: i target sono costruiti per Tomcat 6.x
+                     e fanno riferimento alla cartella %TOMCAT_HOME%/lib
+      *************************************************** -->
+    <target name="-init-url" depends="init">
+        <property name="catalina.url" value="http://${catalina.host}:${catalina.port}/manager" />
+    </target>
+
+    <target name="-init-tasks" depends="init">
+        <property name="catalina.ant.jar" value="${catalina.dir}/lib/catalina-ant.jar" />
+        <!-- Configure the custom Ant tasks for the Manager application -->
+        <taskdef name="deploy"   classname="org.apache.catalina.ant.DeployTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="install"   classname="org.apache.catalina.ant.InstallTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="list"      classname="org.apache.catalina.ant.ListTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="reload"    classname="org.apache.catalina.ant.ReloadTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="remove"    classname="org.apache.catalina.ant.RemoveTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="resources" classname="org.apache.catalina.ant.ResourcesTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="roles"     classname="org.apache.catalina.ant.RolesTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="start"     classname="org.apache.catalina.ant.StartTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="stop"      classname="org.apache.catalina.ant.StopTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask" 
+                                  classpath="${catalina.ant.jar}" />
+        <taskdef name="jasper2"   classname="org.apache.jasper.JspC"> 
+            <classpath id="jspc.classpath"> 
+                <pathelement location="${java.home}/lib/tools.jar"/>
+                <fileset dir="${catalina.dir}/bin"> 
+                  <include name="*.jar"/> 
+                </fileset> 
+                <fileset dir="${catalina.dir}/lib"> 
+                    <include name="*.jar"/> 
+                </fileset> 
+            </classpath>
+        </taskdef> 
+     </target>     
+     
+     <target name="compile-jsp" depends="-init-tasks, -prepare-build, compile"> 
+        <mkdir dir="${jspc.src.dir}" />
+        <mkdir dir="${jspc.build.dir}" />
+        <jasper2 validateXml="false" 
+                 uriroot="${build.webapp.dir}" 
+                 webXmlFragment="${jspc.dir}/generated_web.xml" 
+                 outputDir="${jspc.src.dir}" />
+        <path id="jasper.compile.classpath">
+            <path refid="compile.classpath" />
+            <fileset dir="${build.webapp.lib.dir}">
+              <include name="*.jar"/>
+            </fileset>        
+            <fileset dir="${catalina.dir}/lib">
+              <include name="*.jar"/>
+            </fileset>
+            <fileset dir="${catalina.dir}/bin"> 
+              <include name="*.jar"/> 
+            </fileset> 
+        </path>
+        <javac srcdir="${jspc.dir}/src"
+               destdir="${jspc.dir}/build"
+               classpathref="jasper.compile.classpath" 
+               debug="on"
+               optimize="off"
+               excludes="**/*.smap">
+          <include name="**" />
+          <exclude name="tags/**" />
+        </javac>   
+     </target> 
+    
+    <target name="start-tomcat" depends="init" description="Start Tomcat" >
+        <exec executable="${catalina.dir}/bin/catalina.bat" spawn="true">
+           <arg value="start" />
+           <env key="CATALINA_HOME" value="${catalina.dir}" />
+        </exec>
+    </target>
+
+    <target name="stop-tomcat" depends="init" description="Stop Tomcat" >
+        <exec executable="${catalina.dir}/bin/catalina.bat">
+           <arg value="stop" />
+           <env key="CATALINA_HOME" value="${catalina.dir}" />
+        </exec>
+    </target>
+
+    <target name="list" depends="-init-url, -init-tasks" description="List web applications" >
+        <list  url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" />
+    </target>
+
+    <target name="start" depends="-init-url, -init-tasks" description="Start web application" >
+        <start  url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                path="${webapp.path}"/>
+    </target>
+
+    <target name="stop" depends="-init-url, -init-tasks" description="Stop web application" >
+        <stop  url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                path="${webapp.path}"/>
+    </target>
+
+    <target name="reload" depends="-init-url, -init-tasks, build" description="Reload web application" >
+        <reload  url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                 path="${webapp.path}"/>
+    </target>
+
+    <target name="install" depends="-install-app" description="Installa ed esegue l'applicazione web">
+    </target>
+
+    <target name="-install-app" depends="-init-url, -init-tasks, build" description="Install web application">
+        <copy todir="${catalina.dir}/conf/Catalina/localhost"
+              file="${build.webapp.metainf.dir}/${ant.project.name}.xml" /> 
+        <install url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                 path="${webapp.path}" config="${build.webapp.metainf.dir}/${ant.project.name}.xml"/>
+    </target>
+
+    <target name="uninstall" depends="-init-url, -init-tasks" description="Uninstall web application">
+        <remove url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                path="${webapp.path}"/>
+    </target>
+
+    <target name="reinstall" depends="uninstall, install" description="Re-install web application">
+    </target>
+
+    <target name="deploy" depends="-init-url, -init-tasks, war"  description="Deploy web application" >
+        <deploy url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                path="${webapp.path}" war="file:///${dist.dir}/${ant.project.name}.war"/>
+    </target>
+
+    <target name="undeploy" depends="-init-url, -init-tasks" description="Undeploy web application" >
+        <undeploy url="${catalina.url}" username="${catalina.username}" password="${catalina.password}" 
+                path="${webapp.path}"/>
+    </target>
+
+    <target name="redeploy" depends="undeploy, deploy" description="Re-deploy web application">
+    </target>
+
+</project>

@@ -1,0 +1,172 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Statistiche SLA Servizi Erogati" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="bloccoCentrale">     
+            
+            <t:saveState value="#{vistaStatisticheSLAErogati}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/statisticheSLASeriviziErogati.png" alt="Statistiche SLA Servizi Erogati"/>   
+            </h:panelGroup>
+            
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:boxErrore',duration:0.8"/>
+            
+            <h:panelGroup id="boxErrore" styleClass="errore" style="width:515px;" rendered="#{controlloStatisticheSLAErogati.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloStatisticheSLAErogati.errore}"/>
+            </h:panelGroup>
+            
+            <h:form>
+                <rich:simpleTogglePanel id="boxGestioneSLA" style="width:515px;" switchType="ajax">
+                    
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordo_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Aggiungi Parametri SLA"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    <rich:messages>
+                        <f:facet name="errorMarker">
+                            <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>   
+                        </f:facet>
+                    </rich:messages>
+                    <h:panelGrid columns="2" cellspacing="20" rendered="#{vistaStatisticheSLAErogati.pannelloVisibile}">
+                        <h:panelGroup id="boxNuovoSLA" >
+                            <h:panelGrid columns="2">     
+                                <h:outputText value="Servizio: "/> 
+                                <h:outputText value="#{vistaStatisticheSLAErogati.webServizio.nome}"/>
+                                <h:outputText value="Erogatore: "/> 
+                                <h:outputText value="#{vistaStatisticheSLAErogati.webServizio.erogatore}"/>
+                                <h:outputText value="Fruitore: "/>
+                                <h:outputText value="#{vistaStatisticheSLAErogati.webServizio.fruitore}"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup>
+                            
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Parametro SLA: "/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" required="true" label="Parametro SLA" 
+                                                 value="#{vistaStatisticheSLAErogati.nomeParametroSLA}">
+                                    <f:selectItems value="#{vistaStatisticheSLAErogati.listaParametriSLA}"/>
+                                </h:selectOneMenu>
+                                <h:outputText value="Data Inizio Osservazione: "/>
+                                <rich:calendar label="Data Inizio Osservazione" style="font-size:8pt;height:125px" value="#{vistaStatisticheSLAErogati.dataInizioOsservazione}"
+                                               popup="true" direction="top-right" datePattern="yyyy-MM-dd HH:mm" showApplyButton="true" zindex="3" required="true"/>
+                                <h:outputText value="Data Fine Osservazione: "/>
+                                <rich:calendar label="Data Fine Osservazione" style="font-size:8pt;height:125px" value="#{vistaStatisticheSLAErogati.dataFineOsservazione}"
+                                               popup="true" direction="top-right" datePattern="yyyy-MM-dd HH:mm" showApplyButton="true" zindex="3" required="true"/>
+                                <h:outputText value="Granularità: "/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" required="true" label="Granularità:" value="#{vistaStatisticheSLAErogati.nomeStep}">
+                                    <f:selectItems value="#{vistaStatisticheSLAErogati.listaStep}"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Visualizza Grafico" action="#{controlloStatisticheSLAErogati.statistiche}"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+            </h:form>
+            
+            <rich:modalPanel id="pannelloGraficoStatistiche" showWhenRendered="#{vistaStatisticheSLAErogati.visualizzaGrafico}" autosized="true" top="50px" left="100px">
+                
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:outputText value="Grafico - #{vistaStatisticheSLAErogati.nomeParametroSLA}"></h:outputText>
+                      
+                    </h:panelGroup>
+                </f:facet>
+              
+                  
+                      <h:form>
+                          <h:commandLink style="float:right" disabled="#{!vistaStatisticheSLAErogati.visualizzaGrafico}" action="#{controlloStatisticheSLAErogati.chiudi}" id="chiudi" >
+                                <img title="Chiudi Statistica" alt="Chiudi Statistica" src="${pageContext.request.contextPath}/images/close.png" />
+                            </h:commandLink>
+                            <rich:componentControl for="pannelloGraficoStatistiche" attachTo="chiudi" operation="hide" event="onclick"/>
+                        </h:form>
+                 
+             
+                <h:graphicImage value="#{pageContext.request.contextPath}/statistiche#{vistaStatisticheSLAErogati.tempoInMillisecondi}.png" />
+            </rich:modalPanel>
+            
+            
+            <rich:tabPanel style="width:520px;margin-top:30px;" rendered="true"  headerAlignment="right" binding="#{vistaStatisticheSLAErogati.tabPanelServizi}" >
+                <rich:tab disabled="true">
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Erogati"/>   
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>  
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Erogati"/>
+                    
+                    <h:form>
+                        <rich:datascroller align="left"  for="listaServizi" maxPages="10" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="500" id="listaServizi" rows="5" columnClasses="col" binding="#{vistaStatisticheSLAErogati.tabellaServizi}"
+                                        value="#{vistaStatisticheSLAErogati.listaServizi}" var="servizio">
+                            
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome Servizio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Statistiche" />
+                                    </h:column>
+                                </rich:columnGroup>                                
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{servizio.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.erogatore}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.fruitore}" />
+                            </h:column>
+                            <h:column>
+                                <center>
+                                    <h:commandLink action="#{controlloStatisticheSLAErogati.aggiungiDaTabella}">
+                                        <img title="Visualizza Statistiche" alt="Visualizza Statistiche" src="${pageContext.request.contextPath}/images/icons/stats.png" />
+                                    </h:commandLink>
+                                </center>
+                            </h:column>
+                            
+                        </rich:dataTable>
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+            
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

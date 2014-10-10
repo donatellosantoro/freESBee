@@ -1,0 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:redirect url="schermoLoginConfigurazione.faces"/>
+
+<%--
+<jsp:forward page="schermoLoginConfigurazione.faces" />
+
+<jsp:forward page="schermoLogin.faces">
+    <jsp:param name="uriDiProvenienza" value="<%=request.getParameter("uriDiProvenienza")%>" />
+    <jsp:param name="idSessione" value="<%=request.getParameter("idSessione")%>" />
+</jsp:forward>
+--%>

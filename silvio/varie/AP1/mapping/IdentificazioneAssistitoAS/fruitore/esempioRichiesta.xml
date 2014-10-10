@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NS:richiesta_RichiestaRispostaSincrona_IdentificazioneAssistito version="2.3" xsi:schemaLocation="http://www.intemaweb.com/iron/datatypes Types2.2.xsd" xmlns:NS="http://www.intemaweb.com/iron/datatypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<NS:Intestazione>
+		<NS:InfoMittente>
+			<NS:Regione>000</NS:Regione>
+			<NS:CodiceAsl>000</NS:CodiceAsl>
+			<NS:IdOperatore>0</NS:IdOperatore>
+		</NS:InfoMittente>
+		<NS:InfoDestinatario>
+			<NS:Regione>000</NS:Regione>
+			<NS:CodiceAsl>000</NS:CodiceAsl>
+			<NS:IdOperatore>0</NS:IdOperatore>
+		</NS:InfoDestinatario>
+		<NS:DataOra>2001-12-17T09:30:47.0Z</NS:DataOra>
+	</NS:Intestazione>
+	<NS:IdentificazioneAssistito>
+		<NS:CodiceAslResidenza>000</NS:CodiceAslResidenza>
+		<NS:CodiceAslAssistenza>000</NS:CodiceAslAssistenza>
+		<NS:DataRiconoscimento>1967-08-13</NS:DataRiconoscimento>
+		<NS:DatiAnagrafici>
+			<NS:Cognome>ROSSI</NS:Cognome>
+			<NS:Nome>MARIO</NS:Nome>
+			<NS:DataDiNascita>1967-08-13</NS:DataDiNascita>
+			<NS:ComuneNascita>000000</NS:ComuneNascita>
+		</NS:DatiAnagrafici>
+	</NS:IdentificazioneAssistito>
+</NS:richiesta_RichiestaRispostaSincrona_IdentificazioneAssistito>

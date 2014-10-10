@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:intf="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:tns="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" schemaLocation="Types.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg">
+		<wsdl:part name="parameters" element="types:risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_start_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaSincrona_start"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_start_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaSincrona_start"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_end_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaSincrona_end"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_end_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaSincrona_end"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_testSincrono_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaSincrona_testSincrono"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_testSincrono_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaSincrona_testSincrono"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_getTraccia_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaSincrona_getTraccia"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_getTraccia_Msg">
+		<wsdl:part name="parameters" element="types:risposta_RichiestaRispostaSincrona_getTraccia"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaSenzaRisposta_testOneWay_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaSenzaRisposta_testOneWay"/>
+	</wsdl:message>
+	<wsdl:portType name="QualificazionePDD">
+		<wsdl:operation name="testAsincronoAsimmetrico">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="checkTestAsincronoAsimmetrico">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="testAsincronoSimmetrico">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="start">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_start_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_start_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="end">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_end_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_end_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="testSincrono">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_testSincrono_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_testSincrono_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="getTraccia">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_getTraccia_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_getTraccia_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="testOneWay">
+			<wsdl:input message="intf:richiesta_RichiestaSenzaRisposta_testOneWay_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="QualificazionePDDCorrelato">
+		<wsdl:operation name="riceviRispostaTestAsincronoSimmetrico">
+			<wsdl:input message="intf:segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiRisposta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiCompleti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="datiDB" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="documento.id" type="xs:integer" />
+                    <xs:element name="documento.codice_documento" type="xs:string" />
+                    <xs:element name="documento.documento" type="xs:string" />
+                    <xs:element name="documento.nome_documento" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiRichiesta">
+          <xs:complexType>
+            <xs:sequence>
+              <xsd:element xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="richiesta_RichiestaRispostaSincrona_InterrogaDoc" type="richiesta_RichiestaRispostaSincrona_InterrogaDoc_Type" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceAoo">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="16" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceAmm">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="16" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="msgErrore">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceErrore">
+    <xsd:restriction base="xsd:int" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="numeroDocumenti">
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="0" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="anno">
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="4" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="numero">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="dataRegistrazione">
+    <xsd:restriction base="xsd:date" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="arrivoPartenza">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="livelloClassifica">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceClassifica">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="descrizioneClassifica">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceUfficio">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="descrizioneUfficio">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceRegistro">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="descrizioneRegistro">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="oggetto">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceDocumentoInformatico">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="flPrimario">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="descrizioneDocumentoInformatico">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceResponsabileTrattamento">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="descrizioneResponsabileTrattamento">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceDocInf">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="nomeDocInf">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="mimeType">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="descrCorrispondente">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="errore">
+    <xsd:sequence>
+      <xsd:element name="codiceErrore" nillable="false" type="codiceErrore" />
+      <xsd:element name="msgErrore" nillable="false" type="msgErrore" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codiceArea">
+    <xsd:sequence>
+      <xsd:element name="codiceAmm" nillable="false" type="codiceAmm" />
+      <xsd:element name="codiceAoo" nillable="false" type="codiceAoo" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="classifica">
+    <xsd:sequence>
+      <xsd:element name="livelli" nillable="false" type="listaLivelli" />
+      <xsd:element name="codiceClassifica" nillable="false" type="codiceClassifica" />
+      <xsd:element name="descrizioneClassifica" nillable="false" type="descrizioneClassifica" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="listaLivelli">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="livelloClassifica" nillable="false" type="livelloClassifica" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="estremiProtocollo">
+    <xsd:sequence>
+      <xsd:element name="anno" nillable="false" type="anno" />
+      <xsd:element name="numero" nillable="false" type="numero" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="estremiProtocolloEstesi">
+    <xsd:sequence>
+      <xsd:element name="estremiProtocollo" nillable="false" type="estremiProtocollo" />
+      <xsd:element name="arrivoPartenza" nillable="false" type="arrivoPartenza" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="estremiFascicolo">
+    <xsd:sequence>
+      <xsd:element name="codiceUfficio" nillable="false" type="codiceUfficio" />
+      <xsd:element name="descrizioneUfficio" nillable="false" type="descrizioneUfficio" />
+      <xsd:element name="classifica" nillable="false" type="classifica" />
+      <xsd:element name="anno" nillable="false" type="anno" />
+      <xsd:element name="numero" nillable="false" type="numero" />
+      <xsd:element name="subnumero" nillable="true" type="numero" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="estremiFascicoloVirtuale">
+    <xsd:sequence>
+      <xsd:element name="codiceUfficio" nillable="false" type="codiceUfficio" />
+      <xsd:element name="descrizioneUfficio" nillable="false" type="descrizioneUfficio" />
+      <xsd:element name="codiceRegistro" nillable="false" type="codiceRegistro" />
+      <xsd:element name="descrizioneRegistro" nillable="false" type="descrizioneRegistro" />
+      <xsd:element name="anno" nillable="false" type="anno" />
+      <xsd:element name="numero" nillable="false" type="numero" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="listaDocumentiInformatici">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="documentoInformatico" nillable="false" type="documentoInformatico" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="documentoInformatico">
+    <xsd:sequence>
+      <xsd:element name="codiceDocumentoInformatico" nillable="false" type="codiceDocumentoInformatico" />
+      <xsd:element name="flPrimario" nillable="false" type="flPrimario" />
+      <xsd:element name="descrizioneDocumentoInformatico" nillable="false" type="descrizioneDocumentoInformatico" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="listaResponsabiliTrattamento">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="responsabileTrattamento" nillable="false" type="responsabileTrattamento" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="responsabileTrattamento">
+    <xsd:sequence>
+      <xsd:element name="codice_RresponsabileTrattamento" nillable="false" type="codiceResponsabileTrattamento" />
+      <xsd:element name="descrizioneResponsabileTrattamento" nillable="false" type="descrizioneResponsabileTrattamento" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="listaDocumentiFascicolo">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="documentoFascicolo" nillable="false" type="documentoFascicolo" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="documentoFascicolo">
+    <xsd:sequence>
+      <xsd:element name="codiceAmm" nillable="true" type="codiceAmm" />
+      <xsd:element name="codiceAoo" nillable="true" type="codiceAoo" />
+      <xsd:element name="descrCorrispondente" nillable="false" type="descrCorrispondente" />
+      <xsd:element name="dataRegistrazione" nillable="false" type="dataRegistrazione" />
+      <xsd:element name="estremiProtocolloEstesi" nillable="false" type="estremiProtocolloEstesi" />
+      <xsd:element name="codiceUfficio" nillable="true" type="codiceUfficio" />
+      <xsd:element name="descrizioneUfficio" nillable="true" type="descrizioneUfficio" />
+      <xsd:element name="codiceRegistro" nillable="true" type="codiceRegistro" />
+      <xsd:element name="descrizioneRegistro" nillable="true" type="descrizioneRegistro" />
+      <xsd:element name="classifica" nillable="true" type="classifica" />
+      <xsd:element name="oggetto" nillable="false" type="oggetto" />
+      <xsd:element name="documentiInformatici" nillable="true" type="listaDocumentiInformatici" />
+      <xsd:element name="responsabiliTrattamento" nillable="true" type="listaResponsabiliTrattamento" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="listaDocumenti">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="documento" nillable="false" type="documento" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="documento">
+    <xsd:sequence>
+      <xsd:element name="dataRegistrazione" nillable="false" type="dataRegistrazione" />
+      <xsd:element name="estremiProtocolloEstesi" nillable="false" type="estremiProtocolloEstesi" />
+      <xsd:element name="classifica" nillable="true" type="classifica" />
+      <xsd:choice>
+        <xsd:element name="estremiFascicolo" nillable="true" type="estremiFascicolo" />
+        <xsd:element name="estremiFascicoloVirtuale" nillable="true" type="estremiFascicoloVirtuale" />
+      </xsd:choice>
+      <xsd:element name="oggetto" nillable="false" type="oggetto" />
+      <xsd:element name="documentiInformatici" nillable="true" type="listaDocumentiInformatici" />
+      <xsd:element name="responsabiliTrattamento" nillable="true" type="listaResponsabiliTrattamento" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AP3InterrogaDocRequest">
+    <xsd:sequence>
+      <xsd:element name="codiceRichiedente" nillable="false" type="codiceArea" />
+      <xsd:element name="codiceInterrogato" nillable="false" type="codiceArea" />
+      <xsd:element name="codiceDocInf" nillable="false" type="codiceDocInf" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AP3InterrogaDocResponse">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="errore" nillable="false" type="errore" />
+        <xsd:sequence>
+          <xsd:element name="mimeType" nillable="true" type="mimeType" />
+          <xsd:element name="nomeDocInf" nillable="false" type="nomeDocInf" />
+        </xsd:sequence>
+      </xsd:choice>
+    </xsd:sequence>
+    <xsd:attribute name="esito" type="xsd:boolean" use="required" />
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="richiesta_RichiestaRispostaSincrona_InterrogaDoc_Type">
+    <xsd:sequence>
+      <xsd:element name="AP3InterrogaDocRequest" type="AP3InterrogaDocRequest">
+        <xsd:annotation>
+          <xsd:appinfo>http://progettoicar.it/AP3interprotoQry/types/AP3InterrogaDocRequest.xsd</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="risposta_RichiestaRispostaSincrona_InterrogaDoc_Type">
+    <xsd:sequence>
+      <xsd:element name="AP3InterrogaDocResponse" type="AP3InterrogaDocResponse">
+        <xsd:annotation>
+          <xsd:appinfo>http://progettoicar.it/AP3interprotoQry/types/AP3InterrogaDocResponse.xsd</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xs:schema>
+

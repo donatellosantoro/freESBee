@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="framework-lib-build">
+
+	<!-- ***************************************************
+                    Librerie
+      *************************************************** -->
+
+
+	<!-- **********  HIBERNATE *************-->
+	<echo message="Versione di Hibernate: ${hibernate.ver}" />
+	<property name="hibernate.dir" location="./lib/hibernate-${hibernate.ver}" />
+
+	<fileset id="hibernate.jars" dir="${hibernate.dir}">
+		<include name="*.jar" />
+		<!--  <include name="commons-logging-*.jar" /> -->
+	</fileset>
+
+	<!-- **********  TAGLIBS *************-->
+	<fileset id="web.jars" dir="${lib.dir}/taglibs">
+		<include name="jstl-*.jar" />
+		<include name="standard.jar" />
+	</fileset>    
+
+	<!-- **********  JSF *************-->
+	<echo message="Versione di JSF: ${jsf.ver}" />
+
+	<fileset id="jsf.jars" dir="${lib.dir}/jsf-${jsf.ver}">
+		<include name="jsf-api.jar" />
+		<include name="jsf-impl.jar" />
+	</fileset>
+
+	<!-- ********** TOMAHAWK *************-->
+	<echo message="Versione di Tomahawk: ${tomahawk.ver}" />
+
+	<fileset id="tomahawk.jars" dir="${lib.dir}/tomahawk-${tomahawk.ver}">
+		<include name="tomahawk-*.jar" />
+		<include name="commons-el.jar" />
+		<include name="commons-fileupload-*.jar" />
+		<include name="commons-lang-*.jar" />
+	</fileset>
+
+	<!-- ********** RICHFACES *************-->
+	<echo message="Versione di RichFaces: ${richfaces.ver}" />
+
+	<fileset id="richfaces.jars" dir="${lib.dir}/richfaces-${richfaces.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- ********** CXF *************-->
+	<echo message="Versione di CXF: ${cxf.ver}" />
+
+	<fileset id="cxf.jars" dir="${lib.dir}/cxf-${cxf.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- ********** CAMEL *************-->
+	<echo message="Versione di Camel: ${camel.ver}" />
+
+	<fileset id="camel.jars" dir="${lib.dir}/camel-${camel.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- ********** JETTY *************-->
+	<echo message="Versione di Jetty: ${jetty.ver}" />
+
+	<fileset id="jetty.jars" dir="${lib.dir}/jetty-${jetty.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+
+	<!-- ********** ALTRI *************-->
+	<fileset id="driver.jars" dir="${lib.dir}">
+		<include name="${driver.name}" />
+	</fileset>    
+	<fileset id="commons-logging.jars" dir="${lib.dir}/commons">
+		<include name="commons-*.jar" />
+	</fileset>    
+	<fileset id="logging.jars" dir="${lib.dir}">
+		<include name="log4j-*.jar" />
+	</fileset>
+	<fileset id="test.jars" dir="${lib.dir}">
+		<include name="junit.jar" />
+	</fileset>
+	<fileset id="other.jars" dir="${lib.dir}">
+		<include name="*.jar" />
+	</fileset>
+
+</project>

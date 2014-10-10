@@ -1,0 +1,106 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Nuova Istanza" />
+</c:import>
+<!-- ******************************************* -->
+
+
+<f:view>    
+    <t:saveState value="#{vistaIstanzeAccordi}"/>
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/creaIstanzeAccordi.png" alt="Nuova istanza"/>                
+        </h:panelGroup>
+        <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menuWizardNuovaIstanza.jsf"/>
+            </h:panelGroup>
+            <h:panelGroup> 
+                <h:form id="formNuoveIstanze">
+                    <a4j:region selfRendered="true">
+                        <a4j:loadBundle basename="messaggi" var="msgx"/>
+                        <rich:panel style="width:410px;" id="NuovaIstanza">  
+                            <f:facet name="header">  
+                                <h:panelGroup  style="width:410px">  
+                                    <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/istanzaAccordoCollaborazione_add.png"  styleClass="linkPicture" />
+                                        <h:outputText value="#{msg.istanza_title}"/>   
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </f:facet> 
+                            <h:outputText value="#{msg.istanza_info}" styleClass="infoText"/>
+                            <h:outputText value="#{controlloIstanzeAccordi.errore}" rendered="#{controlloIstanzeAccordi.errore != null}" styleClass="errorText"/>
+                            <h:outputText id="boxSuccesso" value="#{controlloIstanzeAccordi.messaggio}" rendered="#{controlloIstanzeAccordi.messaggio != null}" styleClass="confirmText"/>
+                            <rich:messages styleClass="errorText"/>
+                            
+                            <h:panelGroup styleClass="pannello" rendered="#{controlloIstanzeAccordi.errore == null}">
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="#{msg.istanza_nuova}" />
+                                    <h:selectOneMenu id="selectAccordi" value="#{vistaIstanzeAccordi.accordoSelezionato}" required="true">
+                                        <f:selectItems value="#{vistaIstanzeAccordi.listaItem}" />
+                                        <a4j:support event="onchange" reRender="ruolo" action="#{controlloIstanzeAccordi.accordoCambiato}"/>
+                                    </h:selectOneMenu> 
+                                    <h:panelGroup>
+                                        <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                        <rich:toolTip for="help1" showDelay="200">
+                                            <h:outputText value="#{msg.istanza_nuova_tooltip}"/>
+                                        </rich:toolTip>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                
+                                <h:panelGroup id="ruolo">  
+                                    <h:panelGrid columns="3" rendered="#{!empty vistaIstanzeAccordi.accordoSelezionato}">
+                                        <h:outputText value="#{msgx.istanza_ruolo}" />
+                                        <h:selectOneMenu value="#{vistaIstanzeAccordi.sceltaRuolo}" id="sceltaRuolo" required="true">
+                                            <f:selectItem itemLabel="" itemValue=""/>
+                                            <f:selectItem itemLabel="Fruitore" itemValue="FRUITORE"/>
+                                            <f:selectItem itemLabel="Erogatore" itemValue="EROGATORE"/>
+                                            <a4j:support event="onchange" reRender="listaOperation"/>
+                                        </h:selectOneMenu>
+                                        <h:panelGroup>
+                                            <h:graphicImage id="help2" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                            <rich:toolTip for="help2" showDelay="200">
+                                                <h:outputText value="#{msgx.istanza_ruolo_tooltip}"/>
+                                            </rich:toolTip>
+                                        </h:panelGroup>
+                                    </h:panelGrid>    
+                                    
+                                    <h:panelGroup id="listaOperation">  
+                                        <h:panelGroup rendered="#{!empty vistaIstanzeAccordi.sceltaRuolo}">
+                                            <rich:separator height="2" lineType="solid" styleClass="separator"/>
+                                            <h:selectManyCheckbox id="selectOperation" value="#{vistaIstanzeAccordi.listaOperationSelezionate}" 
+                                                                  layout="pageDirection">
+                                                <f:selectItems value="#{vistaIstanzeAccordi.listaItemOperation}" />
+                                                <a4j:support event="onchange" reRender="next1"/>
+                                            </h:selectManyCheckbox>
+                                        </h:panelGroup>
+                                    </h:panelGroup>                                                                        
+                                </h:panelGroup>                                
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="pulsantiWizard" id="next1">
+                                <h:commandLink action="#{controlloIstanzeAccordi.annulla}" immediate="true">               
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloIstanzeAccordi.configuraIstanza}">               
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}.png"  styleClass="linkPicture" rendered="#{!empty vistaIstanzeAccordi.listaOperationSelezionate}"/>
+                                </h:commandLink>                                        
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}_disabled.png"  styleClass="linkPicture" rendered="#{empty vistaIstanzeAccordi.listaOperationSelezionate}"/>
+                            </h:panelGroup>
+                        </rich:panel>
+                    </a4j:region>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

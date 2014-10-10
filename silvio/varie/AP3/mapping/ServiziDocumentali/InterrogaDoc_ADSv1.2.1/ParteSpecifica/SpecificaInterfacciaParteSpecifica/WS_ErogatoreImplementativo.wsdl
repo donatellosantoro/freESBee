@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 (http://www.altova.com) by ACME4 (INSIEL S.P.A.) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:intd="http://progettoicar.it/AP3interprotoQry/interrogaDocWS" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://progettoicar.it/AP3interprotoQry/types" targetNamespace="http://progettoicar.it/AP3interprotoQry/interrogaDocWS">
+	<wsdl:import namespace="http://progettoicar.it/AP3interprotoQry/types" location="Types.xsd"/>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_InterrogaDoc_Msg">
+		<wsdl:part name="parameters" element="tns:richiesta_RichiestaRispostaSincrona_InterrogaDoc"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_InterrogaDoc_Msg">
+		<wsdl:part name="parameters" element="tns:risposta_RichiestaRispostaSincrona_InterrogaDoc"/>
+	</wsdl:message>
+	<wsdl:portType name="InterrogaDocWS">
+		<wsdl:operation name="RichiestaRispostaSincrona_InterrogaDoc">
+			<wsdl:input message="intd:richiesta_RichiestaRispostaSincrona_InterrogaDoc_Msg"/>
+			<wsdl:output message="intd:risposta_RichiestaRispostaSincrona_InterrogaDoc_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="InterrogaDocWSSoapBinding" type="intd:InterrogaDocWS">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="RichiestaRispostaSincrona_InterrogaDoc">
+			<wsdlsoap:operation soapAction=" " style="document"/>
+			<wsdl:input>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="InterrogaDocWSService">
+		<wsdl:port name="InterrogaDocWS" binding="intd:InterrogaDocWSSoapBinding">
+			<wsdlsoap:address location="http://localhost:8080/InterrogaDocWS/services/InterrogaDocWS"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,106 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Esegui Istanza" />
+</c:import>
+<!-- ******************************************* -->
+
+
+<f:view>    
+    <%--t:saveState value="#{vistaEseguiIstanza}"/--%>
+    <a4j:form id="formEseguiIstanza">
+        <a4j:loadBundle basename="messaggi" var="msgx"/>
+        <h:panelGroup>
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/eseguiIstanza.png" alt="Esegui istanza"/>
+            </h:panelGroup>
+
+            <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+                <h:panelGroup>
+                    <c:import url="menuWizardEseguiIstanza.jsf"/>
+                </h:panelGroup>
+
+                <a4j:outputPanel id="pannelloEseguiIstanza">
+                    <rich:panel id="EseguiIstanzaOperation">
+                        <f:facet name="header">
+                            <h:panelGroup  style="width:410px">
+                                <h:panelGroup styleClass="headerNome"  style="width:410px">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/eseguiAccordoCollaborazione.png"  styleClass="linkPicture" />
+                                    <h:outputText value="#{vistaEseguiIstanza.istanzaOperationSelezionata.nome}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{msg.istanza_esegui_info}" styleClass="infoText"/>
+                        <h:outputText value="#{controlloEseguiIstanza.errore}" rendered="#{controlloEseguiIstanza.errore != null}" styleClass="errorText"/>
+                        <h:outputText id="boxSuccesso" value="#{controlloEseguiIstanza.messaggio}" rendered="#{controlloEseguiIstanza.messaggio != null}" styleClass="confirmText"/>
+                        <rich:messages styleClass="errorText"/>
+
+                        <h:panelGroup styleClass="pannello">
+                            <h:panelGroup>
+                                <c:import url="eseguiIstanzaOperationInesrimentoURLErogatore.jsf"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaDatiDB}">
+                                <c:import url="eseguiIstanzaOperationInesrimentoDB.jsf"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaDatiInterattivi}">
+                                <c:import url="eseguiIstanzaOperationInesrimentoInterattivi.jsf"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaPannelloRispostaSincrona}">
+                                <c:import url="eseguiIstanzaOperationRisposta.jsf"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="pulsantiWizard" rendered="#{vistaEseguiIstanza.visualizzaPulsanteLogin}">
+                                <h:outputText value="#{msg.istanza_esegui_test_login}" />
+                                <h:commandLink action="#{controlloEseguiIstanza.login}" immediate="true">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_login_small.png"  styleClass="linkPicture"/>
+                                </h:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="pulsantiWizard" id="next1">
+                                <h:commandLink action="#{controlloEseguiIstanza.annulla}" immediate="true">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanza.eseguiIstanza}" immediate="true">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_indietro}.png"  styleClass="linkPicture"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanza.confermaDati}">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_conferma}.png"  styleClass="linkPicture" rendered="#{vistaEseguiIstanza.conferma}"/>
+                                </h:commandLink>
+                                <a4j:commandLink action="#{controlloEseguiIstanza.inviaMessaggioXML}" reRender="pannelloEseguiIstanza">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_invia}.png"  styleClass="linkPicture" rendered="#{vistaEseguiIstanza.invia}"/>
+                                </a4j:commandLink>
+
+                                <h:commandLink action="#{controlloEseguiIstanza.mostraRispostaSincrona}">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.visualizzaRisposta}.png"  styleClass="linkPicture" rendered="#{vistaEseguiIstanza.visualizzaRispostaSincrona}"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanza.verificaRispostaAincrona}">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.controllaRisposta}.png"  styleClass="linkPicture" rendered="#{vistaEseguiIstanza.visualizzaVerificaRispostaAincrona}"/>
+                                </h:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </rich:panel>
+                </a4j:outputPanel>
+            </h:panelGrid>
+        </h:panelGroup>
+    </a4j:form>
+
+    <a4j:status onstart="#{rich:component('wait')}.show()" onstop="#{rich:component('wait')}.hide()"/>
+    <rich:modalPanel id="wait" autosized="true" width="220" height="40" moveable="false" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Attendere prego..."/>
+        </f:facet>
+        <h:panelGrid columns="2">
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/loading2.gif"/>
+            <h:outputText value="Invio del messaggio in corso..."/>
+        </h:panelGrid>
+
+    </rich:modalPanel>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

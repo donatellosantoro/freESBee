@@ -1,0 +1,17 @@
+# File di properties dependent.properties        
+
+lib.dir             = ./lib
+
+catalina.dir        = C:/Programmi/Apache Software Foundation/apache-tomcat-6.0.16
+servlet.api.jar     = ${catalina.dir}/lib/servlet-api.jar
+catalina.host       = localhost
+catalina.port       = 8080
+catalina.username   = admin
+catalina.password   = admin
+
+#driver.name         = postgresql-8.1-409.jdbc3.jar
+#db.name             = freesbee
+#dbTest.name         = freesbeetest
+#db.username         = freesbee
+#db.password         = **freesbee**
+

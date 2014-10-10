@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://progettoicar.it/AP3interprotoQry/types">
+	<xsl:output method="text"/>
+	<xsl:template match="/">
+		SELECT * FROM amministrazione JOIN areaorganizzativaomogenea ON amministrazione.id = areaorganizzativaomogenea.id_amministrazione JOIN documentofascicolo ON areaorganizzativaomogenea.id = documentofascicolo.id_areaorganizzativaomogenea JOIN fascicolo ON documentofascicolo.id_fascicolo = fascicolo.id JOIN classifica ON fascicolo.id_classifica = classifica.id JOIN documento ON documento.id_documentofascicolo = documentofascicolo.id JOIN responsabiletrattamento ON responsabiletrattamento.id_documentofascicolo = documentofascicolo.id WHERE fascicolo.anno = 
+		'<xsl:value-of select="/soapenv:Envelope/soapenv:Body/richiesta_RichiestaRispostaSincrona_Ricerca/AP3RicercaRequest/estremiProtocolloDest/anno"/>' 
+		AND fascicolo.numero = 
+		'<xsl:apply-templates select="/soapenv:Envelope/soapenv:Body/richiesta_RichiestaRispostaSincrona_Ricerca/AP3RicercaRequest/estremiProtocolloDest/numero"/>' 
+		AND amministrazione.codice = 
+		'<xsl:apply-templates select="/soapenv:Envelope/soapenv:Body/richiesta_RichiestaRispostaSincrona_Ricerca/AP3RicercaRequest/codiceInterrogato/codiceAmm"/>' 
+		AND areaorganizzativaomogenea.codice_aoo = 
+		'<xsl:apply-templates select="/soapenv:Envelope/soapenv:Body/richiesta_RichiestaRispostaSincrona_Ricerca/AP3RicercaRequest/codiceInterrogato/codiceAoo"/>' 
+		AND documentofascicolo.data_registrazione BETWEEN 
+		'<xsl:apply-templates select="/soapenv:Envelope/soapenv:Body/richiesta_RichiestaRispostaSincrona_Ricerca/AP3RicercaRequest/dataDa"/>' 
+		AND 
+		'<xsl:apply-templates select="/soapenv:Envelope/soapenv:Body/richiesta_RichiestaRispostaSincrona_Ricerca/AP3RicercaRequest/dataA"/>' 
+	</xsl:template>
+</xsl:stylesheet>

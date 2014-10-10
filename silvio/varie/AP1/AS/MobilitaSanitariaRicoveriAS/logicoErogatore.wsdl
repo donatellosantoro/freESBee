@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:zsvr="http://www.intemaweb.com/services/mobsan" xmlns:types="http://www.intemaweb.com/iron/datatypes" targetNamespace="http://www.intemaweb.com/services/mobsan">
+	<wsdl:import namespace="http://www.intemaweb.com/iron/datatypes" location="Types2.2.xsd"/>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Segnalazione Ricovero </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Msg">
+		<wsdl:documentation>Messaggio di risposta necessario per definire l'operazione di Segnalazione Ricovero </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:risposta_RichiestaRispostaAsincrona_SegnalazioneRicovero"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di aggiornamento dei dati di mobilita sanitaria</wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_AggiornamentoMobilita"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Msg">
+		<wsdl:documentation>Messaggio di risposta necessario per definire l'operazione di aggiornamento dei dati di mobilita sanitaria </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:risposta_RichiestaRispostaAsincrona_AggiornamentoMobilita"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Segnalazione Dimissione </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_SegnalazioneDimissione"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Msg">
+		<wsdl:documentation>Messaggio di risposta necessario per definire l'operazione di Segnalazione Dimissione </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:risposta_RichiestaRispostaAsincrona_SegnalazioneDimissione"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_TrasmissioneDrg_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Trasmissione Drg </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_TrasmissioneDrg"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_TrasmissioneDrg_Msg">
+		<wsdl:documentation>Messaggio di risposta necessario per definire l'operazione di TrasmissioneDrg </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:risposta_RichiestaRispostaAsincrona_TrasmissioneDrg"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_CancellazioneRicovero_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Cancellazione Ricovero</wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_CancellazioneRicovero"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_CancellazioneRicovero_Msg">
+		<wsdl:documentation>Messaggio di risposta necessario per definire l'operazione di Cancellazione Ricovero</wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:risposta_RichiestaRispostaAsincrona_CancellazioneRicovero"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_CancellazioneDimissione_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Cancellazione Dimissione</wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_CancellazioneDimissione"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_CancellazioneDimissione_Msg">
+		<wsdl:documentation>Messaggio di risposta necessario per definire l'operazione di Cancellazione Dimissione</wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:risposta_RichiestaRispostaAsincrona_CancellazioneDimissione"/>
+	</wsdl:message>
+	<wsdl:portType name="ServizioMobSanRic">
+		<wsdl:documentation>Definizione delle operazioni/scenari elementari di coordinamento e del servizio</wsdl:documentation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_SegnalazioneRicovero">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Segnalazione del ricovero</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_AggiornamentoMobilita">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di aggiornamento dei dati di mobilita sanitaria</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_SegnalazioneDimissione">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Segnalazione della dimissione</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_TrasmissioneDrg">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Trasmissione Drg</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_TrasmissioneDrg_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_CancellazioneRicovero">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Cancellazione della segnalazione di ricovero precedentemente inviata</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_CancellazioneRicovero_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_CancellazioneDimissione">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Cancellazione della segnalazione di dimissione precedentemente inviata</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_CancellazioneDimissione_Msg"/>
+		</wsdl:operation>
+		<!--<wsdl:operation name="RichiestaRispostaAsincrona_CancellazioneDrg">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Cancellazione della segnalazione di trasmissione Drg precedentemente inviata</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_CancellazioneDrg_Msg"/>
+		</wsdl:operation>-->
+	</wsdl:portType>
+
+	<wsdl:binding name="MobSanRicBinding" type="zsvr:ServizioMobSanRic">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<!-- Segnalazione del ricovero -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_SegnalazioneRicovero">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_SegnalazioneRicovero" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<!-- Aggiornamento dei dati di mobilita sanitaria -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_AggiornamentoMobilita">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_AggiornamentoMobilita" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<!-- Segnalazione della dimissione -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_SegnalazioneDimissione">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_SegnalazioneDimissione" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<!-- Trasmissione Drg -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_TrasmissioneDrg">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_TrasmissioneDrg" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<!-- Cancellazione Ricovero -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_CancellazioneRicovero">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_CancellazioneRicovero" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<!-- Cancellazione Dimissione -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_CancellazioneDimissione">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_CancellazioneDimissione" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="MobSanRic">
+		<documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+		<wsdl:port name="MobSan" binding="zsvr:MobSanRicBinding">
+			<soap:address location="http://localhost/ap1/mobsanric.asmx"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

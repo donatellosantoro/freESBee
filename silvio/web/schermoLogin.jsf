@@ -1,0 +1,46 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Login" />
+</c:import>
+<!-- ******************************************* -->
+<f:view>
+    <h:graphicImage value="/images/logoSilvio.png" styleClass="imgLogin" alt="Logo SIL-VIO"/>
+    <t:saveState value="#{vistaLogin}"/>
+
+    <rich:panel id="panelLogin" styleClass="panelLogin">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/key_start.png"  styleClass="linkPicture" />
+                <h:outputText value="Login"/>
+            </h:panelGroup>
+        </f:facet>
+        <h:form>
+            <h:panelGroup styleClass="loginForm">
+                <rich:messages style="text-align:left" styleClass="erroreLogin"/>
+                <h:outputText styleClass="erroreLogin" value="#{controlloLogin.errore}" rendered="#{controlloLogin.errore != null}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Nome Utente: "/>
+                    <h:inputText label="Nome Utente" value="#{vistaLogin.utente.nome}" required="true"/>
+                    <h:outputText value="Password: "/>
+                    <h:inputSecret label="Password" value="#{vistaLogin.utente.password}" required="true"/>
+                    <h:outputText value=" "/>
+                    <h:selectOneMenu value="#{vistaLogin.avvioRapidoSelezionato}" style="width:127px;font-size:11px">
+                        <f:selectItems value="#{vistaLogin.avvioRapido}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value=""/>
+                    <h:commandButton action="#{controlloLogin.login}" image="#{pageContext.request.contextPath}/images/btn_login.png"  styleClass="linkPicture"/>
+                </h:panelGrid>
+            </h:panelGroup>
+        </h:form>
+    </rich:panel>
+
+</f:view>
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

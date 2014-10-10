@@ -1,0 +1,88 @@
+<!DOCTYPE database SYSTEM "http://db.apache.org/torque/dtd/database_3_2.dtd">
+
+<database name="freesbee_sla_gestionegare" package="it.unibas.freesbeesla.tracciatura.modello"
+          defaultIdMethod="none" defaultJavaNamingMethod="javaname">
+
+<!--    
+    <table name="icar_inf2_error" javaName="Inf2Error">
+        <column name="inf2_error_code" required="true" primaryKey="true" type="VARCHAR" size="45" />
+        <column name="inf2_error_description" required="true" type="VARCHAR" size="100" />    
+        <column name="inf2_error_type"  type="VARCHAR" size="100" default="null" /> 
+    </table>
+
+    
+    <table name="icar_inf2_service_catalog_state" javaName="ServiceCatalogState">
+        <column name="inf2_id_state" required="true" primaryKey="true" type="BIGINT" javaType="object" />
+        <column name="inf2_description" required="true" type="VARCHAR" size="80"  />    
+        <unique>
+            <unique-column name="inf2_description"/>
+        </unique>  
+    </table>
+    
+    <table name="icar_inf2_sla_catalog_state" javaName="SlaCatalogState">
+        <column name="inf2_id_sla_object_state" required="true" primaryKey="true" type="BIGINT" javaType="object" />
+        <column name="inf2_sla_state_description" required="true" type="VARCHAR" size="80" />    
+    </table>
+-->    
+    
+    <table name="icar_inf2_soggetto" javaName="SoggettoSLA">
+        <column name="id" required="true" primaryKey="true" type="BIGINT" javaType="object" />
+        <column name="nome_soggetto" required="true" type="VARCHAR" size="255" />
+    </table>
+    
+    <table name="icar_inf2_service" javaName="Service">
+        <column name="inf2_id_service" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_id_initiator" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_id_responder" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_id_agreement" required="true" type="VARCHAR"  size="80" />
+        <column name="inf2_id_state" required="true"  type="VARCHAR" size="30" />
+        <column name="inf2_sla_object"  type="LONGVARCHAR" />
+        <column name="inf2_count_pending_request" required="true"  type="BIGINT" javaType="object" default="0" />
+        <column name="inf2_active" required="true" type="BIGINT" javaType="object"  default="1" />
+    </table>
+    
+    <table name="icar_inf2_sla_object_trace" javaName="SlaObjectTrace">
+        <column name="inf2_id_service" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_id_initiator" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_id_responder" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_sla_basic_metric" required="true" primaryKey="true" type="VARCHAR"  size="80" />
+        <column name="inf2_sla_basic_metric_data_insert" required="true" primaryKey="true" type="TIMESTAMP" />
+        <column name="inf2_sla_basic_metric_value" required="true"  type="DOUBLE" javaType="object"/>
+        <column name="inf2_sla_basic_metric_milliseconds_insert" required="true" primaryKey="true" type="DECIMAL"  size="3" />
+        <foreign-key foreignTable="icar_inf2_service">
+            <reference local="inf2_id_service" foreign="inf2_id_service"/>
+            <reference local="inf2_id_initiator" foreign="inf2_id_initiator"/>
+            <reference local="inf2_id_responder" foreign="inf2_id_responder"/>
+        </foreign-key>
+    </table>
+    
+    <table name="utente" javaName="Utente">
+        <column name="username" required="true"  primaryKey="true" type="VARCHAR" size="45" />
+        <column name="password" required="true" type="VARCHAR" size="100" />
+        <unique>
+            <unique-column name="username"/>
+        </unique>
+    </table>
+    <table name="configurazione" javaName="Configurazione">
+        <column name="id" required="true" primaryKey="true" type="BIGINT" javaType="object" />
+        <column name="indirizzo_registro_servizi" required="true" type="VARCHAR"  size="180"/>
+        <column name="nome_SLA" required="true" type="VARCHAR"  size="180"/>
+        <column name="tipo_SLA" required="true" type="VARCHAR"  size="180"/>
+        <column name="accordo_servizio_sla" required="true" type="VARCHAR"  size="180"/>
+        <column name="nome_servizio_monitoraggio_sla" required="true" type="VARCHAR"  size="180"/>
+        <column name="tipo_servizio_monitoraggio_sla" required="true" type="VARCHAR"  size="180"/>
+        <column name="pd_monitoraggio_sla" required="true" type="VARCHAR"  size="180"/>
+        <column name="accordo_servizio_stato" required="true" type="VARCHAR"  size="180"/>
+        <column name="nome_servizio_monitoraggio_stato" required="true" type="VARCHAR"  size="180"/>
+        <column name="tipo_servizio_monitoraggio_stato" required="true" type="VARCHAR"  size="180"/>
+        <column name="pd_monitoraggio_stato" required="true" type="VARCHAR"  size="180"/>
+    </table>
+    <table name="configurazione_sp" javaName="ConfigurazioneSP">
+        <column name="id" required="true" primaryKey="true" type="BIGINT" javaType="object" />
+        <column name="url_freesbee_sp" required="true" type="VARCHAR"  size="180" />
+        <column name="risorsa" required="true" type="VARCHAR"  size="180"/>
+        <column  name="autenticazione" required="true" type="VARCHAR"  size="6"/>
+        <column name="risorsa_pd_monitoraggio_sla" required="true" type="VARCHAR"  size="180"/>
+        <column name="risorsa_pd_monitoraggio_stato" required="true" type="VARCHAR"  size="180"/>
+    </table>
+</database>

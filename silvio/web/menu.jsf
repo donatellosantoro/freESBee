@@ -1,0 +1,56 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>
+    <h:panelGroup styleClass="menu">        
+        
+        <h:panelGroup  styleClass="menuSeparator">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/trasparent.png"/>
+        </h:panelGroup>
+        
+        <rich:panelMenu width="248" styleClass="menu">        
+            <rich:panelMenuGroup label="Accordo di Collaborazione" expandMode="ajax" expanded="true" 
+                                 iconExpanded="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione.png"
+                                 iconCollapsed="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione.png">
+                <rich:panelMenuItem action="#{controlloAccordoCollaborazione.nuovoAccordo}" immediate="true" label="Crea nuovo accordo"/>
+                <rich:panelMenuItem action="#{controlloAccordoCollaborazione.elenco}" immediate="true" label="Visualizza accordi" />
+            </rich:panelMenuGroup>
+            
+            <rich:panelMenuGroup label="Istanze Accordi di Collaborazione" expandMode="ajax" expanded="true"
+                                 iconExpanded="#{pageContext.request.contextPath}/images/icons/istanzaAccordoCollaborazione.png"
+                                 iconCollapsed="#{pageContext.request.contextPath}/images/icons/istanzaAccordoCollaborazione.png">
+                <rich:panelMenuItem action="#{controlloIstanzeAccordi.nuovaIstanza}" immediate="true" label="Crea nuova istanza"/>
+                <rich:panelMenuItem action="#{controlloIstanzeAccordi.elenco}" immediate="true" label="Visualizza istanze"/>
+            </rich:panelMenuGroup>
+            
+            <rich:panelMenuGroup label="Esegui istanze" expandMode="ajax" expanded="true"
+                                 iconExpanded="#{pageContext.request.contextPath}/images/icons/eseguiAccordoCollaborazione.png"
+                                 iconCollapsed="#{pageContext.request.contextPath}/images/icons/eseguiAccordoCollaborazione.png">
+                <rich:panelMenuItem action="#{controlloEseguiIstanza.eseguiIstanza}" immediate="true" label="Esegui istanza" />
+                <rich:panelMenuItem action="#{controlloEseguiIstanzaTest.eseguiIstanzaTest}" immediate="true" label="Esegui istanza test" />
+                <rich:panelMenuItem action="#{controlloSbloccaRichiesteAsincrone.elenco}" immediate="true" label="Sblocca richieste asincrone"/>
+                <rich:panelMenuItem action="#{controlloVisualizzaMessaggi.caricaMessaggi}" immediate="true" label="Visualizza Messaggi"/>                
+            </rich:panelMenuGroup>
+            
+            <br/><rich:separator height="1" lineType="solid"/><br/>
+            <rich:panelMenuGroup label="Configurazione" expandMode="ajax" expanded="true" 
+                                 iconExpanded="#{pageContext.request.contextPath}/images/icons/configurazione.png"
+                                 iconCollapsed="#{pageContext.request.contextPath}/images/icons/configurazione.png">
+                <rich:panelMenuItem action="#{controlloGestioneConfigurazione.caricaConfigurazione}" label="Configura"/>
+            </rich:panelMenuGroup>
+            
+            <br/><rich:separator height="1" lineType="solid"/><br/>
+            <rich:panelMenuGroup label="#{utente.nome}" expandMode="ajax" expanded="true" 
+                                 iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                                 iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+                <rich:panelMenuItem action="#{controlloLogin.logout}" immediate="true" label="Logout" />
+                <rich:panelMenuItem action="#{controlloLogin.forwardCambiaPassword}" immediate="true" label="Cambia Password"/>
+            </rich:panelMenuGroup>
+        </rich:panelMenu>
+    </h:panelGroup>
+</h:form>
+
+    
+    

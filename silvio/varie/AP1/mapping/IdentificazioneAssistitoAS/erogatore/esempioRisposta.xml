@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NS:risposta_RichiestaRispostaSincrona_IdentificazioneAssistito version="2.3" xsi:schemaLocation="http://www.intemaweb.com/iron/datatypes Types2.2.xsd" xmlns:NS="http://www.intemaweb.com/iron/datatypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<NS:Intestazione>
+		<NS:InfoMittente>
+			<NS:Regione>000</NS:Regione>
+			<NS:CodiceAsl>000</NS:CodiceAsl>
+			<NS:IdOperatore>0</NS:IdOperatore>
+		</NS:InfoMittente>
+		<NS:InfoDestinatario>
+			<NS:Regione>000</NS:Regione>
+			<NS:CodiceAsl>000</NS:CodiceAsl>
+			<NS:IdOperatore>0</NS:IdOperatore>
+		</NS:InfoDestinatario>
+		<NS:DataOra>2001-12-17T09:30:47.0Z</NS:DataOra>
+	</NS:Intestazione>
+	<NS:DatiAnagraficiAssistito>
+		<NS:CodiceFiscale>AAAAAA00A00A000A</NS:CodiceFiscale>
+		<NS:CodiceSSR>a</NS:CodiceSSR>
+		<NS:DatiAnagraficiBase>
+			<NS:Cognome> </NS:Cognome>
+			<NS:Nome> </NS:Nome>
+			<NS:DataDiNascita>1967-08-13</NS:DataDiNascita>
+			<NS:ComuneNascita>000000</NS:ComuneNascita>
+		</NS:DatiAnagraficiBase>
+		<NS:Sesso>1</NS:Sesso>
+		<NS:ComuneResidenza>000000</NS:ComuneResidenza>
+		<NS:AslResidenza>000</NS:AslResidenza>
+		<NS:CFValidatoMEF>true</NS:CFValidatoMEF>
+		<NS:IndirizzoResidenza>a</NS:IndirizzoResidenza>
+		<NS:Telefono>+</NS:Telefono>
+		<NS:Cellulare>+</NS:Cellulare>
+		<NS:Email>A0@00.AA</NS:Email>
+		<NS:MedicoBase>
+			<NS:Cognome>ROSSI</NS:Cognome>
+			<NS:Nome>MARIO</NS:Nome>
+			<NS:ComuneResidenza>000000</NS:ComuneResidenza>
+			<NS:IndirizzoResidenza>a</NS:IndirizzoResidenza>
+			<NS:CodiceFiscale>AAAAAA00A00A000A</NS:CodiceFiscale>
+			<NS:CodiceRegionale>a</NS:CodiceRegionale>
+			<NS:Telefono>+</NS:Telefono>
+			<NS:Cellulare>+</NS:Cellulare>
+			<NS:Email>A0@00.AA</NS:Email>
+		</NS:MedicoBase>
+	</NS:DatiAnagraficiAssistito>
+</NS:risposta_RichiestaRispostaSincrona_IdentificazioneAssistito>

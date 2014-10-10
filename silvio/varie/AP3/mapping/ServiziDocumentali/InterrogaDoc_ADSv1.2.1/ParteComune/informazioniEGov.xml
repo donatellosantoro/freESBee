@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<informazioni-egov 
+	profilo-collaborazione="sincrono" 
+	filtro-duplicati="disabilitato" 
+	conferma-ricezione="disabilitato"
+	id-collaborazione="disabilitato"
+	consegna-in-ordine="disabilitato" 
+	scadenza="5g" 
+	xsi:schemaLocation="http://www.spcoop.it/registry/v0.9 informazioniEGov_ADS.xsd"  
+	xmlns="http://www.spcoop.it/registry/v0.9" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<azione nome="RichiestaRispostaSincrona_InterrogaDoc" profilo-collaborazione="sincrono"/>
+</informazioni-egov>

@@ -1,0 +1,1924 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by Raffaele Cetrancolo (intema) -->
+<!-- Iron Xmle Schema Version  2.2 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.intemaweb.com/iron/datatypes" xmlns:NS="http://www.intemaweb.com/iron/datatypes" targetNamespace="http://www.intemaweb.com/iron/datatypes" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="richiesta_RichiestaRispostaSincrona_IdentificazioneAssistito" type="richiesta_RichiestaRispostaSincrona_IdentificazioneAssistito_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta sincrona a supporto del servizio di IdentificazioneAssistito </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaSincrona_IdentificazioneAssistito" type="risposta_RichiestaRispostaSincrona_IdentificazioneAssistito_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta sincrona a supporto del servizio di IdentificazioneAssistito </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_AggiornamentoMobilita" type="richiesta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Aggiornamento dei dati di mobilità sanitaria</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_AggiornamentoMobilita" type="risposta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Aggiornamento dei dati di mobilità sanitaria</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero" type="richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Segnalazione Ricovero </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_SegnalazioneRicovero" type="risposta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Segnalazione Ricovero</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_SegnalazioneDimissione" type="richiesta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Segnalazione Dimissione Avvenuta</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_SegnalazioneDimissione" type="risposta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Segnalazione Dimissione Avvenuta</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_TrasmissioneDrg" type="richiesta_RichiestaRispostaAsincrona_TrasmissioneDrg_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Trasmissione Drg</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_TrasmissioneDrg" type="risposta_RichiestaRispostaAsincrona_TrasmissioneDrg_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Trasmissione Drg</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali" type="richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Segnalazione Fruizione Prestazioni Ambulatoriali</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali" type="risposta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Segnalazione Fruizione Prestazioni Ambulatoriali</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_CancellazioneRicovero" type="richiesta_RichiestaRispostaAsincrona_CancellazioneRicovero_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Cancellazione Ricovero </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_CancellazioneRicovero" type="risposta_RichiestaRispostaAsincrona_CancellazioneRicovero_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Cancellazione Ricovero </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_CancellazioneDimissione" type="richiesta_RichiestaRispostaAsincrona_CancellazioneDimissione_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Cancellazione Dimissione</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_CancellazioneDimissione" type="risposta_RichiestaRispostaAsincrona_CancellazioneDimissione_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Cancellazione Dimissione</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali" type="richiesta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta asincrona a supporto del servizio di Cancellazione Prestazioni Ambulatoriali</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali" type="risposta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta asincrona a supporto del servizio di Cancellazione Prestazioni Ambulatoriali</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="richiesta_RichiestaRispostaSincrona_DatiClinicoAmministrativi" type="richiesta_RichiestaRispostaSincrona_DatiClinicoAmministrativi_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di richiesta sincrona a supporto del servizio di Dati Clinico-Amministrativi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="risposta_RichiestaRispostaSincrona_DatiClinicoAmministrativi" type="risposta_RichiestaRispostaSincrona_DatiClinicoAmministrativi_Type">
+		<xs:annotation>
+			<xs:documentation>Rappresenta i tipi definiti per un'operazione di risposta sincrona a supporto del servizio di Dati Clinico-Amministrativi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!--    *******************************************************      -->
+	<!--             INIZIO DEFINIZIONE TIPI SEMPLICI                  -->
+	<!--    *******************************************************      -->
+	<xs:simpleType name="RiscontroAutoptico">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=con autopsia 2=senza autopsia </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Telefono">
+		<xs:annotation>
+			<xs:documentation>Numero telefonico validato da regex (Valori numerici,  -/+, lunghezza max 25 caratteri)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="25"/>
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[0-9/+-]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceEccezione">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessaggioEccezione">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="65535"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Asl">
+		<xs:annotation>
+			<xs:documentation>3 Caratteri alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="[0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodificaNomenclatore">
+		<xs:annotation>
+			<xs:documentation>Codice ad 1 carattere alfanumerico. Codificare con “N” (maiuscola) se  si utilizzano le codifiche nazionali; 
+codificare con la lettera alfabetica minuscola (per evitare sovrapposizioni) che identifica la Regione nell'ambito del Sistema Informativo Sanitario nazionale se si utilizzano codifiche regionali.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[Na-z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceSSN">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="Indirizzo">
+		<xs:annotation>
+			<xs:documentation>(Lunghezza massima 100 caratteri)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumeroScheda">
+		<xs:annotation>
+			<xs:documentation>8 Caratteri alfanumerici (Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="8"/>
+			<xs:pattern value="[0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RegimeRicovero">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1 = Ricovero ordinario, 2 = Ricovero diurno</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Regione">
+		<xs:annotation>
+			<xs:documentation>Codice Alfanumerico di 3 caratteri</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="[0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoRichiesta">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IdentificazioneAssistito"/>
+			<xs:enumeration value="SegnalazioneRicovero"/>
+			<xs:enumeration value="SegnalazioneDimissione"/>
+			<xs:enumeration value="SegnalazioneFruizionePrestazioniAmbulatoriali"/>
+			<xs:enumeration value="InformativaMediciDiBase"/>
+			<xs:enumeration value="DatiClinicoAmministrativi"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SistemaCodificaDiagnosi">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 3=ICD9-CM 1997 (Valore costante)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TipoRicovero">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1 = ricovero programmato, non urgente 2 = ricovero urgente
+3 = ricovero per trattamento sanitario obbligatorio (TSO)
+4 = ricovero programmato con preospedalizzazione</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Cognome">
+		<xs:annotation>
+			<xs:documentation>30 Caratteri tutti maiuscoli</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+			<xs:pattern value="[A-Z' ]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Nome">
+		<xs:annotation>
+			<xs:documentation>20 Caratteri tutti maiuscoli</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+			<xs:pattern value="[A-Z ]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Sesso">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=Maschio, 2=Femmina</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Email">
+		<xs:annotation>
+			<xs:documentation>Validato da regex (Lunghezza min 6 caratteri, max 50 caratteri)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="50"/>
+			<xs:pattern value="[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Comune">
+		<xs:annotation>
+			<xs:documentation>Codice Istat 6 Caratteri Alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="6"/>
+			<xs:pattern value="[0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceSSR">
+		<xs:annotation>
+			<xs:documentation>Codice Sanitario Individuale di 16 caratteri alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumeroRicetta">
+		<xs:annotation>
+			<xs:documentation>Codice a 16 caratteri alfanumerici. Riportare il numero della ricetta (dal codice a barre della ricetta va escluso il carattere speciale posto all’inizio di ciascuno dei due campi che compongono il numero della ricetta)
+Nel caso di prestazioni ad accesso diretto o di pronto soccorso, riportare il numero progressivo del paziente o il numero del registro.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="16"/>
+			<xs:pattern value="[a-zA-Z0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceFiscale">
+		<xs:annotation>
+			<xs:documentation>CodiceFiscale di 16 caratteri alfanumerici validato da Regex</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z]{6}[\d]{2}[A-Za-z][\d]{2}[A-Za-z][\d]{3}[A-Za-z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceRegionaleMedico">
+		<xs:annotation>
+			<xs:documentation>Codice di 16 caratteri alfanumerici.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TraumatismiEIntossicazioni">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=infortunio sul lavoro,2=incidente in ambiente domestico, 3=incidente stradale, 
+4=violenza altrui, 
+5=autolesione o tentativo suicidio, 9=altro tipo di incidente</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Reparto">
+		<xs:annotation>
+			<xs:documentation>Codice di 4 caratteri alfanumerici: I primi 4 caratteri utilizzati per identificare l’unità operativa nel modello ministeriale HSP.12</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MotivoRicovero">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=intervento chirurgico di elezione, 2=prima diagnosi, 3=ricovero successivo con stessa diagnosi, 
+9=altro</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceIstituto">
+		<xs:annotation>
+			<xs:documentation>Codice di 8 Caratteri alfanumerici; Codifica come Flussi ministeriali mod. HSP.11.BIS o HSP.11</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DiagnosiDimissione">
+		<xs:annotation>
+			<xs:documentation>Codice di 5 caratteri alfanumerici allineato a sinistra e completato con spazi. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Intervento">
+		<xs:annotation>
+			<xs:documentation>Codice di 4 caratteri alfanumerici allineato a sinistra e completato con spazi</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+			<xs:whiteSpace value="preserve"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProvenienzaPaziente">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=paziente che accede all’Istituto di cura senza proposta di ricovero formulata da un medico; 2=paziente inviato all’Istituto di cura dal medico di base; 3=ricovero precedentemente programmato dallo stesso Istituto di cura; 4=paziente trasferito da un altro Istituto di ricovero e cura pubblico; 5=paziente trasferito da un altro Istituto di ricovero e cura privato accreditato; 6=paziente trasferito da un altro Istituto di ricovero e cura privato non accreditato; 7=paziente trasferito da altra modalità di ricovero nello stesso istituto; 9=altro</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ModalitaDimissione">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=paziente deceduto 2=dimissione ordinaria al domicilio del paziente
+3=dimissione ordinaria presso una RSA
+4=dimissione al domicilio del paziente con attivazione di ospedalizzazione domiciliare
+5=dimissione volontaria (da utilizzare anche nei casi in cui il paziente in ciclo di trattamento diurno non si sia ripresentato durante il ciclo programmato)
+6=trasferito ad altro istituto di ricovero e cura, pubblico o privato per acuti
+7=trasferimento ad altro regime di ricovero o ad altro tipo di attività di ricovero    nell'ambito dello stesso istituto
+8=trasferimento ad un istituto pubblico o privato di riabilitazione
+9=dimissione ordinaria con attivazione di assistenza domiciliare integrata </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PosizioneUtenteTicket">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: Usare la seguente codifica: 1=esente totale; 2=non esente; 3=pagamento quota ricetta.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumeroGiorniDH">
+		<xs:annotation>
+			<xs:documentation>Codice di 3 caratteri numerici.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MotivoRicoveroDH">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1=ricovero diurno diagnostico, 2=ricovero diurno chirurgico, 3=ricovero diurno terapeutico, 
+4=ricovero diurno riabilitativo</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OnereDegenza">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: 1 = Ricovero a totale carico del SSN, 2 = Ricovero a prevalente carico del SSN con parte delle spese a carico del paziente (differenza alberghiera)
+3 = Ricovero con successivo rimborso (totale o parziale) a carico del SSN
+4 = Ricovero senza oneri a carico del SSN
+5 = Ricovero a prevalente carico del SSN con parte delle spese a carico del paziente (libera professione)
+6 = Ricovero a prevalente carico sel SSN con parte delle spese a carico del     paziente (differenza alberghiera e libera professione)
+9 = altro</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceDrg">
+		<xs:annotation>
+			<xs:documentation>Codice DRG, sempre a 3 caratteri alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceErrore">
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ElementoErrato">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="CodicePrestazione">
+		<xs:annotation>
+			<xs:documentation>Codice di 7 caratteri alfanumerici. Nel caso si utilizzi la codifica nazionale indicare il codice comprensivo dei punti separatori</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QuantitaPrestazione">
+		<xs:annotation>
+			<xs:documentation>Valore numerico di 3 caratteri compreso tra 1 e 999. 1 di default.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdOperatore">
+		<xs:annotation>
+			<xs:documentation>Codice di 10 caratteri alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[a-zA-Z0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdComunicazione">
+		<xs:annotation>
+			<xs:documentation>Codice di 20 caratteri alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+			<xs:minLength value="1"/>
+			<xs:pattern value="[A-Za-z0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodiceStrutturaErogatrice">
+		<xs:annotation>
+			<xs:documentation>Codice di 6 caratteri alfanumerici.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ID">
+		<xs:annotation>
+			<xs:documentation>Identifivativo record identico per ogni blocco di prestazioni dalla riga 1 alla riga 99. Ha la stessa funzione del codice ricetta e deve essere univoco per l'anno di riferimento una volta unito ai dati obbligatori dell'erogatore e al progressivo riga.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StatoCivile">
+		<xs:annotation>
+			<xs:documentation>Enumerazione: può assumere valori da 1 a 6</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Stato">
+		<xs:annotation>
+			<xs:documentation>3 Caratteri alfanumerici</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="[0-9]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImportoBase">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]*,[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImportoDegenza">
+		<xs:restriction base="ImportoBase">
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImportoTicket">
+		<xs:restriction base="ImportoBase">
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImportoTotale">
+		<xs:restriction base="ImportoBase">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CFValidatoMEF">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="Xpath">
+		<xs:annotation>
+			<xs:documentation>Percorso Xpath.
+																Sono ammessi i seguenti tipi di espressione:
+																  Selector    ::=    Path ( '|' Path )*  
+																  Path    ::=    ('.//')? Step ( '/' Step )*  
+																  Step    ::=    '.' | NameTest  
+																  NameTest    ::=    QName | '*' | NCName ':' '*'  
+																  child:: 			
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*(\|(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*)*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--    *******************************************************      -->
+	<!--             INIZIO DEFINIZIONE TIPI COMPOSTI               -->
+	<!--    *******************************************************      -->
+	<xs:complexType name="ListaInterventi">
+		<xs:sequence>
+			<xs:element name="InterventoChirurgicoPrincipale" type="Intervento">
+				<xs:annotation>
+					<xs:documentation>Codice dell'intervento chirurgico principale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AltroInterventoOProcedura" type="Intervento" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Codice dei successivi interventi chirurgici</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedicoBase">
+		<xs:sequence>
+			<xs:element name="Cognome" type="Cognome">
+				<xs:annotation>
+					<xs:documentation>Cognome del medico</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Nome" type="Nome">
+				<xs:annotation>
+					<xs:documentation>Nome del medico</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComuneResidenza" type="Comune">
+				<xs:annotation>
+					<xs:documentation>Comune di residenza del medico (codice ISTAT)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndirizzoResidenza" type="Indirizzo">
+				<xs:annotation>
+					<xs:documentation>Indirizzo di residenza del mefico</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodiceFiscale" type="CodiceFiscale" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Codice Fiscale dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodiceRegionale" type="CodiceRegionaleMedico">
+				<xs:annotation>
+					<xs:documentation>Codice Regionale del medico </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Telefono" type="Telefono">
+				<xs:annotation>
+					<xs:documentation>Telefono del medico di base </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cellulare" type="Telefono" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefono cellulare del medico di base</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Email" type="Email" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contatto email del medico </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Intestazione">
+		<xs:sequence>
+			<xs:element name="InfoMittente" type="InfoNodo">
+				<xs:annotation>
+					<xs:documentation>Informazioni che identificano univocamente un mittente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InfoDestinatario" type="InfoNodo">
+				<xs:annotation>
+					<xs:documentation>Informazioni che identificano univocamente un destinatario</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataOra" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Data ed ora di invio richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdMessaggio" type="IdComunicazione">
+				<xs:annotation>
+					<xs:documentation>Codice del messaggio</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdComunicazione" type="IdComunicazione">
+				<xs:annotation>
+					<xs:documentation>Codice riguardante la comunicazione in atto</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InfoNodo">
+		<xs:sequence>
+			<xs:element name="Regione" type="Regione">
+				<xs:annotation>
+					<xs:documentation>Codice identificativo della regione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:sequence minOccurs="0">
+				<xs:element name="CodiceAsl" type="Asl">
+					<xs:annotation>
+						<xs:documentation>Codice identificativo dell'ASL o dell'azienda saitaria</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--Ricordarsi di chiedere come restringere l'idOperatore-->
+				<xs:element name="IdOperatore" type="IdOperatore">
+					<xs:annotation>
+						<xs:documentation>Codice identificativo dell'operatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SegnalazioneDimissione">
+		<xs:choice>
+			<xs:element name="DimissioneAvvenuta" type="AttoDimissione">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una segnalazione avvenuta dimissione ospedaliera</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrasmissioneDRG" type="VerificaDimissione">
+				<xs:annotation>
+					<xs:documentation>Rappresenta la una richiesta di trasmissione DRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="AttoDimissione">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>Dati anagrafici del paziente dimesso</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiDimissioneAvvenuta" type="DatiDimissioneAvvenuta">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti la dimissione avvenuta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiDimissioneAvvenuta">
+		<xs:sequence>
+			<xs:element name="DatiDimissione" type="DatiDimissione">
+				<xs:annotation>
+					<xs:documentation>Dati sanitari riguardanti la dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiStrutturaDimissione" type="DatiStrutturaDimissione">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti la struttura di dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneMedicoDiBase" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indica se l'assisttito ha espresso la sua volontà di avvisare il medico di base dell'avvenuta dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiRicetta">
+		<xs:sequence>
+			<xs:element name="NumeroRicetta" type="NumeroRicetta" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Riportare il numero della ricetta (dal codice a barre della ricetta va escluso il carattere speciale posto all’inizio di ciascuno dei due campi che compongono il numero della ricetta)
+Nel caso di prestazioni ad accesso diretto o di pronto soccorso, riportare il numero progressivo del paziente o il numero del registro.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Diagnosi" type="DiagnosiDimissione" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Diagnosi. Relativa alle prestazioni effettuate presso i centri Termali.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Data di effettuazione delle prestazioni. Nel caso di un ciclo di prestazioni riportare la data di chiusura ciclo .</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PosizioneUtenteTicket" type="PosizioneUtenteTicket">
+				<xs:annotation>
+					<xs:documentation>Indica la posizione dell'utente nei confronti del ticket</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImportoTicket" type="ImportoTicket">
+				<xs:annotation>
+					<xs:documentation>Importo ticket </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImportoTotale" type="ImportoTotale">
+				<xs:annotation>
+					<xs:documentation>Importo Totale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiPrestazioniRicetta">
+		<xs:sequence>
+			<xs:element name="CodiceStrutturaErogatrice" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Codice regionale struttura erogatrice STS.11 </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="CodiceStrutturaErogatrice">
+						<xs:length value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Prestazione" type="Prestazione" maxOccurs="12"/>
+			<xs:element name="ID" type="ID">
+				<xs:annotation>
+					<xs:documentation>Identifivativo record identico per ogni blocco di prestazioni dalla riga 1 alla riga 99. Ha la stessa funzione del codice ricetta e deve essere univoco per l'anno di riferimento una volta unito ai dati obbligatori dell'erogatore e al progressivo riga.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerificaDimissione">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>Dati anagrafici del paziente dimesso</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiTrasmissioneDRG" type="DatiTrasmissioneDRG">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti la trasmissione del DRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiTrasmissioneDRG">
+		<xs:sequence>
+			<xs:element name="DatiDRG" type="DatiDrg">
+				<xs:annotation>
+					<xs:documentation>Contiene i dati riguardanti il Drg</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneMedicoDiBase" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indica se l'assisttito ha espresso la sua volontà di avvisare il medico di base dell'avvenuta dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiDimissione">
+		<xs:sequence>
+			<xs:element name="NumeroScheda" type="NumeroScheda">
+				<xs:annotation>
+					<xs:documentation>Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataDimissioneOMorte" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Nel caso di ricovero in Day Hospital la data di dimissione corrisponde alla data dell’ultimo accesso. Convenzionalmente il 31 dicembre viene considerata la data di fine del ciclo.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ModalitaDimissione" type="ModalitaDimissione">
+				<xs:annotation>
+					<xs:documentation>Descrive la modalità di dimissione dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RiscontroAutoptico" type="RiscontroAutoptico" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indica la presenza o meno di un'autopsia</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SistemaCodificaDiagnosi" type="SistemaCodificaDiagnosi">
+				<xs:annotation>
+					<xs:documentation>ICD9-CM 1997</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ListaDiagnosi" type="ListaDiagnosi">
+				<xs:annotation>
+					<xs:documentation>Lista dele diagnosi effettuate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataInterventoChirurgicoPrincipale" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Data dell'intervento chirurgico principale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ListaInterventi" type="ListaInterventi">
+				<xs:annotation>
+					<xs:documentation>Lista degli interventi effettuati</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MotivoRicoveroDH" type="MotivoRicoveroDH" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descrizione del motivo di ricoveo in Day Hospital</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumeroGiorniDH" type="NumeroGiorniDH" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Riporta il numero degli accessi trasorsi in Day Hospital</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Richiesta">
+		<xs:choice>
+			<xs:element name="IdentificazioneAssistito" type="IdentificazioneAssistito">
+				<xs:annotation>
+					<xs:documentation>Contiene i dati necessari alla corretta identificazione di un assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneRicovero" type="SegnalazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>Reppresenta una richiesta di segnalazione ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneDimissione" type="SegnalazioneDimissione">
+				<xs:annotation>
+					<xs:documentation>Reppresenta una richiesta di segnalazione dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneFruizionePrestazioniAmbulatoriali" type="SegnalazioneFruizionePrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una richiesta di segnalazione fruizione prestazioni ambulatoriali</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneSegnalazione" type="CancellazioneSegnalazione">
+				<xs:annotation>
+					<xs:documentation>Reppresenta una richiesta di Cancellazione per una Segnalazione effettuata precedentemente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiClinicoAmministrativi">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una richiesta di dati clinico-amministrativi</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DatiAnagrafici" type="DatiAnagraficiIdentificativi"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="SegnalazioneFruizionePrestazioniAmbulatoriali">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiFruizionePA">
+				<xs:annotation>
+					<xs:documentation>Dati anagrafici del paziente ricoverato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiPrestazioniAmbulatoriali" type="DatiPrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti la fruizione di prestazioni ambulatoriali</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiPrestazioniAmbulatoriali">
+		<xs:sequence>
+			<xs:element name="DatiRicetta" type="DatiRicetta">
+				<xs:annotation>
+					<xs:documentation>Dati descrittivi di una ricetta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiPrestazioniRicetta" type="DatiPrestazioniRicetta">
+				<xs:annotation>
+					<xs:documentation>Prestazioni contenute in una ricetta</xs:documentation>
+				</xs:annotation>
+				<xs:key name="ProgressivoPrestazione">
+					<xs:selector xpath=".//NS:Prestazione"/>
+					<!-- ".//NS:Prestazione" />-->
+					<xs:field xpath="@progressivo"/>
+				</xs:key>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SegnalazioneRicovero">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>Dati anagrafici del paziente ricoverato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiRichiestaRicovero" type="DatiRichiestaRicovero">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti la richiesta di ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiRichiestaRicovero">
+		<xs:sequence>
+			<xs:element name="DatiAmmissione" type="DatiAmmissione">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti l'ammissione del paziente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiStrutturaRicovero" type="DatiStrutturaRicovero">
+				<xs:annotation>
+					<xs:documentation>Dati riguardanti la struttura che effettua il ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneMedicoDiBase" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indica se l'assistito ha espresso la sua volontà di avvisare il medico di base dell'avvenuto ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiAmmissione">
+		<xs:sequence>
+			<xs:element name="NumeroScheda" type="NumeroScheda">
+				<xs:annotation>
+					<xs:documentation>CODICE NOSOLOGICO: Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegimeRicovero" type="RegimeRicovero">
+				<xs:annotation>
+					<xs:documentation>Descrive il tipo di ricovero se ordinario o diurno</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataRicovero" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Data del ricovero ( aaaa-mm-gg da prevedere logica di casting).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProvenienzaPaziente" type="ProvenienzaPaziente" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descrive la provenienza del paziente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TipoRicovero" type="TipoRicovero">
+				<xs:annotation>
+					<xs:documentation>Solo per ricoveri ordinari. La compilazione per i ricoveri di neonati non è obbligatoria, limitatamente ai ricoveri corrispondenti alla nascita.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MotivoRicovero" type="MotivoRicovero" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descrive le motivazioni di ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TraumatismiEIntossicazioni" type="TraumatismiEIntossicazioni" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Risposta">
+		<xs:choice>
+			<xs:element name="IdentificazioneAssistito" type="DatiAnagraficiCompleti">
+				<xs:annotation>
+					<xs:documentation>Contiene i dati personali dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>ACK per il messaggio di SegnalazioneRicovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneDimissione" type="RispostaSegnalazioneDimissione"/>
+			<xs:element name="FruizionePrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>ACK per il messaggio di FruizionePrestazioniAmbulatoriali</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneSegnalazione" type="RispostaCancellazioneSegnalazione"/>
+			<xs:element name="DatiClinicoAmministrativi" type="ElencoRicoveri"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="IdentificazioneAssistito">
+		<xs:sequence>
+			<xs:element name="CodiceAslResidenza" type="Asl">
+				<xs:annotation>
+					<xs:documentation>Codice dell'ASL di residenza dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodiceAslAssistenza" type="Asl">
+				<xs:annotation>
+					<xs:documentation>Codice dell'ASL di Assistenza dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataRiconoscimento" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Data dell'effettivo riconoscimento dell'assistito; Potrebbe essere diversa  da quella associata all'evento di Identificazione Assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Ricerca in base ad uno dei seguenti valori: Dati Anagrafici; CodiceFiscale; Codice SSR.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="DatiAnagrafici" type="DatiAnagraficiNascita"/>
+				<xs:element name="CodiceFiscale" type="CodiceFiscale">
+					<xs:annotation>
+						<xs:documentation>Codice Fiscale dell'assistito</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CodiceSSR" type="CodiceSSR">
+					<xs:annotation>
+						<xs:documentation>Codice SSR dell'assistito</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiBase">
+		<xs:sequence>
+			<xs:element name="Cognome" type="Cognome">
+				<xs:annotation>
+					<xs:documentation>Cognome dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Nome" type="Nome">
+				<xs:annotation>
+					<xs:documentation>Nome dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataDiNascita" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Data di nascita dell'assistito ( aaaa-mm-gg da prevedere logica di casting). L'età dell'assistito non può essere superiore a 104 anni</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiNascita">
+		<xs:complexContent>
+			<xs:extension base="DatiAnagraficiBase">
+				<xs:sequence>
+					<xs:element name="ComuneNascita" type="Comune">
+						<xs:annotation>
+							<xs:documentation>Comune di nascita dell'assistito (Codice ISTAT)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaSincrona_IdentificazioneAssistito_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdentificazioneAssistito" type="IdentificazioneAssistito">
+				<xs:annotation>
+					<xs:documentation>Contiene i dati necessari alla corretta identificazione di un assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaSincrona_IdentificazioneAssistito_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="DatiAnagraficiAssistito" type="DatiAnagraficiCompleti">
+					<xs:annotation>
+						<xs:documentation>Contiene i dati personali dell'assistito</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaSincrona_DatiClinicoAmministrativi_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiIdentificativi">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una richiesta di dati clinico-amministrativi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaSincrona_DatiClinicoAmministrativi_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Ricoveri" type="ElencoRicoveri">
+					<xs:key name="ProgressivoRicovero">
+						<xs:selector xpath=".//NS:Ricovero"/>
+						<xs:field xpath="@ID"/>
+					</xs:key>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneRicovero" type="SegnalazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>Reppresenta una richiesta di segnalazione ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneRicovero" type="SegnalazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>Reppresenta una richiesta di segnalazione ricovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneDimissioneAvvenuta" type="AttoDimissione" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una segnalazione avvenuta dimissione ospedaliera</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrasmissioneDrg" type="VerificaDimissione" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Rappresenta la una richiesta di trasmissione DRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_SegnalazioneRicovero_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="SegnalazioneRicovero">
+					<xs:annotation>
+						<xs:documentation>Reppresenta una richiesta di segnalazione ricovero</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_AggiornamentoMobilita_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="AggiornamentoMobilita">
+					<xs:annotation>
+						<xs:documentation>Reppresenta una richiesta di segnalazione ricovero</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_CancellazioneRicovero_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneRicovero" type="CancellazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di un ricovero precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_CancellazioneRicovero_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="CancellazioneRicovero">
+					<xs:annotation>
+						<xs:documentation>ACK per il messaggio di CancellazioneRicovero</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneDimissioneAvvenuta" type="AttoDimissione">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una segnalazione avvenuta dimissione ospedaliera</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_SegnalazioneDimissione_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="SegnalazioneDimissioneAvvenuta">
+					<xs:annotation>
+						<xs:documentation>ACK per il messaggio di DimissioneAvvenuta</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_CancellazioneDimissione_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneDimissione" type="CancellazioneDimissione">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di una dimissione precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_CancellazioneDimissione_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="CancellazioneDimissione">
+					<xs:annotation>
+						<xs:documentation>ACK per il messaggio di CancellazioneDimissione</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazionePrestazioniAmbulatoriali" type="CancellazionePrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di Prestazioni Ambulatoriali precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="CancellazionePrestazioniAmbulatoriali">
+					<xs:annotation>
+						<xs:documentation>ACK per messaggio di CancellazionePrestazioniAmbulatoriali</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_TrasmissioneDrg_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrasmissioneDrg" type="VerificaDimissione">
+				<xs:annotation>
+					<xs:documentation>Rappresenta la una richiesta di trasmissione DRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_TrasmissioneDrg_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="TrasmissioneDrg">
+					<xs:annotation>
+						<xs:documentation>ACK per il messaggio di TrasmissioneDRG</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SegnalazioneFruizionePrestazioniAmbulatoriali" type="SegnalazioneFruizionePrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>Rappresenta una richiesta di segnalazione fruizione prestazioni ambulatoriali</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="risposta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali_Type">
+		<xs:sequence>
+			<xs:element name="Intestazione" type="Intestazione">
+				<xs:annotation>
+					<xs:documentation>Header contenente informazioni su mittente, destinatario e tipo di richiesta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="SegnalazioneFruizionePrestazioniAmbulatoriali">
+					<xs:annotation>
+						<xs:documentation>ACK per il messaggio di FruizionePrestazioniAmbulatoriali</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Eccezione" type="Eccezione_Type">
+					<xs:annotation>
+						<xs:documentation>Rappresenta un messaggio di errore prodotto dall'erogatore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required" fixed="2.2"/>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiCompleti">
+		<xs:complexContent>
+			<xs:extension base="DatiAnagraficiResidenza">
+				<xs:sequence>
+					<!--<xs:element name="ComuneNascita" type="Comune">
+						<xs:annotation>
+							<xs:documentation>Comune di nascita dell'assistito</xs:documentation>
+						</xs:annotation>
+					</xs:element>-->
+					<xs:element name="CFValidatoMEF" type="CFValidatoMEF">
+						<xs:annotation>
+							<xs:documentation>Flag indicante l'eventuale validità del codice fiscale attraverso archivi SOGEI</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IndirizzoResidenza" type="Indirizzo">
+						<xs:annotation>
+							<xs:documentation>Indirizzo di residenza dell'assistito</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Telefono" type="Telefono" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Numero di telefono dell'assistito</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Cellulare" type="Telefono" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Numero di telefono cellulare dell'assistito</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Email" type="Email" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Contatti email dell'assistito </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MedicoBase" type="MedicoBase" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Informazioni riguardanti il medico di base dell'assistito</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiResidenza">
+		<xs:complexContent>
+			<xs:extension base="DatiAnagraficiIdentificativi">
+				<xs:sequence>
+					<xs:element name="ComuneResidenza" type="Comune">
+						<xs:annotation>
+							<xs:documentation>Comune di residenza dell'assistito</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="AslResidenza" type="Asl" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Codice Ministeriale della ASL di residenza</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiRicovero">
+		<xs:complexContent>
+			<xs:extension base="DatiAnagraficiResidenza">
+				<xs:sequence>
+					<xs:element name="StatoCivile" type="StatoCivile" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>1 = celibe/nubile, 2 = coniugato/a, 3 = separato/a, 4 = divorziato/a, 5 = vedovo/a
+6 = non dichiarato</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RegioneResidenza" type="Regione">
+						<xs:annotation>
+							<xs:documentation>Codice Ministeriale della Regione di residenza</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Cittadinanza" type="Stato" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nel caso di utenti con cittadinanza straniera porre il codice ISTAT dello Stato straniero di appartenenza. 100 = italiana, 999 = apolide</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MedicoPrescrittore" type="CodiceRegionaleMedico" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Codice fiscale del medico prescrittore</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiFruizionePA">
+		<xs:complexContent>
+			<xs:extension base="DatiAnagraficiResidenza">
+				<xs:sequence>
+					<xs:element name="MedicoPrescrittore" type="CodiceRegionaleMedico" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Codice Regionale o Fiscale del medico Prescrittore</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ErroreIdentificazioneAssistito"/>
+	<xs:complexType name="ErroreSegnalazioneRicovero">
+		<xs:sequence>
+			<xs:element name="Codice" type="CodiceEccezione">
+				<xs:annotation>
+					<xs:documentation>Codice identificativo dell'accezione (lunghezza max 50)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Messaggio" type="MessaggioEccezione">
+				<xs:annotation>
+					<xs:documentation>Messaggio descrittivo dell'eccezione (lunghezza max 65535 caratteri)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ErroreFruizionePrestazioniAmbulatoriali"/>
+	<xs:complexType name="ErroreDatiClinicoAmministrativi"/>
+	<xs:complexType name="ListaDiagnosi">
+		<xs:sequence>
+			<xs:element name="DiagnosiPrincipale" type="DiagnosiDimissione">
+				<xs:annotation>
+					<xs:documentation>Codice della diagnosi principale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiagnosiConcomitante" type="DiagnosiDimissione" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Lista delle diagnosi concomitanti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiStrutturaRicovero">
+		<xs:sequence>
+			<xs:element name="CodiceIstituto" type="CodiceIstituto">
+				<xs:annotation>
+					<xs:documentation>Codifica come Flussi ministeriali mod. HSP.11.BIS o HSP.11</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RepartoAmmissione" type="Reparto" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>L’unità operativa ove è ricoverato l’utente.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiStrutturaDimissione">
+		<xs:sequence>
+			<xs:element name="CodiceIstituto" type="CodiceIstituto">
+				<xs:annotation>
+					<xs:documentation>Codice dell'istituto di dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RepartoDimissione" type="Reparto">
+				<xs:annotation>
+					<xs:documentation>Codice del reparto di dimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiDrg">
+		<xs:sequence>
+			<xs:element name="NumeroScheda" type="NumeroScheda">
+				<xs:annotation>
+					<xs:documentation>Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OnereDegenza" type="OnereDegenza">
+				<xs:annotation>
+					<xs:documentation>Indica l'onere della degenza</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DRG" type="CodiceDrg">
+				<xs:annotation>
+					<xs:documentation>Codice DRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImportoDegenza" type="ImportoDegenza">
+				<xs:annotation>
+					<xs:documentation>Importo del ricovero a carico del SSN</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Eccezione_Type">
+		<xs:sequence>
+			<xs:element name="Errore" type="Errore" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Errore">
+		<xs:sequence>
+			<xs:element name="Messaggio" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Messaggio descrittivo dell'errore</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="CodiceErroreAnagrafico" type="CodiceErrore"/>
+				<xs:element name="CodiceErroreResidenza" type="CodiceErrore"/>
+				<xs:element name="CodiceErrorePrestazione" type="CodiceErrore"/>
+				<xs:element name="CodiceErroreGenerico" type="CodiceErrore"/>
+				<xs:element name="MessaggioMalformato" type="PosizioneErrore">
+					<xs:annotation>
+						<xs:documentation>Posizione dell'errore</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ElementoNonValido" type="Xpath" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Percorso xpath di un elemento non valido, da usare solo per i messaggi Well-Formed</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PosizioneErrore">
+		<xs:annotation>
+			<xs:documentation>Rappresenta la posizione in cui si è verificato un errore di validazione</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Riga" type="xs:positiveInteger"/>
+			<xs:element name="Colonna" type="xs:positiveInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RichiestaRicevuta">
+		<xs:attribute name="idRichiestaRicevuta" type="xs:positiveInteger" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="Prestazione">
+		<xs:sequence>
+			<xs:element name="CodicePrestazione" type="CodicePrestazione">
+				<xs:annotation>
+					<xs:documentation>Riportare il codice della prestazione secondo il Nomenclatore Tariffario Nazionale o quello regionale. Nel caso si utilizzi la codifica nazionale indicare il codice comprensivo dei punti separatori</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodificaNomenclatore" type="CodificaNomenclatore">
+				<xs:annotation>
+					<xs:documentation>Codifica Ministeriiale del tipo di prestazione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Quantita" type="QuantitaPrestazione" default="1">
+				<xs:annotation>
+					<xs:documentation>1 di default.
+Se trattasi di cicli di prestazioni indicare il numero effettivo di prestazioni erogate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Importo" type="ImportoTotale">
+				<xs:annotation>
+					<xs:documentation>Importo della prestazione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="progressivo" type="xs:positiveInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>Numero progressivo delle prestazioni di una stessa ricetta.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ElencoRicoveri">
+		<xs:sequence>
+			<xs:element name="Ricovero" type="DatiDelRicovero" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatiDelRicovero">
+		<xs:sequence>
+			<xs:element name="DatiAmmissione" type="DatiAmmissione"/>
+			<xs:element name="DatiDimissione" type="DatiDimissione"/>
+			<xs:element name="DatiSrutturaRicovero" type="DatiStrutturaRicovero"/>
+			<xs:element name="DatiSrutturaDimissione" type="DatiStrutturaDimissione"/>
+			<xs:element name="DatiDrg" type="DatiDrg"/>
+		</xs:sequence>
+		<xs:attribute name="ID" type="xs:positiveInteger" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="DatiAnagraficiIdentificativi">
+		<xs:sequence>
+			<xs:element name="CodiceFiscale" type="CodiceFiscale" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>CodiceFiscale dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodiceSSR" type="CodiceSSR" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Codice SSR dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatiAnagraficiBase" type="DatiAnagraficiNascita" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dati Anagrafici di base dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sesso" type="Sesso">
+				<xs:annotation>
+					<xs:documentation>Sesso dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancellazioneSegnalazione">
+		<xs:choice>
+			<xs:element name="CancellazioneRicovero" type="CancellazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di un ricovero precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneDimissione" type="CancellazioneDimissione">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di una dimissione precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneDRG" type="CancellazioneDrg">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di un DRG precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazionePrestazioniAmbulatoriali" type="CancellazionePrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>Cancellazione della segnalazione di Prestazioni Ambulatoriali precedentemente trasmessa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CancellazioneRicovero">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>DatiAnagrafici dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumeroScheda" type="NumeroScheda">
+				<xs:annotation>
+					<xs:documentation>CODICE NOSOLOGICO: Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno - Va utilizzato quello del ricovero segnalato in precedenza e da cancellare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancellazioneDimissione">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>DatiAnagrafici dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumeroScheda" type="NumeroScheda">
+				<xs:annotation>
+					<xs:documentation>CODICE NOSOLOGICO: Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno - Va utilizzato quello della dimissione segnalata in precedenza e da cancellare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancellazioneDrg">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>DatiAnagrafici dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumeroScheda" type="NumeroScheda">
+				<xs:annotation>
+					<xs:documentation>CODICE NOSOLOGICO: Le prime due cifre identificano l’anno, le rimanenti sei un progressivo all’interno dell’anno - Va utilizzato quello del ricovero segnalato in precedenza e da cancellare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancellazionePrestazioniAmbulatoriali">
+		<xs:sequence>
+			<xs:element name="DatiAnagrafici" type="DatiAnagraficiRicovero">
+				<xs:annotation>
+					<xs:documentation>DatiAnagrafici dell'assistito</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumeroRicetta" type="NumeroRicetta">
+				<xs:annotation>
+					<xs:documentation>Dati descrittivi di una ricetta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ID" type="ID">
+				<xs:annotation>
+					<xs:documentation>Dati descrittivi di una ricetta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RispostaCancellazioneSegnalazione">
+		<xs:choice>
+			<xs:element name="CancellazioneRicovero">
+				<xs:annotation>
+					<xs:documentation>ACK per il messaggio di CancellazioneRicovero</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneDimissione">
+				<xs:annotation>
+					<xs:documentation>ACK per il messaggio di CancellazioneDimissione</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazioneDRG">
+				<xs:annotation>
+					<xs:documentation>ACK per lil messaggio di CancellazioneDRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CancellazionePrestazioniAmbulatoriali">
+				<xs:annotation>
+					<xs:documentation>ACK per messaggio di CancellazionePrestazioniAmbulatoriali</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RispostaSegnalazioneDimissione">
+		<xs:choice>
+			<xs:element name="DimissioneAvvenuta">
+				<xs:annotation>
+					<xs:documentation>ACK per il messaggio di DimissioneAvvenuta</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TrasmissioneDRG">
+				<xs:annotation>
+					<xs:documentation>ACK per il messaggio di TrasmissioneDRG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

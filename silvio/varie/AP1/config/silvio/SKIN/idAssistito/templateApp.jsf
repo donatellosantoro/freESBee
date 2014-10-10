@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jstl/core" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+    <head>
+        <meta name="author" content="Gruppo ICAR icar.unibas@gmail.com" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="${request.contextPath}/app/css/stile.css" type="text/css"/>
+        <link rel="stylesheet" href="#{skin}/css/stile.css" type="text/css"/>
+        <script type="text/javascript" src="${request.contextPath}/app/js/silvio.js">
+        </script>
+        <script type="text/javascript" src="#{skin}/js/idAssistito.js">
+        </script>
+        <title><ui:insert name="title"/></title>
+    </head><f:loadBundle basename="messaggi" var="msg"/><a4j:loadBundle basename="messaggi" var="msgx"/>
+    <body onload="javascript:inizializzaValori()">
+        <center>
+            <div id="top">
+                <img src="#{skin}/images/san_carlo/header.png"/>
+            </div>
+            <div>
+                <div id="left">
+                    <img src="#{skin}/images/san_carlo/left.png"/><img src="#{skin}/images/san_carlo/left2.png"/><img src="#{skin}/images/san_carlo/left1.png"/>
+                </div>
+                <div>
+                    <div id="right">
+                        <img src="#{skin}/images/san_carlo/right.png"/>
+                        <div class="boxRight">
+                            <h:outputText styleClass="boxRightText" value="Benvenuto #{utente.nome}"/>
+                        </div><img src="#{skin}/images/san_carlo/right2.png"/><img src="#{skin}/images/san_carlo/right1.png"/>
+                    </div>
+                    <h:form styleClass="center_content">
+                        <center>
+                            <img src="#{skin}/images/servizioLogo.jpg" alt="Servizio Identificazione Assistito" style="margin-top:10px"/>
+                            <div class="bloccoCentrale">
+                                <ui:insert name="messaggi"/>
+                                <div style="width:380px;margin-top:40px;margin-bottom:40px">
+                                    <div class="formRicercaCF" style="width:380px;background-color:#f2f2f2;padding:10px;">
+                                        <br/>
+                                        <span>Il servizio di permette di utilizzare funzioni di cooperazione applicativa per effettuare il riconoscimento anagrafico degli utenti iscritti in una qualsiasi azienda sanitaria</span>
+                                        <br/>
+                                        <h:commandLink style="margin-top:10px;margin-right:10px;display:block;text-align:right" value="PROCEDI" immediate="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </center>
+                    </h:form>
+                </div>
+            </div>
+        </center>
+    </body>
+</html>

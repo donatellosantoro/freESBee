@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ric="http://progettoicar.it/AP3interprotoQry/ricercaWS" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://progettoicar.it/AP3interprotoQry/types" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://progettoicar.it/AP3interprotoQry/ricercaWS">
+	<wsdl:import namespace="http://progettoicar.it/AP3interprotoQry/types" location="Types.xsd"/>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_Ricerca_Msg">
+		<wsdl:part name="parameters" element="tns:richiesta_RichiestaRispostaSincrona_Ricerca"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_Ricerca_Msg">
+		<wsdl:part name="parameters" element="tns:risposta_RichiestaRispostaSincrona_Ricerca"/>
+	</wsdl:message>
+	<wsdl:portType name="RicercaWS">
+		<wsdl:operation name="RichiestaRispostaSincrona_Ricerca">
+			<wsdl:input message="ric:richiesta_RichiestaRispostaSincrona_Ricerca_Msg"/>
+			<wsdl:output message="ric:risposta_RichiestaRispostaSincrona_Ricerca_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

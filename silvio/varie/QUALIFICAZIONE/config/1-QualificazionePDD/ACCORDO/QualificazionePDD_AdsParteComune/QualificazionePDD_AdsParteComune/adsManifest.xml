@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<adsDefinition xmlns="http://spcoop.gov.it/ads" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:SICAns="spcoop.gov.it/sica"
+xsi:schemaLocation="http://spcoop.gov.it/SPCoopSchemas/ads.xsd">
+	<identificativoAds>SICAns:accordoDiServizioQualificazionePDDParteComune</identificativoAds>
+	<nomeAmministrazione>SICAns:CNIPA</nomeAmministrazione>
+	<componentiAds>
+		<parteComune>
+			<specificaInterfacciaParteComune formalismo="WSDL">
+				<specificaInterfacciaConcettuale>QualificazionePDD_Concettuale.wsdl</specificaInterfacciaConcettuale>
+				<specificaInterfacciaFruitore>QualificazionePDDWS_FruitoreLogico.wsdl</specificaInterfacciaFruitore>
+				<specificaInterfacciaErogatore>QualificazionePDDWS_ErogatoreLogico.wsdl</specificaInterfacciaErogatore>
+				<specificaInterfacciaDefinitoria>Types.xsd</specificaInterfacciaDefinitoria>
+			</specificaInterfacciaParteComune>
+			<componenteSemiformale>
+				<descrizioneSemiformale semiformalismo="XML">QualificazionePDDWS_ProfiloColl.xml</descrizioneSemiformale>				
+			</componenteSemiformale>
+		</parteComune>
+	</componentiAds>
+</adsDefinition>

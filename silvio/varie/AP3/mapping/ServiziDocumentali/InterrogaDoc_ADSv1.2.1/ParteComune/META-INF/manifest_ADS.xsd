@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xsd:schema xmlns="http://www.spcoop.it/registry/v0.9"
+targetNamespace="http://www.spcoop.it/registry/v0.9"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+<!-- 
+ 		il registro Servizi contiene la definizione dei vari soggetti SPCoop 
+        e di possibili connettori associati ai soggetti oltre alla definizione
+		degli accordi di servizio 
+  	-->  
+<xsd:element name="registro-servizi">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" ref="accordo-servizio" /> 
+  				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="soggetto-spcoop" /> 
+  				<xsd:element maxOccurs="unbounded" minOccurs="0" ref="connettore" /> 
+ 	 		</xsd:sequence>
+  		</xsd:complexType>
+  	</xsd:element>
+
+<!--  un Soggetto SPCoop contiene: un connettore su cui viene gestito (punto di accesso della 
+      sua porta di dominio) e la definizione dei servizi 
+  	-->  
+<xsd:element name="soggetto-spcoop">
+<xsd:complexType>
+<xsd:sequence>
+  				<xsd:element maxOccurs="1" minOccurs="0" ref="connettore" /> 
+  				<xsd:element name="servizio" type="servizio-spcoop" 
+maxOccurs="unbounded" minOccurs="0" /> 
+  				<xsd:element name="servizio-correlato" type="servizio-spcoop" 
+maxOccurs="unbounded" minOccurs="0" /> 
+  			</xsd:sequence>
+  			<xsd:attribute name="tipo" type="xsd:string" use="required" /> 
+  			<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  			<xsd:attribute name="identificativo-porta" type="xsd:string" /> 
+ 			 <xsd:attribute name="descrizione" type="xsd:string" /> 
+  		</xsd:complexType>
+  	</xsd:element>
+
+<!--  Connettore -->  
+<xsd:element name="connettore">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
+    <xsd:complexType>
+  					<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  					<xsd:attribute name="valore" type="xsd:string" use="required" /> 
+  				    </xsd:complexType>
+  				</xsd:element>
+  			</xsd:sequence>
+  			<xsd:attribute name="tipo" type="xsd:string" /> 
+  			<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  		</xsd:complexType>
+  	</xsd:element>
+
+<!-- Accordo di Servizio (Parte Comune) -->  
+<xsd:element name="accordo-servizio">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="soggetto-referente" maxOccurs="unbounded" minOccurs="1">
+<xsd:complexType>
+  						<xsd:attribute name="tipo" type="xsd:string" use="required" /> 
+  						<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+<xsd:element name="specifica-interfaccia" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+  						<xsd:attribute name="wsdl-definitorio" type="xsd:string" /> 
+  						<xsd:attribute name="wsdl-concettuale" type="xsd:string" /> 
+  						<xsd:attribute name="wsdl-logico-erogatore" type="xsd:string" /> 
+  						<xsd:attribute name="wsdl-logico-fruitore" type="xsd:string" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+<xsd:element name="specifica-conversazioni" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+  						<xsd:attribute name="wsbl-concettuale" type="xsd:string" /> 
+  						<xsd:attribute name="wsbl-logico-erogatore" type="xsd:string" /> 
+  						<xsd:attribute name="wsbl-logico-fruitore" type="xsd:string" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+<xsd:element name="catalogo-schemi-ontologie" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+  						<xsd:attribute name="riferimento" type="xsd:string" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+<xsd:element name="informazioni-egov" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+  						<xsd:attribute name="riferimento" type="xsd:string" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+  			</xsd:sequence>
+  			<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  			<xsd:attribute name="descrizione" type="xsd:string" /> 
+  		</xsd:complexType>
+  	</xsd:element>
+
+<!--  Servizio/ServizioCorrelato (Parte Specifica) -->  
+<xsd:complexType name="servizio-spcoop">
+<xsd:sequence>
+<!-- istanza monofruitore -->  
+<!-- port di accesso del servizio e specifici per azione  -->  
+  			<xsd:element maxOccurs="1" minOccurs="0" ref="connettore" /> 
+<xsd:element name="azione" maxOccurs="unbounded" minOccurs="0">
+<xsd:complexType>
+<xsd:sequence>
+  						<xsd:element maxOccurs="1" minOccurs="1" ref="connettore" /> 
+  					</xsd:sequence>
+  					<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  				</xsd:complexType>
+  			</xsd:element>
+<!-- wsdl implementazione -->  
+<xsd:element name="specifica-interfaccia" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+  					<xsd:attribute name="wsdl-implementativo-erogatore" type="xsd:string" /> 
+  					<xsd:attribute name="wsdl-implementativo-fruitore" type="xsd:string" /> 
+  				</xsd:complexType>
+  			</xsd:element>
+<!-- informazioni eGov -->  
+<xsd:element name="informazioni-egov" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+  					<xsd:attribute name="riferimento" type="xsd:string" /> 
+  				</xsd:complexType>
+  			</xsd:element>
+<!-- istanza multifruitore -->  
+  			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="fruitore" /> 
+  		</xsd:sequence>
+  		<xsd:attribute name="tipo" type="xsd:string" use="required" /> 
+ 		 <xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  		<xsd:attribute name="accordo-servizio" type="xsd:string" use="required" /> 
+  	</xsd:complexType>
+
+<!-- Fruitore -->  
+<xsd:element name="fruitore">
+<xsd:complexType>
+<!-- port di accesso del servizio per questo fruitore e specifici per azione di questo fruitore -->  
+<xsd:sequence>
+<!-- istanza multifruitore -->  
+<!-- port di accesso del servizio e specifici per azione  -->  
+  				<xsd:element maxOccurs="1" minOccurs="0" ref="connettore" /> 
+<xsd:element name="azione" maxOccurs="unbounded" minOccurs="0">
+<xsd:complexType>
+<xsd:sequence>
+  							<xsd:element maxOccurs="1" minOccurs="1" ref="connettore" /> 
+  						</xsd:sequence>
+  						<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+<!-- wsdl implementazione  -->  
+<xsd:element name="specifica-interfaccia" maxOccurs="1" minOccurs="0">
+<xsd:complexType>
+  					      <xsd:attribute name="wsdl-implementativo-erogatore" type="xsd:string" /> 
+  					     <xsd:attribute name="wsdl-implementativo-fruitore" type="xsd:string" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+<!-- informazioni eGov -->  
+<xsd:element name="informazioni-egov" maxOccurs="1" minOccurs="1">
+<xsd:complexType>
+  						<xsd:attribute name="riferimento" type="xsd:string" /> 
+  					</xsd:complexType>
+  				</xsd:element>
+  			</xsd:sequence>
+  			<xsd:attribute name="tipo" type="xsd:string" use="required" /> 
+  			<xsd:attribute name="nome" type="xsd:string" use="required" /> 
+  		</xsd:complexType>  	
+</xsd:element>
+  	
+</xsd:schema>

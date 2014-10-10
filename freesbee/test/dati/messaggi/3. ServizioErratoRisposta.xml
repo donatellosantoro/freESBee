@@ -1,0 +1,46 @@
+<soapenv:Envelope xmlns:SOAP_ENV="http://schemas.xmlsoap.org/soap/envelope/"  
+xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"  
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> 
+
+	<soapenv:Header xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"> 
+		<eGov_IT:Intestazione soapenv:actor="http://www.cnipa.it/eGov_it/portadominio" soapenv:mustUnderstand="1" 
+xmlns:eGov_IT="http://www.cnipa.it/schemas/2003/eGovIT/Busta1_0/"  
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"> 
+			<eGov_IT:IntestazioneMessaggio> 
+				<eGov_IT:Mittente> 
+					<eGov_IT:IdentificativoParte indirizzoTelematico="" tipo="SPC">PAGenerica</eGov_IT:IdentificativoParte>  
+				</eGov_IT:Mittente> 
+				<eGov_IT:Destinatario> 
+					<eGov_IT:IdentificativoParte indirizzoTelematico="" tipo="SPC">CNIPA</eGov_IT:IdentificativoParte>  
+				</eGov_IT:Destinatario> 
+				<eGov_IT:ProfiloCollaborazione>EGOV_IT_ServizioSincrono</eGov_IT:ProfiloCollaborazione>  
+				<eGov_IT:Servizio tipo="SPC">ServizioErrato</eGov_IT:Servizio>  
+				<eGov_IT:Azione>testSincrono</eGov_IT:Azione>  
+				<eGov_IT:Messaggio> 
+					<eGov_IT:Identificatore>PAGenerica_PAGenericaspcoopit_0000002_2007-11-07_16:28</eGov_IT:Identificatore>  
+					<eGov_IT:OraRegistrazione tempo="EGOV_IT_SPC">2007-11-07T16:28:48</eGov_IT:OraRegistrazione>  
+					<eGov_IT:RiferimentoMessaggio>CNIPA_CNIPAspcoopit_0000002_2007-11-07_16:28</eGov_IT:RiferimentoMessaggio>  
+				</eGov_IT:Messaggio> 
+			</eGov_IT:IntestazioneMessaggio> 
+			<eGov_IT:ListaEccezioni> 
+				<eGov_IT:Eccezione  
+codiceEccezione="EGOV_IT_105"  
+contestoCodifica="ErroreIntestazioneMessaggioSPCoop"  
+posizione="Azione"  
+rilevanza="GRAVE"/>  
+			</eGov_IT:ListaEccezioni> 
+		</eGov_IT:Intestazione> 
+	</soapenv:Header> 
+
+	<soapenv:Body> 
+		<soapenv:Fault> 
+			<faultcode>SOAP_ENV:Client</faultcode>  
+			<faultstring> 
+				<![CDATA[ EGOV_IT_001 - Formato Busta non corretto]]>  
+			</faultstring> 
+		</soapenv:Fault> 
+	</soapenv:Body> 
+
+</soapenv:Envelope> 

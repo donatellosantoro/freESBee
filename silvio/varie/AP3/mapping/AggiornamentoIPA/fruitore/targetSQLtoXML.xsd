@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://www.progettoicar.it/ipa/types" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://www.progettoicar.it/ipa" xmlns:intf="http://www.progettoicar.it/ipa" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" xmlns:tns="http://www.progettoicar.it/ipa/types" xmlns:types="http://www.progettoicar.it/ipa/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.progettoicar.it/ipa/types" elementFormDefault="qualified">
+	<!-- definizione tipi semplici -->
+	<xsd:simpleType name="email">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="telefono">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- 
+		per i Ministeri, il codice sar� "m_", seguito dall�?acronimo del ministero stesso, ad
+		esempio per il Ministero dell�?Economia e delle Finanze, il codice sar� "m_ef";
+		
+		per le Regioni, il codice sar� "r_", seguito dai primi sei caratteri del nome della
+		regione (spazi esclusi), ad esempio per la Regione Valle D�?Aosta, il codice sar�
+		"r_valled";
+		
+		per le Province, il codice sar� "p_", seguito dalla targa della provincia, ad
+		esempio per la Provincia di Rieti, il codice sar� "p_ri";
+		
+		per i Comuni, il codice sar� "c_", seguito dal codice identificativo del comune
+		come da Codice Fiscale; ad esempio per il Comune di Gallio, il codice sar�
+		"c_d882";
+		
+		per le ASL, il codice sar�: a<numero>_<codice del comune> oppure
+		a<numero>_<acronimo citt�>; ad esempio per l�?Azienda Sanitaria n.2 di
+		Potenza, il codice sar� "a2_pz";
+		
+		
+		per i Consigli Regionali, il codice sar�: cr_<prime lettere regione fino ad 8>;
+		ad esempio per il Consiglio Regionale della Valle D�?Aosta, il codice sar�
+		"cr_valledao";
+		
+		per le Camere di Commercio, il codice sar�: cciaa_<provincia>; ad esempio per
+		la Camera di Commercio di Padova, il codice sar� "cciaa_pd";
+		
+		per tutti gli altri Enti, il codice sar� un acronimo al massimo di 16 lettere, ad
+		esempio per l�?Ente Nazionale di Previdenza ed Assistenza per i Lavoratori dello
+		Spettacolo, il codice sar� "enpals".
+	 -->
+	<xsd:simpleType name="codice_amministrazione">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- 
+		il codice di una AOO dovr� essere unico per l�?amministrazione.
+		
+		il codice di una AOO deve avere una lunghezza non superiore a 16 caratteri
+		
+		il codice di una AOO � codificato mediante un sottoinsieme dei caratteri previsti dalla
+		specifica US-ASCII a 8 bit; il codice � composto da una sequenza di lettere
+		maiuscole ([A-Z]), lettere minuscole ([a-z]), cifre decimali ([0-9]) e dai caratteri "-"
+		e "_";
+	-->
+	<xsd:simpleType name="codice_aoo">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- 
+		il codice di una UO dovr� essere unico per l�?amministrazione.
+		
+		il codice di una UO deve avere una lunghezza non superiore a 16 caratteri
+		
+		il codice di una UO � codificato mediante un sottoinsieme dei caratteri previsti dalla
+		specifica US-ASCII a 8 bit; il codice � composto da una sequenza di lettere
+		maiuscole ([A-Z]), lettere minuscole ([a-z]), cifre decimali ([0-9]) e dai caratteri "-"
+		e "_";
+	-->
+	<xsd:simpleType name="codice_uo">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="uri">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- variazioni indica le variazioni da apportare nel caso di  richiesta di aggiornamento non corretta-->
+	<xsd:simpleType name="variazioni">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- definizione tipi complessi -->
+	<xsd:complexType name="credenziali_accesso">
+		<xsd:sequence>
+			<xsd:element name="username" type="xsd:string" nillable="false"/>
+			<xsd:element name="password" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="indirizzo">
+		<xsd:sequence>
+			<xsd:element name="via" type="xsd:string" nillable="false"/>
+			<xsd:element name="numero_civico" type="xsd:string" nillable="false"/>
+			<xsd:element name="cap" type="xsd:string" nillable="false"/>
+			<xsd:element name="citta" type="xsd:string" nillable="false"/>
+			<xsd:element name="sigla_provincia" type="xsd:string" nillable="false"/>
+			<xsd:element name="regione" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="responsabile">
+		<xsd:sequence>
+			<xsd:element name="nome" type="xsd:string" nillable="false"/>
+			<xsd:element name="cognome" type="xsd:string" nillable="false"/>
+			<xsd:element name="titolo" type="xsd:string" nillable="true"/>
+			<xsd:element name="email" type="tns:email" nillable="true"/>
+			<xsd:element name="telefono" type="tns:telefono" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="servizio_telematico">
+		<xsd:sequence>
+			<xsd:element name="nome" type="xsd:string" nillable="false"/>
+			<xsd:element name="descrizione" type="xsd:string" nillable="true"/>
+			<xsd:element name="telefono" type="tns:telefono" nillable="true"/>
+			<xsd:element name="url" type="tns:uri" nillable="true"/>
+			<xsd:element name="email" type="tns:email" nillable="true"/>
+			<xsd:element name="codice_ufficio" type="xsd:string" nillable="true"/>
+		</xsd:sequence>
+		<xsd:attribute name="pubblico" type="xsd:boolean"/>
+		<!-- se true il servizio e' fruibile da internet -->
+	</xsd:complexType>
+	<xsd:complexType name="lista_servizi_telematici">
+		<xsd:sequence>
+			<xsd:element name="servizio_telematico" type="tns:servizio_telematico" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="amministrazione">
+		<xsd:sequence>
+			<xsd:element name="nome" type="xsd:string" nillable="false"/>
+			<xsd:element name="indirizzo" type="tns:indirizzo" nillable="true"/>
+			<xsd:element name="email" type="tns:email" nillable="true"/>
+			<xsd:element name="dominio_pec" type="tns:uri" nillable="true"/>
+			<xsd:element name="sito_istituzionale" type="tns:uri" nillable="true"/>
+			<xsd:element name="responsabile" type="tns:responsabile" nillable="true"/>
+			<xsd:element name="servizi_telematici" type="tns:lista_servizi_telematici" nillable="true"/>
+			<xsd:element name="aree_organizzative_omogenee" type="lista_aree_organizzative_omogenee" nillable="true"/>
+			<xsd:element name="unita_organizzative" type="lista_unita_organizzative" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="area_organizzativa_omogenea">
+		<xsd:sequence>
+			<xsd:element name="codice_aoo" type="tns:codice_aoo" nillable="false"/>
+			<xsd:element name="nome" type="xsd:string" nillable="false"/>
+			<xsd:element name="responsabile" type="tns:responsabile" nillable="false"/>
+			<!-- 
+				Le date di istituzione e soppressione delle AOO, dovranno essere aderenti allo
+				standard specificato dalla ISO 8601 e cio� "AAAA-MM-GG".
+			-->
+			<xsd:element name="data_istituzione" type="xsd:date" nillable="false"/>
+			<xsd:element name="data_soppressione" type="xsd:date" nillable="true"/>
+			<xsd:element name="certification_autority" type="tns:uri" nillable="true"/>
+			<xsd:element name="email" type="tns:email" nillable="false"/>
+			<xsd:element name="telefono" type="tns:telefono" nillable="true"/>
+			<xsd:element name="fax" type="tns:telefono" nillable="true"/>
+			<xsd:element name="indirizzo" type="tns:indirizzo" nillable="true"/>
+			<xsd:element name="servizi_telematici" type="tns:lista_servizi_telematici" nillable="true"/>
+			<xsd:element name="unita_organizzative" type="lista_unita_organizzative" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="lista_aree_organizzative_omogenee">
+		<xsd:sequence>
+			<xsd:element name="area_organizzativa_omogenea" type="tns:area_organizzativa_omogenea" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="lista_unita_organizzative">
+		<xsd:sequence>
+			<xsd:element name="unita_organizzativa" type="tns:unita_organizzativa" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="unita_organizzativa">
+		<xsd:sequence>
+			<xsd:element name="codice_uo" type="tns:codice_uo" nillable="false"/>
+			<xsd:element name="nome_ufficio" type="xsd:string" nillable="false"/>
+			<xsd:element name="codice_uo_livello_superiore" type="tns:codice_uo" nillable="true"/>
+			<xsd:element name="codice_aoo" type="tns:codice_aoo" nillable="true"/>
+			<xsd:element name="indirizzo" type="tns:indirizzo"/>
+			<xsd:element name="responsabile" type="tns:responsabile" nillable="false"/>
+			<xsd:element name="email" type="tns:email" nillable="true"/>
+			<xsd:element name="email_pec" type="tns:email" nillable="true"/>
+			<xsd:element name="telefono" type="tns:telefono" nillable="true"/>
+			<xsd:element name="fax" type="tns:telefono" nillable="true"/>
+			<xsd:element name="url_ca" type="tns:uri" nillable="true"/>
+			<xsd:element name="servizi_telematici" type="tns:lista_servizi_telematici" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA_Type">
+		<xsd:sequence>
+			<xsd:element name="amministrazione" type="types:amministrazione"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA" type="types:richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA_Type"/>
+	<xsd:complexType name="risposta_RichiestaRispostaAsincrona_AggiornamentoIPA_Type">
+		<xsd:sequence>
+			<xsd:element name="correzione" type="types:variazioni" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,41 @@
+POST /PD/SincronoLoopback/ HTTP/1.1
+Content-Type: multipart/related; type="application/soap+xml"; start="<rootpart@soapui.org>"; boundary="----=_Part_3_25671167.1229438195197"
+MIME-Version: 1.0
+User-Agent: Jakarta Commons-HttpClient/3.0.1
+Host: 127.0.0.1:18192
+Content-Length: 3002
+
+
+------=_Part_3_25671167.1229438195197
+Content-Type: application/soap+xml; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Content-ID: <rootpart@soapui.org>
+
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:fre="http://icar.unibas.it/freesbee/">
+   <soap:Header/>
+   <soap:Body>
+      <fre:testAttachment>
+         <fre:arg0>SW4gaGFjIGhhYml0YXNzZSBwbGF0ZWEgZGljdHVtc3QuIER1aXMgcG9ydHRpdG9yLiBTZWQgdnVscHV0YXRlIGVsZW1lbnR1bSBuaXNsLiBWaXZhbXVzIGV0IG1pIGF0IGFyY3UgbWF0dGlzIGlhY3VsaXMuIE51bGxhbSBwb3N1ZXJlIHRyaXN0aXF1ZSB0b3J0b3IuIEluIGJpYmVuZHVtLiBBZW5lYW4gb3JuYXJlLCBudW5jIGVnZXQgcHJldGl1bSBwb3J0dGl0b3IsIHNlbSBlc3QgcHJldGl1bSBsZW8sIG5vbiBldWlzbW9kIG51bGxhIGR1aSBub24gZGlhbS4gUGVsbGVudGVzcXVlIGRpY3R1bSBmYXVjaWJ1cyBsZW8uIFZlc3RpYnVsdW0gYWMgYW50ZS4gU2VkIGluIGVzdC4gU2VkIHNvZGFsZXMgbmlzbCBzaXQgYW1ldCBhdWd1ZS4gRG9uZWMgdWx0cmljZXMsIGF1Z3VlIHVsbGFtY29ycGVyIHBvc3VlcmUgbGFvcmVldCwgdHVycGlzIG1hc3NhIHRyaXN0aXF1ZSBqdXN0bywgc2VkIGVnZXN0YXMgbWV0dXMgbWFnbmEgc2VkIHB1cnVzLiBBbGlxdWFtIHJpc3VzIGp1c3RvLCBtb2xsaXMgaW4sIGxhb3JlZXQgYSwgY29uc2VjdGV0dWVyIG5lYywgcmlzdXMuIE51bmMgYmxhbmRpdCBzb2RhbGVzIGxhY3VzLiBOYW0gbHVjdHVzIHNlbXBlciBtaS4gSW4gZXUgZGlhbS4gRnVzY2UgcG9ydGEgcGVkZSBuZWMgZXJvcy4gTWFlY2VuYXMgaXBzdW0gc2VtLCBpbnRlcmR1bSBub24sIGFsaXF1YW0gdml0YWUsIGludGVyZHVtIG5lYywgbWV0dXMuIE1hZWNlbmFzIG9ybmFyZSBsb2JvcnRpcyByaXN1cy4gRXRpYW0gcGxhY2VyYXQgdmFyaXVzIG1hdXJpcy4gTWFlY2VuYXMgdml2ZXJyYS4gU2VkIGZldWdpYXQuIERvbmVjIG1hdHRpcyBxdWFtIGFsaXF1YW0gcmlzdXMuIE51bGxhIG5vbiBmZWxpcyBzb2xsaWNpdHVkaW4gdXJuYSBibGFuZGl0IGVnZXN0YXMuIEludGVnZXIgZXQgbGliZXJvIHZhcml1cyBwZWRlIHRyaXN0aXF1ZSB1bHRyaWNpZXMuIENyYXMgbmlzbC4gUHJvaW4gcXVpcyBtYXNzYSBzZW1wZXIgZmVsaXMgZXVpc21vZCB1bHRyaWNpZXMuIERvbmVjIG1hdA==</fre:arg0>
+      </fre:testAttachment>
+   </soap:Body>
+</soap:Envelope>
+------=_Part_3_25671167.1229438195197
+Content-Type: text/plain; charset=Cp1252
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <929102932367>
+
+In hac habitasse platea dictumst. Duis porttitor. Sed vulputate elementum n=
+isl. Vivamus et mi at arcu mattis iaculis. Nullam posuere tristique tortor.=
+ In bibendum. Aenean ornare, nunc eget pretium porttitor, sem est pretium l=
+eo, non euismod nulla dui non diam. Pellentesque dictum faucibus leo. Vesti=
+bulum ac ante. Sed in est. Sed sodales nisl sit amet augue. Donec ultrices,=
+ augue ullamcorper posuere laoreet, turpis massa tristique justo, sed egest=
+as metus magna sed purus. Aliquam risus justo, mollis in, laoreet a, consec=
+tetuer nec, risus. Nunc blandit sodales lacus. Nam luctus semper mi. In eu =
+diam. Fusce porta pede nec eros. Maecenas ipsum sem, interdum non, aliquam =
+vitae, interdum nec, metus. Maecenas ornare lobortis risus. Etiam placerat =
+varius mauris. Maecenas viverra. Sed feugiat. Donec mattis quam aliquam ris=
+us. Nulla non felis sollicitudin urna blandit egestas. Integer et libero va=
+rius pede tristique ultricies. Cras nisl. Proin quis massa semper felis eui=
+smod ultricies. Donec mat
+------=_Part_3_25671167.1229438195197--

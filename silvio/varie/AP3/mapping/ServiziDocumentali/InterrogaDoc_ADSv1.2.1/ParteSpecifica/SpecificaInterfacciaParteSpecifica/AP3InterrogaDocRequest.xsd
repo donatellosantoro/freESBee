@@ -1,0 +1,10 @@
+<xsd:schema targetNamespace="http://progettoicar.it/AP3interprotoQry/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" xmlns="http://progettoicar.it/AP3interprotoQry/types">
+	<xsd:include schemaLocation="AP3TipiGenerici.xsd"/>
+	<xsd:complexType name="AP3InterrogaDocRequest">
+		<xsd:sequence>
+			<xsd:element name="codiceRichiedente" type="tns:codiceArea" nillable="false"/>
+			<xsd:element name="codiceInterrogato" type="tns:codiceArea" nillable="false"/>
+			<xsd:element name="codiceDocInf" type="tns:codiceDocInf" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurazione xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" indirizzoRegistroServizi="http://192.168.7.6:8161/ws/registroServizi">
+  <utente>
+    <nomeUtente>admin</nomeUtente>
+    <password>21232f297a57a5a743894a0e4a801fc3</password>
+  </utente>
+  <istanza>
+    <risorsa>http://192.168.7.6:9192/EROGATORE/IWSConsegnaMessaggio_131073/</risorsa>
+    <uriAscolto>CONSEGNA</uriAscolto>
+    <accordoServizio>ASConsegna</accordoServizio>
+  </istanza>
+  <istanza>
+    <risorsa>http://192.168.10.1:9192/EROGATORE/ServizioIdentificazioneAssistito_4/</risorsa>
+    <uriAscolto>ServizioIdentificazioneAssistito_PEP</uriAscolto>
+    <accordoServizio>ASIdentificazioneAssistito</accordoServizio>
+  </istanza>
+  <istanza>
+    <risorsa>http://192.168.7.6:8193/freesbeege/ws/gestionePubblicatori/Test2Puglia/</risorsa>
+    <uriAscolto>Pubblicatori_Test2Puglia_PEP</uriAscolto>
+    <accordoServizio>ASGestionePubblicatori_Test2Puglia</accordoServizio>
+  </istanza>
+  <istanza>
+    <risorsa>http://192.168.7.6:8193/freesbeege/ws/gestioneSottoscrizioni/Test2Puglia/</risorsa>
+    <uriAscolto>Sottoscrizioni_Test2Puglia_PEP</uriAscolto>
+    <accordoServizio>ASGestioneSottoscrizioni_Test2Puglia</accordoServizio>
+  </istanza>
+</configurazione>
+

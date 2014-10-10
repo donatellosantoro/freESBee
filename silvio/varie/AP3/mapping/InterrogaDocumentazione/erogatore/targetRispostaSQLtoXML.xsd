@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" xmlns:types="http://progettoicar.it/AP3interprotoQry/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://progettoicar.it/AP3interprotoQry/types" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!--xsd:include schemaLocation="AP3InterrogaDocRequest.xsd"/>
+	<xsd:include schemaLocation="AP3InterrogaDocResponse.xsd"/-->
+	<!-- AP3TipiGenerici -->
+	<!-- definizione tipi semplici -->
+	<xsd:simpleType name="codiceAoo">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceAmm">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="msgErrore">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceErrore">
+		<xsd:restriction base="xsd:int"/>
+	</xsd:simpleType>
+	<!-- 
+		I codici di risposta da implementare devono prevedere i casi:
+		
+		Elaborazione corretta (es: 0)
+		Errore di sistema (es: -1)
+		Protocollo non contenuto in nessun fascicolo per responseAP3InterrogaFasc (es: -2)
+		Protocollo non trovato per responseAP3InterrogaFasc (es: -3)
+		Documento non trovato per responseAP3InterrogaDoc (es: -4)
+		
+		Una opportuna messaggistica pu� essere gestita nela campo msgErrore.
+	-->
+	<xsd:simpleType name="numeroDocumenti">
+		<xsd:restriction base="xsd:int">
+			<xsd:minInclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="anno">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="numero">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="dataRegistrazione">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="arrivoPartenza">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="livelloClassifica">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceClassifica">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="descrizioneClassifica">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceUfficio">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="descrizioneUfficio">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceRegistro">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="descrizioneRegistro">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="oggetto">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceDocumentoInformatico">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- 
+		Codice che identifica univocamente il documento informatico associato nel file system o nella base dati dell'Amministrazione e ne permette successivamente il recupero.
+	-->
+	<xsd:simpleType name="flPrimario">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- 
+		Flag che identifica se il documento � il documento primario dell'invio tramite interoperabilit� o meno.
+		I casi da codificare sono:
+		
+		Doc primario (es: 1)
+		Doc non primario (es:0)
+		Documento non inviato via interoperabilit� (es: -1)
+	-->
+	<xsd:simpleType name="descrizioneDocumentoInformatico">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceResponsabileTrattamento">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="descrizioneResponsabileTrattamento">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="codiceDocInf">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="nomeDocInf">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="mimeType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="descrCorrispondente">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- 
+		Coppie di codice - descrizione associate ad uffici o dipendenti.
+	-->
+	<!-- definizione tipi complessi -->
+	<xsd:complexType name="errore">
+		<xsd:sequence>
+			<xsd:element name="codiceErrore" nillable="false" type="tns:codiceErrore"/>
+			<xsd:element name="msgErrore" nillable="false" type="tns:msgErrore"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="codiceArea">
+		<xsd:sequence>
+			<xsd:element name="codiceAmm" nillable="false" type="tns:codiceAmm"/>
+			<xsd:element name="codiceAoo" nillable="false" type="tns:codiceAoo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="classifica">
+		<xsd:sequence>
+			<xsd:element name="livelli" nillable="false" type="tns:listaLivelli"/>
+			<xsd:element name="codiceClassifica" nillable="false" type="tns:codiceClassifica"/>
+			<xsd:element name="descrizioneClassifica" nillable="false" type="tns:descrizioneClassifica"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="listaLivelli">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" name="livelloClassifica" nillable="false" type="tns:livelloClassifica"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="estremiProtocollo">
+		<xsd:sequence>
+			<xsd:element name="anno" nillable="false" type="tns:anno"/>
+			<xsd:element name="numero" nillable="false" type="tns:numero"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="estremiProtocolloEstesi">
+		<xsd:sequence>
+			<xsd:element name="estremiProtocollo" nillable="false" type="tns:estremiProtocollo"/>
+			<xsd:element name="arrivoPartenza" nillable="false" type="tns:arrivoPartenza"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="estremiFascicolo">
+		<xsd:sequence>
+			<xsd:element name="codiceUfficio" nillable="false" type="tns:codiceUfficio"/>
+			<xsd:element name="descrizioneUfficio" nillable="false" type="tns:descrizioneUfficio"/>
+			<xsd:element name="classifica" nillable="false" type="tns:classifica"/>
+			<xsd:element name="anno" nillable="false" type="tns:anno"/>
+			<xsd:element name="numero" nillable="false" type="tns:numero"/>
+			<xsd:element name="subnumero" nillable="true" type="tns:numero"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="estremiFascicoloVirtuale">
+		<xsd:sequence>
+			<xsd:element name="codiceUfficio" nillable="false" type="tns:codiceUfficio"/>
+			<xsd:element name="descrizioneUfficio" nillable="false" type="tns:descrizioneUfficio"/>
+			<xsd:element name="codiceRegistro" nillable="false" type="tns:codiceRegistro"/>
+			<xsd:element name="descrizioneRegistro" nillable="false" type="tns:descrizioneRegistro"/>
+			<xsd:element name="anno" nillable="false" type="tns:anno"/>
+			<xsd:element name="numero" nillable="false" type="tns:numero"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="listaDocumentiInformatici">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documentoInformatico" nillable="false" type="tns:documentoInformatico"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoInformatico">
+		<xsd:sequence>
+			<xsd:element name="codiceDocumentoInformatico" nillable="false" type="tns:codiceDocumentoInformatico"/>
+			<xsd:element name="flPrimario" nillable="false" type="tns:flPrimario"/>
+			<xsd:element name="descrizioneDocumentoInformatico" nillable="false" type="tns:descrizioneDocumentoInformatico"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="listaResponsabiliTrattamento">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="responsabileTrattamento" nillable="false" type="tns:responsabileTrattamento"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="responsabileTrattamento">
+		<xsd:sequence>
+			<xsd:element name="codice_RresponsabileTrattamento" nillable="false" type="tns:codiceResponsabileTrattamento"/>
+			<xsd:element name="descrizioneResponsabileTrattamento" nillable="false" type="tns:descrizioneResponsabileTrattamento"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="listaDocumentiFascicolo">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documentoFascicolo" nillable="false" type="tns:documentoFascicolo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documentoFascicolo">
+		<xsd:sequence>
+			<xsd:element name="codiceAmm" nillable="true" type="tns:codiceAmm"/>
+			<xsd:element name="codiceAoo" nillable="true" type="tns:codiceAoo"/>
+			<xsd:element name="descrCorrispondente" nillable="false" type="tns:descrCorrispondente"/>
+			<xsd:element name="dataRegistrazione" nillable="false" type="tns:dataRegistrazione"/>
+			<xsd:element name="estremiProtocolloEstesi" nillable="false" type="tns:estremiProtocolloEstesi"/>
+			<xsd:element name="codiceUfficio" nillable="true" type="tns:codiceUfficio"/>
+			<xsd:element name="descrizioneUfficio" nillable="true" type="tns:descrizioneUfficio"/>
+			<xsd:element name="codiceRegistro" nillable="true" type="tns:codiceRegistro"/>
+			<xsd:element name="descrizioneRegistro" nillable="true" type="tns:descrizioneRegistro"/>
+			<xsd:element name="classifica" nillable="true" type="tns:classifica"/>
+			<xsd:element name="oggetto" nillable="false" type="tns:oggetto"/>
+			<xsd:element name="documentiInformatici" nillable="true" type="tns:listaDocumentiInformatici"/>
+			<xsd:element name="responsabiliTrattamento" nillable="true" type="tns:listaResponsabiliTrattamento"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="listaDocumenti">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="documento" nillable="false" type="tns:documento"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="documento">
+		<xsd:sequence>
+			<xsd:element name="dataRegistrazione" nillable="false" type="tns:dataRegistrazione"/>
+			<xsd:element name="estremiProtocolloEstesi" nillable="false" type="tns:estremiProtocolloEstesi"/>
+			<xsd:element name="classifica" nillable="true" type="tns:classifica"/>
+			<xsd:choice>
+				<xsd:element name="estremiFascicolo" nillable="true" type="tns:estremiFascicolo"/>
+				<xsd:element name="estremiFascicoloVirtuale" nillable="true" type="tns:estremiFascicoloVirtuale"/>
+			</xsd:choice>
+			<xsd:element name="oggetto" nillable="false" type="tns:oggetto"/>
+			<xsd:element name="documentiInformatici" nillable="true" type="tns:listaDocumentiInformatici"/>
+			<xsd:element name="responsabiliTrattamento" nillable="true" type="tns:listaResponsabiliTrattamento"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- AP3TipiGenerici -->
+	<!-- AP3InterrogaDocRequest -->
+	<xsd:complexType name="AP3InterrogaDocRequest">
+		<xsd:sequence>
+			<xsd:element name="codiceRichiedente" nillable="false" type="tns:codiceArea"/>
+			<xsd:element name="codiceInterrogato" nillable="false" type="tns:codiceArea"/>
+			<xsd:element name="codiceDocInf" nillable="false" type="tns:codiceDocInf"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- AP3InterrogaDocRequest -->
+	<!-- AP3InterrogaDocResponse -->
+	<xsd:complexType name="AP3InterrogaDocResponse">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="errore" nillable="false" type="tns:errore"/>
+				<xsd:sequence>
+					<xsd:element name="mimeType" nillable="true" type="tns:mimeType"/>
+					<xsd:element name="nomeDocInf" nillable="false" type="tns:nomeDocInf"/>
+				</xsd:sequence>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="esito" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<!-- AP3InterrogaDocResponse -->
+	<xsd:complexType name="richiesta_RichiestaRispostaSincrona_InterrogaDoc_Type">
+		<xsd:sequence>
+			<xsd:element name="AP3InterrogaDocRequest" type="tns:AP3InterrogaDocRequest">
+				<xsd:annotation>
+					<xsd:appinfo>http://progettoicar.it/AP3interprotoQry/types/AP3InterrogaDocRequest.xsd</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="risposta_RichiestaRispostaSincrona_InterrogaDoc_Type">
+		<xsd:sequence>
+			<xsd:element name="AP3InterrogaDocResponse" type="tns:AP3InterrogaDocResponse">
+				<xsd:annotation>
+					<xsd:appinfo>http://progettoicar.it/AP3interprotoQry/types/AP3InterrogaDocResponse.xsd</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="risposta_RichiestaRispostaSincrona_InterrogaDoc" type="types:risposta_RichiestaRispostaSincrona_InterrogaDoc_Type"/>
+</xs:schema>

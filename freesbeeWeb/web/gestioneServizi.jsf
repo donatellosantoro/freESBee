@@ -1,0 +1,290 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Servizi" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">     
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiAccordoServizio:boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiAccordoServizio:boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaGestioneServizi}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestioneServizi.png" alt="Gestione Servizi"/>   
+            </h:panelGroup>
+
+            <rich:modalPanel id="panelEliminaServizio" rendered="#{!vistaGestioneServizi.nicaPresente}" showWhenRendered="#{vistaGestioneServizi.elimina}" height="150" width="320">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                        <h:outputText value="Conferma eliminazione"/>
+                    </h:panelGroup>
+                </f:facet>    
+                <h:form>
+                    <h:outputText styleClass="confermaMessaggio" value="#{controlloGestioneServizi.conferma}"/>            
+
+                    <h:panelGrid columns="2" style="margin:0px 7px 0px 7px;">
+                        <h:outputText style="font-weight: bold;" value="Nome"/>
+                        <h:outputText value="#{vistaGestioneServizi.nuovoServizio.nome}"/> 
+
+                        <h:outputText style="font-weight: bold;" value="Tipo"/>
+                        <h:outputText value="#{vistaGestioneServizi.nuovoServizio.tipo}"/>
+                    </h:panelGrid>
+
+
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Elimina" action="#{controlloGestioneServizi.elimina}"/>   
+                        <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelEliminaAccordo')" action="#{controlloGestioneServizi.caricaGestioneServizi}" immediate="true"/>        
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <h:form id="formCampiAccordoServizio" rendered="#{!vistaGestioneServizi.nicaPresente}" >
+                <rich:simpleTogglePanel opened="#{vistaGestioneServizi.pannelloVisibile}" id="boxNuovoServizio" style="width:780px;" switchType="ajax">
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/servizio_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuovo Servizio"/>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <h:panelGrid columns="3">
+                        <h:panelGroup id="boxAccordo" >
+                            <rich:messages>
+                                <f:facet name="errorMarker">
+                                    <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>   
+                                </f:facet>
+                            </rich:messages>                
+                            <h:panelGrid columns="2">                                
+                                <h:outputText value="Tipo" style="font-size:8pt"/>
+                                <h:inputText id="textTipo" label="tipo" style="font-size:8pt" value="#{vistaGestioneServizi.nuovoServizio.tipo}" required="true" readonly="#{vistaGestioneServizi.elimina}"/>
+
+                                <h:outputText value="Nome" style="font-size:8pt"/>
+                                <h:inputText id="textNome" label="nome" style="font-size:8pt" value="#{vistaGestioneServizi.nuovoServizio.nome}" required="true" readonly="#{vistaGestioneServizi.elimina}"/>
+
+                                <h:outputText value="Accordo di servizio" style="font-size:8pt"/>
+                                <a4j:region>
+                                    <h:selectOneMenu style="font-size:8pt;width:126px" id="textAccordo"  required="true" label="accordo di servizio"
+                                                     value="#{vistaGestioneServizi.nuovoServizio.accordoServizio.id}" readonly="#{vistaGestioneServizi.elimina}">
+                                        <f:selectItems value="#{vistaGestioneServizi.listaAccordiServizio}"/>
+                                        <a4j:support event="onchange" actionListener="#{controlloGestioneServizi.aggiornaAzioniDisponibili}"  reRender="listaAzioni" />
+                                    </h:selectOneMenu>
+                                </a4j:region>
+                                <h:outputText value="Soggetto Erogatore" style="font-size:8pt"/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" id="textErogatore"  required="true" label="soggetto erogatore"
+                                                 value="#{vistaGestioneServizi.nuovoServizio.erogatore.id}" readonly="#{vistaGestioneServizi.elimina}">
+                                    <f:selectItems value="#{vistaGestioneServizi.listaSoggetti}"/>
+                                </h:selectOneMenu>
+
+                                <h:outputText value="Url" style="font-size:8pt"/>
+                                <h:inputText id="textUrl" label="url" style="font-size:8pt" value="#{vistaGestioneServizi.nuovoServizio.urlServizio}" readonly="#{vistaGestioneServizi.elimina}"/>
+
+                                <h:outputText value="Privato"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneServizi.nuovoServizio.privato}"/>
+
+                                <h:outputText value="Correlato" style="font-size:8pt"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneServizi.nuovoServizio.correlato}" style="font-size:8pt"/>
+
+
+                            </h:panelGrid>    
+
+
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Inserisci" action="#{controlloGestioneServizi.inserisci}" rendered="#{!vistaGestioneServizi.modifica}" />  
+                                <h:commandButton value="Modifica" action="#{controlloGestioneServizi.modifica}" rendered="#{vistaGestioneServizi.modifica}" />  
+                                <a4j:region>
+                                    <a4j:commandButton value="Annulla" action="#{controlloGestioneServizi.caricaGestioneServizi}" immediate="true" reRender="listaAzioni" >
+                                    </a4j:commandButton>  
+                               
+                                </a4j:region>
+                            </h:panelGroup>
+
+                        </h:panelGroup> 
+
+                        <h:panelGroup>
+                            <h:outputText value="Soggetti Fruitori" styleClass="titoloFruitori"/>
+                            <br/>
+                            <rich:listShuttle sourceValue="#{vistaGestioneServizi.source}"
+                                              targetValue="#{vistaGestioneServizi.target}"
+                                              var="soggetto"  listsHeight="100" 
+                                              sourceCaptionLabel="Disponibili"
+                                              targetCaptionLabel="Fruitori"
+                                              orderControlsVisible="false"
+                                              showButtonLabels="false"
+                                              sourceListWidth="100"
+                                              targetListWidth="100"
+                                              fastOrderControlsVisible="false">
+                                <rich:column>
+                                    <h:outputText value="#{soggetto}"></h:outputText>
+                                </rich:column>
+                            </rich:listShuttle>
+
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <h:outputText value="Azioni Servizio" styleClass="titoloAzioniServizio"/>
+                            <h:outputText value="Tutte le azioni dell'accordo di servizio"/>
+                            <a4j:region>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneServizi.nuovoServizio.allAzioni}">
+                                    <a4j:support event="onchange" actionListener="#{controlloGestioneServizi.gestisciAzioni}"  reRender="listaAzioni" />
+                                </h:selectBooleanCheckbox>
+                            </a4j:region>
+                            <rich:listShuttle sourceValue="#{vistaGestioneServizi.azioniDisponibili}"
+                                              targetValue="#{vistaGestioneServizi.azioniSelezionate}"
+                                              var="azione"  listsHeight="100" 
+                                              sourceCaptionLabel="Disponibili"
+                                              targetCaptionLabel="Selezionate"
+                                              orderControlsVisible="false"
+                                              showButtonLabels="false"
+                                              sourceListWidth="100"
+                                              targetListWidth="100"
+                                              fastOrderControlsVisible="false"
+                                              id="listaAzioni">
+                                <rich:column>
+                                    <h:outputText value="#{azione}"></h:outputText>
+                                </rich:column>
+                            </rich:listShuttle>
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+
+                <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestioneServizi.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneServizi.messaggio}"/>
+                </h:panelGroup>
+                <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestioneServizi.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneServizi.errore}"/>
+                </h:panelGroup>
+            </h:form>
+
+            <rich:tabPanel style="width:520px;margin-top:30px" rendered="#{!vistaGestioneServizi.nicaPresente}"  headerAlignment="right" binding="#{vistaGestioneServizi.tabPanel}" >
+                <rich:tab disabled="true">
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/detail.png"  styleClass="linkPicture" />
+                            <h:outputText value="Dettagli"/>
+                        </h:panelGroup>
+                    </f:facet>          
+                    <h:outputText styleClass="intestazioneTab" value="Lista dei Servizi"/>   
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>  
+                    <h:outputText styleClass="intestazioneTab" value="Lista dei Servizi"/>
+
+                    <h:form >
+                        <rich:datascroller align="left"  for="listaServizi" maxPages="10" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="500" id="listaServizi" rows="10" columnClasses="col" binding="#{vistaGestioneServizi.tabellaServizi}"
+                                        value="#{vistaGestioneServizi.listaServizi}" var="servizio">
+
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Id" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Tipo" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Accordo Ser." />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Azioni"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Fruitori" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Correl." />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>                                
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{servizio.id}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.tipo}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.accordoServizio.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.erogatore.nomeBreve}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.azioni}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.numeroFruitori}" />
+                            </h:column>
+                            <h:column>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/#{servizio.correlato}.png" styleClass="linkPicture"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestioneServizi.schermoModificaDaTabella}">
+                                    <img title="Modifica servizio" alt="Modifica servizio" src="${pageContext.request.contextPath}/images/icons/servizio_edit.png" />
+                                </h:commandLink>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestioneServizi.schermoEliminaDaTabella}">
+                                    <img title="Elimina servizio" alt="Elimina servizio" src="${pageContext.request.contextPath}/images/icons/servizio_delete.png" />
+                                </h:commandLink>
+                            </h:column>
+
+                        </rich:dataTable> 
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+
+            <rich:panel style="margin: 80px 10px; width: 250px;" rendered="#{vistaGestioneServizi.nicaPresente}">                
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/info.png"  styleClass="linkPicture" />
+                        <h:outputText value="Informazioni"/>
+                    </h:panelGroup>
+                </f:facet>    
+                <h:outputText value="I servizi non vanno configurati su questa porta di dominio, ma nel registro dei servizi associato."/>
+            </rich:panel>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

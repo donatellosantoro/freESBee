@@ -1,0 +1,85 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<h:form>
+    <rich:modalPanel id="panel" width="500" height="500" showWhenRendered="#{vistaIstanzeAccordi.visualizzaXSD}" 
+                     rendered="#{vistaIstanzeAccordi.visualizzaXSD}">
+        <f:facet name="header">            
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/schema.png"  styleClass="linkPicture" />
+                <h:outputText value="XSD Schema"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                <rich:componentControl for="panel" attachTo="hidelink" operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+        <h:panelGroup styleClass="infoText">
+            <h:outputLink styleClass="bloccoSalva" value="#{controlloFruitoreIstanzeAccordi.utente.nomeFileXSD}">
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/disk.png"  styleClass="linkPicture" />
+                <h:outputText value="#{msg.salva_file}"/>
+            </h:outputLink>
+            <h:outputText styleClass="nomeRoot" value="Usare come root element: #{vistaIstanzeAccordi.nomeRoot}"/>
+        </h:panelGroup>
+        <h:panelGroup styleClass="schemaXSD">
+            <h:inputTextarea value="#{controlloFruitoreIstanzeAccordi.utente.fileXSD}" readonly="true" styleClass="schemaXSDText"/>
+        </h:panelGroup>
+    </rich:modalPanel>
+</h:form>
+<h:form enctype="multipart/form-data" id="trasformazioni">
+    <a4j:loadBundle basename="messaggi" var="msgx"/>
+    <rich:panel style="width:410px;" id="NuovaIstanza2" rendered="#{vistaIstanzeAccordi.step==2}">      
+        <f:facet name="header">  
+            <h:panelGroup>  
+                <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/istanzaAccordoCollaborazione_add.png"  styleClass="linkPicture" />
+                    <h:outputText value="#{msg.istanza_operation_trasformazione} - #{vistaIstanzeAccordi.istanzaOperation.operation.nome}"/>   
+                </h:panelGroup>
+            </h:panelGroup>
+        </f:facet> 
+        <h:outputText value="#{msg.istanza_operation_trasformazione_info}" styleClass="infoText"/>
+        <h:outputText value="#{controlloFruitoreIstanzeAccordi.errore}" rendered="#{controlloFruitoreIstanzeAccordi.errore != null}" styleClass="errorText"/>
+        <h:outputText id="boxSuccesso2" value="#{controlloFruitoreIstanzeAccordi.messaggio}" rendered="#{controlloFruitoreIstanzeAccordi.messaggio != null}" styleClass="confirmText"/>
+        <rich:messages styleClass="errorText"/>
+        
+        <h:panelGroup styleClass="pannello" rendered="#{!vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}">    
+            <h:panelGrid columns="2" style="margin: 5px; width: 200px;margin:10px auto; text-align: center;">
+                <h:commandLink action="#{controlloFruitoreIstanzeAccordi.visualizzaXSDSource}">               
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_source_xsd.png" styleClass="linkPicture"/>
+                </h:commandLink>                
+                <h:commandLink action="#{controlloFruitoreIstanzeAccordi.visualizzaXSDTarget}">               
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_target_xsd.png" styleClass="linkPicture"/>
+                </h:commandLink>
+            </h:panelGrid>            
+            <rich:separator height="2" lineType="solid" styleClass="separator"/>
+            <h:panelGrid columns="3">
+                <h:outputText value="#{msg.file_trasformazione}"/>
+                <t:inputFileUpload id="fileXSLT" value="#{vistaIstanzeAccordi.fileXSLTFruitoreRichiesta}" storage="file"/>
+                <h:panelGroup>
+                    <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                    <rich:toolTip for="help1" showDelay="200">
+                        <h:outputText value="#{msg.file_trasformazione_tooltip}"/>
+                    </rich:toolTip>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+        </h:panelGroup>
+    </rich:panel>
+    <h:panelGroup styleClass="pulsantiWizard" id="next2">
+        <h:commandLink action="#{controlloIstanzeAccordi.annulla}" immediate="true">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+        </h:commandLink>
+        <h:commandLink action="#{controlloIstanzeAccordi.indietroConfiguraIstanza}" immediate="true">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_indietro}.png"  styleClass="linkPicture"/>
+        </h:commandLink>
+        <h:commandLink action="#{controlloFruitoreIstanzeAccordi.caricaTrasformazioneRichiesta}">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}.png"  styleClass="linkPicture"/>
+        </h:commandLink>
+    </h:panelGroup>   
+</h:form>
+

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="framework-hibernate-template-build">
+
+
+ <!-- ***************************************************
+               Target Specifici di Hibernate
+      *************************************************** -->
+
+    <target name="-init-tools-classpath" depends="-init-folders">
+        <path id="hibernate.tools.classpath">
+            <path refid="driver.classpath" />
+            <path refid="hibernate.classpath" />            
+        </path>
+    </target>
+
+
+    <target name="-init-hibernate-tasks" depends="init, -init-tools-classpath">
+         <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" 
+                  classpathref="hibernate.tools.classpath" />        
+    </target>
+
+    <target name="schemaexport" depends="-init-hibernate-tasks, build">
+        <hibernatetool destdir="${misc.dir}">
+           <classpath>
+              <path location="${build.dir}"/>
+           </classpath>
+           <annotationconfiguration configurationfile="${conf.dir}/hibernate.cfg.xml"/> 
+           <hbm2ddl export="false" update="false" drop="false" format="true"
+                    outputfilename="${db.name}.sql" />
+        </hibernatetool>
+    </target>
+
+    <target name="-prepare-hbm" depends="prepare">
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.hbm.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="-prepare-hbm-webapp" depends="prepare">
+        <copy todir="${build.webapp.classes.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.hbm.xml" />
+            </fileset>
+        </copy>
+    </target>
+	
+	
+	<!-- ***************************************************
+               Gestione della base di dati
+      *************************************************** -->
+
+    <target name="db-create" depends="init" description="Crea la base di dati">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:testdb"
+               userid="${db.username}"
+               password="${db.password}"
+               autocommit="true">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>            
+            create database ${db.name};
+        </sql>
+    </target>
+    
+    <target name="db-create-tables" depends="init" description="Crea le tabelle nella base di dati">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:${db.name}"
+               userid="${db.username}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>             
+            <transaction src="${misc.dir}/${db.name}.sql" />
+        </sql>
+    </target>
+
+    <target name="db-insert" depends="init" description="Effettua eventuali inserimenti aggiuntivi nella base di dati">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:${db.name}"
+               userid="${db.username}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>             
+            <transaction src="${misc.dir}/insert.sql" />
+        </sql>
+    </target>
+
+    <target name="db-insert-test" depends="init" description="Effettua inserimenti di test nella base di dati">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:${db.name}"
+               userid="${db.username}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>             
+            <transaction src="${misc.dir}/insertTest.sql" />
+        </sql>
+    </target>
+	
+    <target name="db-insert-qualificazione" depends="init" description="Effettua eventuali inserimenti aggiuntivi nella base di dati">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:${db.name}"
+               userid="${db.username}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>             
+            <transaction src="${misc.dir}/QUALIFICAZIONE/silvio_qualificazione.sql" />
+        </sql>
+    </target>
+
+    <target name="db-drop" depends="init" description="Elimina la base di dati">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:testdb"
+               userid="${db.username}"
+               password="${db.password}"
+               autocommit="true">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>             
+            drop database ${db.name};
+        </sql>
+    </target>
+    
+    <target name="db-recreate" depends="db-drop, db-create, db-create-tables, db-insert" description="Ricrea e riemplie la base di dati">
+    </target>
+	
+    <target name="db-recreate-qualificazione" depends="db-recreate, db-insert-qualificazione" description="Ricrea e riemplie la base di dati">
+    </target>
+
+
+</project>

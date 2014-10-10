@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="datiCompleti">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="datiDB" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="rilevazione.idrilevazione" type="xs:integer"/>
+							<xs:element name="rilevazione.codimpianto" type="xs:integer"/>
+							<xs:element name="rilevazione.datarilevazione" type="xs:date"/>
+							<xs:element name="rilevazione.codistatregione" type="xs:string"/>
+							<xs:element name="rilevazione.superifcie" type="xs:integer"/>
+							<xs:element name="rilevazione.numero_addetti" type="xs:integer"/>
+							<xs:element name="rilevazione.numero_dipendenti" type="xs:integer"/>
+							<xs:element name="rilevazione.tipologia" type="xs:string"/>
+							<xs:element name="rilevazione.att_commericale" type="xs:string"/>
+							<xs:element name="rilevazione.autolavaggio" type="xs:string"/>
+							<xs:element name="rilevazione.officina" type="xs:string"/>
+							<xs:element name="rilevazione.self_services" type="xs:string"/>
+							<xs:element name="rilevazione.stato" type="xs:string"/>
+							<xs:element name="rilevazione.bandiera" type="xs:string"/>
+							<xs:element name="rilevazione_has_carburante.carburante" type="xs:string"/>
+							<xs:element name="rilevazione_has_carburante.serbatoio" type="xs:integer"/>
+							<xs:element name="rilevazione_has_pagamento.pagamento" type="xs:string"/>
+							<xs:element name="rilevazione_has_servizio.servizio" type="xs:string"/>
+							<xs:element name="rilevazione_has_servizioaccessorio.servizioaccessorio" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="datiCostanti">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="data_rilevazione" type="xs:string"/>
+							<xs:element name="codistatregione" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

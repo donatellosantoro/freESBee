@@ -1,0 +1,103 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Esegui Istanza Test" />
+</c:import>
+<!-- ******************************************* -->
+
+
+<f:view>    
+    <t:saveState value="#{vistaEseguiIstanzaTest}"/>
+    <h:form id="formEseguiIstanzaTest">
+        <rich:modalPanel id="panelErogatore" width="400" height="350" showWhenRendered="#{vistaEseguiIstanzaTest.visualizzaModalPanel}"
+                         rendered="#{vistaEseguiIstanzaTest.visualizzaModalPanel}">
+            <f:facet name="header">
+                <h:outputText value="Risultato dei Test"/>
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/schema.png"  styleClass="linkPicture" />
+                </h:panelGroup>
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                    <rich:componentControl for="panelErogatore" attachTo="hidelink" operation="hide" event="onclick" />
+                </h:panelGroup>
+            </f:facet>
+            <h:panelGroup styleClass="infoText">
+                <h:outputLink styleClass="bloccoSalva" value="#{controlloEseguiIstanzaTest.utente.nomeFileXSD}">
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/disk.png"  styleClass="linkPicture" />
+                    <h:outputText value="#{msg.salva_file}"/>
+                </h:outputLink>
+            </h:panelGroup>
+            <h:panelGroup styleClass="schemaXSD">
+                <h:inputTextarea value="#{vistaEseguiIstanzaTest.testResult}" readonly="true" styleClass="schemaXSDText"/>
+            </h:panelGroup>
+        </rich:modalPanel>
+
+        <a4j:loadBundle basename="messaggi" var="msgx"/>
+        <h:panelGroup>
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/eseguiIstanzaTest.png" alt="Esegui istanza test"/>
+            </h:panelGroup>
+
+            <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+                <h:panelGroup>
+                    <c:import url="menuWizardEseguiIstanzaTest.jsf"/>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <rich:panel id="EseguiIstanzaTestOperation">
+                        <f:facet name="header">
+                            <h:panelGroup  style="width:410px">
+                                <h:panelGroup styleClass="headerNome"  style="width:410px">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/eseguiAccordoCollaborazione.png"  styleClass="linkPicture" />
+                                    <h:outputText value="#{vistaEseguiIstanzaTest.istanzaOperationSelezionata.nome}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{msg.istanza_esegui_test_info}" styleClass="infoText"/>
+                        <h:outputText value="#{controlloEseguiIstanzaTest.errore}" rendered="#{controlloEseguiIstanzaTest.errore != null}" styleClass="errorText"/>
+                        <h:outputText id="boxSuccesso" value="#{controlloEseguiIstanzaTest.messaggio}" rendered="#{controlloEseguiIstanzaTest.messaggio != null}" styleClass="confirmText"/>
+                        <rich:messages styleClass="errorText"/>
+
+                        <h:panelGroup styleClass="pannello">
+                            <h:panelGroup>
+                                <c:import url="eseguiIstanzaTestOperationInesrimentoURLErogatore.jsf"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <c:import url="eseguiIstanzaTestOperationConfigurazione.jsf"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="pulsantiWizard" id="next1">
+                                <h:commandLink action="#{controlloEseguiIstanzaTest.annulla}" immediate="true">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanzaTest.eseguiIstanzaTest}" immediate="true">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_indietro}.png"  styleClass="linkPicture"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanzaTest.confermaDati}">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_conferma}.png"  styleClass="linkPicture" rendered="#{vistaEseguiIstanzaTest.conferma}"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanzaTest.avviaTest}">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_invia}.png"  styleClass="linkPicture" rendered="#{vistaEseguiIstanzaTest.invia}"/>
+                                </h:commandLink>
+                                <h:commandLink action="#{controlloEseguiIstanzaTest.visualizzaResult}">
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_visualizzaRisultatoTest}.png"  styleClass="linkPicture" rendered="#{not empty vistaEseguiIstanzaTest.testResult}"/>
+                                </h:commandLink>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </rich:panel>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:panelGroup>
+    </h:form>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

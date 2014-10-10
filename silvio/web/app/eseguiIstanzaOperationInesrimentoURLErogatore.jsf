@@ -1,0 +1,43 @@
+<rich:panel style="width:400px" id="EseguiIstanzaOperationURLErogatore" styleClass="pannelloURLErogatore"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+    <f:facet name="header">
+        <h:panelGroup  style="width:380px">
+            <h:panelGroup styleClass="headerNome"  style="width:380px">
+                <h:outputText value="#{msg.istanza_operation_esegui_title_url_erogatore}"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </f:facet>
+    <h:outputText value="#{msg.istanza_operation_esegui_info_url_erogatore}" styleClass="infoText"/>
+    <h:panelGroup styleClass="pannello">
+        <h:panelGrid columns="5">
+            <h:outputText  value="#{msg.istanza_url_erogatore}" />
+            <h:inputText value="#{vistaEseguiIstanza.urlInvio}" label="URL" required="true" style="width:190px" readonly="#{vistaEseguiIstanza.autenticazioneFederata}"/>
+            <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+            <rich:toolTip for="help1" showDelay="200">
+                <h:outputText value="#{msg.istanza_operation_esegui_tooltip_url_erogatore}"/>
+            </rich:toolTip>
+            <a4j:form id="formEseguiIstanza">
+                <a4j:commandLink immediate="true" action="#{controlloEseguiIstanza.defaultUrlInvio}"  rendered="#{!vistaEseguiIstanza.autenticazioneFederata}">
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.default}.png"  styleClass="linkPicture" />
+                </a4j:commandLink>
+            </a4j:form>
+
+            <h:outputText  value="#{msg.istanza_tipo_correlazione}" />
+            <h:selectOneMenu value="#{vistaEseguiIstanza.correlazione}" label="TipoCorrelazione" required="true" style="width:195px">
+                <f:selectItem itemLabel="WS Addressing" itemValue="WS_ADDRESSING"/>
+                <f:selectItem itemLabel="SPCoop" itemValue="SPCOOP"/>
+                <a4j:support event="onchange" reRender="listaOperation"/>
+            </h:selectOneMenu>
+            <h:graphicImage id="help2" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+            <rich:toolTip for="help2" showDelay="200">
+                <h:outputText value="#{msg.istanza_tipo_correlazione_tooltip}"/>
+            </rich:toolTip>
+        </h:panelGrid>
+    </h:panelGroup>
+</rich:panel>

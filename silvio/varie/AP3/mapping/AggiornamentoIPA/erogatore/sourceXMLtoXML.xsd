@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiRisposta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiCompleti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="datiCostanti">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Correzione" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiRichiesta">
+          <xs:complexType>
+            <xs:sequence>
+              <xsd:element xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA" type="richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA_Type" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="email">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="telefono">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codice_amministrazione">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codice_aoo">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="codice_uo">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="uri">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="variazioni">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="credenziali_accesso">
+    <xsd:sequence>
+      <xsd:element name="username" nillable="false" type="xsd:string" />
+      <xsd:element name="password" nillable="false" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="indirizzo">
+    <xsd:sequence>
+      <xsd:element name="via" nillable="false" type="xsd:string" />
+      <xsd:element name="numero_civico" nillable="false" type="xsd:string" />
+      <xsd:element name="cap" nillable="false" type="xsd:string" />
+      <xsd:element name="citta" nillable="false" type="xsd:string" />
+      <xsd:element name="sigla_provincia" nillable="false" type="xsd:string" />
+      <xsd:element name="regione" nillable="false" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="responsabile">
+    <xsd:sequence>
+      <xsd:element name="nome" nillable="false" type="xsd:string" />
+      <xsd:element name="cognome" nillable="false" type="xsd:string" />
+      <xsd:element name="titolo" nillable="true" type="xsd:string" />
+      <xsd:element name="email" nillable="true" type="email" />
+      <xsd:element name="telefono" nillable="true" type="telefono" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="servizio_telematico">
+    <xsd:sequence>
+      <xsd:element name="nome" nillable="false" type="xsd:string" />
+      <xsd:element name="descrizione" nillable="true" type="xsd:string" />
+      <xsd:element name="telefono" nillable="true" type="telefono" />
+      <xsd:element name="url" nillable="true" type="uri" />
+      <xsd:element name="email" nillable="true" type="email" />
+      <xsd:element name="codice_ufficio" nillable="true" type="xsd:string" />
+    </xsd:sequence>
+    <xsd:attribute name="pubblico" type="xsd:boolean" />
+    <!-- se true il servizio e' fruibile da internet -->
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="lista_servizi_telematici">
+    <xsd:sequence>
+      <xsd:element name="servizio_telematico" nillable="false" type="servizio_telematico" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="amministrazione">
+    <xsd:sequence>
+      <xsd:element name="nome" nillable="false" type="xsd:string" />
+      <xsd:element name="indirizzo" nillable="true" type="indirizzo" />
+      <xsd:element name="email" nillable="true" type="email" />
+      <xsd:element name="dominio_pec" nillable="true" type="uri" />
+      <xsd:element name="sito_istituzionale" nillable="true" type="uri" />
+      <xsd:element name="responsabile" nillable="true" type="responsabile" />
+      <xsd:element name="servizi_telematici" nillable="true" type="lista_servizi_telematici" />
+      <xsd:element name="aree_organizzative_omogenee" nillable="true" type="lista_aree_organizzative_omogenee" />
+      <xsd:element name="unita_organizzative" nillable="true" type="lista_unita_organizzative" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="area_organizzativa_omogenea">
+    <xsd:sequence>
+      <xsd:element name="codice_aoo" nillable="false" type="codice_aoo" />
+      <xsd:element name="nome" nillable="false" type="xsd:string" />
+      <xsd:element name="responsabile" nillable="false" type="responsabile" />
+      <!-- 
+				Le date di istituzione e soppressione delle AOO, dovranno essere aderenti allo
+				standard specificato dalla ISO 8601 e cio� "AAAA-MM-GG".
+			-->
+      <xsd:element name="data_istituzione" nillable="false" type="xsd:date" />
+      <xsd:element name="data_soppressione" nillable="true" type="xsd:date" />
+      <xsd:element name="certification_autority" nillable="true" type="uri" />
+      <xsd:element name="email" nillable="false" type="email" />
+      <xsd:element name="telefono" nillable="true" type="telefono" />
+      <xsd:element name="fax" nillable="true" type="telefono" />
+      <xsd:element name="indirizzo" nillable="true" type="indirizzo" />
+      <xsd:element name="servizi_telematici" nillable="true" type="lista_servizi_telematici" />
+      <xsd:element name="unita_organizzative" nillable="true" type="lista_unita_organizzative" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="lista_aree_organizzative_omogenee">
+    <xsd:sequence>
+      <xsd:element name="area_organizzativa_omogenea" nillable="false" type="area_organizzativa_omogenea" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="lista_unita_organizzative">
+    <xsd:sequence>
+      <xsd:element name="unita_organizzativa" nillable="false" type="unita_organizzativa" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="unita_organizzativa">
+    <xsd:sequence>
+      <xsd:element name="codice_uo" nillable="false" type="codice_uo" />
+      <xsd:element name="nome_ufficio" nillable="false" type="xsd:string" />
+      <xsd:element name="codice_uo_livello_superiore" nillable="true" type="codice_uo" />
+      <xsd:element name="codice_aoo" nillable="true" type="codice_aoo" />
+      <xsd:element name="indirizzo" type="indirizzo" />
+      <xsd:element name="responsabile" nillable="false" type="responsabile" />
+      <xsd:element name="email" nillable="true" type="email" />
+      <xsd:element name="email_pec" nillable="true" type="email" />
+      <xsd:element name="telefono" nillable="true" type="telefono" />
+      <xsd:element name="fax" nillable="true" type="telefono" />
+      <xsd:element name="url_ca" nillable="true" type="uri" />
+      <xsd:element name="servizi_telematici" nillable="true" type="lista_servizi_telematici" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA_Type">
+    <xsd:sequence>
+      <xsd:element name="amministrazione" type="amministrazione" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="risposta_RichiestaRispostaAsincrona_AggiornamentoIPA_Type">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="correzione" nillable="true" type="variazioni" />
+    </xsd:sequence>
+  </xsd:complexType>
+</xs:schema>
+

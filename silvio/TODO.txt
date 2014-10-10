@@ -1,0 +1,2 @@
+1. La risposta dell'erogatore deve contenere le intestazioni del MimeTypes
+2. Il fruitore, prima di eseguire la trasformazione, deve estrarre dal messaggio il solo Envelope (escludendo gli attachment). Deve quindi passare per il soap processor reader o richiamarne i suoi metodi

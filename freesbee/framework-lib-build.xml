@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="framework-lib-build">
+
+	<!-- ***************************************************
+                    Librerie
+      *************************************************** -->
+
+
+	<!-- **********  HIBERNATE *************-->
+	<echo message="Versione di Hibernate: ${hibernate.ver}" />
+	<property name="hibernate.dir" location="./lib/hibernate-${hibernate.ver}" />
+
+	<fileset id="hibernate.jars" dir="${hibernate.dir}">
+		<include name="*.jar" />
+		<!--  <include name="commons-logging-*.jar" /> -->
+	</fileset>
+
+	<!-- ********** CXF *************-->
+	<echo message="Versione di CXF: ${cxf.ver}" />
+
+	<fileset id="cxf.jars" dir="${lib.dir}/cxf-${cxf.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- ********** CAMEL *************-->
+	<echo message="Versione di Camel: ${camel.ver}" />
+
+	<fileset id="camel.jars" dir="${lib.dir}/camel-${camel.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- ********** JETTY *************-->
+	<echo message="Versione di Jetty: ${jetty.ver}" />
+
+	<fileset id="jetty.jars" dir="${lib.dir}/jetty-${jetty.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+
+	<!-- **********  INTEROPERABILITA *************-->
+	<fileset id="interoperabilita.jars" dir="${lib.dir}/interoperabilita">
+		<include name="*.jar" />
+	</fileset>
+	
+	<!-- **********  SERVICEMIX *************-->
+	<fileset id="servicemix.jars" dir="${lib.dir}/servicemix">
+		<include name="*.jar" />
+	</fileset>
+	
+	<!-- ********** GUICE *************-->
+	<echo message="Versione di Guice: ${guice.ver}" />
+
+	<fileset id="guice.jars" dir="${lib.dir}/guice-${guice.ver}">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- **********  SERVICEMIX *************-->
+	<fileset id="otroslogviewer.jars" dir="${lib.dir}/otroslogviewer">
+		<include name="*.jar" />
+	</fileset>
+
+	<!-- ********** ALTRI *************-->
+	<fileset id="driver.jars" dir="${lib.dir}">
+		<include name="${driver.name}" />
+	</fileset>    
+	<fileset id="commons-logging.jars" dir="${lib.dir}/commons">
+		<include name="commons-*.jar" />
+	</fileset>    
+	<fileset id="logging.jars" dir="${lib.dir}">
+		<include name="log4j-*.jar" />
+	</fileset>
+	<fileset id="test.jars" dir="${lib.dir}">
+		<include name="junit.jar" />
+	</fileset>
+	<fileset id="other.jars" dir="${lib.dir}/others">
+		<include name="*.jar" />
+	</fileset>
+
+</project>

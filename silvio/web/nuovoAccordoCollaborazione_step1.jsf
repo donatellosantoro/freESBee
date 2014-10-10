@@ -1,0 +1,45 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<!-- STEP1 -->
+<h:form id="formStep1" rendered="#{vistaAccordoCollaborazione.step==1}">
+    <a4j:region selfRendered="true">
+        <a4j:loadBundle basename="messaggi" var="msgx"/>
+        <rich:panel style="width:410px;" id="NuovoAccordoCollaborazione">  
+            <f:facet name="header">  
+                <h:panelGroup  style="width:410px">  
+                    <h:outputText styleClass="headerProfilo" value="#{vistaAccordoCollaborazione.step}/3"/>    
+                    <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione_add.png"  styleClass="linkPicture" />
+                        <h:outputText value="#{msg.nuovoAccordoCollaborazione_title}"/>   
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>  
+            <h:outputText value="#{msg.nuovoAccordoCollaborazione_info}" styleClass="infoText"/>
+            <h:outputText value="#{controlloAccordoCollaborazione.errore}" rendered="#{controlloAccordoCollaborazione.errore != null}" styleClass="errorText"/>
+            <h:outputText id="boxSuccesso" value="#{controlloAccordoCollaborazione.successo}" rendered="#{controlloAccordoCollaborazione.successo != null}" styleClass="confirmText"/>
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="1">
+                    <h:selectOneRadio value="#{vistaAccordoCollaborazione.sceltaInput}" layout="pageDirection" required="true">
+                        <f:selectItem itemLabel="Un WSDL (sincrono o oneway)" itemValue="oneWSDL"/>
+                        <f:selectItem itemLabel="Due WSDL (asincrono)" itemValue="twoWSDL"/>
+                        <f:selectItem itemLabel="Zip di un Accordo di Servizio" itemValue="accordoServizio"/>
+                        <a4j:support event="onchange" reRender="next1" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+                <h:panelGroup styleClass="pulsantiWizard" id="next1">  
+                    <h:commandLink action="#{controlloAccordoCollaborazione.annulla}" immediate="true">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloAccordoCollaborazione.sceltaTipo}">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}.png"  styleClass="linkPicture" rendered="#{vistaAccordoCollaborazione.sceltaInput!=null}"/>
+                    </h:commandLink>                    
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}_disabled.png"  styleClass="linkPicture" rendered="#{vistaAccordoCollaborazione.sceltaInput==null}"/>
+                </h:panelGroup>
+            </h:panelGroup>
+        </rich:panel>
+    </a4j:region>
+</h:form>

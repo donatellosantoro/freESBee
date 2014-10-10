@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiCompleti">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiDB" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="titolare.idtitolare" type="xs:integer" />
+              <xs:element name="titolare.iva_cf" type="xs:string" />
+              <xs:element name="titolare.denominazione" type="xs:string" />
+              <xs:element name="titolare.via" type="xs:string" />
+              <xs:element name="titolare.codistat_pvcomune" type="xs:string" />
+              <xs:element name="titolare.cap" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiCostanti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="data_rilevazione" type="xs:string" />
+              <xs:element name="codistatregione" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<definitions targetNamespace="http://ws.ap6.progettoicar.it/" name="AP6WSService" xmlns:tns="http://ws.ap6.progettoicar.it/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://ws.ap6.progettoicar.it/" schemaLocation="AP6WSService_schema1.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="getTitolari">
+    <part name="parameters" element="tns:getTitolari"/>
+  </message>
+  <message name="getTitolariResponse">
+    <part name="parameters" element="tns:getTitolariResponse"/>
+  </message>
+
+  <portType name="AP6WS">
+    <operation name="getTitolari">
+      <input message="tns:getTitolari"/>
+      <output message="tns:getTitolariResponse"/>
+    </operation>
+  </portType>
+  <binding name="AP6WSPortBinding" type="tns:AP6WS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getTitolari">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+</definitions>
+

@@ -1,0 +1,12 @@
+QUALIFICAZIONE
+freesbee
+	ant schemaexport db-recreate-qualificazione
+	
+silvio
+	ant schemaexport db-recreate-qualificazione
+	copiare varie\QUALIFICAZIONE\config in c:\config\silvio
+	avviare silvio
+	
+freesbee
+	ant run
+	ant test-qualificazione

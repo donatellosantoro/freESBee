@@ -1,0 +1,51 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+
+<a4j:region>  
+    <t:saveState value="#{vistaIstanzeAccordi}"/> 
+    <a4j:loadBundle basename="messaggi" var="msgx"/>
+    <rich:panel style="width:410px;" id="NuovaIstanza1" rendered="#{vistaIstanzeAccordi.step==1}">  
+        <f:facet name="header">  
+            <h:panelGroup  style="width:410px">  
+                <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/istanzaAccordoCollaborazione_add.png"  styleClass="linkPicture" />
+                    <h:outputText value="#{msg.istanza_operation_dati} - #{vistaIstanzeAccordi.istanzaOperation.operation.nome}"/>   
+                </h:panelGroup>
+            </h:panelGroup>
+        </f:facet> 
+        <h:outputText value="#{msg.istanza_info_dati}" styleClass="infoText"/>     
+        <rich:messages styleClass="errorText"/>  
+        <h:outputText value="#{controlloFruitoreIstanzeAccordi.errore}" rendered="#{controlloFruitoreIstanzeAccordi.errore != null}" styleClass="errorText"/>
+        <h:outputText value="#{controlloFruitoreIstanzeAccordi.successo}" rendered="#{controlloFruitoreIstanzeAccordi.successo != null}" styleClass="confirmText"/>
+        
+        <h:panelGroup styleClass="pannello" id="pannello">
+            <c:import url="nuovaIstanzaOperation_fruitore_step1_payload.jsf"/>
+            <br/>
+            <c:import url="nuovaIstanzaOperation_fruitore_step1_db.jsf"/>
+            <br/>
+            <c:import url="nuovaIstanzaOperation_fruitore_step1_interattivi.jsf"/>
+            <br/>
+            <c:import url="nuovaIstanzaOperation_fruitore_step1_costanti.jsf"/>            
+        </h:panelGroup>  
+    </rich:panel>
+    <h:panelGroup styleClass="pulsantiWizard" id="next1">
+        <h:form id="nuovaIstanzaFruitore">
+            <h:commandLink action="#{controlloIstanzeAccordi.annulla}" immediate="true">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+            </h:commandLink>
+            <h:commandLink action="#{controlloIstanzeAccordi.nuovaIstanza}" immediate="true">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_indietro}.png"  styleClass="linkPicture"/>
+            </h:commandLink>
+            <h:commandLink action="#{controlloFruitoreIstanzeAccordi.configuraRichiesta}">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}.png"  styleClass="linkPicture" rendered="true"/>
+            </h:commandLink>
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}_disabled.png"  styleClass="linkPicture" rendered="false"/>
+        </h:form>
+    </h:panelGroup>
+</a4j:region>     
+

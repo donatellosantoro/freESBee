@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="web-template-build">
+     
+ <!-- ***************************************************
+            Importazione dei target per Tomcat
+      *************************************************** -->
+
+    <import file="./tomcat-template-build.xml" />
+
+ <!-- ***************************************************
+            Inizializzazione delle proprieta'
+      *************************************************** -->
+
+    <property file="./dependent.properties" />
+	<property name="freesbee.web.sla.name.war" value ="freesbeeWeb-Sla.war" />
+       
+    <target name="-init-folders" depends="">
+        <!-- Cartelle -->
+        <property name="src.dir" location="./src" />
+        <property name="web.dir" location="./web" />
+        <property name="webinf.dir" location="${web.dir}/WEB-INF" />
+        <property name="build.root.dir" location="./build" />
+        <property name="build.webapp.dir" location="${build.root.dir}/${ant.project.name}" />
+        <property name="build.webapp.meta.dir" location="${build.webapp.dir}/WEB-INF" />
+        <property name="build.webapp.metainf.dir" location="${build.webapp.dir}/META-INF" />
+        <property name="build.webapp.classes.dir" location="${build.webapp.dir}/WEB-INF/classes" />
+        <property name="build.dir" location="${build.webapp.classes.dir}" />
+        <property name="build.webapp.lib.dir" location="${build.webapp.dir}/WEB-INF/lib" />
+
+        <property name="jspc.dir" location="${build.root.dir}/jspc" />
+        <property name="jspc.src.dir" location="${jspc.dir}/src" />
+        <property name="jspc.build.dir" location="${jspc.dir}/build" />
+
+        <property name="test.src.dir" location="./test" />
+        <property name="test.dir" location="${build.root.dir}/test" />
+        <property name="test.build.dir" location="${test.dir}/classes" />
+        <property name="test.report.dir" location="${test.dir}/report" />
+        <property name="test.data.dir" location="${test.src.dir}/dati" />
+
+        <property name="test.src.dir" location="./test" />
+
+        <property name="dist.dir" location="./dist" />
+        <property name="javadoc.dir" location="./dist/javadoc" />
+        <property name="misc.dir" location="./varie" />
+        <property name="resources.dir" location="${misc.dir}/risorse" />
+        <property name="conf.dir" location="${src.dir}/conf" />
+        <condition property="test.data.dir.present">
+            <available file="${test.data.dir}" type="dir" />    
+        </condition>
+        <condition property="resources.dir.present">
+            <available file="${resources.dir}" type="dir" />    
+        </condition>
+        <condition property="conf.dir.present">
+            <available file="${conf.dir}" type="dir" />    
+        </condition>
+    </target>
+
+    <target name="-init-jars" depends=""> 
+        <fileset id="test.jars" dir="${lib.dir}">
+            <include name="junit.jar" />
+            <include name="httpunit.jar" />
+            <include name="Tidy.jar" />
+            <include name="junitperf.jar" />    
+        </fileset>    
+        <fileset id="commons-logging.jars" dir="${lib.dir}">
+            <include name="commons-logging-*.jar" />
+        </fileset>    
+        <fileset id="logging.jars" dir="${lib.dir}">
+            <include name="commons-logging-*.jar" />
+            <include name="log4j-*.jar" />
+        </fileset>    
+        <fileset id="web.jars" dir="${lib.dir}/taglibs">
+            <include name="jstl-*.jar" />
+            <include name="standard.jar" />
+        </fileset>        
+    </target>
+
+    <target name="-init-classpath" depends="-init-folders, -init-jars">
+        <property name="build.sysclasspath" value="ignore" />
+        <path id="servlet.classpath">
+            <pathelement location="${servlet.api.jar}"/>
+        </path>
+        <path id="compile.classpath">
+            <path refid="servlet.classpath" />
+            <pathelement location="${build.webapp.classes.dir}" />
+            <fileset refid="commons-logging.jars" />
+        </path>
+        <path id="test.classpath">
+            <path refid="compile.classpath" />
+            <pathelement location="${test.build.dir}" />
+            <fileset refid="test.jars" />
+        </path>
+        <path id="web.classpath">
+            <path refid="servlet.classpath" />
+            <fileset refid="web.jars" />
+        </path>
+    </target>    
+    
+    <target name="-init-release" if="release.build" depends="">
+        <echo message="Build di release" />
+        <property name="build.debug" value="off" />
+        <property name="build.debuglevel" value="lines" />
+        <property name="build.optimize" value="on" />
+    </target>
+    
+    <target name="-init-debug" unless="release.build" depends="">
+        <echo message="Build di debug" />
+        <property name="build.debug" value="on" />
+        <property name="build.debuglevel" value="lines,vars,source" />
+        <property name="build.optimize" value="off" />
+    </target>
+
+    <target name="init" depends="-init-folders, -init-classpath, -init-release, -init-debug" description="inizializza le proprieta' e i path">
+        <property name="webapp.name" value="${ant.project.name}" />
+        <property name="webapp.path" value="/${ant.project.name}" />
+    </target>    
+    
+ <!-- ***************************************************
+             Clean
+      *************************************************** -->
+    <target name="clean" depends="init" description="ripulisce le cartelle build/webapp/WEB-INF/classes e build/webapp/WEB-INF">
+        <delete dir="${build.webapp.classes.dir}" failonerror="false" />
+        <delete dir="${build.webapp.metainf.dir}" failonerror="false" />
+        <delete includeEmptyDirs="true" failonerror="false" >
+            <fileset dir="${build.webapp.meta.dir}" includes="*.*" />
+        </delete>
+        <delete includeEmptyDirs="true" failonerror="false" >
+            <fileset dir="${build.webapp.dir}">
+                <exclude name="WEB-INF/lib/*.*" />            
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="clean-all" depends="init" description="ripulisce le cartelle riproducibili">
+        <delete dir="${build.root.dir}" />
+        <delete dir="${dist.dir}" /> 
+    </target>
+
+   <!-- ***************************************************
+             Preparazione
+      *************************************************** -->    
+    <target name="-create-misc-dir" depends="init">
+        <mkdir dir="${misc.dir}" />
+    </target>
+    
+    <target name="prepare" depends="-create-misc-dir" description="ricrea le cartelle riproducibili">
+        <mkdir dir="${build.root.dir}" />
+        <mkdir dir="${build.webapp.dir}" />
+        <mkdir dir="${build.webapp.classes.dir}" />
+        <mkdir dir="${build.webapp.lib.dir}" />
+        <mkdir dir="${test.build.dir}" />
+        <mkdir dir="${test.report.dir}" />
+        <mkdir dir="${dist.dir}" />
+    </target>
+        
+    <target name="-prepare-resources" depends="prepare" if="resources.dir.present">
+        <copy todir="${build.webapp.classes.dir}/risorse">
+            <fileset dir="${resources.dir}" />
+        </copy>
+    </target>
+
+    <target name="-prepare-conf" depends="prepare" if="conf.dir.present">
+        <copy todir="${build.webapp.classes.dir}">
+            <fileset dir="${conf.dir}" includes="*.*" />
+        </copy>
+    </target>
+
+    <target name="-verify-context" depends="prepare">
+        <condition property="context.present">
+            <available file="${build.webapp.metainf.dir}/${ant.project.name}.xml" />    
+        </condition>
+    </target>
+
+    <target name="generate-context" depends="prepare, -verify-context" unless="context.present">
+        <mkdir dir="${build.webapp.metainf.dir}" />
+        <echo file="${build.webapp.metainf.dir}/${ant.project.name}.xml">
+            &lt;Context docBase="${build.webapp.dir}" 
+                        antiResourceLocking="false" antiJARLocking="false"
+                        reloadable="true"&gt;
+            &lt;/Context&gt;            
+        </echo>
+    </target>
+
+    <target name="-create-test-data-dir" depends="init" unless="test.data.dir.present">
+        <mkdir dir="${test.data.dir}" />
+    </target>
+
+    <target name="-prepare-test" depends="prepare,-create-test-data-dir">
+        <copy todir="${test.dir}/dati">
+            <fileset dir="${test.data.dir}" />
+        </copy>
+    </target>
+
+ <!-- ***************************************************
+                      Compilazione 
+      *************************************************** -->
+    <target name="compile" depends="prepare, -prepare-resources, -prepare-conf" description="compila il codice">
+        <javac srcdir="${src.dir}"
+               destdir="${build.webapp.classes.dir}"
+               classpathref="compile.classpath" 
+               debug="${build.debug}"
+               debuglevel="${build.debuglevel}"
+               optimize="${build.optimize}">
+        </javac>
+    </target>
+    
+    <target name="compile-test" depends="compile" description="compila i test">
+        <javac srcdir="${test.src.dir}"
+               destdir="${test.build.dir}"
+               classpathref="test.classpath"
+               debug="${build.debug}"
+               debuglevel="${build.debuglevel}">
+        </javac>
+    </target>
+
+ <!-- ***************************************************
+                Esecuzione dei test
+      *************************************************** -->
+    <target name="test" depends="test-modello, test-persistenza, test-funzionali, test-prestazioni" description="esegue i test sul modello">
+    </target>
+    
+    <target name="test-modello" depends="-prepare-test, compile-test" description="esegue i test sul modello">
+        <junit haltonfailure="false"
+               errorProperty="test.failed"
+               failureProperty="test.failed"
+               fork="true">
+            <assertions>
+               <enable/>
+            </assertions>
+            <classpath refid="test.classpath" />
+            <batchtest todir="${test.report.dir}">
+                <fileset dir="${test.build.dir}">
+                    <include name="**/modello/Test*.class" />
+                </fileset>
+            </batchtest>
+            <formatter type="plain" usefile="false" />
+            <formatter type="xml" />
+        </junit>
+        <fail if="test.failed">
+            Esecuzione dell'operazione fallita a causa del fallimento dei test
+        </fail>
+    </target>
+    
+    <target name="test-persistenza" depends="-prepare-test, compile-test" description="esegue i test sulla persistenza">
+        <junit haltonfailure="false"
+               errorProperty="test.failed"
+               failureProperty="test.failed"
+               fork="true">
+            <assertions>
+               <enable/>
+            </assertions>
+            <classpath refid="test.classpath" />
+            <batchtest todir="${test.report.dir}">
+                <fileset dir="${test.build.dir}">
+                    <include name="**/persistenza/Test*.class" />
+                </fileset>
+            </batchtest>
+            <formatter type="plain" usefile="false" />
+            <formatter type="xml" />
+        </junit>
+        <fail if="test.failed">
+            Esecuzione dell'operazione fallita a causa del fallimento dei test
+        </fail>
+    </target>
+
+    <target name="test-funzionali" depends="-prepare-test, compile-test" description="esegue i test funzionali">
+        <junit haltonfailure="false"
+               errorProperty="test.failed"
+               failureProperty="test.failed"
+               fork="true">
+            <assertions>
+               <enable/>
+            </assertions>
+            <classpath refid="test.classpath" />
+            <batchtest todir="${test.report.dir}">
+                <fileset dir="${test.build.dir}">
+                    <include name="**/funzionali/Test*.class" />
+                </fileset>
+            </batchtest>
+            <formatter type="plain" usefile="false" />
+            <formatter type="xml" />
+        </junit>
+        <fail if="test.failed">
+            Esecuzione dell'operazione fallita a causa del fallimento dei test
+        </fail>
+    </target>
+
+    <target name="test-prestazioni" depends="-prepare-test, compile-test" description="esegue i test funzionali">
+        <junit haltonfailure="false"
+               errorProperty="test.failed"
+               failureProperty="test.failed"
+               fork="true">
+            <assertions>
+               <enable/>
+            </assertions>
+            <classpath refid="test.classpath" />
+            <batchtest todir="${test.report.dir}">
+                <fileset dir="${test.build.dir}">
+                    <include name="**/prestazioni/Test*.class" />
+                </fileset>
+            </batchtest>
+            <formatter type="plain" usefile="false" />
+            <formatter type="xml" />
+        </junit>
+        <fail if="test.failed">
+            Esecuzione dell'operazione fallita a causa del fallimento dei test
+        </fail>
+    </target>
+
+    <target name="test-single" depends="-prepare-test, compile-test">
+        <junit haltonfailure="true">
+            <classpath refid="test.classpath" />
+            <test todir="${test.report.dir}" name="${testcase}" if="testcase" />
+            <formatter type="plain" usefile="false" />
+            <formatter type="xml" />
+        </junit>
+    </target>
+      
+    <!-- ***************************************************
+                Build
+      *************************************************** -->
+
+    <target name="-prepare-build" depends="init">
+        <copy todir="${build.webapp.dir}">
+            <fileset dir="${web.dir}" />
+        </copy>
+        <copy todir="${build.webapp.lib.dir}">
+            <fileset refid="logging.jars" />
+            <fileset refid="web.jars" />
+        </copy>
+    </target>
+
+    <target name="build" depends="-prepare-build, compile, compile-jsp, generate-context" description="compila ed esegue i test">
+    </target>
+
+    <target name="rebuild" depends="clean, build, test" description="ripulisce e ricostruisce">
+    </target>
+
+    <!-- ***************************************************
+                Run
+      *************************************************** -->
+
+    <target name="run" depends="reload">
+        <property name="webapp.url" value="http://${catalina.host}:${catalina.port}/${webapp.name}" />
+        <exec executable="${browser.exe}" spawn="true">
+           <arg value="${webapp.url}" />
+        </exec>
+    </target>
+
+    <!-- ***************************************************
+                Distribuzione
+      *************************************************** -->
+    <target name="-init-version" depends="init">
+        <buildnumber file="build.properties" />
+        <property file="build.properties" />    
+    </target>
+
+    <target name="javadoc" depends="compile">
+        <javadoc destdir="${javadoc.dir}" 
+                 sourcepath="${src.dir}"
+                 defaultexcludes="yes"
+                 packagenames="*">
+            <classpath refid="compile.classpath" />
+        </javadoc>
+    </target>
+    
+    <target name="war" depends="rebuild, -init-version" description="crea il jar">
+        <war destfile="${dist.dir}/${freesbee.web.sla.name.war}"
+             webxml="${build.webapp.meta.dir}/web.xml">
+            <fileset dir="${build.webapp.dir}" includes="**/*.*" excludes="**/log4j-1.2.14.jar" />
+        </war>
+    </target>
+    
+    <target name="-init-build-files" depends="init">
+        <fileset id="build.file.templates" dir="..">
+            <include name="web-template-build.xml" />
+            <include name="tomcat-template-build.xml" />
+        </fileset>
+    </target>
+
+    <target name="dist" depends="rebuild, -init-version, war, javadoc, -init-build-files" description="crea lo zip distribuibile">
+        <zip zipfile="${dist.dir}/${ant.project.name}-java-${major.version}.${minor.version}-build${build.number}.zip">
+            <!-- jar -->
+            <zipfileset dir="${dist.dir}" prefix="${ant.project.name}-java" includes="*.war" />
+            <!-- pagine -->
+            <zipfileset dir="${web.dir}" prefix="${ant.project.name}-java/web" />
+            <!-- sorgenti -->
+            <zipfileset dir="${src.dir}" prefix="${ant.project.name}-java/src" />
+            <!-- test -->
+            <zipfileset dir="${test.src.dir}" prefix="${ant.project.name}-java/test" />
+            <!-- javadoc -->
+            <zipfileset dir="${javadoc.dir}" prefix="${ant.project.name}-java/javadoc" />
+            <!-- varie -->
+            <zipfileset dir="${misc.dir}" prefix="${ant.project.name}-java/varie" />
+            <!-- build -->
+            <zipfileset dir="." prefix="${ant.project.name}-java" includes="*.*" />
+            <zipfileset prefix="" refid="build.file.templates" />
+        </zip>
+    </target>
+
+ <!-- ***************************************************
+               Target particolari
+      *************************************************** -->
+
+    <target name="all" depends="dist">
+    </target>
+
+    <target name="debug" depends="init">
+       <echoproperties />
+    </target>
+
+    <target name="default" depends="build">
+    </target>
+ 
+ <!-- ***************************************************
+               Target per progetto FreeForm
+      *************************************************** -->
+
+    <target name="generate-freeform-properties" depends="init, prepare">
+        <pathconvert property="compile.classpath.property" dirsep="/" pathsep=";">
+            <path refid="compile.classpath"/>
+        </pathconvert>
+        <pathconvert property="test.classpath.property" dirsep="/" pathsep=";">
+            <path refid="test.classpath"/>
+        </pathconvert>
+        <pathconvert property="web.classpath.property" dirsep="/" pathsep=";">
+            <path refid="web.classpath"/>
+        </pathconvert>
+        <echo file="nbproject/nbproject.properties">
+src.dir            = src
+build.top.dir      = build/${ant.project.name}/WEB-INF
+build.dir          = build/${ant.project.name}/WEB-INF/classes
+test.src.dir       = test
+test.build.dir     = build/test/classes
+dist.dir           = dist
+javadoc.dir        = dist/javadoc
+web.dir            = web
+context.path       = /${ant.project.name}
+catalina.dir        = C:/Program Files/Java/apache-tomcat-6.0.13
+servlet.api.jar     = ${catalina.dir}/lib/servlet-api.jar
+
+compile.classpath  = ${compile.classpath.property}
+test.classpath     = ${test.classpath.property}
+web.classpath      = ${web.classpath.property}
+        </echo>
+    </target>
+
+</project>

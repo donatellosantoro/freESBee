@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:ge="http://ge.freesbee.unibas.it/">
+    <SOAP-ENV:Body>
+        <ge:pubblicaMessaggio>
+            <messaggioSoap>
+                <confermaCategoria>
+                    <categoriaEventiConferma>Test2</categoriaEventiConferma>
+                </confermaCategoria>
+            </messaggioSoap>
+            <nomePubblicatore>NICA_PUGLIA</nomePubblicatore>
+            <tipoPubblicatore>SPC</tipoPubblicatore>
+            <categoriaEventi>GEControlProtocol</categoriaEventi>
+        </ge:pubblicaMessaggio>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

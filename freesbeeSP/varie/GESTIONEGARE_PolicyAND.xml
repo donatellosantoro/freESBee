@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+  <Policy PolicyId="ExamplePolicy"
+          xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+          xmlns:context="urn:oasis:names:tc:xacml:1.0:context"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
+    <Target>
+      <Subjects>
+        <AnySubject/>
+      </Subjects>
+      <Resources>
+        <AnyResource/>
+      </Resources>
+      <Actions>
+        <AnyAction/>
+      </Actions>
+    </Target>
+    <Rule RuleId="ReadRule" Effect="Permit">
+      <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <SubjectAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="idTitle"/>
+          </Apply>
+          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">agente</AttributeValue>
+        </Apply>
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <SubjectAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="idOrganizationUnit"/>
+          </Apply>
+          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Basilicata</AttributeValue>
+        </Apply>
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            <SubjectAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"/>
+          </Apply>
+          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">agentege</AttributeValue>
+        </Apply>
+      </Condition>
+    </Rule>
+  </Policy>

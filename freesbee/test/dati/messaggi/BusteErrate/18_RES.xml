@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Header>
+        <eGov_IT:Intestazione
+            SOAP_ENV:actor="http://www.cnipa.it/eGov_it/portadominio"
+            SOAP_ENV:mustUnderstand="1"
+            xmlns:SOAP_ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:eGov_IT="http://www.cnipa.it/schemas/2003/eGovIT/Busta1_0/">
+            <eGov_IT:IntestazioneMessaggio>
+                <eGov_IT:Mittente>
+                    <eGov_IT:IdentificativoParte tipo="SPC">PAGenerica</eGov_IT:IdentificativoParte>
+                </eGov_IT:Mittente>
+                <eGov_IT:Destinatario>
+                    <eGov_IT:IdentificativoParte tipo="SPC">CNIPA</eGov_IT:IdentificativoParte>
+                </eGov_IT:Destinatario>
+                <eGov_IT:ProfiloCollaborazione>EGOV_IT_ServizioSincrono</eGov_IT:ProfiloCollaborazione>
+                <eGov_IT:Servizio tipo="SPC">QualificazionePDD</eGov_IT:Servizio>
+                <eGov_IT:Azione>testSincrono</eGov_IT:Azione>
+                <eGov_IT:Messaggio>
+                    <eGov_IT:Identificatore>PAGenerica_PAGenericaSPCoopIT_0000013_2010-11-23_15:50</eGov_IT:Identificatore>
+                    <eGov_IT:OraRegistrazione tempo="EGOV_IT_SPC">2010-11-23T15:50:21</eGov_IT:OraRegistrazione>
+                    <eGov_IT:RiferimentoMessaggio>CNIPA_CNIPASPCoopIT_0000019_2010-11-23_15:54</eGov_IT:RiferimentoMessaggio>
+                </eGov_IT:Messaggio>
+            </eGov_IT:IntestazioneMessaggio>
+            <eGov_IT:ListaTrasmissioni>
+                <eGov_IT:Trasmissione>
+                    <eGov_IT:Origine>
+                        <eGov_IT:IdentificativoParte tipo="SPC">CNIPA</eGov_IT:IdentificativoParte>
+                    </eGov_IT:Origine>
+                    <eGov_IT:Destinazione>
+                        <eGov_IT:IdentificativoParte tipo="SPC">PAGenerica</eGov_IT:IdentificativoParte>
+                    </eGov_IT:Destinazione>
+                    <eGov_IT:OraRegistrazione tempo="EGOV_IT_SPC">2010-11-23T15:54:29</eGov_IT:OraRegistrazione>
+                </eGov_IT:Trasmissione>
+                <eGov_IT:Trasmissione>
+                    <eGov_IT:Origine>
+                        <eGov_IT:IdentificativoParte tipo="SPC">PAGenerica</eGov_IT:IdentificativoParte>
+                    </eGov_IT:Origine>
+                    <eGov_IT:Destinazione>
+                        <eGov_IT:IdentificativoParte tipo="SPC">CNIPA</eGov_IT:IdentificativoParte>
+                    </eGov_IT:Destinazione>
+                    <eGov_IT:OraRegistrazione tempo="EGOV_IT_SPC">2010-11-23T15:50:21</eGov_IT:OraRegistrazione>
+                </eGov_IT:Trasmissione>
+            </eGov_IT:ListaTrasmissioni>
+            <eGov_IT:ListaEccezioni>
+                <eGov_IT:Eccezione codiceEccezione="EGOV_IT_101"
+                    contestoCodifica="ErroreIntestazioneMessaggioSPCoop"
+                    posizione="Mittente/IdentificativoParte/indirizzoTelematico" rilevanza="INFO"/>
+            </eGov_IT:ListaEccezioni>
+        </eGov_IT:Intestazione>
+    </soapenv:Header>
+    <soapenv:Body>
+        <ns0:risposta_RichiestaRispostaSincrona_testSincrono xmlns:ns0="http://CNIPA.spcoop.it/servizi/QualificazionePDDWS/types">
+            <ns0:Esito>RISPOSTA_OK</ns0:Esito>
+            <ns0:TokenSessione>0cf30647-c6ce-4f6c-92d2-04051c1a62b3</ns0:TokenSessione>
+        </ns0:risposta_RichiestaRispostaSincrona_testSincrono>
+    </soapenv:Body>
+</soapenv:Envelope>

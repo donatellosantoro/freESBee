@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jstl/core" xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+    <head>
+        <meta name="author" content="Gruppo ICAR icar.unibas@gmail.com" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="${request.contextPath}/app/css/stile.css" type="text/css"/>
+        <link rel="stylesheet" href="#{skin}/css/stile.css" type="text/css"/>
+        <script type="text/javascript" src="${request.contextPath}/app/js/silvio.js">
+        </script>
+        <script type="text/javascript" src="#{skin}/js/idAssistito.js">
+        </script>
+        <script type="text/javascript" src="#{skin}/js/SQLExecutor.js">
+        </script>
+        <script type="text/javascript" src="#{skin}/js/XMLHttpRequest_responseXML.js">
+        </script>
+		<style type="text/css">			
+			#tessera{background-image:url('#{skin}/images/tessera.jpg');}
+		</style>
+        <title><ui:insert name="title"/></title>
+    </head><f:loadBundle basename="messaggi" var="msg"/><a4j:loadBundle basename="messaggi" var="msgx"/>
+    <body onload="javascript:inizializzaValori()">
+        <center>
+            <div id="top">
+                <img src="#{skin}/images/san_carlo/header.png" onclick="$(this).blindUp({ duration: 16 })"/>
+            </div>
+            <div>
+                <div id="left">
+                    <img src="#{skin}/images/san_carlo/left.png"/>
+                    <div class="istanzeTitle">
+                        <h1>SERVIZI</h1>
+                    </div>
+                    <div class="boxIstanze">
+                        <ui:insert name="elencoIstanze"/>
+                    </div><img src="#{skin}/images/san_carlo/left2.png"/><img src="#{skin}/images/san_carlo/left1.png"/>
+                </div>
+                <div>
+                    <div id="right">
+                        <img src="#{skin}/images/san_carlo/right.png"/>
+                        <div class="boxRight">
+                            <h:outputText styleClass="boxRightText" value="Benvenuto #{utente.nome}"/>
+                            <h:form>
+                                <h:commandLink styleClass="btnLogout" action="#{controlloLogin.logout}" value="Logout" immediate="true"/>
+                            </h:form>
+                        </div><img src="#{skin}/images/san_carlo/right2.png"/><img src="#{skin}/images/san_carlo/right1.png"/>
+                    </div>
+                    <h:form styleClass="center_content">
+                        <center>
+                            <img src="#{skin}/images/servizioLogo.jpg" alt="Servizio Identificazione Assistito" style="margin-top:10px"/>
+                            <div class="bloccoCentrale">
+                            	<p></p>
+                                <ui:insert name="messaggi"/>
+								<span id="labelTitle">Richiedi dati paziente</span><br/>
+								<div class="formRicercaCF">
+                                <form>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                Codice Fiscale
+                                            </td>
+                                            <td>
+                                                <input type="text" id="CodiceFiscale" style="width:166px"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Regione Residenza
+                                            </td>
+                                            <td>
+                                                <select id="RegioneDestinatario" onchange="regione(this.value),asl()" style="width:172px">
+                                                    <OPTION VALUE="">Seleziona Regione</OPTION>
+                                                    <OPTION VALUE="001">ABRUZZO</OPTION>
+                                                    <OPTION VALUE="002">BASILICATA</OPTION>
+                                                    <OPTION VALUE="003">CALABRIA</OPTION>
+                                                    <OPTION VALUE="004">CAMPANIA</OPTION>
+                                                    <OPTION VALUE="005">EMILIA ROMAGNA</OPTION>
+                                                    <OPTION VALUE="006">FRIULI VENEZIA GIULIA</OPTION>
+                                                    <OPTION VALUE="007">LAZIO</OPTION>
+                                                    <OPTION VALUE="008">LIGURIA</OPTION>
+                                                    <OPTION VALUE="009">LOMBARDIA</OPTION>
+                                                    <OPTION VALUE="010">MARCHE</OPTION>
+                                                    <OPTION VALUE="011">MOLISE</OPTION>
+                                                    <OPTION VALUE="012">PIEMONTE</OPTION>
+                                                    <OPTION VALUE="013">PUGLIA</OPTION>
+                                                    <OPTION VALUE="014">SARDEGNA</OPTION>
+                                                    <OPTION VALUE="015">SICILIA</OPTION>
+                                                    <OPTION VALUE="016">TOSCANA</OPTION>
+                                                    <OPTION VALUE="018">UMBRIA</OPTION>
+                                                    <OPTION VALUE="017">TRENTINO ALTO ADIGE</OPTION>
+                                                    <OPTION VALUE="019">VALLE AOSTA</OPTION>
+                                                    <OPTION VALUE="020">VENETO</OPTION>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Asl Residenza
+                                            </td>
+                                            <td>
+                                                <select id="CodiceAslDestinatario" onchange="asl()" style="width:172px">
+                                                    <option value="0">Selezionare la regione</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td/>
+                                            <td>
+                                                <h:commandButton onclick="javascript:copiaValori()" styleClass="linkPicture" image="#{pageContext.request.contextPath}/images/btn_#{msgx.button_invia}.png" action="#{controlloEseguiIstanza.inviaMessaggioXML}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+									<input type="hidden" value="101" id="CodiceAslAssistenza"/>
+									<input type="hidden" value="101" id="CodiceAslResidenza"/>
+									<input type="hidden" value="1" id="IdOperatoreDestinatario"/>
+                                </form>									
+								</div>
+                            </div>
+							
+                            <div style="width:400px;margin-top:40px;margin-bottom:40px">
+								<span id="labelTitle">Cerca un paziente nel sistema locale</span><br/>
+								<div class="formRicercaCF">									
+									<span id="labelRicercaCodiceFiscale">Codice Fiscale</span>
+									<input type="text" id="ricercaCodiceFiscale"/>
+	                                <a href="javascript:executeSQL()" id="linkRicercaCodiceFiscale">Cerca</a>									
+								</div>						
+                            </div>
+							<center>								
+								<div id="ricercaPaziente" style="margin: 0 285px; display:block">
+									<div id="risultato">
+									</div>
+								</div>
+							</center>
+
+							<h:inputText value="#{vistaEseguiIstanza.nuovaRisorsa}" style="display:none" class="boxRisorsa"/>
+                            <h:panelGroup>
+                                <h:panelGrid columns="2" styleClass="bloccoCentrale,bloccoCentrale">
+                                    <a4j:outputPanel id="pannelloEseguiIstanza">
+                                        <h:panelGroup styleClass="pannello">
+                                            <h:panelGroup>
+                                                <ui:include src="#{appPath}/eseguiIstanzaOperationInesrimentoURLErogatore.jsf"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaDatiDB}">
+                                                <ui:include src="#{appPath}/eseguiIstanzaOperationInesrimentoDB.jsf"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaDatiInterattivi}">
+                                                <ui:include src="#{appPath}/eseguiIstanzaOperationInesrimentoInterattivi.jsf"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaPannelloRispostaSincrona}">
+                                                <ui:include src="#{appPath}/eseguiIstanzaOperationRisposta.jsf"/>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </a4j:outputPanel>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                        </center>
+                    </h:form>
+                </div>
+            </div>
+        </center>
+    </body>
+</html>

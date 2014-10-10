@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Servizio di Fruizione Prestazioni Ambulatoriali - WSDL Implementativo Erogatore -->
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:zsvr="http://www.intemaweb.com/services/fruizioneprestazioniambulatoriali" xmlns:types="http://www.intemaweb.com/iron/datatypes" targetNamespace="http://www.intemaweb.com/services/fruizioneprestazioniambulatoriali">
+	<wsdl:import namespace="http://www.intemaweb.com/iron/datatypes" location="Types2.2.xsd"/>
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Segnalazione Fruizione Prestazioni Ambulatoriali </wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali"/>
+	</wsdl:message>
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali_Msg">
+		<wsdl:documentation>Messaggio di richiesta necessario per definire l'operazione di Cancellazione Fruizione Prestazioni Ambulatoriali</wsdl:documentation>
+		<wsdl:part name="messagePart" element="types:richiesta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali"/>
+	</wsdl:message>
+	<wsdl:portType name="ServizioFruizionePrestazioniAmbulatoriali">
+		<wsdl:documentation>Definizione delle operazioni/scenari elementari di coordinamento e del servizio</wsdl:documentation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Segnalazione fruizione prestazioni ambulatoriali</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali_Msg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Cancellazione della segnalazione fruizione prestazioni ambulatoriali precedentemente inviata</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FruizionePrestazioniAmbulatorialiBinding" type="zsvr:ServizioFruizionePrestazioniAmbulatoriali">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<!-- Segnalazione fruizione prestazioni ambulatoriali -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<!-- Cancellazione segnalazione prestazioni ambulatoriali -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali">
+			<soap:operation soapAction="urn:RichiestaRispostaAsincrona_CancellazionePrestazioniAmbulatoriali" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FruizionePrestazioniAmbulatoriali">
+		<documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+		<wsdl:port name="FruizionePrestazioniAmbulatoriali" binding="zsvr:FruizionePrestazioniAmbulatorialiBinding">
+			<soap:address location="http://localhost/regbas/fruizioneprestazioniambulatoriali.asmx"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

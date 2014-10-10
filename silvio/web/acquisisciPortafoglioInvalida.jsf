@@ -1,0 +1,57 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Esegui Istanza" />
+</c:import>
+<!-- ******************************************* -->
+
+
+<f:view>    
+    <%--t:saveState value="#{vistaEffettuaLogin}"/--%>
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/effettuaLogin.png" alt="Effettua Login"/>                
+        </h:panelGroup>
+        <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menuWizardEseguiIstanza.jsf"/>
+            </h:panelGroup>
+            <h:panelGroup> 
+                <h:form id="formEseguiIstanza">
+                    <a4j:region selfRendered="true">
+                        <a4j:loadBundle basename="messaggi" var="msgx"/>
+                        <rich:panel style="width:410px;" id="EffettuaLogin">  
+                            <f:facet name="header">  
+                                <h:panelGroup  style="width:410px">  
+                                    <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/eseguiAccordoCollaborazione.png"  styleClass="linkPicture" />
+                                        <h:outputText value="#{msg.effettua_login}"/>   
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </f:facet> 
+                            <h:outputText value="#{msg.effettua_login_info}" styleClass="infoText"/>
+                            
+                            <h:panelGroup styleClass="pannello">                                
+                                <h:panelGroup styleClass="pulsantiWizard" id="acquisisciPortafoglio">
+                                    <h:commandLink>               
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_asserzioni.png"  styleClass="linkPicture"/>
+                                    </h:commandLink>
+                                </h:panelGroup>                                    
+                            </h:panelGroup>
+                        </rich:panel>
+                    </a4j:region>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

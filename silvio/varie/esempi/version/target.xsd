@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://axisversion.sample">
+	<xs:complexType name="Exception">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
+

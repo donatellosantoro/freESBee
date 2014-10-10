@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:types="http://progettoicar.it/AP3interprotoQry/types" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://progettoicar.it/AP3interprotoQry/types" elementFormDefault="qualified">
+	<xsd:include schemaLocation="AP3InterrogaDocRequest.xsd"/>
+	<xsd:include schemaLocation="AP3InterrogaDocResponse.xsd"/>
+	<xsd:complexType name="richiesta_RichiestaRispostaSincrona_InterrogaDoc_Type">
+		<xsd:sequence>
+			<xsd:element name="AP3InterrogaDocRequest" type="tns:AP3InterrogaDocRequest">
+				<xsd:annotation>
+					<xsd:appinfo>http://progettoicar.it/AP3interprotoQry/types/AP3InterrogaDocRequest.xsd</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="richiesta_RichiestaRispostaSincrona_InterrogaDoc" type="types:richiesta_RichiestaRispostaSincrona_InterrogaDoc_Type"/>
+	<xsd:complexType name="risposta_RichiestaRispostaSincrona_InterrogaDoc_Type">
+		<xsd:sequence>
+			<xsd:element name="AP3InterrogaDocResponse" type="tns:AP3InterrogaDocResponse">
+				<xsd:annotation>
+					<xsd:appinfo>http://progettoicar.it/AP3interprotoQry/types/AP3InterrogaDocResponse.xsd</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="risposta_RichiestaRispostaSincrona_InterrogaDoc" type="types:risposta_RichiestaRispostaSincrona_InterrogaDoc_Type"/>
+</xsd:schema>

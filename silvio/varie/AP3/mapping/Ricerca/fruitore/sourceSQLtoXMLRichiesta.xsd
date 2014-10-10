@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiCompleti">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiDB" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="amministrazione.id" type="xs:integer" />
+              <xs:element name="amministrazione.codice" type="xs:string" />
+              <xs:element name="amministrazione.nome" type="xs:string" />
+              <xs:element name="amministrazione.indirizzo" type="xs:integer" />
+              <xs:element name="amministrazione.email" type="xs:string" />
+              <xs:element name="amministrazione.dominio_pec" type="xs:string" />
+              <xs:element name="amministrazione.sito_istituzionale" type="xs:string" />
+              <xs:element name="amministrazione.responsabile" type="xs:integer" />
+              <xs:element name="areaorganizzativaomogenea.id" type="xs:integer" />
+              <xs:element name="areaorganizzativaomogenea.codice_aoo" type="xs:string" />
+              <xs:element name="areaorganizzativaomogenea.nome" type="xs:string" />
+              <xs:element name="areaorganizzativaomogenea.responsabile" type="xs:integer" />
+              <xs:element name="areaorganizzativaomogenea.data_istituzione" type="xs:date" />
+              <xs:element name="areaorganizzativaomogenea.data_soppressione" type="xs:date" />
+              <xs:element name="areaorganizzativaomogenea.certification_autority" type="xs:string" />
+              <xs:element name="areaorganizzativaomogenea.email" type="xs:string" />
+              <xs:element name="areaorganizzativaomogenea.telefono" type="xs:string" />
+              <xs:element name="areaorganizzativaomogenea.fax" type="xs:string" />
+              <xs:element name="areaorganizzativaomogenea.indirizzo" type="xs:integer" />
+              <xs:element name="areaorganizzativaomogenea.id_amministrazione" type="xs:integer" />
+              <xs:element name="documentofascicolo.id" type="xs:integer" />
+              <xs:element name="documentofascicolo.descrizione_corrispondente" type="xs:string" />
+              <xs:element name="documentofascicolo.data_registrazione" type="xs:date" />
+              <xs:element name="documentofascicolo.estremiprotocollo_anno" type="xs:string" />
+              <xs:element name="documentofascicolo.estremiprotocollo_numero" type="xs:string" />
+              <xs:element name="documentofascicolo.arrivopartenza" type="xs:string" />
+              <xs:element name="documentofascicolo.codice_registro" type="xs:string" />
+              <xs:element name="documentofascicolo.descrizione_registro" type="xs:string" />
+              <xs:element name="documentofascicolo.id_areaorganizzativaomogenea" type="xs:integer" />
+              <xs:element name="documentofascicolo.id_fascicolo" type="xs:integer" />
+              <xs:element name="fascicolo.id" type="xs:integer" />
+              <xs:element name="fascicolo.codice_ufficio" type="xs:string" />
+              <xs:element name="fascicolo.descrizione_ufficio" type="xs:string" />
+              <xs:element name="fascicolo.anno" type="xs:string" />
+              <xs:element name="fascicolo.numero" type="xs:string" />
+              <xs:element name="fascicolo.subnumero" type="xs:string" />
+              <xs:element name="fascicolo.id_classifica" type="xs:integer" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiCostanti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dataDa" type="xs:string" />
+              <xs:element name="dataA" type="xs:string" />
+              <xs:element name="codiceAmm" type="xs:string" />
+              <xs:element name="codiceAoo" type="xs:string" />
+              <xs:element name="anno" type="xs:string" />
+              <xs:element name="numero" type="xs:string" />
+              <xs:element name="oggetto" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

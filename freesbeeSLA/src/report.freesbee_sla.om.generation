@@ -1,0 +1,136 @@
+
+targetdatabase = postgresql
+
+correctGetters = 
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+    Peers generated in package it.unibas.freesbeesla.tracciatura.modello.dao
+    Objects generated in package it.unibas.freesbeesla.tracciatura.modello
+    Maps generated in package it.unibas.freesbeesla.tracciatura.modello.map
+    Managers generated in package it.unibas.freesbeesla.tracciatura.modello
+    Beans generated in package it.unibas.freesbeesla.tracciatura.modello.bean
+
+    BasePeers generated in package it.unibas.freesbeesla.tracciatura.modello.base
+    BaseObjects generated in package it.unibas.freesbeesla.tracciatura.modello.base
+    BaseManagers generated in package it.unibas.freesbeesla.tracciatura.modello.base
+    BaseBeans generated in package it.unibas.freesbeesla.tracciatura.modello.bean
+
+        Failed to create dir or dir already exists: /Users/donatello/Dati/work/icar/svn/codice/freesbeeSLA/src/it/unibas/freesbeesla/tracciatura/modello/dao/
+
+        Failed to create dir or dir already exists: /Users/donatello/Dati/work/icar/svn/codice/freesbeeSLA/src/it/unibas/freesbeesla/tracciatura/modello/
+
+        Failed to create dir or dir already exists: /Users/donatello/Dati/work/icar/svn/codice/freesbeeSLA/src/it/unibas/freesbeesla/tracciatura/modello/map/
+
+    
+    
+        Failed to create dir or dir already exists: /Users/donatello/Dati/work/icar/svn/codice/freesbeeSLA/src/it/unibas/freesbeesla/tracciatura/modello/base/
+
+        Failed to create dir or dir already exists: /Users/donatello/Dati/work/icar/svn/codice/freesbeeSLA/src/it/unibas/freesbeesla/tracciatura/modello/base/
+
+    
+    
+                  icar_inf2_soggetto
+
+        
+        
+                
+
+                  
+        
+        
+                  
+        
+                
+                
+        
+        
+        
+                                icar_inf2_service
+
+        
+        
+                
+
+                  
+        
+        
+                  
+        
+                
+                
+        
+        
+        
+                                icar_inf2_sla_object_trace
+
+        
+        
+                
+
+                  
+        
+        
+                  
+        
+                
+                
+        
+        
+        
+                                utente
+
+        
+        
+                
+
+                  
+        
+        
+                  
+        
+                
+                
+        
+        
+        
+                                configurazione
+
+        
+        
+                
+
+                  
+        
+        
+                  
+        
+                
+                
+        
+        
+        
+                                configurazione_sp
+
+        
+        
+                
+
+                  
+        
+        
+                  
+        
+                
+                
+        
+        
+        
+                  

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types">
+  <xs:import namespace="http://progettoicar.it/AP3interprotoQry/types" schemaLocation="schemaRichiesta.xsd" />
+  <xs:element name="datiRisposta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiCompleti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="datiDB" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="documento.codice_amministrazione" type="xs:string" />
+                    <xs:element name="documento.codice_aoo" type="xs:string" />
+                    <xs:element name="documento.nome_documento" type="xs:string" />
+                    <xs:element name="documento.mime_type" type="xs:string" />
+                    <xs:element name="documento.contenuto_documento" type="xs:string" />
+                    <xs:element name="documento.codice_doc_inf" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="tns:richiesta_RichiestaRispostaSincrona_InterrogaDoc" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

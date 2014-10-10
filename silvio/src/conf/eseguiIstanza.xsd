@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Papi Raton (Pirate Bay) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="istanzaOperation">
+		<xs:annotation>
+			<xs:documentation>Dettagli per l'esecuzione di un'istanza dell'accordo di collaborazione</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="nomeOperazione" type="xs:string"/>
+				<xs:element name="indirizzoRichiesta" type="xs:string"/>
+				<xs:element name="risorsa" type="xs:string" minOccurs="0"/>
+				<xs:element name="datiParziali">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="datiDB" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="dato">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="nome" type="xs:string" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="datiInterattivi" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="dato">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="nome" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="correlazione">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="WS_ADDRESSING"/>
+						<xs:enumeration value="SPCOOP"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="test" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

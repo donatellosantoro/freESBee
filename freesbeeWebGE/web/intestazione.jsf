@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD-xhtml1/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it">
+
+<head>
+    <meta name="author" content="Gruppo ICAR freesbee@unibas.it" />
+    <title>Web Console Gestore Eventi - ${param.titolo}</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stile.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stileStruttura.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stileTabelle.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stileTree.css" type="text/css"/>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" />
+</head>
+
+    <div id="nonFooter">

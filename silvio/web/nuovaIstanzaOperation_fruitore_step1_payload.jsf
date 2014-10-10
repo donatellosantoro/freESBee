@@ -1,0 +1,71 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<h:form>
+    <rich:modalPanel id="panel" width="500" height="500" showWhenRendered="#{vistaIstanzeAccordi.visualizzaXSD}" 
+                     rendered="#{vistaIstanzeAccordi.visualizzaXSD}">
+        <f:facet name="header">            
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/schema.png"  styleClass="linkPicture" />
+                <h:outputText value="XSD Schema"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                <rich:componentControl for="panel" attachTo="hidelink" operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+        <h:panelGroup styleClass="infoText">
+            <h:outputLink styleClass="bloccoSalva" value="#{controlloFruitoreIstanzeAccordi.utente.nomeFileXSD}">
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/disk.png"  styleClass="linkPicture" />
+                <h:outputText value="#{msg.salva_file}"/>
+            </h:outputLink>            
+            <h:outputText styleClass="nomeRoot" value="Usare come root element: #{vistaIstanzeAccordi.nomeRoot}"/>
+        </h:panelGroup>
+        <h:panelGroup styleClass="schemaXSD">
+            <h:inputTextarea value="#{controlloFruitoreIstanzeAccordi.utente.fileXSD}" readonly="true" styleClass="schemaXSDText"/>
+        </h:panelGroup>
+    </rich:modalPanel>
+</h:form>
+<h:form id="formPayload">
+    <rich:panel id="pannelloPayload" headerClass="pannelloHeaderPiccolo"  bodyClass="pannelloAperto#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}">                    
+        <f:facet name="header">       
+            <h:panelGroup>  
+                <h:selectBooleanCheckbox onchange="javascript:submit()" value="#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}" styleClass="pannelloCheckHeaderPiccolo">
+                    <a4j:support event="onchange" reRender="pannelloPayload"  immediate="true" action="#{controlloIstanzeAccordi.switchPayload}"/>
+                </h:selectBooleanCheckbox>
+                <h:panelGroup styleClass="pannelloTestoHeaderPiccolo">  
+                    <h:outputText value="#{msgx.parametriPayload}"/>   
+                </h:panelGroup>
+            </h:panelGroup>
+        </f:facet>
+        
+        <h:panelGroup rendered="#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}">          
+            <h:panelGrid columns="1" styleClass="infoText">  
+                <h:outputText value="#{msgx.payloadCostanti}" style="font-size:8pt;"/>      
+                <h:panelGroup style="display:block">  
+                    <h:commandLink styleClass="bloccoSalva" action="#{controlloFruitoreIstanzeAccordi.visualizzaXSDTarget}"  style="font-size:8pt;">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/page_code.png"  styleClass="linkPicture" />
+                        <h:outputText value="#{msg.xsdMessaggio}"/>
+                    </h:commandLink>
+                    
+                    <h:commandLink styleClass="bloccoSalva" action="#{controlloFruitoreIstanzeAccordi.valida}"  style="font-size:8pt;" rendered="false">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/tick.png"  styleClass="linkPicture" />
+                        <h:outputText value="#{msg.valida}"/>
+                    </h:commandLink>
+                </h:panelGroup> 
+            </h:panelGrid>             
+            <h:panelGroup  styleClass="pannello">                           
+                <h:inputTextarea label="Payload" style="width:100%;height:150px" value="#{vistaIstanzeAccordi.datiPM.payloadCostante}"/>             
+            </h:panelGroup>
+        </h:panelGroup>
+        
+        <h:commandLink action="#{controlloIstanzeAccordi.confermaPayloadCostante}">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_conferma}.png"  styleClass="linkPicture"/>
+        </h:commandLink>
+    </rich:panel>
+</h:form>

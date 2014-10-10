@@ -1,0 +1,71 @@
+.gridAccordi {
+    border-left-width:0px;
+    border-top-width:0px;
+    margin-left:-10px;
+}
+
+.gridAccordiCell {
+    border-bottom-width:0px;
+    border-right-width:0px;
+}
+
+
+.pannelloAccordo {
+    width:395px;
+}
+
+.accordoTree {
+    
+}
+
+.inputIndirizzo{
+    margin-right:5px;
+    width:200px;
+}
+
+.treeNomeAccordo {
+    float:left;
+    font-weight:bold;
+}
+
+.treeRuoloAccordo {
+    float:right;
+    text-align:right;
+    font-weight:bold;
+}
+
+.treeOperation {
+    width:340px;
+    display:block;
+}
+
+.bloccoNomeAccordo{
+    display:block;
+    width:340px;
+}
+
+.treeIndirizzo {
+    margin-right:10px;
+}
+.treeNomeOperation {
+    font-size:8pt;
+    float:left;
+}
+
+.treeProfiloOperation {
+    float:right;
+    font-size:8pt;
+    margin-right:19px;
+}
+
+.treeProfiloComboOperation {
+    font-size:8pt;
+    width:73px;
+    height:16px;
+    float:right;
+    border:1px solid grey;
+}
+
+.treeNomeMessage {
+    font-size:8pt;
+}

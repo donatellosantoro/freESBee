@@ -1,0 +1,42 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Login di configurazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<center>
+    <f:view>
+              
+        <rich:modalPanel id="panelLogin" showWhenRendered="true" minHeight="100" minWidth="300" autosized="true" >
+            <f:facet name="header">
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/key_start.png"  styleClass="linkPicture" />
+                    <h:outputText value="Login"/>
+                </h:panelGroup>
+            </f:facet>
+            <h:form>
+                <h:panelGroup id="boxErrore" styleClass="errore" style="width:280px;" rendered="#{controlloSchermoLoginConfigurazione.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloSchermoLoginConfigurazione.errore}"/>
+                </h:panelGroup>
+
+                <h:panelGrid columns="2" >
+                    <h:outputText value="Nome Utente: "/> 
+                    <h:inputText id="nomeUtente" label="Nome Utente" value="#{vistaSchermoLoginConfigurazione.nomeUtente}"/>
+                    <h:outputText value="Password: "/> 
+                    <h:inputSecret id="password" label="Password" value="#{vistaSchermoLoginConfigurazione.password}"/>
+                    <h:commandButton value="login" style="width:100px" action="#{controlloSchermoLoginConfigurazione.login}" />
+                </h:panelGrid>
+            </h:form>
+        </rich:modalPanel>
+    </f:view>
+</center>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

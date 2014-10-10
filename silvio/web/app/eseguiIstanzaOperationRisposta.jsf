@@ -1,0 +1,47 @@
+<a4j:region xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+    <h:panelGroup  rendered="#{controlloEseguiIstanza.errore == null}">
+        <rich:spacer height="30" />
+        <h:panelGrid columns="1">
+            <rich:modalPanel id="panelIstanzaOperationRisposta" width="500" height="500" showWhenRendered="#{vistaEseguiIstanza.visualizzaPannelloRispostaSincrona}">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/schema.png"  styleClass="linkPicture" />
+                        <h:outputText value="#{msg.istana_operation_esegui_risposta}"/>
+                    </h:panelGroup>
+                </f:facet>
+                <f:facet name="controls">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                        <rich:componentControl for="panelIstanzaOperationRisposta" attachTo="hidelink" operation="hide" event="onclick" />
+                    </h:panelGroup>
+                </f:facet>
+                <h:panelGroup styleClass="infoText">
+                    <h:panelGrid columns="2">
+                        <h:panelGroup>
+                            <h:outputText style="display:block" value="#{msg.istana_operation_esegui_risposta_idMessaggioRichiesta}"/>
+                            <h:outputText style="display:block" value="#{msg.istana_operation_esegui_risposta_idMessaggioRisposta}"/>
+                            <h:outputText style="display:block" value="#{msg.istana_operation_esegui_risposta_tipo}"/>
+                            <h:outputText style="display:block" value="#{msg.istana_operation_esegui_risposta_messaggio}"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputText style="display:block"  value="#{vistaEseguiIstanza.rispostaEseguiIstanza.idMessaggio}"/>
+                            <h:outputText style="display:block" value="#{vistaEseguiIstanza.rispostaEseguiIstanza.idMessaggioRisposta}"/>
+                            <h:outputText style="display:block" value="#{vistaEseguiIstanza.rispostaEseguiIstanza.tipoMessaggio}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+                <h:panelGroup styleClass="schemaXSD">
+                    <h:inputTextarea value="#{vistaEseguiIstanza.rispostaEseguiIstanza.messaggio}" readonly="true" styleClass="messaggioRisposta" rendered="#{!vistaEseguiIstanza.rispostaEseguiIstanza.errore}" />
+                    <h:inputTextarea value="#{vistaEseguiIstanza.rispostaEseguiIstanza.messaggioErrore}" readonly="true" styleClass="messaggioRisposta" rendered="#{vistaEseguiIstanza.rispostaEseguiIstanza.errore}" />
+                </h:panelGroup>
+            </rich:modalPanel>
+        </h:panelGrid>
+    </h:panelGroup>
+</a4j:region>

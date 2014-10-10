@@ -1,0 +1,49 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>
+    <rich:panelMenu width="255" styleClass="menu">
+
+        <rich:panelMenuGroup label="Gestori Eventi" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+         <rich:panelMenuItem action="#{controlloGestoreEventi.getListaGestoreEventi}" label="Gestori Eventi"/>
+        </rich:panelMenuGroup>
+
+  <br/><rich:separator height="1" lineType="solid"/><br/>
+
+        <rich:panelMenuGroup label="Categorie di Eventi" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/lightning.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/lightning.png">
+            <rich:panelMenuItem action="#{controlloCategoriaEventiInterna.getListaCategoriaEventi}" label="Categorie di Eventi Interne"/>
+            <rich:panelMenuItem action="#{controlloCategoriaEventiEsterna.getListaCategoriaEventi}" label="Categorie di Eventi Esterne"/>
+        </rich:panelMenuGroup>
+
+
+        <br/><rich:separator height="1" lineType="solid"/><br/>
+        <rich:panelMenuGroup label="Configurazione" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/configurazione.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/configurazione.png">
+            <rich:panelMenuItem action="#{controlloConfigurazione.caricaConfigurazioneGE}" label="Configurazione"/>
+            <rich:panelMenuItem action="#{controlloConfigurazioneSP.caricaConfigurazioneSP}" label="Configurazione SP"/>
+        </rich:panelMenuGroup>
+
+        <br/><rich:separator height="1" lineType="solid"/><br/>
+        <rich:panelMenuGroup label="#{utente.nomeUtente}" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+            <rich:panelMenuItem action="#{controlloLogin.logout}" label="Logout"/>
+            <rich:panelMenuItem action="#{controlloLogin.forwardCambioPassword}" label="Cambia Password"/>
+        </rich:panelMenuGroup>
+
+    </rich:panelMenu>
+
+    <!--h:panelGroup styleClass="imgTitle"-->
+            <!--h:graphicImage value="/images/title/logoProj.png" alt="Logo freESBee Project" height="100px" width="200px"/-->
+        <!--/h:panelGroup-->
+
+</h:form>
+
+

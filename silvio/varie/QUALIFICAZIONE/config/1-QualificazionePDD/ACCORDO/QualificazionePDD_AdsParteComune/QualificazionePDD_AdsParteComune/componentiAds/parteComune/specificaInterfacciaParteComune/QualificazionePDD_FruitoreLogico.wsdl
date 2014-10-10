@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:intf="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+			<xsd:import namespace="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" schemaLocation="Types.xsd"/>
+
+		</xsd:schema>
+  </wsdl:types>
+ 
+	<wsdl:message name="segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg">
+		<wsdl:part element="types:segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg">
+		<wsdl:part element="types:risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico" name="parameters"/>
+	</wsdl:message>
+
+ 	<wsdl:portType name="QualificazionePDDCorrelato">
+
+	  <wsdl:operation name="riceviRispostaTestAsincronoSimmetrico">
+			<wsdl:input message="intf:segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico_Msg"/>
+	  </wsdl:operation>
+		
+	</wsdl:portType>
+  <wsdl:binding name="QualificazionePDDCorrelatoWSSoapBinding" type="intf:QualificazionePDDCorrelato">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="riceviRispostaTestAsincronoSimmetrico">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QualificazionePDDCorrelatoWSService">
+    <wsdl:port binding="intf:QualificazionePDDCorrelatoWSSoapBinding" name="QualificazionePDDCorrelatoWS">
+      <soap:address location="http://localhost:9080/FruitoreQualificazioneWEB/services/QualificazionePDDCorrelatoWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

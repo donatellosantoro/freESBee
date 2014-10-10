@@ -1,0 +1,50 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Acquisizione Portafolgio" />
+</c:import>
+<!-- ******************************************* -->
+
+<center>
+    <f:view>
+        
+        <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiAccordoServizio:boxSuccesso',delay:2.0,duration:0.8"/>
+        <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiAccordoServizio:boxErrore',duration:0.8"/>
+        
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/logoSLA.png" styleClass="imgLogin" alt="Logo freESBee.Trace"/>   
+        </h:panelGroup>
+        
+        <rich:modalPanel id="panelAcquisizionePortafolgio" showWhenRendered="true" width="250" height="85" autosized="true">
+            <f:facet name="header">
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                    <h:outputText value="Acquisizione Portafoglio"/>
+                </h:panelGroup>
+            </f:facet>    
+            <h:form>
+                <h:panelGroup id="boxErrore" styleClass="errore" style="width:230px;" rendered="#{controlloAcquisizionePortafoglio .visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloAcquisizionePortafoglio.errore}"/>
+                </h:panelGroup>
+
+                <h:panelGrid>
+                    <h:outputLabel value="Acquisizione Portafoglio"/>
+                    <h:commandButton value="Acquisizione Portafoglio" style="width:200px" action="#{controlloAcquisizionePortafoglio.acquisisciPortafoglio}" />
+                </h:panelGrid>
+            </h:form>
+        </rich:modalPanel>
+        
+    </f:view>
+</center>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

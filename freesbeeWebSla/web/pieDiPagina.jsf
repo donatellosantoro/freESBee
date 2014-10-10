@@ -1,0 +1,25 @@
+<div class="footer">
+    <div class="contentFooter">
+        © COPYRIGHT 2009 <a href="http://freesbee.unibas.it">GRUPPO freESBee</a>
+        <img src="${pageContext.request.contextPath}/images/title/logoProj.png" alt="Logo freESBee Project"class="footerFreesbee"/>
+    </div>
+</div>
+</body>
+</html>
+
+<!--iv class="footer">
+    <a href="http://validator.w3.org/check/referer">
+        <img src="${pageContext.request.contextPath}/images/valid_xhtml.png"
+         alt="Valid XHTML 1.0" height="15" width="80" /></a>
+    <a href="http://jigsaw.w3.org/css-validator/validator.html.en">
+        <img src="${pageContext.request.contextPath}/images/valid_css.png"
+         alt="Valid CSS" height="15" width="80" /></a>
+    <a href="http://www.hibernate.org">
+        <img src="${pageContext.request.contextPath}/images/hibernate.png"
+         alt="Hibernate" height="15" width="80" /></a>
+    <a href="http://labs.jboss.com/jbossrichfaces/">
+        <img src="${pageContext.request.contextPath}/images/richfaces.png"
+         alt="Rich Faces" height="15" width="80" /></a>
+</div>
+</body>
+</html-->

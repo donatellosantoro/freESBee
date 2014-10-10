@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <soapenv:Fault xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+            <faultcode xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">soap:Client</faultcode>
+            <faultstring><![CDATA[EGOV_IT_001 - Formato Busta non corretto]]></faultstring>
+        </soapenv:Fault>
+    </soapenv:Body>
+</soapenv:Envelope>

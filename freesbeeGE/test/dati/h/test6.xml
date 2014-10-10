@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ge="http://ge.freesbee.unibas.it/">
+    <soap:Header/>
+    <soap:Body>
+        <ge:consegnaMessaggio>
+            <messaggioSoap>
+                <rimuoviGESottoscrittore>
+                    <nomeSottoscrittore>NON_GE</nomeSottoscrittore>
+                    <tipoSottoscrittore>SPC</tipoSottoscrittore>
+                    <categoriaSottoscrizione>Test1</categoriaSottoscrizione>
+                </rimuoviGESottoscrittore>
+            </messaggioSoap>
+            <nomePubblicatore>NON_GE</nomePubblicatore>
+            <tipoPubblicatore>SPC</tipoPubblicatore>
+            <categoriaEventi>GEControlProtocol</categoriaEventi>
+        </ge:consegnaMessaggio>
+    </soap:Body>
+</soap:Envelope>

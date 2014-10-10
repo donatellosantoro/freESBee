@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD-xhtml1/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it">
+
+    <head>
+        <meta name="author" content="Gruppo ICAR freesbee@unibas.it" />
+        <title>FreESBee - Errore 404</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stile.css" type="text/css"/>
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" />
+    </head>
+
+    <body>
+        <div class="bloccoCentrale" style="text-align:center">
+            <img src="images/title/logoFreesbee.png" alt="Logo freESBee"/>
+            <h2 style="color: red; font-size: 15px;">Errore</h2>
+            <h1>La pagina richiesta non esiste.</h1>
+
+            <p>${pageScope.exception}</p>
+        <p><a href="index.faces">Home</a></p>
+        </div>
+
+        <div class="footer">
+            <a href="http://validator.w3.org/check/referer">
+                <img src="${pageContext.request.contextPath}/images/valid_xhtml.png"
+                 alt="Valid XHTML 1.0" height="15" width="80" /></a>
+            <a href="http://jigsaw.w3.org/css-validator/validator.html.en">
+                <img src="${pageContext.request.contextPath}/images/valid_css.png"
+                 alt="Valid CSS" height="15" width="80" /></a>
+            <a href="http://www.hibernate.org">
+                <img src="${pageContext.request.contextPath}/images/hibernate.png"
+                 alt="Hibernate" height="15" width="80" /></a>
+            <a href="http://labs.jboss.com/jbossrichfaces/">
+                <img src="${pageContext.request.contextPath}/images/richfaces.png"
+                 alt="Rich Faces" height="15" width="80" /></a>
+        </div>
+    </body>
+</html>

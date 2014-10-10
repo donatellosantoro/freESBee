@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+    <Header>
+        <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <saml:Assertion xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="_52dd2f9c89fe4b5f8b86c34d5cd9bd52" IssueInstant="2008-11-28T18:05:58.030Z" Version="2.0">
+                <saml:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">https://icarlab.unibas.it/idp/shibboleth</saml:Issuer>
+                <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                    <ds:SignedInfo>
+                        <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+                        <ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+                        <ds:Reference URI="#_52dd2f9c89fe4b5f8b86c34d5cd9bd52">
+                            <ds:Transforms>
+                                <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                                <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+                                    <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="ds saml xs xsi" />
+                                </ds:Transform>
+                            </ds:Transforms>
+                            <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+                            <ds:DigestValue>4HNg/I+FZ3Zr1Wv/5aSqijgCOAQ=</ds:DigestValue>
+                        </ds:Reference>
+                    </ds:SignedInfo>
+                    <ds:SignatureValue>
+                        JR2+auPtEvpR9kHiEP/CiC/uwqwLt4F6l3TFylkKiDCZOO2Y2vK7F1wWMpXAOeeaeofbcth872kN
+                        HIOYJxE4Mm2bgHHFUaIFuY5KCuISMAulNzQVmCmISrFs/Vg9YFPME6oXC8wK6PpYQp+BiGf8CMDe
+                        cggfkSpgtHhDbuFOPQtHtPGjB7ZG1c0ZnFo2RYUCb4YrMAmaQJdS1FxlQ9HDnNh2XaOV2WPGSiMl
+                        4L8OpT8TMgTCAj0owmuvSVCdTiHCbB/U3O+DVLudQtEc3wM4f1xGaaTBXClaSKu/vSIiEhuaTsku
+                        PZIbFhoPTqlEmTrtG2cS2xoeKM9xEGNqRrQ3Ig==
+                    </ds:SignatureValue>
+                    <ds:KeyInfo>
+                        <ds:KeyValue>
+                            <ds:RSAKeyValue>
+                                <ds:Modulus>gph41mXBvOFVlA3GjQ5zciX7ZOnqxzZRuDIYPK81y0G8q2cMBmJtjKXhEbMKj1Ou4yQokPQ/vM3y
+                                    3Bn5kZc14AkS+tPwkcoEbauExP0JSg1Ube843MFGZe9mbtr1j9JX+ZMjvqoF9fw9S0wKjhTe0ws8
+                                    HNhu3B2CvD8CmeLLhrf7FP8MLfGYpJN1IW9qlmZ4zWoVtXh28gwmbRrit1i7Imo4/B5TsVpkfBCj
+                                    LW1e9G9etp8hrDlQa6mZ4MvfK1BcsaO8XuXvcsNfJCSXaytQsHF/hd+1cPipcf+fSyKZfYwVoOG3
+                                bLxlkcn5rlgnfJXNHnJFyRDIh8nwK9t2SXLc6Q==</ds:Modulus>
+                                <ds:Exponent>AQAB</ds:Exponent>
+                            </ds:RSAKeyValue>
+                        </ds:KeyValue>
+                    </ds:KeyInfo>
+                </ds:Signature>
+                <saml:Subject>
+                    <saml:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified">b</saml:NameID>
+                    <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+                        <saml:SubjectConfirmationData Address="127.0.0.1" InResponseTo="_24968542bf4aca1e81ea41bbfd00cd1c" NotOnOrAfter="2008-11-28T18:10:58.030Z" Recipient="https://sp.example.unibas.org/Shibboleth.sso/SAML2/POST" />
+                    </saml:SubjectConfirmation>
+                </saml:Subject>
+                <saml:Conditions NotBefore="2008-11-28T18:05:58.030Z" NotOnOrAfter="2008-11-28T18:10:58.030Z">
+                    <saml:AudienceRestriction>
+                        <saml:Audience>https://sp.example.unibas.org/shibboleth-sp</saml:Audience>
+                    </saml:AudienceRestriction>
+                </saml:Conditions>
+                <saml:AuthnStatement AuthnInstant="2008-11-28T18:05:57.643Z" SessionIndex="0ab96afd458d7d30447c12914c37707ab72aa993953b38607e580516ee5ecd97" SessionNotOnOrAfter="2008-11-28T18:35:57.643Z">
+                    <saml:SubjectLocality Address="127.0.0.1" />
+                    <saml:AuthnContext>
+                        <saml:AuthnContextDeclRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextDeclRef>
+                    </saml:AuthnContext>
+                </saml:AuthnStatement>
+                <saml:AttributeStatement>
+                    <saml:Attribute FriendlyName="title" Name="idTitle" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                        <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Borsista</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute FriendlyName="organizationUnit" Name="idOrganizationUnit" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                        <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Unibas</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+            </saml:Assertion>
+        </wsse:Security>
+    </Header>
+    <Body>
+        <helloWorld />
+    </Body>
+</Envelope>

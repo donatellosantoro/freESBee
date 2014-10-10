@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" xmlns:intf="http://www.progettoicar.it/ipa" xmlns:impl="http://www.progettoicar.it/ipa" xmlns:types="http://www.progettoicar.it/ipa/types" xmlns:ns="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.progettoicar.it/ipa">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.progettoicar.it/ipa" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:types="http://www.progettoicar.it/ipa/types">
+			<xsd:import namespace="http://www.progettoicar.it/ipa/types" schemaLocation="Types.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA_Msg">
+		<wsdl:part name="parameters" element="types:richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA"/>
+	</wsdl:message>
+
+	<wsdl:portType name="AggiornamentoIPA_WS">
+		<!-- Azione della busta di egov = "RichiestaAggiornamentoIPA" -->
+		<wsdl:operation name="RichiestaRispostaAsincrona_AggiornamentoIPA">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_AggiornamentoIPA_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

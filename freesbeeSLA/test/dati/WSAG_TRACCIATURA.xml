@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsag:GuaranteeTerms xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.ggf.org/graap/2007/03/ws-agreement GuaranteeTerms.xsd">
+	<wsag:GuaranteeTerm wsag:Name="TempoRispostaMedio1M" wsag:Obligated="ServiceProvider">
+		<wsag:ServiceLevelObjective>
+			<wsag:CustomServiceLevel>
+				<wsag:Threshold wsag:Operator="LessEqual" wsag:Value="500"/>
+				<wsag:Function wsag:resultType="double" xsi:type="wsag:Mean">
+					<wsag:BasicMetric wsag:Unit="milliseconds">tempoRisposta</wsag:BasicMetric>
+					<wsag:Window>
+						<wsag:Interval>Month</wsag:Interval>
+					</wsag:Window>
+				</wsag:Function>
+			</wsag:CustomServiceLevel>
+		</wsag:ServiceLevelObjective>
+		<wsag:BusinessValueList/>
+	</wsag:GuaranteeTerm>
+	<wsag:GuaranteeTerm wsag:Name="MaxTempoRisposta5" wsag:Obligated="ServiceProvider">
+		<wsag:ServiceLevelObjective>
+			<wsag:CustomServiceLevel>
+				<wsag:Threshold wsag:Operator="Less" wsag:Value="1100"/>
+				<wsag:Function wsag:resultType="double" xsi:type="wsag:Max">
+					<wsag:BasicMetric wsag:Unit="milliseconds">tempoRisposta</wsag:BasicMetric>
+					<wsag:Window>
+						<wsag:Times>5</wsag:Times>
+					</wsag:Window>
+				</wsag:Function>
+			</wsag:CustomServiceLevel>
+		</wsag:ServiceLevelObjective>
+		<wsag:BusinessValueList/>
+	</wsag:GuaranteeTerm>
+</wsag:GuaranteeTerms>

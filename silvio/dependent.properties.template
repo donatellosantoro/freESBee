@@ -1,0 +1,24 @@
+# File di properties dependent.properties
+
+lib.dir             = ./lib
+
+jsf.ver             = 1.2
+tomahawk.ver        = 1.1
+cxf.ver             = 2.0.4
+hibernate.ver       = 3.2
+camel.ver       	= 1.5.0
+richfaces.ver       = 3.2.1
+jetty.ver       	= 6.1.8
+facelets.ver		= 1.0.14
+
+catalina.dir        = C:/Program Files/apache-tomcat-6.0.16
+servlet.api.jar     = ${catalina.dir}/lib/servlet-api.jar
+catalina.host       = localhost
+catalina.port       = 8080
+catalina.username   = admin
+catalina.password   = admin
+
+driver.name         = postgresql-8.1-409.jdbc3.jar
+db.name             = silvio
+db.username         = silvio
+db.password         = **silvio**

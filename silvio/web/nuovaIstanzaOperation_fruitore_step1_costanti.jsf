@@ -1,0 +1,98 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+<rich:modalPanel id="panelEliminaDatoCostante" showWhenRendered="#{vistaIstanzeAccordi.eliminaDatoCostante}" rendered="#{vistaIstanzeAccordi.eliminaDatoCostante}" height="100" width="240">
+    <f:facet name="header">
+        <h:panelGroup>
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+            <h:outputText value="#{msg.confermaEliminazione}"/>
+        </h:panelGroup>
+    </f:facet>    
+    <h:form>
+        <h:outputText styleClass="confermaMessaggio" value="#{msg.query_confermaEliminaDatoCostante}"/>
+        <h:panelGroup styleClass="bloccoPulsantiDialog">                    
+            <h:commandLink action="#{controlloErogatoreIstanzeAccordi.chiudiModalPanel}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelEliminaDatoCostante')">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_annulla}.png"  styleClass="linkPicture"/>
+            </h:commandLink>
+            <h:commandLink action="#{controlloIstanzeAccordi.eliminaDatoCostante}">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_conferma}.png"  styleClass="linkPicture"/>
+            </h:commandLink>  
+        </h:panelGroup>
+    </h:form>
+</rich:modalPanel>
+
+<h:form id="formCostanti">
+    <rich:panel id="pannelloDatiCostanti" headerClass="pannelloHeaderPiccolo"  bodyClass="pannelloAperto#{vistaIstanzeAccordi.datiPM.datiCostantiSelezionati}">                    
+        <f:facet name="header">       
+            <h:panelGroup>  
+                <h:selectBooleanCheckbox value="#{vistaIstanzeAccordi.datiPM.datiCostantiSelezionati}" styleClass="pannelloCheckHeaderPiccolo" disabled="#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}">
+                    <a4j:support event="onchange" reRender="pannelloDatiCostanti" immediate="true" action="#{controlloIstanzeAccordi.switchCostanti}"/>
+                </h:selectBooleanCheckbox>
+                <h:panelGroup styleClass="pannelloTestoHeaderPiccolo">  
+                    <h:outputText value="#{msgx.costanti}"/>   
+                </h:panelGroup>
+            </h:panelGroup>
+        </f:facet>
+        
+        <h:panelGroup rendered="#{vistaIstanzeAccordi.datiPM.datiCostantiSelezionati}">                        
+            <h:outputText value="#{msgx.datiCostanti}" styleClass="infoText"/>                        
+            <h:panelGroup  styleClass="pannello">                           
+                <rich:panel header="#{msgx.parametriCostanti}" >
+                    <h:panelGrid columns="3" style="width:350px" >                                                                                   
+                        <h:outputText  value="#{msgx.nomeCostante}"/>
+                        <h:inputText label="nomeDatoCostante" style="width:150px" required="true" value="#{vistaIstanzeAccordi.datiPM.datoPrimitivoCostante.nome}"/>
+                        <h:outputText  value=""/>
+                        <h:outputText  value="#{msgx.valoreCostante}"/>
+                        <h:inputText label="nomeDatoCostante" style="width:150px" required="true" value="#{vistaIstanzeAccordi.datiPM.datoPrimitivoCostante.valore}"/>
+                        <h:panelGroup>  
+                            <h:commandLink action="#{controlloIstanzeAccordi.aggiungiDatoPrimitivoCostante}">               
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_dato_add.png"  styleClass="linkPicture" rendered="true"/>                                                                                    
+                            </h:commandLink>                                
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:panel>
+                
+            </h:panelGroup>
+            
+            
+            
+            <h:panelGroup rendered="#{!empty vistaIstanzeAccordi.datiPM.datiCostanti.datiCostanti}">
+                <rich:dataTable id="listaSelect" rows="10" columnClasses="col" binding="#{vistaIstanzeAccordi.datiPM.listaDatiPrimitiviCostantiGridFruitore}"
+                                value="#{vistaIstanzeAccordi.datiPM.datiCostanti.datiCostanti}" var="datoCostante" styleClass="tabellaSelect" 
+                                width="362px" columnsWidth="350">
+                    <f:facet name="header">
+                        <rich:columnGroup styleClass="headerTabella">
+                            <h:column>
+                                <h:outputText styleClass="headerText" value="#{msgx.datoCostante_header}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText styleClass="headerText" value="" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText styleClass="headerText" value="" />
+                            </h:column>
+                        </rich:columnGroup>                                
+                    </f:facet>
+                    <h:column>
+                        <h:outputText value="#{datoCostante.nome}" />
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="#{datoCostante.valore}" />
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{controlloIstanzeAccordi.confermaEliminazioneDatoCostate}" id="eliminaDatoCostante" immediate="true">               
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/cestino.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                        <rich:toolTip for="eliminaDatoCostante" showDelay="200">
+                            <h:outputText value="#{msgx.eliminare}"/>
+                        </rich:toolTip>
+                    </h:column>
+                </rich:dataTable> 
+            </h:panelGroup>
+        </h:panelGroup>
+    </rich:panel>
+</h:form>

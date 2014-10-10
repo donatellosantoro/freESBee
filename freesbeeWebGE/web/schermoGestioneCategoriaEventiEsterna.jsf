@@ -1,0 +1,422 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Categorie di Eventi Esterne" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <t:saveState value="#{vistaCategoriaEventiEsterna}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/blue/categorieEventiEsterne.png" alt="Categorie Eventi Esterne" width="400" height="50"/>
+            </h:panelGroup>
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:1"/>
+
+            <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:300px;" rendered="#{controlloCategoriaEventiEsterna.visualizzaMessaggio}">
+                <h:outputText styleClass="successoMessaggio" value="#{controlloCategoriaEventiEsterna.messaggio}"/>
+            </h:panelGroup>
+            <h:panelGroup  id="boxErrore" styleClass="errore" style="width:300px;"  rendered="#{controlloCategoriaEventiEsterna.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloCategoriaEventiEsterna.errore}"/>
+            </h:panelGroup>
+
+
+
+            <!-- PANNELLO DISATTIVA CATEGORIA -->
+            <rich:modalPanel id="panelEliminaCategoria" showWhenRendered="#{vistaCategoriaEventiEsterna.elimina}" height="150" width="320" >
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                        <h:outputText value="Conferma disattivazione"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:outputText styleClass="confermaMessaggio" value="#{controlloCategoriaEventiEsterna.conferma}"/>
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Disattiva" action="#{controlloCategoriaEventiEsterna.disattiva}" rendered="#{vistaCategoriaEventiEsterna.categoriaEventiSelezionata.attiva}" />
+                        <h:commandButton value="Attiva" action="#{controlloCategoriaEventiEsterna.attiva}" rendered="#{!vistaCategoriaEventiEsterna.categoriaEventiSelezionata.attiva}"/>
+                        <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelEliminaCategoria')" action="#{controlloCategoriaEventiEsterna.getListaCategoriaEventi}" immediate="true"/>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <!-- PANNELLO SOTTOSCRIZIONI -->
+            <rich:modalPanel  id="panelSottoscrizioni"  autosized="true"  showWhenRendered="#{vistaCategoriaEventiEsterna.sottoscrizioni}" rendered="#{vistaCategoriaEventiEsterna.sottoscrizioni}">
+
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/plus_shield.png"  styleClass="linkPicture" />
+                        <h:outputText value="Sottoscrizioni"/>
+                    </h:panelGroup>
+                </f:facet>
+                <f:facet name="controls">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelinkSottoscrizioni"/>
+                        <rich:componentControl for="panelSottoscrizioni" attachTo="hidelinkSottoscrizioni" operation="hide" event="onclick" />
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:panelGroup styleClass="infoText">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome Categoria:    "  styleClass="textHeader" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.categoriaEventiSelezionata.nome}" styleClass="textHeaderGrassetto" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="infoText">
+                        <rich:tabPanel style="width:300px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
+                                       binding="#{vistaCategoriaEventiEsterna.tabPanelSottoscrizione}" >
+
+                            <rich:tab disabled="true">
+                                <h:outputText styleClass="intestazioneTab" value="Lista delle Sottoscrizioni "/>
+                            </rich:tab>
+                            <rich:tab>
+                                <f:facet name="label">
+                                    <h:panelGroup>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                        <h:outputText value="Tabella"/>
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText styleClass="intestazioneTab" value="Sottoscrizioni"/>
+                                <rich:datascroller align="left"  for="listaSottoscrizione" />
+                                <rich:spacer height="30" />
+                                <rich:dataTable id="listaSottoscrizione" rows="10" columnClasses="col" binding="#{vistaCategoriaEventiEsterna.tabellaSottoscrizione}"
+                                                width="280" value="#{vistaCategoriaEventiEsterna.listaSottoscrizione}" var="sottoscrizione">
+
+                                    <f:facet name="header">
+                                        <rich:columnGroup>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Tipo" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Nome" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Tipo Sottoscrizione" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Dettagli" />
+                                            </h:column>
+                                        </rich:columnGroup>
+                                    </f:facet>
+                                    <h:column>
+                                        <h:outputText value="#{sottoscrizione.sottoscrittore.tipo}" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{sottoscrizione.sottoscrittore.nome}" />
+                                    </h:column>
+                                    <h:column>
+                                        <center>
+                                            <h:outputText value="#{sottoscrizione.tipoSottoscrizione}" />
+                                        </center>
+                                    </h:column>
+                                    <h:column>
+                                        <center>
+                                            <h:commandLink  action="#{controlloCategoriaEventiEsterna.visuliazzaDettagliSottoscrizione}" ><img title="Dettagli" alt="Dettaglio della sottoscrizione" src="${pageContext.request.contextPath}/images/icons/zoom.png" /></h:commandLink>
+                                        </center>
+                                    </h:column>
+                                </rich:dataTable>
+                            </rich:tab>
+                        </rich:tabPanel>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <!-- PANNELLO SOTTOSCRIZIONE -->
+            <rich:modalPanel id="panelSottoscrizione"  autosized="true"  showWhenRendered="#{vistaCategoriaEventiEsterna.dettagli}" rendered="#{vistaCategoriaEventiEsterna.dettagli}">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/plus_shield.png"  styleClass="linkPicture" />
+                        <h:outputText value="Sottoscrizione"/>
+                    </h:panelGroup>
+                </f:facet>
+                <f:facet name="controls">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelinkSottoscrizione"/>
+                        <rich:componentControl for="panelSottoscrizione" attachTo="hidelinkSottoscrizione" operation="hide" event="onclick" />
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:panelGroup>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome Categoria:"  styleClass="intestazioneWizard" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.categoriaEventiSelezionata.nome}"  />
+                            <h:outputText styleClass="intestazioneWizard" value="Tipo:" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.sottoscrizioneSelezionata.sottoscrittore.tipo}" />
+                            <h:outputText styleClass="intestazioneWizard" value="Nome:" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.sottoscrizioneSelezionata.sottoscrittore.nome}" />
+                            <h:outputText styleClass="intestazioneWizard" value="Descrizione" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.sottoscrizioneSelezionata.sottoscrittore.descrizione}" />
+                            <h:outputText value="" />
+                            <h:outputText value="" />
+                            <h:outputText styleClass="intestazioneWizard" value="Tipo Sottoscrizione:" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.sottoscrizioneSelezionata.tipoSottoscrizione}" />
+                            <h:outputText styleClass="intestazioneWizard" value="Data Inizio:" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.dataI}" />
+                            <h:outputText styleClass="intestazioneWizard" value="Data Fine:" />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.dataF}" />
+                            <h:outputText styleClass="intestazioneWizard" value="Filtro Contenuto: " />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.sottoscrizioneSelezionata.filtroContenuto.regularExpression}" />
+                            <h:outputText styleClass="intestazioneWizard" value="Data Scadenza: " />
+                            <h:outputText value="#{vistaCategoriaEventiEsterna.dataScadenza}" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <rich:tabPanel rendered="#{vistaCategoriaEventiEsterna.dettagli}" style="width:300px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab" binding="#{vistaCategoriaEventiEsterna.tabPanelPubblicatoreFiltro}" >
+                            <rich:tab disabled="true">
+                                <h:outputText styleClass="intestazioneTab" value="Lista dei Filtri Pubblicatore "/>
+                            </rich:tab>
+                            <rich:tab>
+                                <f:facet name="label">
+                                    <h:panelGroup>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                        <h:outputText value="Tabella"/>
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText styleClass="intestazioneTab" value="Filtri Pubblicatore"/>
+                                <rich:datascroller align="left"  for="listaPubblicatore" />
+                                <rich:spacer height="30" />
+                                <rich:dataTable id="listaPubblicatoreFiltro" rows="10" columnClasses="col" binding="#{vistaCategoriaEventiEsterna.tabellaPubblicatoreFiltro}"
+                                                width="280" value="#{vistaCategoriaEventiEsterna.listaPubblicatoreFiltro}" var="pubblicatore">
+
+                                    <f:facet name="header">
+                                        <rich:columnGroup>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Tipo" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Nome" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Descrizione" />
+                                            </h:column>
+                                        </rich:columnGroup>
+                                    </f:facet>
+                                    <h:column>
+                                        <h:outputText value="#{pubblicatore.tipo}" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{pubblicatore.nome}" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{pubblicatore.descrizione}" />
+                                    </h:column>
+                                </rich:dataTable>
+                            </rich:tab>
+                        </rich:tabPanel>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+
+            <!-- PANNELLO PUBBLICATORI -->
+            <rich:modalPanel id="panelPubblicatori"  autosized="true"  showWhenRendered="#{vistaCategoriaEventiEsterna.pubblicatori}" rendered="#{vistaCategoriaEventiEsterna.pubblicatori}">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/plus_shield.png"  styleClass="linkPicture" />
+                        <h:outputText value="Pubblicatori Confermati"/>
+                    </h:panelGroup>
+                </f:facet>
+                <f:facet name="controls">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelinkPubblicatori"/>
+                        <rich:componentControl for="panelPubblicatori" attachTo="hidelinkPubblicatori" operation="hide" event="onclick" />
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:panelGroup styleClass="infoText">
+                        <h:outputText value="Categoria:    "  styleClass="textHeader" />
+                        <h:outputText value="   "  />
+                        <h:outputText value="#{vistaCategoriaEventiEsterna.categoriaEventiSelezionata.nome}" styleClass="textHeaderGrassetto" />
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="infoText">
+                        <rich:tabPanel style="width:300px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
+                                       binding="#{vistaCategoriaEventiEsterna.tabPanelPubblicatore}" >
+
+                            <rich:tab disabled="true">
+                                <h:outputText styleClass="intestazioneTab" value="Lista dei Pubblicatori "/>
+                            </rich:tab>
+                            <rich:tab>
+                                <f:facet name="label">
+                                    <h:panelGroup>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                        <h:outputText value="Tabella"/>
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText styleClass="intestazioneTab" value="Pubblicatore"/>
+                                <rich:datascroller align="left"  for="listaPubblicatore" />
+                                <rich:spacer height="30" />
+                                <rich:dataTable id="listaPubblicatore" rows="10" columnClasses="col" binding="#{vistaCategoriaEventiEsterna.tabellaPubblicatore}"
+                                                width="280" value="#{vistaCategoriaEventiEsterna.listaPubblicatore}" var="pubblicatore">
+
+                                    <f:facet name="header">
+                                        <rich:columnGroup>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Tipo" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Nome" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="headerText" value="Descrizione" />
+                                            </h:column>
+                                        </rich:columnGroup>
+                                    </f:facet>
+                                    <h:column>
+                                        <h:outputText value="#{pubblicatore.tipo}" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{pubblicatore.nome}" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{pubblicatore.descrizione}" />
+                                    </h:column>
+                                </rich:dataTable>
+                            </rich:tab>
+                        </rich:tabPanel>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <!-- PANNELLO AGGIUNGI CATEGORIA -->
+            <rich:simpleTogglePanel opened="true" id="boxNuovaCategoria" style="width:300px;" switchType="ajax">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/azione_add.png"  styleClass="linkPicture" />
+                        <h:outputText value="Nuova Categoria di Eventi Esterna"/>
+                    </h:panelGroup>
+                </f:facet>
+
+
+                <h:form id="formCampiCategoria">
+                    <h:panelGroup id="boxCategoria" >
+                        <rich:messages>
+                            <f:facet name="errorMarker">
+                                <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>
+                            </f:facet>
+                        </rich:messages>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome"/>
+                            <h:inputText size="40" id="textNome" label="nome" value="#{vistaCategoriaEventiEsterna.nomeNuovaCategoria}" required="true"  />
+                        </h:panelGrid>
+                        <h:panelGroup styleClass="bloccoPulsanti" >
+                            <h:commandButton value="Inserisci" action="#{controlloCategoriaEventiEsterna.addCategoriaEventi}" />
+                            <h:commandButton value="Annulla" action="#{controlloCategoriaEventiEsterna.getListaCategoriaEventi}" immediate="true"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </rich:simpleTogglePanel>
+
+
+            <div>
+
+                <rich:tabPanel style="width:300px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
+                               binding="#{vistaCategoriaEventiEsterna.tabPanel}" >
+
+                    <rich:tab disabled="true">
+                        <h:outputText styleClass="intestazioneTab" value="Lista delle Categorie di Eventi"/>
+                    </rich:tab>
+                    <rich:tab>
+                        <f:facet name="label">
+                            <h:panelGroup>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                <h:outputText value="Tabella"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText styleClass="intestazioneTab" value="Categorie di Eventi"/>
+                        <h:form id="formTabellaAggiungi">
+                            <rich:datascroller align="left"  for="listaCategoriaEventi" />
+                            <rich:spacer height="30" />
+                            <rich:dataTable id="listaCategoriaEventi" rows="10" columnClasses="col" binding="#{vistaCategoriaEventiEsterna.tabellaCategoriaEventi}"
+                                            width="280" value="#{vistaCategoriaEventiEsterna.listaCategoriaEventi}" var="categoriaEventi" >
+
+                                <f:facet name="header">
+                                    <rich:columnGroup>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Nome" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Esterna" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Confermata" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Attiva" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Pubblicatori" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Sottoscrizioni" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="" />
+                                        </h:column>
+                                    </rich:columnGroup>
+                                </f:facet>
+                                <h:column>
+                                    <h:outputText value="#{categoriaEventi.nome}"  />
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:outputText rendered="true"><img src="${pageContext.request.contextPath}/images/true.png" /></h:outputText>
+                                    </center>
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:outputText rendered="#{categoriaEventi.inAttesa}"><img src="${pageContext.request.contextPath}/images/false.png" /></h:outputText>
+                                        <h:outputText rendered="#{!categoriaEventi.inAttesa}"><img src="${pageContext.request.contextPath}/images/true.png" /></h:outputText>
+                                    </center>
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:outputText rendered="#{!categoriaEventi.attiva}"><img src="${pageContext.request.contextPath}/images/false.png" /></h:outputText>
+                                        <h:outputText rendered="#{categoriaEventi.attiva}"><img src="${pageContext.request.contextPath}/images/true.png" /></h:outputText>
+                                    </center>
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:commandLink  action="#{controlloCategoriaEventiEsterna.visuliazzaPubblicatori}" ><img title="Pubblicatori" alt="Visualizza l'elenco dei pubblicatori" src="${pageContext.request.contextPath}/images/icons/user_edit.png" /></h:commandLink>
+                                    </center>
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:commandLink  action="#{controlloCategoriaEventiEsterna.visuliazzaSottoscrizioni}" ><img title="Sottoscrizioni" alt="Visualizza l'elenco delle sottoscrizioni" src="${pageContext.request.contextPath}/images/icons/accordoCollaborazione.png" /></h:commandLink>
+                                    </center>
+                                </h:column>
+                                <h:column>
+                                    <h:commandLink  disabled="#{categoriaEventi.attiva}" action="#{controlloCategoriaEventiEsterna.schermoAttivaDaTabella}" ><img title="Attiva" alt="Attiva la categoria di eventi" src="${pageContext.request.contextPath}/images/icons/azione_add.png" /></h:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <h:commandLink  disabled="#{!categoriaEventi.attiva}" action="#{controlloCategoriaEventiEsterna.schermoDisattivaDaTabella}" ><img title="Disattiva" alt="Disattiva la categoria di eventi" src="${pageContext.request.contextPath}/images/icons/azione_delete.png" /></h:commandLink>
+                                </h:column>
+                            </rich:dataTable>
+                        </h:form>
+                    </rich:tab>
+                </rich:tabPanel>
+
+            </div>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

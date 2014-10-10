@@ -1,0 +1,52 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Home" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/silvio.png" alt="SIL-VIO"/>
+        </h:panelGroup>
+        <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menu.jsf"/>
+            </h:panelGroup>
+            <h:panelGrid columns="1">
+                <rich:panel bodyClass="descrizioneSilvio">
+                    <h:outputText>
+                        SIL-VIO e' uno strumento orientato al test e all'integrazione di architetture SOA basate su Enterprise Service Bus (ESB). Data un'interfaccia applicativa (un WSDL o un accordo di servizio) SIL-VIO è in grado di esporre automaticamente i servizi necessari dal lato erogatore, e di interrogarli dal lato fruitore, implementando correttamente i profili di collaborazione richiesti.
+                    </h:outputText>
+                </rich:panel>
+                <h:form>
+                    <h:commandLink action="#{controlloAccordoCollaborazione.nuovoAccordo}">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_nuovoAccordo_home.png" styleClass="linkPicture" />
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloIstanzeAccordi.nuovaIstanza}">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_nuovaIstanza_home.png" styleClass="linkPicture" />
+                    </h:commandLink>
+                    <br />
+                    <h:commandLink action="#{controlloEseguiIstanza.eseguiIstanza}">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_eseguiIstanza_home.png" styleClass="linkPicture" />
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloVisualizzaMessaggi.caricaMessaggi}">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_visualizzaMessaggi_home.png" styleClass="linkPicture" />
+                    </h:commandLink>
+
+                </h:form>
+            </h:panelGrid>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

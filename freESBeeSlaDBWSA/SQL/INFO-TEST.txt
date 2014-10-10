@@ -1,0 +1,4 @@
+DATABASE : freesbee_sla
+PostgreSQL = ("org.postgresql.Driver", "jdbc:postgresql:freesbee_sla", "postgres", "postgres")
+MySql =  "com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/freesbee_sla", "root", "mysql")
+        

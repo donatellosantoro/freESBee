@@ -1,0 +1,2 @@
+URI : https://192.168.7.17:8443/freesbeesp/schermoLogin.faces?autenticazione=AGENTE&risorsa=https://sp.example.unibas.org/PD_PUBBLICA/&username=agentege&password=agentege
+

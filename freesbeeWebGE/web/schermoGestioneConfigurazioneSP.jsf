@@ -1,0 +1,148 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Configurazione SP" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaConfigurazioneSP}" />
+            <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:550px;" rendered="#{controlloConfigurazioneSP.visualizzaMessaggio}">
+                <h:outputText styleClass="successoMessaggio" value="#{controlloConfigurazioneSP.messaggio}"/>
+            </h:panelGroup>
+            <h:panelGroup id="boxErrore" styleClass="errore" style="width:550px;" rendered="#{controlloConfigurazioneSP.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloConfigurazioneSP.errore}"/>
+            </h:panelGroup>
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/blue/configurazioneSP.png" alt="Configurazione SP" width="310" height="50"/>
+            </h:panelGroup>
+
+            <rich:panel header="Dati Configurazione SP">
+                <h:form>
+                    <h:panelGrid  style="width:550px;" columns="2" rendered="#{!vistaConfigurazioneSP.attivaModificaSP}">
+                        <h:outputText styleClass="propConf" value="Nome Utente SP" />
+                        <h:outputText style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.nomeUtenteSP}" />
+
+                        <h:outputText styleClass="propConf" value="Password SP" />
+                        <h:outputText style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.passwordSP}" />
+
+                        <h:outputText styleClass="propConf" value="Tipo Autenticazione" />
+                        <h:outputText style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.autenticazione}" />
+
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+                        <h:outputText styleClass="propConf" value="URL freesbeeSP" />
+                        <h:outputText style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.urlFreesbeeSP}" />
+
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+
+                        <h:outputText styleClass="propConf" value="Risorsa" />
+                        <h:outputText  style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsa}" />
+
+                        <h:outputText styleClass="propConf" value="Risorsa Notifica" />
+                        <h:outputText style="width:250px;"  value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsaPdNotifica}" />
+
+                        <h:outputText styleClass="propConf" value="Risorsa Consegna" />
+                        <h:outputText  style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsaPdConsegna}" />
+
+                        <h:outputText styleClass="propConf" value="Risorsa Pubblica" />
+                        <h:outputText  style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsaPdPubblica}" />
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+
+                        <h:outputText styleClass="propConf" value="Protezione SP" />
+                        <h:outputText style="width:250px;" value="#{vistaConfigurazioneSP.datiConfigurazione.protezioneSP}" />
+
+
+                        <h:commandLink action="#{controlloConfigurazioneSP.attivaModificaSP}">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_modificaSP.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                        <h:outputText styleClass="valConf" value="" />
+                    </h:panelGrid>
+
+                    <%--MODIFICA DATI SP--%>
+                    <h:panelGrid style="width:550px;" columns="2" rendered="#{vistaConfigurazioneSP.attivaModificaSP}">
+                        <h:outputText styleClass="propConf" value="Nome Utente SP" />
+                        <h:inputText style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.nomeUtenteSP}" required="true" />
+
+                        <h:outputText styleClass="propConf" value="Password SP" />
+                        <h:inputText style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.passwordSP}" required="true" />
+
+                        <h:outputText styleClass="propConf" value="Tipo Autenticazione" />
+                        <h:outputText style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.autenticazione}" />
+
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+                        <h:outputText styleClass="propConf" value="URL freesbeeSP" />
+                        <h:inputText style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.urlFreesbeeSP}" required="true" />
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+
+
+                        <h:outputText styleClass="propConf" value="Risorsa" />
+                        <h:inputText  style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsa}" required="true" />
+
+                        <h:outputText styleClass="propConf" value="Risorsa Notifica" />
+                        <h:inputText style="width:300px;"  value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsaPdNotifica}" required="true" />
+
+                        <h:outputText styleClass="propConf" value="Risorsa Consegna" />
+                        <h:inputText  style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsaPdConsegna}" required="true" />
+                        
+                        <h:outputText styleClass="propConf" value="Risorsa Pubblica" />
+                        <h:inputText  style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.configurazioneSP.risorsaPdPubblica}" required="true" />
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+
+
+                        <h:outputText styleClass="propConf" value="Protezione SP" />
+                        <h:outputText style="width:300px;" value="#{vistaConfigurazioneSP.datiConfigurazione.protezioneSP}" />
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+
+                        <h:commandLink action="#{controlloConfigurazioneSP.salvaModificaSP}">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_salva.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                        <h:commandLink action="#{controlloConfigurazioneSP.annullaModificaSP}">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_annulla.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                    </h:panelGrid>
+                </h:form>
+            </rich:panel>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

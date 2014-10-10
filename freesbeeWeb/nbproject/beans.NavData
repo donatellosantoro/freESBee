@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="gestioneConfigurazione.jsf" x="650" y="300" zoom="true"/>
+        <Node id="home.jsf" x="400" y="150" zoom="true"/>
+        <Node id="gestioneServiziApplicativi.jsf" x="1400" y="150" zoom="true"/>
+        <Node id="schermoLogin.jsf" x="400" y="600" zoom="true"/>
+        <Node id="pieDiPagina.jsf" x="150" y="300" zoom="true"/>
+        <Node id="gestionePorteDelegate.jsf" x="400" y="300" zoom="true"/>
+        <Node id="intestazione.jsf" x="1150" y="150" zoom="true"/>
+        <Node id="gestionePorteApplicative.jsf" x="1150" y="300" zoom="true"/>
+        <Node id="gestioneAccordiServizi.jsf" x="150" y="150" zoom="true"/>
+        <Node id="schermoErrore404.jsf" x="900" y="300" zoom="true"/>
+        <Node id="schermoSessioneScaduta.jsf" x="650" y="150" zoom="true"/>
+        <Node id="schermoCambioPassword.jsf" x="400" y="450" zoom="true"/>
+        <Node id="menu.jsf" x="150" y="750" zoom="true"/>
+        <Node id="gestioneServizi.jsf" x="150" y="600" zoom="true"/>
+        <Node id="gestioneSoggetti.jsf" x="650" y="450" zoom="true"/>
+        <Node id="schermoErrore.jsf" x="900" y="150" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

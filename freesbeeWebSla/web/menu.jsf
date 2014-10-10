@@ -1,0 +1,64 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>
+    <rich:panelMenu width="255" styleClass="menu">
+
+        <rich:panelMenuGroup label="Gestione Soggetti" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+            <rich:panelMenuItem action="#{controlloGestioneSoggetti.caricaGestioneSoggetti}" label="Verifica periodica soggetti"/>
+        </rich:panelMenuGroup>
+
+        <rich:panelMenuGroup label="Gestione Servizi" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/servizio.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/servizio.png">
+            <rich:panelMenuItem action="#{controlloGestioneServizi.caricaGestioneServizi}" label="Gestione occorrenze servizi" disabled="#{vistaVerificaInstallazione.disabilitaGestioneOccorrenzeServizi}"/>
+        </rich:panelMenuGroup>
+
+
+        <rich:panelMenuGroup label="Monitoraggio Servizi Erogati" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/servizio_erogato.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/servizio_erogato.png">
+            <rich:panelMenuItem action="#{controlloMonitoraggioStatoServiziErogati.richiediAcquisizionePortafoglio}" label="Monitoraggio stato"/>
+            <rich:panelMenuItem action="#{controlloMonitoraggioSLAServiziErogati.richiediAcquisizionePortafoglio}" label="Monitoraggio parametri SLA"/>
+            <rich:panelMenuItem action="#{controlloStatisticheSLAErogati.caricaGestioneServizi}" label="Statistiche parametri SLA"/>
+        </rich:panelMenuGroup>
+
+        <rich:panelMenuGroup label="Monitoraggio Servizi Fruiti" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/servizio_fruito.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/servizio_fruito.png">
+            <rich:panelMenuItem action="#{controlloMonitoraggioStatoServiziFruiti.richiediAcquisizionePortafoglio}" label="Monitoraggio stato"/>
+            <rich:panelMenuItem action="#{controlloMonitoraggioSLAServiziFruiti.richiediAcquisizionePortafoglio}" label="Monitoraggio parametri SLA"/>
+        </rich:panelMenuGroup>
+
+        <br/><rich:separator height="1" lineType="solid"/><br/>
+        <rich:panelMenuGroup label="Configurazione" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/configurazione.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/configurazione.png">
+            <rich:panelMenuItem action="#{controlloConfigurazione.caricaConfigurazioneSLA}" label="Configurazione"/>
+            <rich:panelMenuItem action="#{controlloConfigurazioneSP.caricaConfigurazioneSP}" label="Configurazione SP"/>
+        </rich:panelMenuGroup>
+
+        <br/><rich:separator height="1" lineType="solid"/><br/>
+        <rich:panelMenuGroup label="#{utente.nomeUtente}" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+            <rich:panelMenuItem action="#{controlloLogin.logout}" label="Logout"/>
+            <rich:panelMenuItem action="#{controlloLogin.forwardCambioPassword}" label="Cambia Password"/>
+        </rich:panelMenuGroup>
+
+
+
+
+
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/logoSLA_picc.png" alt="Logo freESBeeSLA" height="100px" width="200px"/>
+        </h:panelGroup>
+
+    </rich:panelMenu>
+</h:form>
+
+

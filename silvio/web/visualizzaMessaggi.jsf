@@ -1,0 +1,185 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+
+
+<f:view>  
+    <t:saveState value="#{vistaVisualizzaMessaggi}"/>
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formMessaggi:boxSuccesso',delay:2.0,duration:0.8"/>
+    <rich:modalPanel id="panelEliminaMessaggio" showWhenRendered="#{vistaVisualizzaMessaggi.elimina}" rendered="#{vistaVisualizzaMessaggi.elimina}" height="100" width="240">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                <h:outputText value="#{msg.conferma_eliminazione}"/>
+            </h:panelGroup>
+        </f:facet>          
+        <h:form>
+            <h:outputText styleClass="confermaMessaggio" value="#{msg.messaggio_conferma_eliminazione}?"/>
+            <h:panelGroup styleClass="bloccoPulsantiDialog">                    
+                <h:commandLink action="#{controlloVisualizzaMessaggi.chiudiModalPanelElimina}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelEliminaMessaggio')">               
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_annulla}.png"  styleClass="linkPicture"/>
+                </h:commandLink>
+                <h:commandLink action="#{controlloVisualizzaMessaggi.eliminaMessaggio}">               
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_conferma}.png"  styleClass="linkPicture"/>
+                </h:commandLink>  
+            </h:panelGroup>
+        </h:form>
+    </rich:modalPanel>
+    <h:form>
+        <rich:modalPanel id="panelVisualizzaMessaggio" showWhenRendered="#{vistaVisualizzaMessaggi.visualizzaMessaggio}" 
+        rendered="#{vistaVisualizzaMessaggi.visualizzaMessaggio}" height="500" width="500">
+            <f:facet name="header">
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/message.png"  styleClass="linkPicture" />
+                    <h:outputText value="#{msg.visualizza_messaggio }"/>
+                </h:panelGroup>
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:commandLink action="#{controlloVisualizzaMessaggi.chiudiModalPanelVisualizzaMessaggio}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelVisualizzaMessaggio')">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                    </h:commandLink>
+                </h:panelGroup>
+            </f:facet>              
+            <h:panelGroup styleClass="infoText">   
+                <h:outputText value="Messaggio #{vistaVisualizzaMessaggi.messaggio.tipo} all'indirizzo #{vistaVisualizzaMessaggi.messaggio.indirizzo}" />
+            </h:panelGroup>                
+            <h:panelGroup styleClass="schemaXSD">
+                <h:inputTextarea value="#{vistaVisualizzaMessaggi.messaggio.messaggio}" styleClass="schemaXSDText" readonly="true"/>
+            </h:panelGroup>
+        </rich:modalPanel>
+    </h:form>
+    <!-- ************** intestazione *************** -->
+    <c:import url="intestazione.jsf">
+        <c:param name="titolo" value="Home" />
+    </c:import>
+    <!-- ******************************************* -->            
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/silvio.png" alt="SIL-VIO"/>                
+        </h:panelGroup>
+        
+        <h:panelGrid columns="2" styleClass="bloccoUnico" columnClasses="bloccoMenu,bloccoCentrale">            
+            <h:panelGroup>
+                <c:import url="menu.jsf"/>
+            </h:panelGroup>
+            
+            <h:form id="formMessaggi">                
+                <rich:panel style="width:410px;" id="ListaMessaggi"> 
+                    <f:facet name="header">  
+                        <h:panelGroup  style="width:410px">  
+                            <h:outputText styleClass="headerProfilo"/>    
+                            <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/message.png"  styleClass="linkPicture" />
+                                <h:outputText value="#{msg.messaggio_intestazione}"/>   
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </f:facet>  
+                    
+                    <h:outputText value="#{msg.messaggi_info}" styleClass="infoText"/>
+                    <h:outputText value="#{controlloVisualizzaMessaggi.errore}" rendered="#{controlloVisualizzaMessaggi.errore != null}" styleClass="errorText"/>
+                    <h:outputText id="boxSuccesso" value="#{controlloVisualizzaMessaggi.successo}" rendered="#{controlloVisualizzaMessaggi.successo != null}" styleClass="confirmText"/>
+                    <h:outputText value="#{controlloVisualizzaMessaggi.messaggio}" rendered="#{controlloVisualizzaMessaggi.messaggio != null}" styleClass="infoText"/>
+                    <rich:messages styleClass="errorText"/>
+                    
+                    <h:panelGroup styleClass="pannello">
+                        <rich:panel styleClass="pannelloAccordo">   
+                            <f:facet name="header">  
+                                <h:panelGroup style="width:400px">                                      
+                                    <h:outputText styleClass="headerProfilo"/>    
+                                    <h:panelGroup styleClass="headerNome" style="width:410px">
+                                        <h:panelGroup styleClass="bloccoHeader">
+                                            <h:graphicImage styleClass="iconHeader" value="#{pageContext.request.contextPath}/images/icons/message.png" />
+                                            <h:outputText styleClass="textHeader" value="#{msg.filtro_messaggi}"/>                                             
+                                        </h:panelGroup>                                        
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/message.png"  styleClass="linkPicture" />                                        
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:panelGrid columns="4">
+                                <h:outputText value="#{msg.filtro_tipo_messaggio}"/>
+                                <h:selectOneMenu id="selectTipoMex" label="TipoMex" style="width:104px"
+                                                 value="#{vistaVisualizzaMessaggi.tipoMessaggio}">
+                                    <f:selectItems value="#{vistaVisualizzaMessaggi.listaTipoMessaggio}" />
+                                </h:selectOneMenu>
+                                <h:outputText value="#{msg.filtro_istanza}"/>
+                                <h:selectOneMenu id="selectIstanza" label="TipoIstanza" style="width:104px"
+                                                 value="#{vistaVisualizzaMessaggi.tipoIstanza}">
+                                    <f:selectItems value="#{vistaVisualizzaMessaggi.listaIstanza}" />
+                                </h:selectOneMenu>
+                                
+                                <h:outputText value="#{msg.filtro_idmessaggio}"/>
+                                <h:inputText label="idMessaggio" style="width:100px" value="#{vistaVisualizzaMessaggi.idMessaggio}"/>
+                                <h:outputText value="#{msg.filtro_idmessaggio_related}"/>
+                                <h:inputText label="idMessaggioRelated" style="width:100px" value="#{vistaVisualizzaMessaggi.idMessaggioReleted}"/>
+                                
+                                <h:commandLink action="#{controlloVisualizzaMessaggi.filtraMessaggi}">               
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_cerca}.png"  styleClass="linkPicture" />
+                                </h:commandLink>
+                                
+                                <h:commandLink action="#{controlloVisualizzaMessaggi.svuotaMessaggi}">               
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_svuotaMessaggi}.png"  styleClass="linkPicture" />
+                                </h:commandLink>
+                                
+                            </h:panelGrid>
+                        </rich:panel>                        
+                    </h:panelGroup>
+                    
+                    <h:panelGroup styleClass="pannello" rendered="#{vistaVisualizzaMessaggi.ricercaFiltro}">
+                        <rich:dataGrid value="#{vistaVisualizzaMessaggi.listaMessaggi}" id="listaMessaggiGrid"
+                                       var="messaggio" styleClass="gridAccordi" columnClasses="gridAccordiCell" columns="1" elements="5" binding="#{vistaVisualizzaMessaggi.tabellaMessaggi}"> 
+                            <rich:panel styleClass="pannelloAccordo">   
+                                <f:facet name="header">  
+                                    <h:panelGroup style="width:400px">                                      
+                                        <h:outputText styleClass="headerProfilo"/>    
+                                        <h:panelGroup styleClass="headerNome" style="width:410px">
+                                            <h:panelGroup styleClass="bloccoHeader">
+                                                <h:graphicImage styleClass="iconHeader" value="#{pageContext.request.contextPath}/images/icons/message.png" />
+                                                <h:outputText styleClass="textHeader" value="#{messaggio.id} - #{messaggio.tipo} - #{messaggio.istanzaOperation.anteprimaNome}"/>                                             
+                                            </h:panelGroup>
+                                            <h:commandLink action="#{controlloVisualizzaMessaggi.confermaEliminazione}">               
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/cestino.png"  styleClass="linkPicture" />
+                                            </h:commandLink>                                            
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="ID" styleClass="textHeader"/>
+                                    <h:outputText value="#{messaggio.id}" />
+                                    
+                                    <h:outputText value="#{msg.tab_data}" styleClass="textHeader"/>
+                                    <h:outputText value="#{messaggio.data}" />
+                                    
+                                    <h:outputText value="ID RelatesTo" styleClass="textHeader"/>
+                                    <h:outputText value="#{messaggio.idRelatesTo}" />
+                                    
+                                    <h:outputText value="#{msg.tab_istanza_porttype}" styleClass="textHeader"/>
+                                    <h:outputText value="#{messaggio.istanzaPortType}" />
+                                    
+                                    <h:outputText value="#{msg.tab_tipo_messaggio}" styleClass="textHeader"/>
+                                    <h:outputText value="#{messaggio.tipo}" />
+                                    
+                                    <h:outputText value="#{msg.tab_zoom_messaggio}" styleClass="textHeader"/>
+                                    <h:commandLink action="#{controlloVisualizzaMessaggi.visualizzaDettaglioMessaggio}" id="dettaglioMessaggio">               
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/zoom.png"  styleClass="linkPicture" />
+                                    </h:commandLink>
+                                    
+                                </h:panelGrid>                                
+                            </rich:panel>
+                        </rich:dataGrid>                           
+                        <rich:datascroller align="left" for="listaMessaggiGrid" maxPages="5" />
+                    </h:panelGroup>
+                </rich:panel>
+            </h:form>
+        </h:panelGrid>
+    </h:panelGroup>
+    
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

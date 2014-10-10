@@ -1,0 +1,135 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Soggetti" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="bloccoCentrale">
+            
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:0.8"/>
+            
+            <t:saveState value="#{vistaGestioneSoggetti}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestioneSoggetti.png" alt="Gestione Soggetti"/>   
+            </h:panelGroup>
+            
+            <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:300px;" rendered="#{controlloGestioneSoggetti.visualizzaMessaggio}">
+                <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneSoggetti.messaggio}"/>
+            </h:panelGroup>
+            <h:panelGroup id="boxErrore" styleClass="errore" style="width:300px;" rendered="#{controlloGestioneSoggetti.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneSoggetti.errore}"/>
+            </h:panelGroup>
+            
+
+            <div id="divCampiSoggettoNICA">
+                <rich:tabPanel style="width:300px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
+                               binding="#{vistaGestioneSoggetti.tabPanelNICA}" >
+                    
+                    <rich:tab disabled="true">    
+                        <h:outputText styleClass="intestazioneTab" value="Lista dei Soggetti presenti nel NICA"/>      
+                    </rich:tab>
+                    <rich:tab>
+                        <f:facet name="label">
+                            <h:panelGroup>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                <h:outputText value="Tabella"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText styleClass="intestazioneTab" value="Soggetti NICA"/>
+                        <h:form id="formTabellaAggiungi">
+                            <rich:datascroller align="left"  for="listaSoggettiNICA" />
+                            <rich:spacer height="30" />
+                            <rich:dataTable id="listaSoggettiNICA" rows="5" columnClasses="col" binding="#{vistaGestioneSoggetti.tabellaSoggettiNICA}"
+                                            width="280" value="#{vistaGestioneSoggetti.listaSoggettiNICA}" var="soggetto">
+                                
+                                <f:facet name="header">
+                                    <rich:columnGroup>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Nome" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value=""/>
+                                        </h:column>
+                                    </rich:columnGroup>
+                                </f:facet>
+                                <h:column>
+                                    <h:outputText value="#{soggetto.nome}" />
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:commandLink action="#{controlloGestioneSoggetti.inserisci}">
+                                            <img title="Aggiungi" alt="Aggiungi" src="${pageContext.request.contextPath}/images/icons/user_add.png" />
+                                        </h:commandLink>
+                                    </center>
+                                </h:column>
+                            </rich:dataTable> 
+                        </h:form>
+                    </rich:tab>
+                </rich:tabPanel>
+            </div>
+            
+            <div id="divCampiSoggettoINF2">
+                <rich:tabPanel style="width:300px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
+                               binding="#{vistaGestioneSoggetti.tabPanelINF2}" >
+                    <rich:tab disabled="true">
+                        <h:outputText styleClass="intestazioneTab" value="Lista dei Soggetti da Monitorare"/>      
+                    </rich:tab>
+                    <rich:tab>
+                        <f:facet name="label">
+                            <h:panelGroup>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                <h:outputText value="Tabella"/>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText styleClass="intestazioneTab" value="Soggetti  freESBeeSLA"/>
+                        <h:form id="formTabellaElimina">
+                            <rich:datascroller align="left"  for="listaSoggettiINF2" />
+                            <rich:spacer height="30" />
+                            <rich:dataTable id="listaSoggettiINF2" rows="5" columnClasses="col" binding="#{vistaGestioneSoggetti.tabellaSoggettiINF2}"
+                                            width="280" value="#{vistaGestioneSoggetti.listaSoggettiINF2}" var="soggetto">
+                                <f:facet name="header">
+                                    <rich:columnGroup>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="Nome" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText styleClass="headerText" value="" />
+                                        </h:column>
+                                    </rich:columnGroup>                                
+                                </f:facet>
+                                <h:column>
+                                    <h:outputText value="#{soggetto.nome}" />
+                                </h:column>
+                                <h:column>
+                                    <center>
+                                        <h:commandLink action="#{controlloGestioneSoggetti.elimina}">
+                                            <img title="Elimina" alt="Elimina" src="${pageContext.request.contextPath}/images/icons/user_delete.png" />
+                                        </h:commandLink>
+                                    </center>
+                                </h:column>
+                            </rich:dataTable> 
+                        </h:form>
+                    </rich:tab>
+                </rich:tabPanel>
+            </div>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

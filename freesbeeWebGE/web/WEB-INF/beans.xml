@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    
+      <application>
+        <message-bundle>messaggiErrore</message-bundle>
+    </application>
+
+
+
+    <!--             UTENTE                 -->
+    <managed-bean>
+        <managed-bean-name>utente</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.modello.Utente</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    
+    <!--             LOGIN                 -->
+    <managed-bean>
+        <managed-bean-name>vistaLogin</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaLogin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloLogin</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloLogin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaLogin}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoAutenticazione</property-name>
+            <value>#{daoAutenticazione}</value>
+        </managed-property>
+    </managed-bean>
+
+    
+    <!--           GESTIONE CAMBIO PASSWORD        -->
+    <managed-bean>
+        <managed-bean-name>vistaCambiaPassword</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaCambiaPassword</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloCambiaPassword</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloCambiaPassword</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaCambiaPassword}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoAutenticazione</property-name>
+            <value>#{daoAutenticazione}</value>
+        </managed-property>
+    </managed-bean>
+
+
+    <!--               CONFIGURAZIONE GE            -->
+    <managed-bean>
+        <managed-bean-name>vistaConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaConfigurazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloConfigurazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaConfigurazione}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoConfigurazione</property-name>
+            <value>#{daoConfigurazione}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+
+
+    <!--               CONFIGURAZIONE SP            -->
+    <managed-bean>
+        <managed-bean-name>vistaConfigurazioneSP</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaConfigurazioneSP</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloConfigurazioneSP</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloConfigurazioneSP</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaConfigurazioneSP}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoConfigurazione</property-name>
+            <value>#{daoConfigurazione}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+
+
+    <!--            GESTIONE CATEGORIA EVENTI INTERNA        -->
+    <managed-bean>
+        <managed-bean-name>vistaCategoriaEventiInterna</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaCategoriaEventiInterna</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloCategoriaEventiInterna</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloCategoriaEventiInterna</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaCategoriaEventiInterna}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoCategoriaEventi</property-name>
+            <value>#{daoCategoriaEventiInterna}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+
+
+     <!--            GESTIONE CATEGORIA EVENTI ESTERNA         -->
+    <managed-bean>
+        <managed-bean-name>vistaCategoriaEventiEsterna</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaCategoriaEventiEsterna</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloCategoriaEventiEsterna</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloCategoriaEventiEsterna</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaCategoriaEventiEsterna}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoCategoriaEventi</property-name>
+            <value>#{daoCategoriaEventiEsterna}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+
+        
+    <!--            GESTIONE GESTORI EVENTI             -->
+    <managed-bean>
+        <managed-bean-name>vistaGestoreEventi</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.vista.VistaGestoreEventi</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>controlloGestoreEventi</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.controllo.ControlloGestoreEventi</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vista</property-name>
+            <value>#{vistaGestoreEventi}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoGestoreEventi</property-name>
+            <value>#{daoGestoreEventi}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>daoConfigurazione</property-name>
+            <value>#{daoConfigurazione}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+    
+ 
+   
+
+
+    
+    <!--                    persistenza                     -->
+
+    <managed-bean>
+        <managed-bean-name>daoConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.persistenza.soap.DAOConfigurazioneSOAP</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>daoAutenticazione</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.persistenza.soap.DAOAutenticazioneSOAP</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>daoCategoriaEventiInterna</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.persistenza.soap.DAOCategoriaEventiInternaSOAP</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>daoCategoriaEventiEsterna</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.persistenza.soap.DAOCategoriaEventiEsternaSOAP</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>daoGestoreEventi</managed-bean-name>
+        <managed-bean-class>it.unibas.freesbee.ge.web.persistenza.soap.DAOGestoreEventiSOAP</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+    <!--
+    <lifecycle>
+        <phase-listener>it.unibas.acijsfhibernate.controllo.PhaseListener</phase-listener>
+    </lifecycle>
+    -->
+    
+</faces-config>

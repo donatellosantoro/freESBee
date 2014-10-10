@@ -1,0 +1,398 @@
+body, html {
+    height:100% !important;
+    margin:0pt;
+    padding:0pt;
+    background-image:url(../images/back.gif);
+    background-repeat:y-repeat;
+    border-top:2px solid #085196;
+}
+* { 
+    font-size: 9pt;
+    font-family: Tahoma, arial;
+}
+
+img{
+    border-width: 0px;
+}
+
+.footer{
+    margin-top:20px;
+    text-align:center;
+}
+
+
+.tabellaRender{
+    background-color: #e4f1f4;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #26d4ff;
+    background-image: url(../images/title-table-blu.png);
+    background-repeat: repeat-x;
+    background-position: top;
+    background-attachment: none;
+    color:black;
+}
+
+.tabellaRender header {
+    width: auto }
+
+.tabellaRender td, .tabellaRender th {
+    vertical-align: top; 
+    font-size: smaller;
+    font-size : 10pt;
+}
+
+.tabellaRender td.vmiddle {
+    vertical-align: middle }
+
+.tabellaRender td.aligncenter {
+    text-align: center }
+
+.tabellaRender th {
+    padding: 3px;  
+    text-align: left; 
+    border-bottom: 1px solid #26d4ff; 
+}
+
+.tabellaRender td {
+    background-color: #eafdfe;
+    padding: 5px;
+    text-align: left
+}
+
+.tabellaRender td.stub, .tabellaRender td.subitem, .tabellaRender th {
+    white-space: nowrap
+}
+
+.tabellaRender td.subitem {
+    padding-left: 24px
+}
+.erroreValidazione{
+    color: red;
+    font-size:8pt;
+}
+.rich-message-marker img {
+    padding-right:7px;
+}
+
+.rich-message-label {
+    color:red;
+}
+
+.bloccoPulsanti{
+    text-align:center;    
+    width: 220px;
+    display:block;
+    margin:10px 0px 0px 0px;
+}
+
+.bloccoPulsantiDialog{
+    text-align:center;    
+    display:block;
+}
+
+.bloccoPulsantiDialog input{
+    margin: 10px 5px 0px 5px;
+}
+
+.errore{
+    background-color: #ffbfbf;
+    margin: 10px 0px 10px 0px;
+    border: 1px solid red;
+    color:black;
+    background-image: url(../images/error.png);
+    background-position: top left;
+    background-attachment: none;
+    background-repeat: no-repeat;
+    width: 400px;
+    display:block;
+    text-align:left;
+}
+
+
+.erroreMessaggio{
+    display:block;
+    font-weight: bold;
+    color: #800000;
+    margin: 6px 7px 6px 27px;
+}
+
+.erroreLogin{
+    color:red;
+    margin-left:5px;
+    display:block;
+    margin-bottom:5px;
+}
+
+.successo{
+    background-color: #aeffae;
+    margin: 10px 0px 10px 0px;
+    border: 1px solid green;
+    color:black;
+    background-image: url(../images/success.png);
+    background-position: top left;
+    background-attachment: none;
+    background-repeat: no-repeat;
+    width: 400px;
+    display:block;
+}
+.successoMessaggio{
+    display:block;
+    margin: 6px 10px 6px 27px;
+    font-weight: bold;
+    color: #006600;
+}
+
+.conferma{
+    background-color: #c7fafe;
+    margin: 10px 10px 10px 10px;
+    border: 1px solid #26d4ff;
+    color:black;
+    padding: 4px 10px 4px 27px;
+    background-image: url(../images/question.png);
+    background-position: top left;
+    background-attachment: none;
+    background-repeat: no-repeat;
+    heigth: 40px;
+    width: 300px;
+    display:block;
+}
+.confermaMessaggio{
+    display:block;
+    margin: 3px 3px 3px 3px;
+    font-weight: bold;
+    color: #0072ff;
+}
+.confermaSottoMessaggio{
+    display:block;
+    margin: 3px 3px 3px 3px;
+    color:black;
+}
+.linkPicture{
+    margin-bottom: -4px;
+    margin-right: 2px;
+}
+
+.bloccoASdx{
+    vertical-align: super;
+}
+
+.righeAS{
+    margin-bottom:2px;
+    display:block;
+}
+
+.dr-stglpnl-b{
+    padding: 0px 0px 0px 0px;
+}
+
+.linkText {
+    text-decoration: none;
+    color: #000000;
+    border-top-style: none;
+    border-bottom-style: dotted;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-width: 1px;
+    margin-right: 7px;
+}
+
+.linkAccordo{
+    width:140px;
+    display:block;
+    float:right;
+}
+
+.headerProfilo{
+    text-align:right;
+    font-style: italic;
+    color:#0054d2;
+    font-size: 8pt;
+    float:right;
+    margin-right:5px;
+}
+
+.intestazione{
+    font-size: 9pt;
+    font-weight: bold;
+    text-align:center;
+    width:420px;
+}
+
+.headerNome{
+    display:block;
+}
+
+.rich-calendar-input{
+    width:65px;
+    font-size:8pt;
+}
+.rich-messages{
+    margin:0px 0px 0px 0px;
+}
+.rich-messages-label{
+    color:red;
+}
+
+.rich-definition{
+    margin:7px 0px 7px 0px;
+}
+.intestazioneTab{
+    font-family: Arial,Verdana,sans-serif;
+    font-size:9pt;
+    padding-left:5px;
+    margin-top:-30px;
+    font-weight:bold;
+    display:block;
+    width:200px;
+}
+
+.dettagliAccordi{
+    border-top-width: 0px;
+    border-left-width: 0px;
+}
+.dettagliAccordiCell{
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+.bloccoMenu{
+    width:215px;
+    vertical-align:top;
+}
+.menu{
+    width:255px;
+    margin-top:35px;
+    margin-right:35px;
+}
+.menu a{
+    text-decoration:none;
+    display:block;
+    color:black;
+}
+.menu a:visited{
+    color:black;
+}
+
+.bloccoCentrale{
+    vertical-align:top;
+}
+
+.bloccoAzione{
+    width:350px;
+}
+.tabellaAzioni .rich-table-headercell{
+    padding:1px 0px 1px 3px;
+    text-align:left;
+}
+
+.colAzioni{
+    font-size:8pt;
+    padding:0px 1px 0px 3px;
+}
+.titoloFruitori{
+    font-family: Arial,Verdana,sans-serif;
+    font-size:8pt;
+    display:block;
+    text-align:center;
+    font-weight:bold;
+}
+.imgTitle{
+    display:block;
+    margin-top:15px;
+    margin-bottom:10px;
+    margin-left:10px;
+}
+.login{
+    width:250px;
+    margin-top:35px;
+    margin:0 auto;
+}
+.cambioPwd{
+    width:300px;
+    margin-top:35px;
+}
+.imgLogin{
+    margin:0 auto;
+    width:278px;
+    display:block;
+}
+.inputServer{
+ width: 200px;
+}
+
+.divCampiSoggettoNICA{
+    float:left;
+}
+
+.divCampiSoggettoINF2{
+    float:right;
+}
+.contentFooter{
+    padding-top:67px;
+    color:white;
+    font-family:tahoma;
+    font-size:10px;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    line-height:normal;
+}
+.contentFooter a{
+    color:white;
+    font-family:tahoma;
+    font-size:10px;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    line-height:normal;
+    color:orange;
+    text-decoration:none;
+}
+.panelLogin{
+    width:340px;
+    margin:60px auto;
+}
+.footerFreesbee{
+    float:right;
+    margin-top:-45px;
+    margin-right:10px;
+}
+.footer{
+    position: relative;
+    background-color:#073399;
+    height:90px;
+    kmargin:-90px 0px 0px;
+    text-align:center;
+    background-image:url(../images/footer.jpg);
+}
+
+.contentFooter{
+    padding-top:67px;
+    color:white;
+    font-family:tahoma;
+    font-size:10px;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    line-height:normal;
+}
+.contentFooter a{
+    color:white;
+    font-family:tahoma;
+    font-size:10px;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    line-height:normal;
+    color:orange;
+    text-decoration:none;
+}
+

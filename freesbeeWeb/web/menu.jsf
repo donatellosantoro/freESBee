@@ -1,0 +1,64 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>
+    <rich:panelMenu width="200" styleClass="menu">        
+        <rich:panelMenuGroup label="Soggetti" expandMode="ajax" expanded="true" 
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+            <rich:panelMenuItem action="#{controlloGestioneSoggetti.caricaGestioneSoggetti}" label="Elenco"/>
+        </rich:panelMenuGroup>
+        
+        <rich:panelMenuGroup label="Accordi di servizio" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/accordo.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/accordo.png">
+            <rich:panelMenuItem action="#{controlloGestioneAccordiServizio.caricaGestioneAccordiServizi}" label="Elenco"/>
+        </rich:panelMenuGroup>
+        
+        <rich:panelMenuGroup label="Servizi" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/servizio.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/servizio.png">
+            <rich:panelMenuItem action="#{controlloGestioneServizi.caricaGestioneServizi}" label="Elenco"/>
+        </rich:panelMenuGroup>
+        
+        <rich:panelMenuGroup label="Servizi Applicativi" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/servizio.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/servizio.png">
+            <rich:panelMenuItem action="#{controlloGestioneServiziApplicativi.caricaGestioneServiziApplicativi}" label="Elenco"/>
+        </rich:panelMenuGroup>
+        
+        <rich:panelMenuGroup label="Porte Delegate" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/portaDelegata.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/portaDelegata.png">
+            <rich:panelMenuItem action="#{controlloGestionePorteDelegate.gestionePorteDelegate}" label="Elenco"/>
+        </rich:panelMenuGroup>
+        
+        <rich:panelMenuGroup label="Porte Applicative" expandMode="ajax" expanded="true"
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/portaApplicativa.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/portaApplicativa.png">
+            <rich:panelMenuItem action="#{controlloGestionePorteApplicative.gestionePorteApplicative}" label="Elenco"/>
+        </rich:panelMenuGroup>
+        
+        <br/><rich:separator height="1" lineType="solid"/><br/>
+        <rich:panelMenuGroup label="Configurazione" expandMode="ajax" expanded="true" 
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/configurazione.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/configurazione.png">
+            <rich:panelMenuItem action="#{controlloGestioneConfigurazione.caricaConfigurazione}" label="Configura"/>
+        </rich:panelMenuGroup>
+        
+        <br/><rich:separator height="1" lineType="solid"/><br/>
+        <rich:panelMenuGroup label="#{utente.nomeUtente}" expandMode="ajax" expanded="true" 
+                             iconExpanded="#{pageContext.request.contextPath}/images/icons/user.png"
+                             iconCollapsed="#{pageContext.request.contextPath}/images/icons/user.png">
+            <rich:panelMenuItem label="#{utente.stringaServer}"/>
+            <rich:panelMenuItem label="freESBee #{utente.freesbeeVersion}"/>
+            <rich:panelMenuItem action="#{controlloLogin.logout}" label="Logout"/>
+            <rich:panelMenuItem action="#{controlloLogin.forwardCambioPassword}" label="Cambia Password"/>
+        </rich:panelMenuGroup>
+    </rich:panelMenu>
+    </h:form>
+    
+        
+        

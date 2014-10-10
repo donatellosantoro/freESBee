@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsag:AgreementOffer wsag:AgreementId="ASRichiestaDatiClinicoAmministrativi" xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.ggf.org/graap/2007/03/ws-agreement ws-agreementICAR.xsd">
+	<wsag:Name>SLA per accordo di servizio di richiesta Dati Clinico Amministrativi</wsag:Name>
+	<wsag:Context>
+		<wsag:AgreementInitiator>Fruitore</wsag:AgreementInitiator>
+		<wsag:AgreementResponder>RegioneBasilicata</wsag:AgreementResponder>
+		<wsag:ServiceProvider>AgreementResponder</wsag:ServiceProvider>
+	</wsag:Context>
+	<wsag:Terms>
+		<wsag:All>
+			<!-- TempoMedio1M: Media dei tempi di risposta di un servizio calcolata su base mensile -->
+			<wsag:GuaranteeTerm wsag:Name="TempoMedio1M" wsag:Obligated="ServiceProvider">
+				<wsag:ServiceLevelObjective>
+					<wsag:CustomServiceLevel>
+						<wsag:Threshold wsag:Operator="Less" wsag:Value="3"/>
+						<wsag:Function wsag:resultType="double" xsi:type=" wsag:Mean">
+							<wsag:BasicMetric wsag:Unit="seconds">tempoRisposta</wsag:BasicMetric>
+							<wsag:Window>
+								<wsag:Interval>Month</wsag:Interval>
+							</wsag:Window>
+						</wsag:Function>
+					</wsag:CustomServiceLevel>
+				</wsag:ServiceLevelObjective>
+				<wsag:BusinessValueList/>
+			</wsag:GuaranteeTerm>
+			<!-- MaxTempoRisposta2W: Massimo tempo di risposta del servizio erogatore calcolato su base quindicinale-->
+			<wsag:GuaranteeTerm wsag:Name="MaxTempoRisposta2W" wsag:Obligated="ServiceProvider">
+				<wsag:ServiceLevelObjective>
+					<wsag:CustomServiceLevel>
+						<wsag:Threshold wsag:Operator="Less" wsag:Value="30"/>
+						<wsag:Function wsag:resultType="double" xsi:type=" wsag:Max">
+							<wsag:BasicMetric wsag:Unit="seconds">tempoRisposta</wsag:BasicMetric>
+							<wsag:Window>
+								<wsag:Interval>TwoWeeks</wsag:Interval>
+							</wsag:Window>
+						</wsag:Function>
+					</wsag:CustomServiceLevel>
+				</wsag:ServiceLevelObjective>
+				<wsag:BusinessValueList/>
+			</wsag:GuaranteeTerm>
+			<!-- PercentualeTempi1M: Percentuale calcolata su base mensile di richieste di servizio andate a buon fine ed evase in meno di 2 secondi; si impone che il valore di tale parametro sia superiore all'80%-->
+			<wsag:GuaranteeTerm wsag:Name="PercentualeTempi1M" wsag:Obligated="ServiceProvider">
+				<wsag:ServiceLevelObjective>
+					<wsag:CustomServiceLevel>
+						<wsag:Threshold wsag:Operator="GreaterEqual" wsag:Value="0.80"/>
+						<wsag:Function wsag:resultType="double" xsi:type="wsag:Divide">
+							<wsag:Operand>
+								<wsag:Function wsag:resultType="double" xsi:type="wsag:Hits">
+									<wsag:BasicMetric wsag:Unit="seconds">tempoRisposta</wsag:BasicMetric>
+									<wsag:Threshold wsag:Operator="Less" wsag:Value="2"/>
+									<wsag:Window>
+										<wsag:Interval>Month</wsag:Interval>
+									</wsag:Window>
+								</wsag:Function>
+							</wsag:Operand>
+							<wsag:Operand>
+								<wsag:Function wsag:resultType="double" xsi:type="wsag:Hits">
+									<wsag:BasicMetric wsag:Unit="seconds">tempoRisposta</wsag:BasicMetric>
+									<wsag:Window>
+										<wsag:Interval>Month</wsag:Interval>
+									</wsag:Window>
+								</wsag:Function>
+							</wsag:Operand>
+						</wsag:Function>
+					</wsag:CustomServiceLevel>
+				</wsag:ServiceLevelObjective>
+				<wsag:BusinessValueList/>
+			</wsag:GuaranteeTerm>
+			<!-- PercentualeErrori3M: Percentuale calcolata su base trimestrale di richieste di servizio andate in errore. Si impone che il valore di tale parametro sia inferiore al 2%-->
+			<wsag:GuaranteeTerm wsag:Name="PercentualeErrori3M" wsag:Obligated="ServiceProvider">
+				<wsag:ServiceLevelObjective>
+					<wsag:CustomServiceLevel>
+						<wsag:Threshold wsag:Operator="Less" wsag:Value="0.02"/>
+						<wsag:Function wsag:resultType="double" xsi:type="wsag:Divide">
+							<wsag:Operand>
+								<wsag:Function wsag:resultType="double" xsi:type="wsag:Hits">
+									<wsag:BasicMetric wsag:Unit="error">erroreInterazione</wsag:BasicMetric>
+									<wsag:Threshold wsag:Operator="Equal" wsag:Value="1"/>
+									<wsag:Window>
+										<wsag:Interval>ThreeMonths</wsag:Interval>
+									</wsag:Window>
+								</wsag:Function>
+							</wsag:Operand>
+							<wsag:Operand>
+								<wsag:Function wsag:resultType="double" xsi:type="wsag:Hits">
+									<wsag:BasicMetric wsag:Unit="error">erroreInterazione</wsag:BasicMetric>
+									<wsag:Window>
+										<wsag:Interval>ThreeMonths</wsag:Interval>
+									</wsag:Window>
+								</wsag:Function>
+							</wsag:Operand>
+						</wsag:Function>
+					</wsag:CustomServiceLevel>
+				</wsag:ServiceLevelObjective>
+				<wsag:BusinessValueList/>
+			</wsag:GuaranteeTerm>
+		</wsag:All>
+	</wsag:Terms>
+</wsag:AgreementOffer>

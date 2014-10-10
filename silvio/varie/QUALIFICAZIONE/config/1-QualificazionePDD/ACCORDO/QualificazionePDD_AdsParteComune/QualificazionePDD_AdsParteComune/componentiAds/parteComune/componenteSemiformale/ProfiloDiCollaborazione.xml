@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<tns:egovDecllElement 
+xmlns:tns="http://spcoop.gov.it/collProfiles" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:adsQualificazionePDD="http://sica.spcoop.it/servizi/AdSQualificazionePDD/"
+xsi:schemaLocation="http://spcoop.gov.it/collProfiles/collProfiles.xsd ">
+  <e-govVersion>
+			e-govV1.1
+	</e-govVersion>
+  <rifDefinizioneInterfaccia>
+			adsQualificazionePDD:AdSQualificazionePDDConcettuale
+	</rifDefinizioneInterfaccia>
+  <operationList>
+  
+		<operation 	operazione="adsQualificazionePDD:start"
+ 								profiloDiCollaborazione="Sincrono"
+    						servizio="adsQualificazionePDD:QualificazionePDD"/>
+    						
+    <operation 	operazione="adsQualificazionePDD:end"
+ 								profiloDiCollaborazione="Sincrono"
+    						servizio="adsQualificazionePDD:QualificazionePDD"/>
+    						
+    <operation 	operazione="adsQualificazionePDD:getTraccia"
+ 								profiloDiCollaborazione="Sincrono"
+    						servizio="adsQualificazionePDD:QualificazionePDD"/>
+    						
+		<operation 	operazione="adsQualificazionePDD:testOneway"
+ 								profiloDiCollaborazione="OneWay"
+    						servizio="adsQualificazionePDD:QualificazionePDD"/>
+    						    						
+		<operation 	operazione="adsQualificazionePDD:testSincrono"
+ 								profiloDiCollaborazione="Sincrono"
+    						servizio="adsQualificazionePDD:QualificazionePDD"/>
+    						
+    <operation 	operazione="adsQualificazionePDD:testAsincronoAsimmetrico"
+ 								profiloDiCollaborazione="AsincronoSimmetrico"
+    						servizio="adsQualificazionePDD:QualificazionePDD"
+    						operazioneCorrelata="adsQualificazionePDD:checkTestAsincronoAsimmetrico"
+								servizioCorrelato="adsQualificazionePDD:QualificazionePDD"/>
+    						
+    <operation 	operazione="adsQualificazionePDD:checkTestAsincronoAsimmetrico"
+ 								profiloDiCollaborazione="AsincronoAsimmetrico"
+    						servizio="adsQualificazionePDD:QualificazionePDD"/>
+    						
+    <operation 	operazione="adsQualificazionePDD:testAsincronoSimmetrico"
+ 								profiloDiCollaborazione="AsincronoSimmetrico"
+    						servizio="adsQualificazionePDD:QualificazionePDD"
+    						operazioneCorrelata="adsQualificazionePDD:riceviRispostaTestAsincronoSimmetrico"
+								servizioCorrelato="adsQualificazionePDD:QualificazionePDDCorrelato"/>
+    						
+		<operation 	operazione="adsQualificazionePDD:riceviRispostaTestAsincronoSimmetrico"
+ 								profiloDiCollaborazione="AsincronoSimmetrico"
+    						servizio="adsQualificazionePDD:QualificazionePDDCorrelato"/>
+    						
+ 	</operationList>
+</tns:egovDecllElement>

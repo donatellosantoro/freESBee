@@ -1,0 +1,123 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Lista Accordi di Collaborazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>   
+    <t:saveState value="#{vistaAccordoCollaborazione}" />
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formElenco:boxSuccesso',delay:2.0,duration:0.8"/>                     
+    <h:panelGroup>  
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/visualizzaAccordiCollaborazione.png" alt="Lista Accordi di Collaborazione"/>                
+        </h:panelGroup>      
+        
+        <!-- PANNELLO ELIMINA ACCORDO -->
+        <rich:modalPanel id="panelEliminaAccordo" showWhenRendered="#{vistaAccordoCollaborazione.elimina}" rendered="#{vistaAccordoCollaborazione.elimina}" height="100" width="240">
+            <f:facet name="header">
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                    <h:outputText value="#{msg.confermaEliminazione}"/>
+                </h:panelGroup>
+            </f:facet>    
+            <h:form>
+                <h:outputText styleClass="confermaMessaggio" value="#{msg.listaAccordiCollaborazione_confermaElimina} #{vistaAccordoCollaborazione.accordoDiCollaborazioneEliminare.nome}?"/>
+                <h:panelGroup styleClass="bloccoPulsantiDialog">                    
+                    <h:commandLink action="#{controlloAccordoCollaborazione.elenco}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelEliminaAccordo')">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_annulla}.png"  styleClass="linkPicture"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloAccordoCollaborazione.eliminaAccordo}">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_conferma}.png"  styleClass="linkPicture"/>
+                    </h:commandLink>  
+                </h:panelGroup>
+            </h:form>
+        </rich:modalPanel>
+        
+        <h:panelGrid columns="2" styleClass="bloccoUnico" columnClasses="bloccoMenu,bloccoCentrale">            
+            <h:panelGroup>
+                <c:import url="menu.jsf"/>
+            </h:panelGroup>
+            
+            <h:form id="formElenco">                
+                <rich:panel style="width:410px;" id="ListaAccordiCollaborazione"> 
+                    <f:facet name="header">  
+                        <h:panelGroup  style="width:410px">  
+                            <h:outputText styleClass="headerProfilo"/>    
+                            <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione_add.png"  styleClass="linkPicture" />
+                                <h:outputText value="#{msg.listaAccordiCollaborazione_title}"/>   
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </f:facet>  
+                    
+                    <h:outputText value="#{msg.elencoAccordoCollaborazione_info}" styleClass="infoText"/>
+                    <h:outputText value="#{controlloAccordoCollaborazione.errore}" rendered="#{controlloAccordoCollaborazione.errore != null}" styleClass="errorText"/>
+                    <h:outputText id="boxSuccesso" value="#{controlloAccordoCollaborazione.successo}" rendered="#{controlloAccordoCollaborazione.successo != null}" styleClass="confirmText"/>
+                    <h:outputText value="#{controlloAccordoCollaborazione.messaggio}" rendered="#{controlloAccordoCollaborazione.messaggio != null}" styleClass="infoText"/>
+                    
+                    <h:panelGroup styleClass="pannello">
+                        <rich:dataGrid value="#{vistaAccordoCollaborazione.listaAccordiDiCollaborazionePM}" id="listaAccordiCollaborazioneGrid"
+                                       var="accordoPM" styleClass="gridAccordi" columnClasses="gridAccordiCell" columns="1" elements="5" binding="#{vistaAccordoCollaborazione.listaAccordiCollaborazioneGrid}"> 
+                            <rich:panel styleClass="pannelloAccordo">   
+                                <f:facet name="header">  
+                                    <h:panelGroup style="width:400px">                                      
+                                        <h:outputText styleClass="headerProfilo"/>    
+                                        <h:panelGroup styleClass="headerNome" style="width:410px">
+                                            <h:panelGroup styleClass="bloccoHeader">
+                                                <h:graphicImage styleClass="iconHeader" value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione.png" />
+                                                <h:outputText styleClass="textHeader" value="#{accordoPM.nome}"/>                                             
+                                            </h:panelGroup>
+                                            <h:commandLink action="#{controlloAccordoCollaborazione.confermaEliminazione}">               
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/cestino.png"  styleClass="linkPicture" />
+                                            </h:commandLink>                                            
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </f:facet>  
+                                <rich:tree styleClass="accordoTree" value="#{accordoPM.data}" switchType="client"
+                                           toggleOnClick="true" var="item" nodeFace="#{item.type}">
+                                    <rich:treeNode type="portType" iconLeaf="/images/icons/package.png" icon="/images/icons/package.png">
+                                        <h:outputText value="#{item.nome}" styleClass="treeNomeAccordo"/>
+                                        <h:outputText value="#{item.ruolo}" styleClass="treeRuoloAccordo"/>
+                                    </rich:treeNode>
+                                    <rich:treeNode type="operation" iconLeaf="/images/icons/cog.png" icon="/images/icons/cog.png">
+                                        <h:panelGroup styleClass="treeOperation">
+                                            <h:outputText value="#{item.nome}" styleClass="treeNomeOperation"/>
+                                            <h:outputText value="#{item.profiloDiCollaborazione}"  styleClass="treeProfiloOperation"/>
+                                        </h:panelGroup>
+                                    </rich:treeNode>
+                                    <rich:treeNode type="message" iconLeaf="/images/icons/message_#{item.tipo}.png" icon="/images/icons/message_#{item.tipo}.png">
+                                        <h:outputText value="#{item.nome}"  styleClass="treeNomeMessage"/>
+                                    </rich:treeNode>
+                                </rich:tree>
+                            </rich:panel>
+                        </rich:dataGrid>                           
+                        <rich:datascroller align="left" for="listaAccordiCollaborazioneGrid" maxPages="5" />
+                    </h:panelGroup>
+                </rich:panel>
+                    
+                    
+                    <h:panelGrid styleClass="bloccoLegenda">
+                        <h:panelGrid columns="6" styleClass="legenda">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/package.png"  styleClass="linkPicture"/>
+                            <h:outputText value="Port Type"/>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/cog.png"  styleClass="linkPicture"/>
+                            <h:outputText value="Operation"/>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/message.png"  styleClass="linkPicture"/>  
+                            <h:outputText value="Message"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+            </h:form>
+        </h:panelGrid>
+    </h:panelGroup>    
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

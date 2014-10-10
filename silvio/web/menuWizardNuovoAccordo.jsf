@@ -1,0 +1,80 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>
+    
+    <h:panelGroup styleClass="menu">                
+        <h:panelGroup  styleClass="menuSeparator">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/trasparent.png"/>
+        </h:panelGroup>
+        
+        <rich:panel style="width:248px;" >
+            <f:facet name="header">  
+                <h:panelGroup  style="width:248px">                          
+                    <h:panelGroup styleClass="headerNome"  style="width:248px">                            
+                        <h:outputText styleClass="headerWizard" value="#{msg.wizard_accordo_step1_titolo}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>
+            <h:outputText value="#{msg.wizard_accordo_step1}" styleClass="infoText"/>
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Tipo Accordo" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.secondoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.profilo}" rendered="#{vistaAccordoCollaborazione.secondoPasso}"/>                    
+                </h:panelGrid>
+            </h:panelGroup>
+        </rich:panel>
+        
+        <br/><rich:separator height="1" lineType="solid" rendered="#{vistaAccordoCollaborazione.secondoPasso}"/><br/>
+        
+        <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaAccordoCollaborazione.secondoPasso}">
+            <f:facet name="header">  
+                <h:panelGroup  style="width:248px">                          
+                    <h:panelGroup styleClass="headerNome"  style="width:248px">                          
+                        <h:outputText styleClass="headerWizard" value="#{msg.wizard_accordo_step2_titolo}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>
+            <h:outputText value="#{msg.wizard_accordo_step2}" styleClass="infoText"/>
+            <h:panelGroup styleClass="pannello" rendered="#{vistaAccordoCollaborazione.profilo=='Sincrono'}">
+                <h:panelGrid columns="2">                    
+                    <h:outputText value="File wsdl erogatore" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.fileWsdlErogatore.name}" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="File dei tipi" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.fileTypes.name}" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup styleClass="pannello" rendered="#{vistaAccordoCollaborazione.profilo=='Asincrono'}">
+                <h:panelGrid columns="2">                    
+                    <h:outputText value="File wsdl erogatore" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.fileWsdlErogatore.name}" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="File wsdl fruitore" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.fileWsdlFruitore.name}" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="File dei tipi" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.fileTypes.name}" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup styleClass="pannello" rendered="#{vistaAccordoCollaborazione.profilo=='AccordoDiServizio'}">
+                <h:panelGrid columns="2">                    
+                    <h:outputText value="Accordo di servizio" styleClass="intestazioneWizard" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                    <h:outputText value="#{vistaAccordoCollaborazione.fileAS.name}" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/>
+                </h:panelGrid>
+            </h:panelGroup>
+        </rich:panel>
+        
+        <br/><rich:separator height="1" lineType="solid" rendered="#{vistaAccordoCollaborazione.terzoPasso}"/><br/>
+        
+        <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaAccordoCollaborazione.terzoPasso}">
+            <f:facet name="header">  
+                <h:panelGroup  style="width:248px">                          
+                    <h:panelGroup styleClass="headerNome"  style="width:248px">                         
+                        <h:outputText styleClass="headerWizard" value="#{msg.wizard_accordo_step3_titolo}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>
+            <h:outputText value="#{msg.wizard_accordo_step3}" styleClass="infoText"/>
+        </rich:panel>
+    </h:panelGroup>
+</h:form>

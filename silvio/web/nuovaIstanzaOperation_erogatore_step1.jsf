@@ -1,0 +1,191 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<h:form>
+    <rich:modalPanel id="panel" width="500" height="500" showWhenRendered="#{vistaIstanzeAccordi.visualizzaXSD}"
+                     rendered="#{vistaIstanzeAccordi.visualizzaXSD}">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/schema.png"  styleClass="linkPicture" />
+                <h:outputText value="XSD Schema"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                <rich:componentControl for="panel" attachTo="hidelink" operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+        <h:panelGroup styleClass="infoText">
+            <h:outputLink styleClass="bloccoSalva" value="#{controlloErogatoreIstanzeAccordi.utente.nomeFileXSD}">
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/disk.png"  styleClass="linkPicture" />
+                <h:outputText value="#{msg.salva_file}"/>
+            </h:outputLink>
+            <h:outputText styleClass="nomeRoot" value="Usare come root element: #{vistaIstanzeAccordi.nomeRoot}" rendered="false"/>
+        </h:panelGroup>
+        <h:panelGroup styleClass="schemaXSD">
+            <h:inputTextarea value="#{controlloErogatoreIstanzeAccordi.utente.fileXSD}" readonly="true" styleClass="schemaXSDText"/>
+        </h:panelGroup>
+    </rich:modalPanel>
+</h:form>
+
+<rich:panel style="width:410px;" id="NuovaIstanzaErogatore1" rendered="#{vistaIstanzeAccordi.stepErogatore==1}">  
+    <f:facet name="header">
+        <h:panelGroup  style="width:410px">
+            <h:panelGroup styleClass="headerNome"  style="width:410px">
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/istanzaAccordoCollaborazione_add.png"  styleClass="linkPicture" />
+                <h:outputText value="#{msg.istanza_operation_richiesta} - #{vistaIstanzeAccordi.istanzaOperation.operation.nome}"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </f:facet>
+    <h:outputText value="#{msg.istanza_operation_risposta_info}" styleClass="infoText"/>
+    <h:outputText value="#{controlloErogatoreIstanzeAccordi.errore}" rendered="#{controlloErogatoreIstanzeAccordi.errore != null}" styleClass="errorText"/>
+    <h:outputText id="boxSuccesso1" value="#{controlloIstanzeAccordi.messaggio}" rendered="#{controlloIstanzeAccordi.messaggio != null}" styleClass="confirmText"/>
+    <rich:messages styleClass="errorText"/>
+
+    <h:panelGroup styleClass="pannello">
+        <h:form enctype="multipart/form-data" id="trasformazioneErogatore">
+            <a4j:region>
+                <a4j:loadBundle basename="messaggi" var="msgx"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{msgx.elaboraRichiesta}"/>
+                    <h:selectBooleanCheckbox value="#{vistaIstanzeAccordi.elaboraRichiesta}" styleClass="pannelloCheckHeaderPiccolo">
+                        <a4j:support event="onchange" reRender="pannelloDatiDBRisposta" />
+                    </h:selectBooleanCheckbox>
+                    <h:outputText value="#{msgx.elaboraRichiestaMail}"/>
+                    <h:selectBooleanCheckbox value="#{vistaIstanzeAccordi.elaboraRichiestaMail}" styleClass="pannelloCheckHeaderPiccolo">
+                        <a4j:support event="onchange" reRender="pannelloDatiMail" />
+                    </h:selectBooleanCheckbox>
+                </h:panelGrid>
+
+                <h:panelGroup id="pannelloDatiDBRisposta">
+                    <h:panelGrid columns="2"  rendered="#{vistaIstanzeAccordi.elaboraRichiesta}"
+                                 style="width: 150px;margin:0px auto; text-align: center;">
+                        <h:commandLink action="#{controlloErogatoreIstanzeAccordi.visualizzaXSDTarget}">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_source_xsd.png" styleClass="linkPicture"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" rendered="#{vistaIstanzeAccordi.elaboraRichiesta}">
+                        <h:outputText value="#{msg.file_trasformazione}"/>
+                        <t:inputFileUpload id="fileXSLTInsert" value="#{vistaIstanzeAccordi.fileXSLTErogatoreRichiestaInsert}" storage="file"/>
+                        <h:panelGroup>
+                            <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                            <rich:toolTip for="help1" showDelay="200">
+                                <h:outputText value="#{msg.file_trasformazione_erogatore_insert_tooltip}"/>
+                            </rich:toolTip>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <rich:panel header="#{msgx.informazioniDB}" headerClass="simplePanel" bodyClass="bodyDB"
+                                rendered="#{vistaIstanzeAccordi.elaboraRichiesta}">
+
+                        <h:panelGrid columns="4" style="width:360px" columnClasses="testoPiccolo">
+                            <h:outputText  value="#{msgx.nome_utente}"/>
+                            <h:inputText label="NomeUtente" style="width:100px" value="#{vistaIstanzeAccordi.datiPM.datiDBErogatoreRisposta.select.nomeUtente}"/>
+                            <h:panelGroup rendered="false">
+                                <h:graphicImage id="helpNomeUtente" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpNomeUtente" showDelay="200">
+                                    <h:outputText value="#{msgx.nome_utente_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                            <h:outputText  value="#{msgx.pwd_utente}"/>
+                            <h:inputSecret label="PwdUtente" style="width:100px" value="#{vistaIstanzeAccordi.datiPM.datiDBErogatoreRisposta.select.password}"/>
+                            <h:panelGroup rendered="false">
+                                <h:graphicImage id="helpPwdUtente" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpPwdUtente" showDelay="200">
+                                    <h:outputText value="#{msgx.pwd_utente_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                            <h:outputText  value="#{msgx.nome_DB}"/>
+                            <h:inputText label="NomeDB" style="width:100px" value="#{vistaIstanzeAccordi.datiPM.datiDBErogatoreRisposta.select.nomeDB}"/>
+                            <h:panelGroup rendered="false">
+                                <h:graphicImage id="helpNomeDB" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpNomeDB" showDelay="200">
+                                    <h:outputText value="#{msgx.nome_DB_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                            <h:outputText  value="#{msgx.tipo_DB}"/>
+                            <h:selectOneMenu id="selectTipoDB" label="TipoDB" style="width:104px"
+                                             value="#{vistaIstanzeAccordi.datiPM.datiDBErogatoreRisposta.select.tipoDB}">
+                                <f:selectItems value="#{vistaIstanzeAccordi.datiPM.listaTipiDB}" />
+                            </h:selectOneMenu>
+                            <h:panelGroup rendered="false">
+                                <h:graphicImage id="helpTipoDB" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpTipoDB" showDelay="200">
+                                    <h:outputText value="#{msgx.tipo_DB_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3" style="width:300px" columnClasses="testoPiccolo">
+                            <h:outputText  value="#{msgx.indirizzo_DB}"/>
+                            <h:inputText label="Select" style="width: 140px; margin-top: 0px; margin-right: 0px; margin-left: 11px;" value="#{vistaIstanzeAccordi.datiPM.datiDBErogatoreRisposta.select.indirizzoDB}"/>
+                            <h:panelGroup>
+                                <h:graphicImage id="helpIndirizzoDB" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpIndirizzoDB" showDelay="200">
+                                    <h:outputText value="#{msgx.indirizzo_DB_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </rich:panel>
+                </h:panelGroup>
+
+
+                <h:panelGroup id="pannelloDatiMail">
+                    <h:panelGrid columns="2"  rendered="#{vistaIstanzeAccordi.elaboraRichiestaMail}"
+                                 style="width: 150px;margin:0px auto; text-align: center;">
+                        <h:commandLink action="#{controlloErogatoreIstanzeAccordi.visualizzaXSDTarget}">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_source_xsd.png" styleClass="linkPicture"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" rendered="#{vistaIstanzeAccordi.elaboraRichiestaMail}">
+                        <h:outputText value="#{msg.file_trasformazioneMail}"/>
+                        <t:inputFileUpload id="fileXSLTMailInsert" value="#{vistaIstanzeAccordi.fileXSLTErogatoreMailRichiesta}" storage="file"/>
+                        <h:panelGroup>
+                            <h:graphicImage id="helpmail" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                            <rich:toolTip for="helpmail" showDelay="200">
+                                <h:outputText value="#{msg.file_trasformazione_erogatore_mail_insert_tooltip}"/>
+                            </rich:toolTip>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <rich:panel header="#{msgx.informazioniMail}" headerClass="simplePanel" bodyClass="bodyDB"
+                                rendered="#{vistaIstanzeAccordi.elaboraRichiestaMail}">
+                        <h:panelGrid columns="4" style="width:360px" columnClasses="testoPiccolo">
+                            <h:outputText  value="#{msgx.indirizzoMail}"/>
+                            <h:inputText label="IndirizzoMail" style="width:100px" value="#{vistaIstanzeAccordi.indirizzoMail}"/>
+                            <h:panelGroup rendered="false">
+                                <h:graphicImage id="helpIndirizzoMail" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpIndirizzoMail" showDelay="200">
+                                    <h:outputText value="#{msgx.indirizzoMail_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                            <h:outputText  value="#{msgx.oggettoMail}"/>
+                            <h:inputText label="OggettoMail" style="width:100px" value="#{vistaIstanzeAccordi.oggettoMail}"/>
+                            <h:panelGroup rendered="false">
+                                <h:graphicImage id="helpOggettoMail" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="helpOggettoMail" showDelay="200">
+                                    <h:outputText value="#{msgx.oggettoMail_tooltip}"/>
+                                </rich:toolTip>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </rich:panel>
+                </h:panelGroup>
+
+
+                <h:panelGroup styleClass="pulsantiWizard" id="next1">
+                    <h:commandLink action="#{controlloIstanzeAccordi.annulla}" immediate="true">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloIstanzeAccordi.nuovaIstanza}" immediate="true">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_indietro}.png"  styleClass="linkPicture"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloErogatoreIstanzeAccordi.configuraRichiestaErogatore}">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}.png"  styleClass="linkPicture" rendered="true"/>
+                    </h:commandLink>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}_disabled.png"  styleClass="linkPicture" rendered="false"/>
+                </h:panelGroup>
+            </a4j:region>
+        </h:form>
+    </h:panelGroup>
+</rich:panel>

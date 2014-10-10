@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Identificazione Assistito - WSDL Logico Erogatore - 1.0 -->
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:zsvr="http://www.intemaweb.com/services/identificazioneassistito" xmlns:types="http://www.intemaweb.com/iron/datatypes" targetNamespace="http://www.intemaweb.com/services/identificazioneassistito">
+	<wsdl:import namespace="http://www.intemaweb.com/iron/datatypes" location="definitorio.wsdl"/>
+	<wsdl:portType name="ServizioIdentificazioneAssistito">
+		<wsdl:documentation>Definizione delle operazioni/scenari elementari di coordinamento e del servizio</wsdl:documentation>
+		<wsdl:operation name="RichiestaRispostaSincrona_IdentificazioneAssistito">
+			<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servizio di Identificazione dell'assistito</documentation>
+			<wsdl:input message="zsvr:richiesta_RichiestaRispostaSincrona_IdentificazioneAssistito_Msg"/>
+			<wsdl:output message="zsvr:risposta_RichiestaRispostaSincrona_IdentificazioneAssistito_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

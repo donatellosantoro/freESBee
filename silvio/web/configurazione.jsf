@@ -1,0 +1,78 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Configurazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>   
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formConfigurazione:boxSuccesso',delay:2.0,duration:0.8"/>      
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/configurazione.png" alt="Configurazione"/>                
+        </h:panelGroup>
+        <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menu.jsf"/>
+            </h:panelGroup>
+            <h:panelGroup> 
+                <h:form id="formConfigurazione">
+                    <rich:panel style="width:300px;" id="CambiaPassword">  
+                        <f:facet name="header">  
+                            <h:panelGroup  style="width:410px">  
+                                <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/configurazione.png"  styleClass="linkPicture" />
+                                    <h:outputText value="#{msg.configurazione_title}"/>   
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </f:facet> 
+                        <h:outputText value="#{msg.configurazione_info}" styleClass="infoText"/>
+                        <h:outputText value="#{controlloGestioneConfigurazione.errore}" rendered="#{controlloGestioneConfigurazione.errore != null}" styleClass="errorText"/>
+                        <h:outputText id="boxSuccesso" value="#{controlloGestioneConfigurazione.messaggio}" rendered="#{controlloGestioneConfigurazione.messaggio != null}" styleClass="confirmText"/>
+                        <h:outputText id="boxInfo" value="#{controlloGestioneConfigurazione.info}" rendered="#{controlloGestioneConfigurazione.info != null}" styleClass="noteText"/>
+                        <rich:messages styleClass="errorText"/>
+                        
+                        <h:panelGroup styleClass="pannello">
+                            <h:panelGrid columns="3" >
+                                <h:outputText value="#{msg.dirConfig}: "/> 
+                                <h:inputText label="#{msg.dirConfig}" value="#{vistaGestioneConfigurazione.dirConfig}" required="true"/>  
+                                <h:panelGroup rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}">
+                                    <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                    <rich:toolTip for="help1" showDelay="200">
+                                        <h:outputText value="#{msg.configurazione_tooltip_cartella}"/>
+                                    </rich:toolTip>
+                                </h:panelGroup>
+                                <h:outputText value="#{msg.portaConfig}: "/> 
+                                <h:inputText label="#{msg.portaConfig}" value="#{vistaGestioneConfigurazione.porta}" required="true" />  
+                                <h:panelGroup rendered="#{vistaAccordoCollaborazione.sceltaInput != 'accordoServizio'}">
+                                    <h:graphicImage id="help2" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                    <rich:toolTip for="help2" showDelay="200">
+                                        <h:outputText value="#{msg.configurazione_tooltip_porta}"/>
+                                    </rich:toolTip>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            
+                            
+                            <h:panelGroup styleClass="pulsantiWizard" style="text-align: center !important">  
+                                <h:commandLink action="#{controlloGestioneConfigurazione.salvaConfigurazione}">               
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_salva}.png"  styleClass="linkPicture"/>
+                                </h:commandLink>
+                            </h:panelGroup>     
+                            
+                        </h:panelGroup>
+                    </rich:panel>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

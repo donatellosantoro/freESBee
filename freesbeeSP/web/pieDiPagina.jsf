@@ -1,0 +1,9 @@
+</div>
+<div class="footer">
+    <div class="contentFooter">
+        © COPYRIGHT 2009 <a href="http://freesbee.unibas.it">GRUPPO freESBee</a>
+        <img src="${pageContext.request.contextPath}/images/title/logoProj.png" alt="Logo freESBee Project" class="footerFreESBeeSP"/>
+    </div>
+</div>
+</body>
+</html>

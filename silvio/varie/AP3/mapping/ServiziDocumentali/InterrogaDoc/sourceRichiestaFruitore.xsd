@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiCompleti">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiInterattivi">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codice_amministrazione_richiedente" type="xs:string" />
+              <xs:element name="codice_aoo_richiedente" type="xs:string" />
+              <xs:element name="codice_amministrazione_interrogato" type="xs:string" />
+              <xs:element name="codice_aoo_interrogato" type="xs:string" />
+              <xs:element name="codice_doc_inf" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

@@ -1,0 +1,57 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>    
+    <h:panelGroup styleClass="menu">                
+        <h:panelGroup  styleClass="menuSeparator">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/trasparent.png"/>
+        </h:panelGroup>
+        
+        <rich:panel style="width:248px;" >
+            <f:facet name="header">  
+                <h:panelGroup  style="width:248px">                    
+                    <h:panelGroup styleClass="headerNome"  style="width:248px">                                                  
+                        <h:outputText styleClass="headerWizard" value="#{msg.wizard_esegui_istanza_step1_titolo}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>
+            <h:outputText value="#{msg.wizard_esegui_istanza_step1}" styleClass="infoText"/>
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Istanza" styleClass="intestazioneWizard" rendered="#{vistaEseguiIstanzaTest.secondoPasso}"/>
+                    <h:outputText value="#{vistaEseguiIstanzaTest.istanzaSelezionata}" rendered="#{vistaEseguiIstanzaTest.secondoPasso}" styleClass="testoPiccolo"/>                    
+                </h:panelGrid>
+            </h:panelGroup>                
+        </rich:panel>
+        
+        <br/><rich:separator height="1" lineType="solid" rendered="#{vistaEseguiIstanzaTest.secondoPasso}"/><br/>
+        
+        <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaEseguiIstanzaTest.secondoPasso}">
+            <f:facet name="header">  
+                <h:panelGroup  style="width:248px">                              
+                    <h:panelGroup styleClass="headerNome"  style="width:248px">  
+                               
+                        <h:outputText styleClass="headerWizard" value="#{msg.wizard_esegui_istanza_test_step2_titolo}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>
+            <h:outputText value="#{msg.wizard_esegui_istanza_dati_erogatore_test}" styleClass="infoText"/>
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="2" rendered="#{vistaEseguiIstanzaTest.terzoPasso}">                                               
+                        <h:outputText value="Indirizzo Erogatore:" styleClass="intestazioneWizard"/>
+                        <h:outputText value="#{msg.wizard_esegui_istanza_urlErogatore}" styleClass="testoPiccolo"/>
+                        <h:outputText value="Correlazione" styleClass="intestazioneWizard"/>
+                        <h:outputText value="#{vistaEseguiIstanzaTest.correlazione}" styleClass="testoPiccolo"/>
+                        <h:outputText value="Indirizzo ascolto risposta" styleClass="intestazioneWizard"/>
+                        <h:outputText value="#{msg.wizard_esegui_istanza_urlAscolto}" styleClass="testoPiccolo"/>                    
+                        <h:outputText value="Utenti simulati" styleClass="intestazioneWizard"/>
+                        <h:outputText value="#{vistaEseguiIstanzaTest.numeroUtenti}" styleClass="testoPiccolo"/>                    
+                        <h:outputText value="Richieste simulate" styleClass="intestazioneWizard"/>
+                        <h:outputText value="#{vistaEseguiIstanzaTest.numeroRichieste}" styleClass="testoPiccolo"/>                    
+                </h:panelGrid>                
+            </h:panelGroup>                       
+        </rich:panel>                
+    </h:panelGroup>    
+</h:form>

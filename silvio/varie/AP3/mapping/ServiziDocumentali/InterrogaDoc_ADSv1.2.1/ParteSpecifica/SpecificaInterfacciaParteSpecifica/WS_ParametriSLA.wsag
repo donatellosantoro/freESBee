@@ -1,0 +1,40 @@
+		<wsag:AgreementOffer wsag:AgreementId="IdAgrA"
+			xsi:schemaLocation="http://schemas.ggf.org/graap/2007/03/ws-agreement ws-agreementICAR.xsd"
+			xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<wsag:Name>ASAP3InterrogaDoc</wsag:Name>
+			<wsag:Context>
+				<wsag:AgreementInitiator>
+					FVGFruitore
+				</wsag:AgreementInitiator>
+				<wsag:AgreementResponder>
+					FVGErogatore
+				</wsag:AgreementResponder>
+				<wsag:ServiceProvider>AgreementResponder</wsag:ServiceProvider>
+			</wsag:Context>
+			<wsag:Terms>
+				<wsag:All>
+					<wsag:GuaranteeTerm wsag:Name="TempoRispostaMedio1M"
+						wsag:Obligated="ServiceProvider">
+						<!--wsag:ServiceScope wsag:ServiceName="InterrogaDocWS" /-->
+						<wsag:ServiceLevelObjective>
+							<wsag:CustomServiceLevel>
+								<wsag:Threshold wsag:Operator="Less"
+									wsag:Value="3" />
+								<wsag:Function wsag:resultType="double"
+									xsi:type="wsag:Mean">
+									<wsag:BasicMetric
+										wsag:Unit="seconds">
+										tempoRisposta
+									</wsag:BasicMetric>
+									<wsag:Window>
+										<wsag:Interval>Month</wsag:Interval>
+									</wsag:Window>
+								</wsag:Function>
+							</wsag:CustomServiceLevel>
+						</wsag:ServiceLevelObjective>
+						<wsag:BusinessValueList/>
+					</wsag:GuaranteeTerm>
+				</wsag:All>
+			</wsag:Terms>
+		</wsag:AgreementOffer>

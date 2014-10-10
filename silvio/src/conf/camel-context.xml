@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
+    
+    
+    <camelContext id="camel-silvio" xmlns="http://activemq.apache.org/camel/schema/spring">
+        <package>it.unibas.silvio.fruitore</package>
+        <package>it.unibas.silvio.erogatore</package>
+        <package>it.unibas.silvio.ws.istanza</package>
+    </camelContext>
+    
+    <bean id="ProducerCompletiSoapFruitore" class="it.unibas.silvio.fruitore.ProducerCompletiSoapFruitore">
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+    </bean>
+    
+    <bean id="wsIstanza" class="it.unibas.silvio.ws.istanza.WSIstanza">
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+        <property name="daoIstanzaPortType" ref="daoIstanzaPortType"/>
+        <property name="daoIstanzaAccordo" ref="daoIstanzaAccordo"/>
+    </bean>        
+            
+    <bean id="EnricherOperationFruitore" class="it.unibas.silvio.fruitore.EnricherOperationFruitore">
+        <property name="daoIstanzaPortType" ref="daoIstanzaPortType"/>
+    </bean>        
+            
+    <bean id="EnricherDatiParzialiCompletiFruitore" class="it.unibas.silvio.fruitore.EnricherDatiParzialiCompletiFruitore">
+        <property name="daoIstanzaAccordo" ref="daoIstanzaAccordo"/>
+        <property name="daoDati" ref="daoDati"/>
+    </bean>  
+            
+    <bean id="EnricherOperationErogatore" class="it.unibas.silvio.erogatore.EnricherOperationErogatore">
+        <property name="daoIstanzaPortType" ref="daoIstanzaPortType"/>
+    </bean>  
+    
+    <bean id="EnricherDatiParzialiCompletiErogatore" class="it.unibas.silvio.erogatore.EnricherDatiParzialiCompletiErogatore">
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+        <property name="daoDati" ref="daoDati"/>
+    </bean>  
+    
+    <bean id="ProducerCompletiSoapErogatore" class="it.unibas.silvio.erogatore.ProducerCompletiSoapErogatore">
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+    </bean>  
+    
+    <bean id="MessageStoreRichiestaFruitore" class="it.unibas.silvio.fruitore.MessageStoreRichiestaFruitore">
+        <property name="daoMessaggio" ref="daoMessaggio"/>
+    </bean>  
+    
+    <bean id="DetourUscitaRispostaErogatore" class="it.unibas.silvio.erogatore.DetourUscitaRispostaErogatore">
+        <property name="daoMessaggio" ref="daoMessaggio"/>
+    </bean>
+    
+    <bean id="EventDrivenConsumerSbloccoRispostaManuale" class="it.unibas.silvio.erogatore.EventDrivenConsumerSbloccoRispostaManuale">
+        <property name="daoMessaggioSblocco" ref="daoMessaggioSblocco"/>
+    </bean>
+    
+    <bean id="HttpUscitaRichiestaFruitore" class="it.unibas.silvio.fruitore.HttpUscitaRichiestaFruitore">
+        <property name="daoMessaggio" ref="daoMessaggio"/>
+    </bean>  
+    
+    <bean id="HttpUscitaRispostaErogatore" class="it.unibas.silvio.erogatore.HttpUscitaRispostaErogatore">
+        <property name="daoMessaggio" ref="daoMessaggio"/>
+    </bean>
+    
+    <bean id="HttpIngressoSbloccoAsincrono" class="it.unibas.silvio.erogatore.HttpIngressoSbloccoAsincrono">
+        <property name="daoMessaggioSblocco" ref="daoMessaggioSblocco"/>
+    </bean>  
+    
+    <bean id="MessageStoreDBErogatore" class="it.unibas.silvio.erogatore.MessageStoreDBErogatore">
+        <property name="daoMessaggio" ref="daoMessaggio"/>
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+    </bean>  
+    
+    <bean id="MessageStoreDBFruitore" class="it.unibas.silvio.fruitore.MessageStoreDBFruitore">
+        <property name="daoMessaggio" ref="daoMessaggio"/>
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+    </bean>  
+    
+        <!---    DAO    -->
+    <bean id="daoIstanzaAccordo" class="it.unibas.silvio.persistenza.hibernate.DAOIstanzaAccordoDiCollaborazioneHibernate"/>
+    <bean id="daoIstanzaPortType" class="it.unibas.silvio.persistenza.hibernate.DAOIstanzaPortTypeHibernate"/>
+    <bean id="daoConfigurazione" class="it.unibas.silvio.persistenza.hibernate.DAOConfigurazioneHibernate"/>
+    <bean id="daoMessaggio" class="it.unibas.silvio.persistenza.hibernate.DAOMessaggioHibernate"/>
+    <bean id="daoDati" class="it.unibas.silvio.persistenza.hibernate.DAODatiHibernate"/>
+    <bean id="daoMessaggioSblocco" class="it.unibas.silvio.persistenza.hibernate.DAOMessaggioSbloccoManualeHibernate"/>
+</beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
+    
+    <camelContext id="camel-silvio" xmlns="http://activemq.apache.org/camel/schema/spring">
+        <!--<package>it.unibas.silvio.fruitore</package>
+        <package>it.unibas.silvio.erogatore</package>
+        <package>it.unibas.silvio.ws.istanza</package>-->
+        <routeBuilderRef ref="RouteInvioMessaggio" />
+        <routeBuilderRef ref="RouteTransazioneBD" />
+        <routeBuilderRef ref="RouteInterrogazioneBD" />
+        <routeBuilderRef ref="RouteSbloccoPolling" />
+    </camelContext>
+    
+    <bean id="Test" class="it.unibas.silvio.route.TestEseguiIstanza">
+        <constructor-arg ref="camel-silvio"/>
+    </bean>
+
+
+    <bean id="RouteInvioMessaggio" class="it.unibas.silvio.route.RouteInvioMessaggio"/>
+    <bean id="RouteTransazioneBD" class="it.unibas.silvio.route.RouteTransazioneBD"/>
+    <bean id="RouteInterrogazioneBD" class="it.unibas.silvio.route.RouteInterrogazioneBD"/>
+    <bean id="RouteSbloccoPolling" class="it.unibas.silvio.route.RouteSbloccoPolling"/>
+</beans>

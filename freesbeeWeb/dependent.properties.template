@@ -1,0 +1,16 @@
+# File di properties dependent.properties        
+lib.dir             = ./lib
+
+jsf.ver                   = 1.2
+tomahawk.ver              = 1.1
+richfaces.ver             = 3.2.0
+cxf.ver                   = 2.5.2
+
+catalina.dir        = 
+servlet.api.jar     = ${catalina.dir}/lib/servlet-api.jar
+catalina.host       = localhost
+catalina.port       = 8080
+catalina.username   = admin
+catalina.password   = 
+
+browser.exe         = c:/Programmi/Mozilla Firefox/firefox.exe

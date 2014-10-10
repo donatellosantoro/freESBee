@@ -1,0 +1,109 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Configurazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaConfigurazione}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/configurazione.png" alt="Configurazione"/>
+            </h:panelGroup>
+
+            <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:600px;" rendered="#{controlloConfigurazione.visualizzaMessaggio}">
+                <h:outputText styleClass="successoMessaggio" value="#{controlloConfigurazione.messaggio}"/>
+            </h:panelGroup>
+            <h:panelGroup id="boxErrore" styleClass="errore" style="width:600px;" rendered="#{controlloConfigurazione.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloConfigurazione.errore}"/>
+            </h:panelGroup>
+
+            <h:form id="formConfigurazione">
+                <rich:simpleTogglePanel opened="true" id="boxNuovaConfigurazione" style="width:600px;" switchType="ajax">
+
+
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/servizio_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuova Configurazione"/>
+                        </h:panelGroup>
+                    </f:facet>
+
+
+                    <h:panelGrid columns="1" cellspacing="">
+                        <h:panelGrid columns="2" cellspacing="20">
+                            <h:outputText value="Indirizzo Servizio Registri: "/>
+                            <h:inputText style="width:300px" value="#{vistaConfigurazione.datiConfigurazione.indirizzoRegistroServizi}"/>
+
+                            <h:outputText value="Nome Soggetto Modulo SLA: "/>
+                            <h:inputText value="#{vistaConfigurazione.datiConfigurazione.nomeSLA}"/>
+
+
+                            <h:outputText value="Tipo Soggetto Modulo SLA: "/>
+                            <h:inputText value="#{vistaConfigurazione.datiConfigurazione.tipoSLA}"/>
+
+                            <rich:separator height="2" lineType="dotted"/>
+                            <rich:separator height="2" lineType="dotted"/>
+
+                            <h:outputText value="Accordo Servizio Monitoraggio Stato: "/>
+                            <h:inputText style="width:150px" value="#{vistaConfigurazione.datiConfigurazione.accordoServizioStato}"/>
+
+
+                            <h:outputText value="Nome Servizio Monitoraggio Stato: "/>
+                            <h:inputText  style="width:150px" value="#{vistaConfigurazione.datiConfigurazione.nomeServizioMonitoraggioStato}"/>
+
+                            <h:outputText value="Tipo Servizio Monitoraggio Stato: "/>
+                            <h:inputText value="#{vistaConfigurazione.datiConfigurazione.tipoServizioMonitoraggioStato}"/>
+
+                            <h:outputText value="Porta Delegata Monitoraggio Stato: "/>
+                            <h:inputText style="width:350px" value="#{vistaConfigurazione.datiConfigurazione.pdMonitoraggioStato}"/>
+
+                            <rich:separator height="2" lineType="dotted"/>
+                            <rich:separator height="2" lineType="dotted"/>
+
+                            <h:outputText value="Accordo Servizio Monitoraggio SLA: "/>
+                            <h:inputText  style="width:150px" value="#{vistaConfigurazione.datiConfigurazione.accordoServizioSLA}"/>
+
+                            <h:outputText value="Nome Servizio Monitoraggio SLA: "/>
+                            <h:inputText  style="width:150px" value="#{vistaConfigurazione.datiConfigurazione.nomeServizioMonitoraggioSLA}"/>
+
+                            <h:outputText value="Tipo Servizio Monitoraggio SLA: "/>
+                            <h:inputText value="#{vistaConfigurazione.datiConfigurazione.tipoServizioMonitoraggioSLA}"/>
+
+                            <h:outputText value="Porta Delegata Monitoraggio SLA: "/>
+                            <h:inputText style="width:350px" value="#{vistaConfigurazione.datiConfigurazione.pdMonitoraggioSLA}"/>
+
+
+                        </h:panelGrid>
+                        <h:panelGroup styleClass="bloccoPulsanti" >
+                            <h:commandButton value="Modifica" action="#{controlloConfigurazione.modifica}"  />
+                            <h:commandButton value="Annulla" action="#{controlloConfigurazione.caricaConfigurazioneSLA}" immediate="true"/>
+                        </h:panelGroup>
+
+                    </h:panelGrid>
+
+                </rich:simpleTogglePanel>
+            </h:form>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

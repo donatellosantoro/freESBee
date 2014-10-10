@@ -1,0 +1,30 @@
+POST /EROGATORE/AP6WS_3/ HTTP/1.1
+VALOREPROFILOCOLLABORAZIONE: SINCRONO
+User-Agent: Jakarta Commons-HttpClient/3.1-rc1
+Host: 127.0.0.1:19192
+Content-Length: 1334
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header><wsaw:MessageID xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">SILVIO-1215683220250</wsaw:MessageID><wsaw:Action xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">getTitolari</wsaw:Action><wsaw:To xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">http://www.w3.org/2005/08/addressing/anonymous</wsaw:To><sil:istanza_test xmlns:sil="http://silvio.unibas.it/">false</sil:istanza_test><sil:nome_operation xmlns:sil="http://silvio.unibas.it/">getTitolari</sil:nome_operation></SOAP-ENV:Header><SOAP-ENV:Body><getTitolari xmlns="http://ws.ap6.progettoicar.it/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ws.ap6.progettoicar.it/ C:/DOCUME~1/LAGUAR~1/Desktop/icarSVN/AP-X/AP-6/AP6-SILVIO/mapping/getTitolari/fruitore/target.xsd">
+  <titolariXML codistatregione="ab222" data_rilevazione="10/07/2008">
+    <titolaritype>
+      <titolareitem>
+        <iva_cf>abcdefghilmn1234</iva_cf>
+        <denominazione/>
+        <indirizzo>
+          <via>via dei fiori 1</via>
+          <codistat_pvcomune>BASPZ</codistat_pvcomune>
+          <cap>85100</cap>
+        </indirizzo>
+      </titolareitem>
+	   <titolareitem>
+        <iva_cf>abcdefghilmn</iva_cf>
+        <denominazione/>
+        <indirizzo>
+          <via>via olio 1</via>
+          <codistat_pvcomune>BASPZ</codistat_pvcomune>
+          <cap>85100</cap>
+        </indirizzo>
+      </titolareitem>
+    </titolaritype>
+  </titolariXML>
+</getTitolari></SOAP-ENV:Body></SOAP-ENV:Envelope>

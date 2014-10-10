@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    
+    <!--                     navigazione                        -->
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>schermoLogin</from-outcome>
+            <to-view-id>/schermoLogin.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>schermoLoginConfigurazione</from-outcome>
+            <to-view-id>/schermoLoginConfigurazione.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>redirectASchermoApplicazione</from-outcome>
+            <to-view-id>/redirectASchermoApplicazione.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>configurazione</from-outcome>
+            <to-view-id>/schermoConfigurazione.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>schermoInviaMessaggio</from-outcome>
+            <to-view-id>/schermoInviaMessaggio.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+        
+</faces-config>

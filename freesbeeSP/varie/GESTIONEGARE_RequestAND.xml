@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+  <Subject SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string">
+      <AttributeValue>agentege</AttributeValue>
+    </Attribute>
+    <Attribute AttributeId="idOrganizationUnit" DataType="http://www.w3.org/2001/XMLSchema#string" Issuer="https://icarlab.unibas.it/idp/shibboleth">
+      <AttributeValue>Basilicata</AttributeValue>
+    </Attribute>
+    <Attribute AttributeId="idTitle" DataType="http://www.w3.org/2001/XMLSchema#string" Issuer="https://icarlab.unibas.it/idp/shibboleth">
+      <AttributeValue>agente</AttributeValue>
+    </Attribute>
+  </Subject>
+  <Resource>
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" DataType="http://www.w3.org/2001/XMLSchema#anyURI">
+      <AttributeValue>http://server.example.com/</AttributeValue>
+    </Attribute>
+  </Resource>
+  <Action>
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string">
+      <AttributeValue>commit</AttributeValue>
+    </Attribute>
+  </Action>
+</Request>

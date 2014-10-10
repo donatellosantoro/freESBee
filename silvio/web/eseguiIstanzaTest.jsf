@@ -1,0 +1,90 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Esegui Istanza Test" />
+</c:import>
+<!-- ******************************************* -->
+
+
+<f:view>    
+    <t:saveState value="#{vistaEseguiIstanzaTest}"/>
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/eseguiIstanzaTest.png" alt="Esegui istanza test"/>                
+        </h:panelGroup>
+        <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menuWizardEseguiIstanzaTest.jsf"/>
+            </h:panelGroup>
+            <h:panelGroup> 
+                <h:form id="formEseguiIstanzaTest">
+                    <a4j:region selfRendered="true">
+                        <a4j:loadBundle basename="messaggi" var="msgx"/>
+                        <rich:panel style="width:410px;" id="EseguiIstanzaTest">  
+                            <f:facet name="header">  
+                                <h:panelGroup  style="width:410px">  
+                                    <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/eseguiAccordoCollaborazione.png"  styleClass="linkPicture" />
+                                        <h:outputText value="#{msg.istanza_esegui_test_title}"/>   
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </f:facet> 
+                            <h:outputText value="#{msg.istanza_esegui_test_info}" styleClass="infoText"/>
+                            <h:outputText value="#{controlloEseguiIstanzaTest.errore}" rendered="#{controlloEseguiIstanzaTest.errore != null}" styleClass="errorText"/>
+                            <h:outputText id="boxSuccesso" value="#{controlloEseguiIstanzaTest.messaggio}" rendered="#{controlloEseguiIstanzaTest.messaggio != null}" styleClass="confirmText"/>
+                            <rich:messages styleClass="errorText"/>
+                            
+                            <h:panelGroup styleClass="pannello" rendered="#{controlloEseguiIstanzaTest.errore == null}">
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="#{msg.istanza_esegui}" />
+                                    <h:selectOneMenu id="selectIstanze" value="#{vistaEseguiIstanzaTest.istanzaSelezionata}" required="true">
+                                        <f:selectItems value="#{vistaEseguiIstanzaTest.listaItem}" />
+                                        <a4j:support event="onchange" reRender="listaOperation" action="#{controlloEseguiIstanzaTest.istanzaCambiata}"/>
+                                    </h:selectOneMenu> 
+                                    <h:panelGroup>
+                                        <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                        <rich:toolTip for="help1" showDelay="200">
+                                            <h:outputText value="#{msg.istanza_esegui_test_tooltip}"/>
+                                        </rich:toolTip>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                
+                                <h:panelGroup id="listaOperation">  
+                                    <h:panelGroup rendered="#{!empty vistaEseguiIstanzaTest.istanzaSelezionata}">
+                                        <rich:separator height="2" lineType="solid" styleClass="separator"/>
+                                        <h:selectOneRadio id="selectOperation" value="#{vistaEseguiIstanzaTest.operationSelezionata}"
+                                                          layout="pageDirection">
+                                            <f:selectItems value="#{vistaEseguiIstanzaTest.listaItemOperation}" />
+                                            <a4j:support event="onchange" reRender="next1"/>
+                                        </h:selectOneRadio>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                
+                                <h:panelGroup styleClass="pulsantiWizard" id="next1">
+                                    <h:commandLink action="#{controlloEseguiIstanzaTest.annulla}" immediate="true">               
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                                    </h:commandLink>
+                                    <h:commandLink action="#{controlloEseguiIstanzaTest.configura}">               
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}.png"  styleClass="linkPicture" rendered="#{!empty vistaEseguiIstanzaTest.operationSelezionata}"/>
+                                    </h:commandLink>
+                                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_avanti}_disabled.png"  styleClass="linkPicture" rendered="#{empty vistaEseguiIstanzaTest.operationSelezionata}"/>
+                                </h:panelGroup>    
+                                
+                            </h:panelGroup>
+                        </rich:panel>
+                    </a4j:region>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

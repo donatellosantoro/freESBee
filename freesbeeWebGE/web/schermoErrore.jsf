@@ -1,0 +1,41 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Errore" />
+</c:import>
+<!-- ******************************************* -->
+
+<center>
+    <f:view>
+
+
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/logoGE.png"  alt="Logo freESBeeGE"/>
+        </h:panelGroup>
+
+        <rich:modalPanel  showWhenRendered="true" minHeight="100" minWidth="330"  >
+            <f:facet name="header">
+                <h:panelGroup>
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/false.png"   />
+                    <h:outputText value="Errore"/>
+                </h:panelGroup>
+            </f:facet>
+            <h:form>
+                <center><h:outputText value="Si è verificato un errore." style="color:red;font-size:12pt;"/></center>
+                <br/><h:outputText value="E' possibile effettuare nuovamente il login." style="font-size:12pt;" />
+                <h:outputText styleClass="erroreLogin" value="#{controlloLogin.errore}"/>
+                <center><h:commandButton value="login" style="width:100px;margin-top:5px;" action="#{controlloLogin.logout}" /></center>
+            </h:form>
+        </rich:modalPanel>
+
+    </f:view>
+</center>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

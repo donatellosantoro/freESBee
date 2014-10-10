@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:ge="http://ge.freesbee.unibas.it/">
+    <SOAP-ENV:Body>
+        <ge:pubblicaMessaggio>
+            <messaggioSoap>
+                <persona>
+                    <codiceFiscale>clstrssll</codiceFiscale>
+                    <cognome>Celeste</cognome>
+                    <comuneNascita>Pisticci</comuneNascita>
+                    <comuneResidenza>Ancona</comuneResidenza>
+                    <dataNascita>1975-05-13</dataNascita>
+                    <indirizzoResidenza>?</indirizzoResidenza>
+                    <nome>Rossella</nome>
+                    <sesso>F</sesso>
+                    <statoCivile>nubile</statoCivile>
+                </persona>
+            </messaggioSoap>
+            <nomePubblicatore>GE</nomePubblicatore>
+            <tipoPubblicatore>SPC</tipoPubblicatore>
+            <categoriaEventi>Test7</categoriaEventi>
+            <nomePubblicatoreEsterno>A</nomePubblicatoreEsterno>
+            <tipoPubblicatoreEsterno>SPC</tipoPubblicatoreEsterno>
+        </ge:pubblicaMessaggio>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+     
+
+  
+  
+  
+  

@@ -1,0 +1,17 @@
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:ge="http://ge.freesbee.unibas.it/">
+    <SOAP-ENV:Body>
+        <ge:pubblicaMessaggio>
+            <messaggioSoap>
+                <rimuoviGESottoscrittore>
+                    <nomeSottoscrittore>NICA_PUGLIA</nomeSottoscrittore>
+                    <tipoSottoscrittore>SPC</tipoSottoscrittore>
+                    <categoriaSottoscrizione>Test9</categoriaSottoscrizione>
+                </rimuoviGESottoscrittore>
+            </messaggioSoap>
+            <nomePubblicatore>NICA_PUGLIA</nomePubblicatore>
+            <tipoPubblicatore>SPC</tipoPubblicatore>
+            <categoriaEventi>GEControlProtocol</categoriaEventi>
+        </ge:pubblicaMessaggio>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

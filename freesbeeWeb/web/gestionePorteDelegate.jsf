@@ -1,0 +1,294 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Porte Delegate" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiPorteDelegate:boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiPorteDelegate:boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaGestionePorteDelegate}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestionePorteDelegate.png" alt="Gestione Porte Delegate"/>
+            </h:panelGroup>
+
+            <rich:modalPanel id="panelEliminaPortaDelegata" showWhenRendered="#{vistaGestionePorteDelegate.elimina}" height="160" width="320">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                        <h:outputText value="Conferma eliminazione"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:outputText styleClass="confermaMessaggio" value="#{controlloGestionePorteDelegate.conferma}"/>
+
+                    <h:panelGrid columns="2" style="margin:0px 7px 0px 7px;">
+                        <h:outputText style="font-weight: bold;" value="Nome"/>
+                        <h:outputText value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.nome}"/>
+                    </h:panelGrid>
+
+
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Elimina" action="#{controlloGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.elimina}" />
+                        <h:commandButton value="Annulla" action="#{controlloGestionePorteDelegate.gestionePorteDelegate}" immediate="true"/>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <h:form id="formCampiPorteDelegate">
+                <rich:simpleTogglePanel opened="#{vistaGestionePorteDelegate.pannelloVisibile}" id="boxNuovaPorta"
+                                        style="width:300px;" switchType="ajax">
+
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/portaDelegata_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuova Porta Delegata"/>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <h:panelGrid columns="2">
+                        <h:panelGroup id="boxAccordo" >
+                            <rich:messages>
+                                <f:facet name="errorMarker">
+                                    <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>
+                                </f:facet>
+                            </rich:messages>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Nome" />
+                                <h:inputText id="textNome" label="nome" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.nome}" required="true" readonly="#{vistaGestionePorteDelegate.elimina}"/>
+
+                                <h:outputText value="Descrizione" />
+                                <h:inputText id="textDescrizione" label="descrizione" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.descrizione}" readonly="#{vistaGestionePorteDelegate.elimina}"/>
+
+                                <h:outputText value="Dinamica"/>
+                                <h:panelGrid columns="2">
+                                    <a4j:region>
+                                        <h:selectBooleanCheckbox value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.fruitoreQueryString}">
+                                            <a4j:support event="onchange" reRender="boxDettagli" />
+                                        </h:selectBooleanCheckbox>
+                                    </a4j:region>
+                                    <h:panelGroup>
+                                        <h:graphicImage id="helpDinamica" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                        <rich:toolTip for="helpDinamica" showDelay="200" >
+                                            Il fruitore verrà specificato nella query string.<br/>
+                                            I parametri da utilizzare sono <strong>FRUITORE</strong> e <strong>TIPO_FRUITORE</strong><br/><br/>
+                                            Quindi, per contattare una porta delegata che si chiama PDTEST l'indirizzo sarà<br/><br/>
+                                            <span >http://.../PDTEST/?FRUITORE=Fruitore&TIPO_FRUITORE=TEST</span>
+                                        </rich:toolTip>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" id="boxDettagli">
+
+                                <h:outputText value="Servizio" rendered="#{!vistaGestionePorteDelegate.nicaPresente}"/>
+                                <a4j:region rendered="#{!vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:selectOneMenu style="font-size:8pt;width:126px" required="#{!vistaGestionePorteDelegate.nuovoPortaDelegata.fruitoreQueryString}" label="servizio"  rendered="#{!vistaGestionePorteDelegate.nicaPresente}"
+                                                     value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.servizio.id}" readonly="#{vistaGestionePorteDelegate.elimina}">
+                                        <f:selectItems value="#{vistaGestionePorteDelegate.listaServizi}"/>
+                                        <a4j:support event="onchange" actionListener="#{controlloGestionePorteDelegate.servizioCambiato}"  reRender="listaFruitori,listaAzioni" />
+                                    </h:selectOneMenu>
+                                </a4j:region>
+
+                                <h:outputText value="Azione" rendered="#{!vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" label="azione" id="listaAzioni" rendered="#{!vistaGestionePorteDelegate.nicaPresente}"
+                                                 value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.azione.id}" readonly="#{vistaGestionePorteDelegate.elimina}">
+                                    <f:selectItems value="#{vistaGestionePorteDelegate.listaAzioni}"/>
+                                </h:selectOneMenu>
+
+                                <h:outputText value="Fruitore"  rendered="#{!vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" required="#{!vistaGestionePorteDelegate.nuovoPortaDelegata.fruitoreQueryString}" label="fruitore" id="listaFruitori" rendered="#{!vistaGestionePorteDelegate.nicaPresente}"
+                                                 value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.soggettoFruitore.id}" readonly="#{vistaGestionePorteDelegate.elimina}">
+                                    <f:selectItems value="#{vistaGestionePorteDelegate.listaSoggetti}"/>
+                                </h:selectOneMenu>
+
+                                <!-- CAMPI PER CREARE UNA PORTA DELEGATA QUANDO E' PRESENTE UN NICA-->
+
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+
+                                <h:outputText value="Tipo Servizio"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="tipo servizio" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaTipoServizio}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}"  />
+
+                                <h:outputText value="Servizio"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="servizio" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaServizio}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}" />
+
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+
+                                <h:outputText value="Azione"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="azione" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaAzione}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}" />
+
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+
+                                <h:outputText value="Tipo Erogatore"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="tipo erogatore" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaTipoErogatore}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}" />
+
+                                <h:outputText value="Erogatore"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="erogatore" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaErogatore}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}" />
+
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+
+                                <h:outputText value="Tipo Fruitore"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="tipo fruitore" id="stringaTipoFruitore" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaTipoFruitore}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}" />
+
+                                <h:outputText value="Fruitore"  rendered="#{vistaGestionePorteDelegate.nicaPresente}"/>
+                                <h:inputText label="fruitore" id="stringaFruitore" value="#{vistaGestionePorteDelegate.nuovoPortaDelegata.stringaFruitore}" readonly="#{vistaGestionePorteDelegate.elimina}" rendered="#{vistaGestionePorteDelegate.nicaPresente}" />
+
+                            </h:panelGrid>
+
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Inserisci" action="#{controlloGestionePorteDelegate.inserisci}" rendered="#{!vistaGestionePorteDelegate.modifica && !vistaGestionePorteDelegate.elimina}" />
+                                <h:commandButton value="Modifica" action="#{controlloGestionePorteDelegate.modifica}" rendered="#{vistaGestionePorteDelegate.modifica}" />
+                                <h:commandButton value="Annulla" action="#{controlloGestionePorteDelegate.gestionePorteDelegate}" rendered="#{!vistaGestionePorteDelegate.elimina}" immediate="true"/>
+                            </h:panelGroup>
+
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+
+                <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestionePorteDelegate.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestionePorteDelegate.messaggio}"/>
+                </h:panelGroup>
+                <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestionePorteDelegate.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestionePorteDelegate.errore}"/>
+                </h:panelGroup>
+            </h:form>
+
+
+            <rich:tabPanel style="width:520px;margin-top:30px" headerAlignment="right" binding="#{vistaGestionePorteDelegate.tabPanel}" >
+                <rich:tab disabled="true">
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/detail.png"  styleClass="linkPicture" />
+                            <h:outputText value="Dettagli"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:outputText styleClass="intestazioneTab" value="Lista delle Porte Delegate"/>
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:outputText styleClass="intestazioneTab" value="Lista delle Porte Delegate"/>
+
+                    <h:form >
+                        <rich:datascroller align="left"  for="listaPorteDelegate" maxPages="10"/>
+
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="500" id="listaPorteDelegate" rows="10" columnClasses="col" binding="#{vistaGestionePorteDelegate.tabellaPorteDelegate}"
+                                        value="#{vistaGestionePorteDelegate.listaPorteDelegate}" var="portaDelegata">
+
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Id" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Descrizione" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Servizio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Azione" />
+                                    </h:column>
+                                    <h:column rendered="#{!vistaGestionePorteDelegate.nicaPresente}">
+                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                    </h:column>
+                                    <h:column rendered="#{vistaGestionePorteDelegate.nicaPresente}">
+                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                    </h:column>
+                                    <h:column rendered="#{vistaGestionePorteDelegate.nicaPresente}">
+                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                    </h:column>
+
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>
+                            </f:facet>
+
+                            <rich:columnGroup>
+                                <h:column>
+                                    <h:outputText value="#{portaDelegata.id}" />
+                                </h:column>
+                                <h:column>
+                                    <h:outputText value="#{portaDelegata.nome}" />
+                                </h:column>
+                                <h:column>
+                                    <h:outputText value="#{portaDelegata.descrizione}" />
+                                </h:column>
+                                <h:column rendered="#{!vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.servizio.nomeBreve}" />
+                                </h:column>
+                                <h:column rendered="#{!vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.azione.nome}" />
+                                </h:column>
+                                <h:column rendered="#{vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.stringaTipoServizio}" />\ <h:outputText value="#{portaDelegata.stringaServizio}" />
+                                </h:column>
+                                <h:column rendered="#{vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.stringaAzione}" />
+                                </h:column>
+
+                                <h:column rendered="#{!vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.soggettoFruitore.nomeBreve}" />
+                                </h:column>
+
+                                <h:column rendered="#{vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.stringaTipoErogatore}" />\ <h:outputText value="#{portaDelegata.stringaErogatore}" />
+                                </h:column>
+                                <h:column rendered="#{vistaGestionePorteDelegate.nicaPresente}">
+                                    <h:outputText value="#{portaDelegata.stringaTipoFruitore}" />\ <h:outputText value="#{portaDelegata.stringaFruitore}" />
+                                </h:column>
+
+                                <h:column>
+                                    <h:commandLink action="#{controlloGestionePorteDelegate.schermoModificaDaTabella}"><img title="Modifica porta delegata" alt="Modifica porta delegata" src="${pageContext.request.contextPath}/images/icons/portaDelegata_edit.png" /></h:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <h:commandLink action="#{controlloGestionePorteDelegate.schermoEliminaDaTabella}"><img title="Elimina porta delegata" alt="Elimina porta delegata" src="${pageContext.request.contextPath}/images/icons/portaDelegata_delete.png" /></h:commandLink>
+                                </h:column>
+                            </rich:columnGroup>
+                        </rich:dataTable>
+
+
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

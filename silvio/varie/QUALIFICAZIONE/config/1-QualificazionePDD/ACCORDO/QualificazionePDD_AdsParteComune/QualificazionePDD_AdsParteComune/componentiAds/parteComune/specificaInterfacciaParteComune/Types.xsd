@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS/types">
+
+    <xsd:element name="richiesta_RichiestaSenzaRisposta_testOneWay" type="types:richiesta_type"/>
+    
+	<xsd:element name="richiesta_RichiestaRispostaSincrona_start" type="types:richiesta_type"/>
+	<xsd:element name="risposta_RichiestaRispostaSincrona_start" type="types:risposta_type"/>
+	
+	<xsd:element name="richiesta_RichiestaRispostaSincrona_end" type="types:richiesta_end_type"/>
+	<xsd:element name="risposta_RichiestaRispostaSincrona_end" type="types:risposta_type"/>
+	
+	<xsd:element name="richiesta_RichiestaRispostaSincrona_testSincrono" type="types:richiesta_type"/>
+	<xsd:element name="risposta_RichiestaRispostaSincrona_testSincrono" type="types:risposta_type"/>
+	
+	<xsd:element name="richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico" type="types:richiesta_type"/>
+	<xsd:element name="risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico" type="types:ack_type"/>
+	<xsd:element name="segnalazione_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico" type="types:risposta_type"/>
+	<xsd:element name="risposta_NotificazioneRisposta_riceviRispostaTestAsincronoSimmetrico" type="types:ack_type"/>
+			
+	<xsd:element name="richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico" type="types:richiesta_type"/>
+	<xsd:element name="risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico" type="types:ack_type"/>
+	<xsd:element name="richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico" type="types:richiesta_type"/>
+	<xsd:element name="risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico" type="types:risposta_type"/>
+		
+	<xsd:element name="richiesta_RichiestaRispostaSincrona_getTraccia" type="types:richiesta_type"/>
+	<xsd:element name="risposta_RichiestaRispostaSincrona_getTraccia" type="types:risposta_getTraccia_type"/>
+
+	<xsd:complexType name="richiesta_type">
+		<xsd:sequence>
+			<xsd:element name="TokenSessione" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="richiesta_end_type">
+		<xsd:sequence>
+			<xsd:element name="TokenSessione" type="xsd:string"/>
+			<xsd:element name="isInError" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="risposta_type">
+		<xsd:sequence>
+			<xsd:element name="Esito" type="types:esito_type"/>
+			<xsd:element name="TokenSessione" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="risposta_getTraccia_type">
+		<xsd:sequence>
+			<xsd:element name="Esito" type="types:esito_type"/>					
+			<xsd:element name="TokenSessione" type="xsd:string"/>
+			<xsd:element maxOccurs="unbounded" name="TracciaQualificazione" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ack_type">
+		<xsd:sequence>
+		    <xsd:element name="PresaInCarico" type="types:presa_type"/>
+			<xsd:element name="TokenSessione" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="esito_type">
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="RISPOSTA_OK"/>
+				<xsd:enumeration value="RISPOSTA_KO"/>
+				<xsd:enumeration value="RISPOSTA_NON_PRONTA"/>
+			</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="presa_type">
+			<xsd:restriction base="xsd:string">
+			  <xsd:enumeration value="OK"/>
+			  <xsd:enumeration value="KO"/>
+			</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

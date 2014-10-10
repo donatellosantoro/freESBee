@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsag:GuaranteeTerms xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.ggf.org/graap/2007/03/ws-agreement GuaranteeTerms.xsd">
+	<wsag:GuaranteeTerm wsag:Name="VelocitaMediaDatiRestituiti2W" wsag:Obligated="ServiceProvider">
+		<wsag:ServiceLevelObjective>
+			<wsag:CustomServiceLevel>
+		 		<wsag:Threshold wsag:Operator="Greater" wsag:Value="50"/> <!-- ci si obbliga ad avere pi di 50 rec al secondo -->	
+		 		<!-- media aritmetica tra una serie di letture (lista di q.t di record per unit di tempo) nell arco di 2 sett. -->
+		 		<wsag:Function wsag:resultType="double" xsi:type="wsag:Mean">
+		 			<!-- numero di record diviso tempo di risposta -->
+		 			<wsag:Function wsag:resultType="double" xsi:type="wsag:Divide">
+		 				<wsag:Operand>
+		 					<!-- nome di metrica di risorsa oggetto di tracciatura -->
+		 					<wsag:BasicMetric wsag:Unit="seconds">tempoRisposta</wsag:BasicMetric>
+		 				</wsag:Operand>
+		 				<wsag:Operand>
+		 					<!-- nome di metrica di risorsa oggetto di tracciatura -->
+		 					<wsag:BasicMetric wsag:Unit="seconds">tempoChiamata</wsag:BasicMetric>
+		 				</wsag:Operand>
+		 			</wsag:Function>
+		 			<wsag:Window>
+		 				<wsag:Interval>TwoWeeks</wsag:Interval>
+		 			</wsag:Window>
+		 		</wsag:Function>
+			</wsag:CustomServiceLevel>
+		</wsag:ServiceLevelObjective>
+		<wsag:BusinessValueList/>
+	</wsag:GuaranteeTerm>
+</wsag:GuaranteeTerms>

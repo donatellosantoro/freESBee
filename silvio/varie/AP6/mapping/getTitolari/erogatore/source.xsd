@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.ap6.progettoicar.it/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws.ap6.progettoicar.it/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:element name="getTitolari" type="tns:getTitolari"/>
+
+  <xs:complexType name="getErogato">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="erogatoXML" nillable="true" type="tns:erogati"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getErogatoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" nillable="true" type="tns:ricevutaerogati"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getImpianti">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="impiantiXML" nillable="true" type="tns:impianti"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getImpiantiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" nillable="true" type="tns:ricevutaimpianti"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+ <xs:complexType name="getTitolari">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="titolariXML" nillable="true" type="tns:titolari"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getTitolariResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" nillable="true" type="tns:ricevutatitolari"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRilevazioni">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rilevazioniXML" nillable="true" type="tns:rilevazioni"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRilevazioniResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" nillable="true" type="tns:ricevutarilevazioni"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+ 
+   <!--erogato.xsd-->
+  <xs:complexType name="erogati">
+            <xs:sequence>
+                <xs:element name="erogatitype" type="tns:ErogatiType"/>
+			</xs:sequence>
+            <xs:attribute name="anno" type="xs:integer" use="required"/>
+            <xs:attribute name="codistatregione" type="xs:string" use="required"/>
+  </xs:complexType>
+
+    
+	<xs:complexType name="ErogatiType">
+	      <xs:sequence>
+	          <xs:element maxOccurs="unbounded" minOccurs="1" name="erogatoitem" type="tns:ErogatoItem"/>
+	      </xs:sequence>
+	</xs:complexType>
+			    
+    <xs:complexType name="ErogatoItem">
+        <xs:sequence>
+			<xs:element name="codimpianto" type="xs:integer"/>
+			<xs:element name="benzina" type="xs:integer"/>
+			<xs:element name="gasolio" type="xs:integer"/>
+			<xs:element name="metano" type="xs:integer"/>
+			<xs:element name="gpl" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+   
+     <!--ricevutaerogato.xsd-->
+    <xs:complexType name="ricevutaerogati">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="erogatoscartato">
+				<xs:complexType>
+					<xs:attribute name="codimpianto" type="xs:integer"/>
+					<xs:attribute name="causa" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="xmlvalido" type="xs:boolean"/>
+		<xs:attribute name="anno" type="xs:integer"/>
+		<xs:attribute name="codistatregione" type="xs:string"/>
+		<xs:attribute name="recordricevuti" type="xs:integer"/>
+		<xs:attribute name="recordinseriti" type="xs:integer"/>
+		<xs:attribute name="recordscartati" type="xs:integer"/>
+	</xs:complexType>
+
+	  <!--impianto.xsd-->
+        <xs:complexType name="impianti">
+            <xs:sequence>
+                <xs:element name="impiantitype" type="tns:ImpiantiType"/>
+			</xs:sequence>
+	        <xs:attribute name="data_rilevazione" type="xs:date" use="required"/>
+	        <xs:attribute name="codistatregione" type="xs:string" use="required"/>
+        </xs:complexType>
+
+    
+	<xs:complexType name="ImpiantiType">
+	      <xs:sequence>
+	          <xs:element maxOccurs="unbounded" minOccurs="1" name="impiantoitem" type="tns:ImpiantoItem"/>
+	      </xs:sequence>
+	</xs:complexType>
+			    
+    <xs:complexType name="ImpiantoItem">
+        <xs:sequence>
+			<xs:element name="codImpianto" type="xs:integer"/>
+			<xs:element name="anno_installazione" type="xs:integer"/>
+			<xs:element name="indirizzo" type="tns:IndirizzoType"/>
+			<xs:element name="localizzazione" type="tns:LocalizzazioneType"/>						
+			<xs:element name="tipo" type="tns:TipoType"/>						
+			<xs:element name="autorizzazioni" type="tns:AutorizzazioniType"/>						
+			<xs:element name="sospensioni" type="tns:SospensioniType"/>						
+        </xs:sequence>
+    </xs:complexType>
+    
+	<xs:complexType name="IndirizzoType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="autostradale" type="tns:AutostradaleType"/>
+		        <xs:element name="statale" type="tns:StataleType"/>
+		        <xs:element name="provinciale" type="tns:ProvincialeType"/>
+			</xs:choice>
+			<xs:element name="via" type="xs:string"/>						
+			<xs:element name="codistat_pvcomune" type="xs:string"/>											
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AutostradaleType">
+	      <xs:sequence>
+	          <xs:element name="autostrada" type="xs:string"/>
+	          <xs:element name="km" type="xs:integer"/>			          
+	          <xs:element name="area_servizio" type="xs:string"/>			          
+	          <xs:element name="direzione" type="xs:string"/>			          
+	      </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="StataleType">
+	      <xs:sequence>
+	          <xs:element name="km" type="xs:integer"/>			          
+	      </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ProvincialeType">
+	      <xs:sequence>
+	          <xs:element name="km" type="xs:integer"/>			          
+	      </xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="LocalizzazioneType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="comunale"/>
+			<xs:enumeration value="demaniale"/>
+			<xs:enumeration value="provinciale"/>
+			<xs:enumeration value="statale"/>
+			<xs:enumeration value="centro_commerciale"/>
+			<xs:enumeration value="altra_localizzazione"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="TipoType">
+		<xs:restriction base="xs:string">
+	          <xs:enumeration value="autostradale"/>
+	          <xs:enumeration value="stradale"/>
+	          <xs:enumeration value="privato"/>
+	          <xs:enumeration value="natante"/>
+	          <xs:enumeration value="motopesca"/>
+	          <xs:enumeration value="non_disponibile"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="SospensioniType">
+	      <xs:sequence>
+	          <xs:element maxOccurs="unbounded" minOccurs="0" name="sospensione" type="tns:sospensioneItem"/>
+	      </xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="sospensioneItem">
+        <xs:sequence>
+			<xs:element name="dal" type="xs:date"/>
+			<xs:element name="al" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="AutorizzazioniType">
+	      <xs:sequence>
+	          <xs:element maxOccurs="unbounded" minOccurs="1" name="autorizzazione" type="tns:autorizzazioneItem"/>
+	      </xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="autorizzazioneItem">
+        <xs:sequence>
+			<xs:element name="codistatente" type="xs:string"/>
+			<xs:element name="n" type="xs:string"/>
+			<xs:element name="data" type="xs:date"/>
+			<xs:element name="iva_titolare" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+		  <!--ricevutaimpianto.xsd-->
+        <xs:complexType name="ricevutaimpianti">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="impiantoscartato">
+                    <xs:complexType>
+                        <xs:attribute name="codimpianto" type="xs:integer"/>
+                        <xs:attribute name="causa" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+			<xs:attribute name="xmlvalido" type="xs:boolean"/>
+            <xs:attribute name="datarilevazione" type="xs:date"/>
+            <xs:attribute name="codistatregione" type="xs:string"/>
+			<xs:attribute name="recordricevuti" type="xs:integer"/>
+			<xs:attribute name="recordinseriti" type="xs:integer"/>
+			<xs:attribute name="recordscartati" type="xs:integer"/>
+        </xs:complexType>
+
+<!--titolare.xsd-->
+        <xs:complexType name="titolari">
+            <xs:sequence>
+                <xs:element name="titolaritype" type="tns:TitolariType"/>
+			</xs:sequence>
+            <xs:attribute name="data_rilevazione" type="xs:date" use="required"/>
+            <xs:attribute name="codistatregione" type="xs:string" use="required"/>
+        </xs:complexType>
+
+    
+	<xs:complexType name="TitolariType">
+	      <xs:sequence>
+	          <xs:element maxOccurs="unbounded" minOccurs="1" name="titolareitem" type="tns:TitolareItem"/>
+	      </xs:sequence>
+	</xs:complexType>
+			    
+    <xs:complexType name="TitolareItem">
+        <xs:sequence>
+			<xs:element name="iva_cf" type="xs:string"/>
+			<xs:element name="denominazione" type="xs:string"/>
+			<xs:element name="indirizzo" type="tns:IndirizzoTitolareType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+	<xs:complexType name="IndirizzoTitolareType">
+		<xs:sequence>
+			<xs:element name="via" type="xs:string"/>
+			<xs:element name="codistat_pvcomune" type="xs:string"/>
+			<xs:element name="cap" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--ricevutatitolare.xsd-->
+        <xs:complexType name="ricevutatitolari">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="titolarescartato">
+                    <xs:complexType>
+                        <xs:attribute name="ivacftitolare" type="xs:string"/>
+                        <xs:attribute name="causa" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+			<xs:attribute name="xmlvalido" type="xs:boolean"/>
+            <xs:attribute name="anno" type="xs:integer"/>
+            <xs:attribute name="codistatregione" type="xs:string"/>
+			<xs:attribute name="recordricevuti" type="xs:integer"/>
+			<xs:attribute name="recordinseriti" type="xs:integer"/>
+			<xs:attribute name="recordscartati" type="xs:integer"/>
+        </xs:complexType>
+
+		<!--rilevazione.xsd-->
+        <xs:complexType name="rilevazioni">
+            <xs:sequence>
+                <xs:element name="rilevazionitype" type="tns:RilevazioniType"/>
+			</xs:sequence>
+	        <xs:attribute name="data_rilevazione" type="xs:date" use="required"/>
+	        <xs:attribute name="codistatregione" type="xs:string" use="required"/>
+        </xs:complexType>
+    
+	<xs:complexType name="RilevazioniType">
+	      <xs:sequence>
+	          <xs:element maxOccurs="unbounded" minOccurs="1" name="rilevazioneitem" type="tns:RilevazioneItem"/>
+	      </xs:sequence>
+	</xs:complexType>
+			    
+    <xs:complexType name="RilevazioneItem">
+        <xs:sequence>
+			<xs:element name="cod_impianto" type="xs:integer"/>
+			<xs:element name="superficie" type="xs:integer"/>
+			<xs:element name="addetti" type="tns:AddettiType"/>
+			<xs:element name="dipendenti" type="tns:DipendentiType"/>
+			<xs:element name="tipologia" type="tns:TipologiaType"/>
+			<xs:element name="att_commerciali" type="tns:AttCommercialiType"/>
+			<xs:element name="autolavaggio" type="tns:AutolavaggioType"/>
+			<xs:element name="carburanti_disponibili" type="tns:CarburantiDisponibiliType"/>
+			<xs:element name="officine_disponibili" type="tns:OfficinaType"/>
+			<xs:element name="pagamenti_disponibili" type="tns:PagamentoType"/>
+			<xs:element name="self_service" type="tns:SelfServiceType"/>
+			<xs:element name="servizi_accessori" type="tns:ServiziAccessoriType"/>
+			<xs:element name="stato" type="tns:StatoType"/>
+			<xs:element name="servizi" type="tns:ServiziType"/>
+			<xs:element name="bandiera" type="tns:BandieraType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+	<xs:complexType name="AddettiType">
+	      <xs:sequence>
+	          <xs:element name="n" type="xs:integer"/>
+	      </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DipendentiType">
+	      <xs:sequence>
+	          <xs:element name="n" type="xs:integer"/>
+	      </xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="TipologiaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="generico"/>
+			<xs:enumeration value="non_servito"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AttCommercialiType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sup0_30mq"/>
+			<xs:enumeration value="sup30_50mq"/>
+			<xs:enumeration value="sup150_250mq"/>
+			<xs:enumeration value="sup_oltre250mq"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AutolavaggioType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="manuale"/>
+			<xs:enumeration value="selfservice"/>
+			<xs:enumeration value="carwash"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="CarburantiDisponibiliType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="carburantedisponibile" type="tns:carburantedisponibileItem"/>
+		</xs:sequence>	
+	</xs:complexType>
+	
+    <xs:complexType name="carburantedisponibileItem">
+        <xs:sequence>
+			<xs:element name="gpl" type="tns:GplType"/>
+			<xs:element name="benzina" type="tns:BenzinaType"/>
+			<xs:element name="gasolio" type="tns:GasolioType"/>
+			<xs:element name="metano" type="tns:MetanoType"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="GplType">
+	      <xs:sequence>
+	          <xs:element name="serbatoio" type="xs:integer"/>
+	      </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BenzinaType">
+	      <xs:sequence>
+	          <xs:element name="serbatoio" type="xs:integer"/>
+	      </xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="GasolioType">
+	      <xs:sequence>
+	          <xs:element name="serbatoio" type="xs:integer"/>
+	      </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MetanoType">
+	      <xs:sequence>
+	          <xs:element name="serbatoio" type="xs:integer"/>
+	      </xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="OfficinaType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="officina" type="tns:officinaItem"/>
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:simpleType name="officinaItem">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="autoriparazioni"/>
+			<xs:enumeration value="controllo_olio"/>
+			<xs:enumeration value="controllo_cambio_pneumatici"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="PagamentoType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="pagamento" type="tns:pagamentoItem"/>
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:simpleType name="pagamentoItem">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="bancomat"/>
+			<xs:enumeration value="fidelitycard"/>
+			<xs:enumeration value="carta_credito"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SelfServiceType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="nessuno"/>
+			<xs:enumeration value="prepagamento"/>
+			<xs:enumeration value="postpagamento"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ServiziAccessoriType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="servizioaccessorio" type="tns:servizioaccessorioItem"/>
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:simpleType name="servizioaccessorioItem">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="internet_point"/>
+			<xs:enumeration value="servizi_utenti"/>
+			<xs:enumeration value="servizio_fax"/>
+			<xs:enumeration value="telefono_pubblico"/>
+			<xs:enumeration value="servizi_disabili"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="StatoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="attivo"/>
+			<xs:enumeration value="decaduto"/>
+			<xs:enumeration value="sospeso"/>
+			<xs:enumeration value="attesa_attivazione"/>
+			<xs:enumeration value="non_rilevato"/>
+		</xs:restriction>
+	</xs:simpleType>
+    
+	<xs:complexType name="ServiziType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="servizio" type="tns:servizioItem"/>
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:simpleType name="servizioItem">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="bar"/>
+			<xs:enumeration value="giornali"/>
+			<xs:enumeration value="ristoranti"/>
+		</xs:restriction>
+	</xs:simpleType>
+    
+	<xs:complexType name="BandieraType">
+		<xs:choice>
+			<xs:element name="marchio" type="tns:MarchioType"/>
+	        <xs:element name="anonimo" type="xs:string"/>
+	        <xs:element name="non_rilevato" type="xs:string"/>
+		</xs:choice>
+    </xs:complexType>
+    
+	<xs:complexType name="MarchioType">
+	      <xs:sequence>
+	          <xs:element name="nome" type="xs:string"/>			          
+	      </xs:sequence>
+	</xs:complexType>
+	
+	<!--ricevutarilevazione.xsd-->    
+        <xs:complexType name="ricevutarilevazioni">
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="rilevazionescartata">
+                    <xs:complexType>
+                        <xs:attribute name="codimpianto" type="xs:integer"/>
+                        <xs:attribute name="causa" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+			<xs:attribute name="xmlvalido" type="xs:boolean"/>
+            <xs:attribute name="anno" type="xs:integer"/>
+            <xs:attribute name="codistatregione" type="xs:string"/>
+			<xs:attribute name="recordricevuti" type="xs:integer"/>
+			<xs:attribute name="recordinseriti" type="xs:integer"/>
+			<xs:attribute name="recordscartati" type="xs:integer"/>
+        </xs:complexType>
+  
+</xs:schema>

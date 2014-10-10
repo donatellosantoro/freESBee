@@ -1,0 +1,59 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+
+<a4j:region>  
+    <t:saveState value="#{vistaEseguiIstanzaTest}"/>
+    <a4j:region selfRendered="true">
+        <rich:panel style="width:380px;margin-top:10px" id="EseguiIstanzaTestOperationConfigurazione" >  
+            <f:facet name="header">  
+                <h:panelGroup  style="width:380px">  
+                    <h:panelGroup styleClass="headerNome"  style="width:380px">  
+                        <h:outputText value="#{msg.istanza_esegui_test_configurazione_title}"/>   
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet> 
+            <h:outputText value="#{msg.istanza_esegui_test_configurazione_info}" styleClass="infoText"/>
+            
+            <h:panelGroup styleClass="pannello">           
+                <h:panelGrid columns="4">
+                    <h:outputText value="#{msg.istanza_esegui_test_configurazione_numero_utenti}" />
+                    <h:inputText value="#{vistaEseguiIstanzaTest.numeroUtenti}"  label="numero utenti" required="true" style="width:100px" >
+                        <f:converter converterId="javax.faces.BigDecimal" />
+                        <f:validateLongRange minimum="0"  />
+                    </h:inputText>    
+                    <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                    <rich:toolTip for="help1" showDelay="200">
+                        <h:outputText value="#{msg.istanza_esegui_test_tooltip_configurazione_numero_utenti}"/>
+                    </rich:toolTip>
+                    
+                    <h:outputText value="#{msg.istanza_esegui_test_configurazione_numero_richieste}" />
+                    <h:inputText  value="#{vistaEseguiIstanzaTest.numeroRichieste}"  label="numero richieste" required="true" style="width:100px">
+                        <f:converter converterId="javax.faces.BigDecimal"  />
+                          <f:validateLongRange minimum="0"  />
+                    </h:inputText>   
+                    <h:graphicImage id="help2" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                    <rich:toolTip for="help2" showDelay="200">
+                        <h:outputText value="#{msg.istanza_esegui_test_tooltip_configurazione_numero_richieste}"/>
+                    </rich:toolTip>
+                    
+                    <h:outputText value="#{msg.istanza_esegui_test_sec_attesa}" rendered="#{vistaEseguiIstanzaTest.istanzaOperationSelezionata.asincrono}"/>
+                    <h:inputText  value="#{vistaEseguiIstanzaTest.secondiAttesa}"  rendered="#{vistaEseguiIstanzaTest.istanzaOperationSelezionata.asincrono}" label="tempo di attesa per la risposta " required="true" style="width:100px">
+                        <f:converter converterId="javax.faces.BigDecimal"  />
+                          <f:validateLongRange minimum="0"  />
+                    </h:inputText>   
+                    <h:graphicImage id="help5" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip"  rendered="#{vistaEseguiIstanzaTest.istanzaOperationSelezionata.asincrono}"/>
+                    <rich:toolTip for="help5" showDelay="200"  rendered="#{vistaEseguiIstanzaTest.istanzaOperationSelezionata.asincrono}">
+                        <h:outputText value="#{msg.istanza_esegui_test_sec_attesa_tooltip}"/>
+                    </rich:toolTip>
+                </h:panelGrid>
+            </h:panelGroup>
+        </rich:panel>
+    </a4j:region>
+    </a4j:region>     
+    
+    

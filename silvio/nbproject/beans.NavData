@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="nuovaIstanzaOperation_erogatore_step2_db.jsf" x="1650" y="150" zoom="true"/>
+        <Node id="nuovoAccordoCollaborazione_step3.jsf" x="650" y="450" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step2_payload.jsf" x="1900" y="450" zoom="true"/>
+        <Node id="visualizzaMessaggi.jsf" x="650" y="900" zoom="true"/>
+        <Node id="configurazione.jsf" x="150" y="450" zoom="true"/>
+        <Node id="menuWizardEseguiIstanza.jsf" x="150" y="1350" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step2_sla.jsf" x="2150" y="450" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step2.jsf" x="400" y="900" zoom="true"/>
+        <Node id="eseguiIstanzaTestOperationConfigurazione.jsf" x="900" y="900" zoom="true"/>
+        <Node id="eseguiIstanzaOperation.jsf" x="400" y="1050" zoom="true"/>
+        <Node id="app/eseguiIstanzaOperationInesrimentoURLErogatore.jsf" x="1900" y="600" zoom="true"/>
+        <Node id="nuovoAccordoCollaborazione_step1.jsf" x="400" y="450" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step1_payload.jsf" x="1650" y="600" zoom="true"/>
+        <Node id="nuovoAccordoCollaborazione.jsf" x="650" y="150" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step2.jsf" x="1150" y="450" zoom="true"/>
+        <Node id="home.jsf" x="150" y="750" zoom="true"/>
+        <Node id="facelets/guess.jsf" x="150" y="1500" zoom="true"/>
+        <Node id="eseguiIstanzaOperationInesrimentoDB.jsf" x="1900" y="300" zoom="true"/>
+        <Node id="pieDiPagina.jsf" x="400" y="300" zoom="true"/>
+        <Node id="schermoCambiaPassword.jsf" x="1150" y="150" zoom="true"/>
+        <Node id="app/eseguiIstanzaOperationRisposta.jsf" x="1650" y="750" zoom="true"/>
+        <Node id="eseguiIstanza.jsf" x="150" y="1200" zoom="true"/>
+        <Node id="nuovoAccordoCollaborazione_step2.jsf" x="900" y="300" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step2_costanti.jsf" x="1650" y="300" zoom="true"/>
+        <Node id="facelets/response.jsf" x="2650" y="150" zoom="true"/>
+        <Node id="eseguiIstanzaTestOperationInesrimentoURLErogatore.jsf" x="1650" y="450" zoom="true"/>
+        <Node id="menuWizardEseguiIstanzaTest.jsf" x="2150" y="300" zoom="true"/>
+        <Node id="menuWizardNuovaIstanza.jsf" x="650" y="1050" zoom="true"/>
+        <Node id="app/index.jsf" x="150" y="600" zoom="true"/>
+        <Node id="schermoErrore.jsf" x="1150" y="300" zoom="true"/>
+        <Node id="elencoAccordi.jsf" x="1400" y="150" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step1_db.jsf" x="400" y="600" zoom="true"/>
+        <Node id="index.jsp" x="150" y="300" zoom="true"/>
+        <Node id="eseguiIstanzaOperationRisposta.jsf" x="900" y="750" zoom="true"/>
+        <Node id="intestazione.jsf" x="150" y="150" zoom="true"/>
+        <Node id="menuWizardNuovoAccordo.jsf" x="2400" y="150" zoom="true"/>
+        <Node id="eseguiIstanzaTestOperation.jsf" x="1400" y="600" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step1_costanti.jsf" x="1400" y="300" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step1.jsf" x="150" y="1050" zoom="true"/>
+        <Node id="acquisisciPortafoglio.jsf" x="1150" y="900" zoom="true"/>
+        <Node id="app/eseguiIstanzaOperationInesrimentoInterattivi.jsf" x="1400" y="900" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step1.jsf" x="650" y="600" zoom="true"/>
+        <Node id="menu.jsf" x="400" y="150" zoom="true"/>
+        <Node id="eseguiIstanzaTest.jsf" x="1150" y="750" zoom="true"/>
+        <Node id="acquisisciPortafoglioInvalida.jsf" x="900" y="1050" zoom="true"/>
+        <Node id="nuovaIstanzaConferma.jsf" x="900" y="600" zoom="true"/>
+        <Node id="acquisisciPortafoglioApp.jsf" x="650" y="1200" zoom="true"/>
+        <Node id="app/template.jsf" x="400" y="1350" zoom="true"/>
+        <Node id="eseguiIstanzaOperationInesrimentoInterattivi.jsf" x="2150" y="150" zoom="true"/>
+        <Node id="eseguiIstanzaOperationInesrimentoURLErogatore.jsf" x="1150" y="600" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step3.jsf" x="400" y="750" zoom="true"/>
+        <Node id="schermoLogin.jsf" x="900" y="450" zoom="true"/>
+        <Node id="nuovaIstanzaOperation.jsf" x="900" y="150" zoom="true"/>
+        <Node id="elencoSbloccoMessaggi.jsf" x="400" y="1200" zoom="true"/>
+        <Node id="app/eseguiIstanzaOperationInesrimentoDB.jsf" x="2400" y="300" zoom="true"/>
+        <Node id="elencoIstanze.jsf" x="650" y="750" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step2_sblocco.jsf" x="1400" y="450" zoom="true"/>
+        <Node id="schermoSessioneScaduta.jsf" x="1400" y="750" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_fruitore_step1_interattivi.jsf" x="150" y="900" zoom="true"/>
+        <Node id="nuovaIstanzaOperation_erogatore_step3.jsf" x="1900" y="150" zoom="true"/>
+        <Node id="nuovaIstanza.jsf" x="650" y="300" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<accordo-servizio nome="ASAP3InterrogaDoc" descrizione="Accordo di servizio per il servizio Interroga Documento" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.spcoop.it/registry/v0.9" xsi:schemaLocation="http://www.spcoop.it/registry/v0.9 manifest_ADS.xsd">
+	<soggetto-referente tipo="SPC" nome="FVG"/>
+	<specifica-interfaccia 
+			wsdl-definitorio="SpecificaInterfacciaParteComune/Types.xsd" 
+			wsdl-concettuale="SpecificaInterfacciaParteComune/WS_Concettuale.wsdl" 
+			wsdl-logico-erogatore="SpecificaInterfacciaParteComune/WS_ErogatoreLogico.wsdl" 
+			wsdl-logico-fruitore="SpecificaInterfacciaParteComune/WS_FruitoreLogico.wsdl"/>
+	<catalogo-schemi-ontologie riferimento="http://www.lego-lab.it/icar/servizidocumentali.owl"/>
+	<informazioni-egov riferimento="informazioniEGov.xml"/>
+</accordo-servizio>

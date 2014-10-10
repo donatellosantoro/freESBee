@@ -1,0 +1,164 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Servizi" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="bloccoCentrale">     
+            
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:0.8"/>
+            
+            <t:saveState value="#{vistaGestioneServizi}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestioneOccorrenzeServizi.png" alt="Gestione Servizi"/>   
+            </h:panelGroup>
+            
+        
+                <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:515px;" rendered="#{controlloGestioneServizi.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneServizi.messaggio}"/>
+                </h:panelGroup>
+                
+                <h:panelGroup id="boxErrore" styleClass="errore" style="width:515px;" rendered="#{controlloGestioneServizi.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneServizi.errore}"/>
+                </h:panelGroup>
+       
+            
+            <rich:tabPanel style="width:520px;margin-top:30px" rendered="true" headerAlignment="right" binding="#{vistaGestioneServizi.tabPanelServiziNICA}" >
+                <rich:tab disabled="true">
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Erogati dal NICA"/>   
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>  
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Erogati"/>
+                    
+                    <h:form id="formCampiServizio" enctype="multipart/form-data" >
+                        <rich:datascroller align="left"  for="listaServizi" />
+                        <rich:spacer height="30" />
+                        <br/><br/>
+                        <center>
+                            <t:inputFileUpload id="fileWSAG" alt="File xml" title="File xml" value="#{vistaGestioneServizi.fileWSAG}" storage="file" />
+                        </center>                        
+                        <br/><br/>
+                        <rich:dataTable width="500" id="listaServizi" rows="10" columnClasses="col" binding="#{vistaGestioneServizi.tabellaServiziNICA}"
+                                        value="#{vistaGestioneServizi.listaServiziNICA}" var="servizio">
+                            
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome Servizio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{servizio.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.erogatore}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.fruitore}" />
+                            </h:column>
+                            <h:column>
+                                <center>
+                                    <h:commandLink action="#{controlloGestioneServizi.caricaFileConfigurazioneWSAG}">
+                                        <img title="Aggiungi" alt="Aggiungi" src="${pageContext.request.contextPath}/images/icons/add.png" />
+                                    </h:commandLink>
+                                </center>
+                            </h:column>
+                        </rich:dataTable>
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+            
+            <rich:tabPanel style="width:520px;margin-top:30px" rendered="true"  headerAlignment="right" binding="#{vistaGestioneServizi.tabPanelServiziMonitorati}" >
+                <rich:tab disabled="true">
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Monitorati in  freESBeeSLA"/>
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>  
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Monitorati"/>
+                    
+                    <h:form>
+                        <rich:datascroller align="left"  for="listaServizi" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="500" id="listaServizi" rows="10" columnClasses="col" binding="#{vistaGestioneServizi.tabellaServiziINF2}"
+                                        value="#{vistaGestioneServizi.listaServiziINF2}" var="servizio">
+                            
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome Servizio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Attivo" />
+                                    </h:column>
+                                </rich:columnGroup>                                
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{servizio.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.erogatore}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.fruitore}" />
+                            </h:column>
+                            <h:column>
+                                <center>
+                                    <a4j:region>
+                                        <h:selectBooleanCheckbox id="checkboxAttiva" value="#{servizio.attiva}">
+                                            <a4j:support event="onclick" actionListener="#{controlloGestioneServizi.aggiornaServizio}" />
+                                        </h:selectBooleanCheckbox>
+                                    </a4j:region>
+                                </center>
+                            </h:column>
+                        </rich:dataTable>
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

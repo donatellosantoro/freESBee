@@ -1,0 +1,47 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Nuovo Accordo di Collaborazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>  
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formStep1:boxSuccesso',delay:2.0,duration:0.8"/>
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formStep2:boxSuccesso',delay:2.0,duration:0.8"/>
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formStep3:boxSuccesso',delay:2.0,duration:0.8"/>
+    <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiAccordoServizio:boxErrore',duration:0.8"/>
+    
+    
+    <!--a4j:keepAlive beanName="vistaAccordoCollaborazione"/-->
+    <t:saveState value="#{vistaAccordoCollaborazione}"/>
+    <h:panelGroup> 
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/nuovoAccordoCollaborazione.png" alt="Nuovo Accordo di Collaborazione"/>                
+        </h:panelGroup>
+        <h:panelGrid columns="2" styleClass="bloccoUnico" columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menuWizardNuovoAccordo.jsf"/>
+            </h:panelGroup>
+            <h:panelGroup>              
+                <!-- STEP1 -->
+                <c:import url="nuovoAccordoCollaborazione_step1.jsf" />
+                
+                <!-- STEP2 -->
+                <c:import url="nuovoAccordoCollaborazione_step2.jsf" />
+                
+                <!-- STEP3 -->
+                <c:import url="nuovoAccordoCollaborazione_step3.jsf" />
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

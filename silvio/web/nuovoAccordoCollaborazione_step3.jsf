@@ -1,0 +1,88 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+<!-- STEP3 -->
+<h:form id="formStep3" rendered="#{vistaAccordoCollaborazione.step==3}">
+    <a4j:region selfRendered="true">
+        <a4j:loadBundle basename="messaggi" var="msgx"/>
+        <rich:panel style="width:410px;" id="NuovoAccordoCollaborazione">  
+            <f:facet name="header">  
+                <h:panelGroup  style="width:410px">  
+                    <h:outputText styleClass="headerProfilo" value="#{vistaAccordoCollaborazione.step}/3"/>    
+                    <h:panelGroup styleClass="headerNome"  style="width:410px">  
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione_add.png"  styleClass="linkPicture" />
+                        <h:outputText value="#{msg.nuovoAccordoCollaborazione_title}"/>   
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>  
+            
+            <h:outputText value="#{msg.nuovoAccordoCollaborazione_info_riepilogo}" styleClass="infoText"/>
+            <h:outputText value="#{controlloAccordoCollaborazione.errore}" rendered="#{controlloAccordoCollaborazione.errore != null}" styleClass="errorText"/>
+            <h:outputText id="boxSuccesso" value="#{controlloAccordoCollaborazione.successo}" rendered="#{controlloAccordoCollaborazione.successo != null}" styleClass="confirmText"/>
+            <rich:messages styleClass="errorText"/>
+            
+            <h:panelGroup styleClass="pannello">                  
+                <h:panelGrid columns="3" style="width:400px">
+                    <h:outputText value="#{msg.nome}"/>
+                    <h:inputText label="Nome" style="width:175px" required="true" value="#{vistaAccordoCollaborazione.accordoDiCollaborazione.nome}"/>
+                    <h:panelGroup>
+                        <h:graphicImage id="helpNome" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="helpNome" showDelay="200">
+                            <h:outputText value="#{msg.nuovoAccordoCollaborazione_tooltip_nome}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <rich:separator height="2" lineType="solid" styleClass="separator"/>
+                <rich:tree styleClass="accordoTree" value="#{vistaAccordoCollaborazione.accordoDiCollaborazionePM.data}" 
+                           switchType="client" var="item" nodeFace="#{item.type}" adviseNodeOpened="#{vistaAccordoCollaborazione.nodoAperto}">
+                    <rich:treeNode type="portType" iconLeaf="/images/icons/package.png" icon="/images/icons/package.png">
+                        <h:outputText value="#{item.nome}" styleClass="treeNomeAccordo"/>
+                        <h:outputText value="#{item.ruolo}" styleClass="treeRuoloAccordo"/>
+                    </rich:treeNode>
+                    <rich:treeNode type="operation" iconLeaf="/images/icons/cog.png" icon="/images/icons/cog.png">
+                        <h:panelGroup styleClass="treeOperation">
+                            <h:outputText value="#{item.nome}" styleClass="treeNomeOperation"/>
+                            <h:outputText value="#{item.profiloDiCollaborazione}"  styleClass="treeProfiloOperation" rendered="false"/>
+                            <h:inputText value="#{item.profiloDiCollaborazione}"  styleClass="treeProfiloOperation" rendered="false"/>
+                            <h:selectOneMenu value="#{item.profiloDiCollaborazione}" styleClass="treeProfiloComboOperation" rendered="true">
+                                <f:selectItem itemLabel="One Way" itemValue="ONE_WAY"/>
+                                <f:selectItem itemLabel="Sincrono" itemValue="SINCRONO"/>
+                                <f:selectItem itemLabel="Asincrono" itemValue="ASINCRONO"/>
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </rich:treeNode>
+                    <rich:treeNode type="message" iconLeaf="/images/icons/message_#{item.tipo}.png" icon="/images/icons/message_#{item.tipo}.png">
+                        <h:outputText value="#{item.nome}"  styleClass="treeNomeMessage"/>
+                    </rich:treeNode>
+                </rich:tree>
+                
+                <h:panelGrid styleClass="bloccoLegenda">
+                    <h:panelGrid columns="6" styleClass="legenda">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/package.png"  styleClass="linkPicture"/>
+                        <h:outputText value="Port Type"/>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/cog.png"  styleClass="linkPicture"/>
+                        <h:outputText value="Operation"/>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/message.png"  styleClass="linkPicture"/>  
+                        <h:outputText value="Message"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGroup styleClass="pulsantiWizard">
+                    <h:commandLink action="#{controlloAccordoCollaborazione.annulla}" immediate="true">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_annulla}.png"  styleClass="linkPicture" rendered="true"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloAccordoCollaborazione.sceltaTipo}" immediate="true">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_indietro}.png"  styleClass="linkPicture"/>
+                    </h:commandLink>
+                    <h:commandLink action="#{controlloAccordoCollaborazione.salva}">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_salva}.png"  styleClass="linkPicture"/>
+                    </h:commandLink>                    
+                </h:panelGroup>                
+            </h:panelGroup>
+        </rich:panel>
+        
+    </a4j:region>
+</h:form>

@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>ICAR :: SIL-VIO Test</title>
+<style>
+*{
+font-size:13px;
+font-family:"Verdana";
+}
+
+h1{
+color:blue;
+font-size:15px;
+}
+</style>
+<script type="text/javascript">
+var urlToOpen = "http://localhost:9192/EROGATORE/ServizioMobSan_1/"; //default URL to open
+
+function getHTTPObject() {
+  var xmlhttp = false;
+
+  /* Compilation conditionnelle d'IE */
+  /*@cc_on
+  @if (@_jscript_version >= 5)
+     try {
+        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+     } catch (e) {
+        try {
+           xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (E) {
+           xmlhttp = false;
+        }
+     }
+  @else
+     xmlhttp = false;
+  @end @*/
+
+  /* on essaie de créer l'objet si ce n'est pas déjà fait */
+  if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+     try {
+        xmlhttp = new XMLHttpRequest();
+     } catch (e) {
+        xmlhttp = false;
+     }
+  }
+
+  if (xmlhttp) {
+     /* on définit ce qui doit se passer quand la page répondra */
+     xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState == 4) { /* 4 : état "complete" */
+           var response = document.getElementById("response");
+           var responseStatus = "";
+           try {
+             responseStatus = xmlhttp.status + "";
+           } catch (e) {
+             responseStatus = "ERROR WHILE RETRIEVING STATUS; MAYBE UNABLE TO CONNECT.";
+           }
+           response.value = "STATUS: " + responseStatus + "\n" + xmlhttp.responseText;
+        }
+     }
+  }
+  return xmlhttp;
+}
+
+function send() {
+  if ((document.getElementById("urlToOpen").value != urlToOpen) && (document.getElementById("urlToOpen").value != "")) {
+    //use user entry only if it at least can be okay
+    urlToOpen = document.getElementById("urlToOpen").value;
+  }
+  var xmlhttp = getHTTPObject();
+  if (!xmlhttp) {
+    alert('cound not create XMLHttpRequest object');
+    return;
+  }
+  var request = document.getElementById("request");
+  var response = document.getElementById("response");
+  response.value = "In attesa di risposta...";
+  try {
+    netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead UniversalBrowserWrite");
+  } catch (e) {
+  }
+  try {
+    xmlhttp.open("POST", urlToOpen, true);
+  } catch (e) {
+    alert('error opening');
+  }
+  xmlhttp.send(request.value);
+}
+
+</script>
+</head>
+
+<body>
+
+<h1>ICAR :: SIL-VIO Test</h1>
+
+<p>Target: <input type="text" size="50" id="urlToOpen" value=""><script type="text/javascript">document.getElementById("urlToOpen").value = urlToOpen;</script>.</p>
+
+<table>
+  <tr>
+    <td>
+  <textarea id="request" style="width:600px;height:235px"><?xml version="1.0" encoding="utf-8"?>
+   <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <soap:Header>
+		<wsa:MessageID xmlns:wsa="http://www.w3.org/2006/05/addressing/wsdl">SILVIO-1212593188217</wsa:MessageID>
+	  </soap:Header>
+	  <soap:Body>
+         <richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero version="2.2" xmlns="http://www.intemaweb.com/iron/datatypes">
+            <Intestazione>
+               <InfoMittente>
+                  <Regione>170</Regione>
+                  <CodiceAsl>102</CodiceAsl>
+                  <IdOperatore>0</IdOperatore>
+               </InfoMittente>
+               <InfoDestinatario>
+                  <Regione>000</Regione>
+                  <CodiceAsl>000</CodiceAsl>
+                  <IdOperatore>0</IdOperatore>
+               </InfoDestinatario>
+               <DataOra>2008-12-17T09:30:47Z</DataOra>
+               <IdMessaggio>1</IdMessaggio>
+               <IdComunicazione>8</IdComunicazione>
+            </Intestazione>
+            <IdentificazioneAssistito>
+               <CodiceAslResidenza>000</CodiceAslResidenza>
+               <CodiceAslAssistenza>000</CodiceAslAssistenza>
+               <DataRiconoscimento>1967-08-13</DataRiconoscimento>
+               <CodiceFiscale>xxxxxxxxxxx</CodiceFiscale>
+            </IdentificazioneAssistito>
+         </richiesta_RichiestaRispostaAsincrona_SegnalazioneRicovero>
+      </soap:Body>
+   </soap:Envelope>
+  </textarea>
+    </td>
+    </tr>
+    <tr>
+    <td>
+  <textarea id="response" style="width:600px;height:235px">
+  </textarea>
+    </td>
+  </tr>
+  <tr>
+    <td colspan=2>
+  <input type="button" value="Send" onClick="send();"/>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

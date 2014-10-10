@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="framework-hibernate-template-build">
+
+    <import file="./dbms-template-build.xml" />
+
+    <property name="hibernate.dir" location="./lib/hibernate" />
+
+ <!-- ***************************************************
+               Target Specifici di Hibernate
+      *************************************************** -->
+
+
+    <target name="-init-hibernate-tasks" depends="init">
+         <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" 
+                  classpathref="hibernate.classpath" />        
+    </target>
+
+    <target name="schemaexport" depends="-init-hibernate-tasks, build">
+        <hibernatetool destdir="${misc.dir}">
+           <classpath>
+              <path location="${build.dir}"/>
+           </classpath>
+           <annotationconfiguration configurationfile="${conf.dir}/hibernate.cfg.xml"/> 
+           <hbm2ddl export="false" update="false" drop="false" format="true"
+                    outputfilename="${db.name}.sql" />
+        </hibernatetool>
+    </target>
+
+    <target name="-prepare-hbm" depends="prepare">
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.hbm.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="-prepare-hbm-webapp" depends="prepare">
+        <copy todir="${build.webapp.classes.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.hbm.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+</project>

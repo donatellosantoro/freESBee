@@ -1,0 +1,18 @@
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by any (INSIEL S.p.A.) -->
+<xsd:schema xmlns="http://progettoicar.it/AP3interprotoQry/types" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" 
+xmlns:sawsdl="http://www.w3.org/ns/sawsdl" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://progettoicar.it/AP3interprotoQry/types">
+	<xsd:include schemaLocation="AP3TipiGenerici.xsd"/>
+	<xsd:complexType name="AP3InterrogaDocResponse">
+		<xsd:choice>
+			<xsd:element name="errore" type="tns:errore" nillable="false"/>
+			<xsd:sequence>
+				<xsd:element name="mimeType" type="tns:mimeType" nillable="true"/>
+				<xsd:element name="nomeDocInf" type="tns:nomeDocInf" nillable="false"/>
+				<xsd:element name="base64" type="xsd:string" nillable="false"/>
+			</xsd:sequence>
+		</xsd:choice>
+		<xsd:attribute name="esito" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+</xsd:schema>

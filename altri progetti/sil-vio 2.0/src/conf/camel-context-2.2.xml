@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <camelContext id="camel-silvio" xmlns="http://camel.apache.org/schema/spring">
+    <routeBuilder ref="RouteInvioMessaggio"/>
+    <routeBuilder ref="RouteTransazioneBD"/>
+    <routeBuilder ref="RouteInterrogazioneBD"/>
+    <routeBuilder ref="RouteSbloccoPolling"/>
+  </camelContext>
+
+    
+    <bean id="Test" class="it.unibas.silvio.route.TestEseguiIstanza">
+        <constructor-arg ref="camel-silvio"/>
+    </bean>
+
+    <bean id="RouteInvioMessaggio" class="it.unibas.silvio.route.RouteInvioMessaggio"/>
+    <bean id="RouteTransazioneBD" class="it.unibas.silvio.route.RouteTransazioneBD"/>
+    <bean id="RouteInterrogazioneBD" class="it.unibas.silvio.route.RouteInterrogazioneBD"/>
+    <bean id="RouteSbloccoPolling" class="it.unibas.silvio.route.RouteSbloccoPolling"/>
+</beans>

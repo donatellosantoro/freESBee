@@ -1,0 +1,32 @@
+<h:panelGroup styleClass="pannelloParametriInterattivi" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+        <h:panelGrid columns="1">
+                <rich:dataTable id="listaParametriInterattivi" columnClasses="col" binding="#{vistaEseguiIstanza.tabellaParametriInterattivi}"
+                        width="400" value="#{vistaEseguiIstanza.listaParametriInterattivi}" var="parametro">
+                        <f:facet name="header">
+                                <rich:columnGroup>
+                                        <h:column>
+                                                <h:outputText styleClass="headerText" value="#{msg.parametro}" />
+                                        </h:column>
+                                        <h:column>
+                                                <h:outputText styleClass="headerText" value="#{msg.valore}" />
+                                        </h:column>
+                                </rich:columnGroup>
+                        </f:facet>
+                        <h:column>
+                                <h:outputText value="#{parametro.nome}" />
+                        </h:column>
+                        <h:column>
+                                <center>
+                                        <h:inputText value="#{parametro.valore}" label="#{parametro.nome}" styleClass="parametroInterattivo#{parametro.id}" required="true"/>
+                                </center>
+                        </h:column>
+                </rich:dataTable>
+        </h:panelGrid>
+</h:panelGroup>

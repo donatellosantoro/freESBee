@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Papi Raton (Pirate Bay) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="rispostaIstanza">
+		<xs:annotation>
+			<xs:documentation>Risultato dell'esecuzione dell'istanza</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="successo">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="idMessaggioRichiesta"/>
+							<xs:element name="messaggio" minOccurs="0"/>
+							<xs:element name="idMessaggioRisposta" minOccurs="0"/>
+						</xs:all>
+						<xs:attribute name="tipo"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="errore">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="messaggioErrore"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

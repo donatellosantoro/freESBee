@@ -1,0 +1,56 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Nuova Istanza" />
+</c:import>
+<!-- ******************************************* -->
+
+
+<f:view>    
+    <t:saveState value="#{vistaIstanzeAccordi}"/>
+    <h:panelGroup>
+        <h:panelGroup styleClass="imgTitle">
+            <h:graphicImage value="/images/title/creaIstanzeAccordi.png" alt="Nuova istanza"/>                
+        </h:panelGroup>
+        <h:panelGrid styleClass="bloccoUnico" columns="2"columnClasses="bloccoMenu,bloccoCentrale">
+            <h:panelGroup>
+                <c:import url="menuWizardNuovaIstanza.jsf"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{vistaIstanzeAccordi.sceltaRuolo=='FRUITORE'}">             
+                <!-- FRUITORE -->
+                <h:panelGroup rendered="#{vistaIstanzeAccordi.step==1}">
+                    <c:import url="nuovaIstanzaOperation_fruitore_step1.jsf"/>
+                </h:panelGroup> 
+                <h:panelGroup rendered="#{vistaIstanzeAccordi.step==2}">
+                    <c:import url="nuovaIstanzaOperation_fruitore_step2.jsf"/>
+                </h:panelGroup> 
+                <h:panelGroup rendered="#{vistaIstanzeAccordi.step==3}">
+                    <c:import url="nuovaIstanzaOperation_fruitore_step3.jsf"/>
+                </h:panelGroup> 
+            </h:panelGroup>
+            <h:panelGroup rendered="#{vistaIstanzeAccordi.sceltaRuolo=='EROGATORE'}">             
+                <!-- EROGATORE -->
+                <h:panelGroup rendered="#{vistaIstanzeAccordi.stepErogatore==1}">
+                    <c:import url="nuovaIstanzaOperation_erogatore_step1.jsf"/>
+                </h:panelGroup> 
+                <h:panelGroup rendered="#{vistaIstanzeAccordi.stepErogatore==2}">
+                    <c:import url="nuovaIstanzaOperation_erogatore_step2.jsf"/>
+                </h:panelGroup> 
+                <h:panelGroup rendered="#{vistaIstanzeAccordi.stepErogatore==3}">
+                    <c:import url="nuovaIstanzaOperation_erogatore_step3.jsf"/>
+                </h:panelGroup> 
+                 
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGroup>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

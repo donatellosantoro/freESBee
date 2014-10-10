@@ -1,0 +1,14 @@
+<NS:risposta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali version="2.2" xsi:schemaLocation="http://www.intemaweb.com/iron/datatypes Types2.2.xsd" xmlns:NS="http://www.intemaweb.com/iron/datatypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<NS:Intestazione>
+		<NS:InfoMittente>
+			<NS:Regione>000</NS:Regione>
+		</NS:InfoMittente>
+		<NS:InfoDestinatario>
+			<NS:Regione>000</NS:Regione>
+		</NS:InfoDestinatario>
+		<NS:DataOra>2001-12-17T09:30:47.0Z</NS:DataOra>
+		<NS:IdMessaggio>0</NS:IdMessaggio>
+		<NS:IdComunicazione>0</NS:IdComunicazione>
+	</NS:Intestazione>
+	<NS:SegnalazioneFruizionePrestazioniAmbulatoriali>text</NS:SegnalazioneFruizionePrestazioniAmbulatoriali>
+</NS:risposta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali>

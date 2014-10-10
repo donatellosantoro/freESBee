@@ -1,0 +1,6 @@
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+  <Header/>
+  <Body>
+    <helloWorld/>
+  </Body>
+</Envelope>

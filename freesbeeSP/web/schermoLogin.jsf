@@ -1,0 +1,66 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Autenticazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>
+    <t:saveState value="#{vistaSchermoLogin}" />
+    <h:panelGroup styleClass="imgTitle">
+        <h:graphicImage value="/images/title/logoSP.png" alt="freESBeeSP"/>
+    </h:panelGroup>
+    <h:panelGrid styleClass="bloccoUnico" style="width:370px;padding:0px" columns="1" columnClasses="bloccoCentrale">
+        <h:panelGrid columns="1">
+            <rich:panel bodyClass="descrizioneFreESBeeSP">
+                <h:outputText>
+                    freESBeeSP è il componente per la gestione dell'identificazione federata della porta di dominio freESBee. Per poter accedere alla risorsa richiesta è necessario effettuare l'autenticazione presso il service provider inserendo nome utente e password
+                </h:outputText>
+            </rich:panel>
+
+            <rich:panel style="width:270px;margin:0 auto" id="loginFederato" >
+                <f:facet name="header">
+                    <h:panelGroup >
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/key_start.png"  styleClass="linkPicture" />
+                        <h:outputText value="Login"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:panelGroup styleClass="loginForm">
+                        <rich:messages style="text-align:left" styleClass="erroreLogin"/>
+                        <h:outputText styleClass="erroreLogin" value="#{controlloSchermoLogin.errore}" rendered="#{controlloSchermoLogin.errore != null}"/>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome Utente: "/>
+                            <h:inputText label="Nome Utente" value="#{vistaSchermoLogin.nomeUtente}" required="true"/>
+
+                            <h:outputText value="Password: "/>
+                            <h:inputSecret label="Password" value="#{vistaSchermoLogin.password}" required="true"/>
+
+                            <h:outputText value="Identity Provider: " rendered="#{!empty vistaSchermoLogin.listaIdP}"/>
+                            <h:selectOneMenu value="#{vistaSchermoLogin.idpSelezionato}" rendered="#{!empty vistaSchermoLogin.listaIdP}">
+                                <f:selectItems value="#{vistaSchermoLogin.listaIdP}"/>
+                            </h:selectOneMenu>
+
+                            <h:commandLink action="#{controlloSchermoLogin.login}">
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_login.png"  styleClass="linkPicture" />
+                            </h:commandLink>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <h:outputText value="SAML Response : #{controlloSchermoLogin.samlResponse}"
+                                  rendered="#{controlloSchermoLogin.visualizzaSamlResponse}" styleClass="infoText"/>
+                </h:form>
+            </rich:panel>
+        </h:panelGrid>
+    </h:panelGrid>
+</f:view>
+<br/>
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

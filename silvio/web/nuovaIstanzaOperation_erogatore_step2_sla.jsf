@@ -1,0 +1,35 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+
+
+<rich:panel id="pannelloSelezioneSLA" headerClass="pannelloHeaderPiccolo" header="#{msgx.sceltaSLA}"
+            bodyClass="pannelloAperto#{vistaIstanzeAccordi.aggiornaSLA}">
+    <f:facet name="header">
+        <h:panelGroup>
+            <h:selectBooleanCheckbox value="#{vistaIstanzeAccordi.aggiornaSLA}" styleClass="pannelloCheckHeaderPiccolo">
+                <a4j:support event="onchange" reRender="pannelloSelezioneSLA" immediate="true" action="#{controlloIstanzeAccordi.switchSLA}"/>
+            </h:selectBooleanCheckbox>
+            <h:panelGroup styleClass="pannelloTestoHeaderPiccolo">
+                <h:outputText value="#{msgx.sceltaSLA}"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </f:facet>
+
+    <h:outputText value="#{msg.istanza_info_sla}" styleClass="infoText"/>
+    <h:outputText value="#{controlloIstanzeAccordi.errore}" rendered="#{controlloIstanzeAccordi.errore != null}" styleClass="errorText"/>
+
+    <h:panelGroup styleClass="pannello">
+        <h:panelGrid columns="3" style="width:350px" >
+            <h:outputText value="#{msgx.indirizzo_sla}"/>
+            <h:inputText label="Indirizzo SLA" style="width:150px" value="#{vistaIstanzeAccordi.indirizzoSLA}"/>
+            <h:commandLink action="#{controlloIstanzeAccordi.confermaSLA}">
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_conferma}.png"  styleClass="linkPicture"/>
+            </h:commandLink>
+        </h:panelGrid>
+    </h:panelGroup>
+</rich:panel>

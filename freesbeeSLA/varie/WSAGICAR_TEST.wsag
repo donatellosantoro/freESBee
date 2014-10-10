@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsag:AgreementOffer wsag:AgreementId="IdAgrA" xsi:schemaLocation="http://schemas.ggf.org/graap/2007/03/ws-agreement ws-agreementICAR.xsd" xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement" xmlns:icar="http://icar.regione.liguria.it" xmlns:n1="http://www.altova.com/samplexml/other-namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<wsag:Name>AgreementA</wsag:Name>
+	<wsag:Context>
+		<wsag:AgreementInitiator>InitiatorA</wsag:AgreementInitiator>
+		<wsag:AgreementResponder>ResponderA</wsag:AgreementResponder>
+		<wsag:ServiceProvider>AgreementInitiator</wsag:ServiceProvider>
+		<wsag:ExpirationTime>2001-12-17T09:30:47.0Z</wsag:ExpirationTime>
+		<wsag:TemplateId>String</wsag:TemplateId>
+		<wsag:TemplateName>String</wsag:TemplateName>
+	</wsag:Context>
+	<wsag:Terms>
+		<wsag:All>
+			<wsag:GuaranteeTerm wsag:Obligated="ServiceProvider" wsag:Name="TempoRispostaMedio1M">
+				<wsag:ServiceLevelObjective>
+					<wsag:CustomServiceLevel>
+						<wsag:Threshold wsag:Operator="LessEqual" wsag:Value="500"></wsag:Threshold>
+						<wsag:Function wsag:resultType="double" xsi:type="wsag:Mean">
+							<wsag:BasicMetric wsag:Unit="milliseconds">tempoRisposta</wsag:BasicMetric>
+							<wsag:Window>
+								<wsag:Interval>Month</wsag:Interval>
+							</wsag:Window>
+						</wsag:Function>
+					</wsag:CustomServiceLevel>
+				</wsag:ServiceLevelObjective>
+				<wsag:BusinessValueList>
+				</wsag:BusinessValueList>
+			</wsag:GuaranteeTerm>
+			<wsag:GuaranteeTerm wsag:Obligated="ServiceProvider" wsag:Name="MaxTempoRisposta5">
+				<wsag:ServiceLevelObjective>
+					<wsag:CustomServiceLevel>
+						<wsag:Threshold wsag:Operator="Less" wsag:Value="1100"></wsag:Threshold>
+						<wsag:Function wsag:resultType="double" xsi:type="wsag:Max">
+							<wsag:BasicMetric wsag:Unit="milliseconds">tempoRisposta</wsag:BasicMetric>
+							<wsag:Window>
+								<wsag:Times>5</wsag:Times>
+							</wsag:Window>
+						</wsag:Function>
+					</wsag:CustomServiceLevel>
+				</wsag:ServiceLevelObjective>
+				<wsag:BusinessValueList>
+				</wsag:BusinessValueList>
+			</wsag:GuaranteeTerm>
+		</wsag:All>
+	</wsag:Terms>
+</wsag:AgreementOffer>

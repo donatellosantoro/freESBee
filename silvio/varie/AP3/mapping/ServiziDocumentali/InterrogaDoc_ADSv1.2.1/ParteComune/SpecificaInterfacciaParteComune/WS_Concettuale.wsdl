@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 (http://www.altova.com) by ACME4 (INSIEL S.P.A.) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:intd="http://progettoicar.it/AP3interprotoQry/interrogaDocWS" 
+	xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" 
+	xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:ns="http://progettoicar.it/AP3interprotoQry/types"
+	xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+	xmlns:serviziDocumentaliOwl="http://progettoicar.it/2008/06/owl/serviziDocumentali"
+	targetNamespace="http://progettoicar.it/AP3interprotoQry/interrogaDocWS">
+	<wsdl:import namespace="http://progettoicar.it/AP3interprotoQry/types" location="Types.xsd"/>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_InterrogaDoc_Msg">
+		<wsdl:part name="parameters" element="tns:richiesta_RichiestaRispostaSincrona_InterrogaDoc"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_InterrogaDoc_Msg">
+		<wsdl:part name="parameters" element="tns:risposta_RichiestaRispostaSincrona_InterrogaDoc"/>
+	</wsdl:message>
+	<wsdl:portType name="InterrogaDocWS">
+		<wsdl:operation name="RichiestaRispostaSincrona_InterrogaDoc">
+			<sawsdl:attrExtensions sawsdl:modelReference="serviziDocumentaliOwl#consultaArchivio[@rdf:ID='ricercaDocumento']"/>
+			<wsdl:input message="intd:richiesta_RichiestaRispostaSincrona_InterrogaDoc_Msg"/>
+			<wsdl:output message="intd:risposta_RichiestaRispostaSincrona_InterrogaDoc_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

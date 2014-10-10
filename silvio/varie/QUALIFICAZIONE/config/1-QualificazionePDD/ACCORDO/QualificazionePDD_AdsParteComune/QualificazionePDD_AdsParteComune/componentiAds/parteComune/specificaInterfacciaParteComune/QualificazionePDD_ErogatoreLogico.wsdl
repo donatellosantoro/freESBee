@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:intf="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://sica.spcoop.it/servizi/QualificazionePDDWS" xmlns:types="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://sica.spcoop.it/servizi/QualificazionePDDWS/types" schemaLocation="Types.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_start_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaSincrona_start" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_start_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaSincrona_start" name="parameters"/>
+	</wsdl:message>
+	
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_end_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaSincrona_end" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_end_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaSincrona_end" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_testSincrono_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaSincrona_testSincrono" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_testSincrono_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaSincrona_testSincrono" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_getTraccia_Msg">
+		<wsdl:part element="types:richiesta_RichiestaRispostaSincrona_getTraccia" name="parameters"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_getTraccia_Msg">
+		<wsdl:part element="types:risposta_RichiestaRispostaSincrona_getTraccia" name="parameters"/>
+	</wsdl:message>
+
+	<wsdl:message name="richiesta_RichiestaSenzaRisposta_testOneWay_Msg">
+		<wsdl:part element="types:richiesta_RichiestaSenzaRisposta_testOneWay" name="parameters"/>
+	</wsdl:message>
+		
+	<wsdl:portType name="QualificazionePDD">
+	
+		<wsdl:operation name="testAsincronoAsimmetrico">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaAsincrona_testAsincronoAsimmetrico_Msg"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="checkTestAsincronoAsimmetrico">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaAsincrona_checkTestAsincronoAsimmetrico_Msg"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="testAsincronoSimmetrico">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaAsincrona_testAsincronoSimmetrico_Msg"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="start">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_start_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_start_Msg"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="end">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_end_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_end_Msg"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="testSincrono">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_testSincrono_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_testSincrono_Msg"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="getTraccia">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_getTraccia_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_getTraccia_Msg"/>
+		</wsdl:operation>
+	
+		<wsdl:operation name="testOneWay">
+			<wsdl:input message="intf:richiesta_RichiestaSenzaRisposta_testOneWay_Msg"/>
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+  <wsdl:binding name="QualificazionePDDWSSoapBinding" type="intf:QualificazionePDD">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="start">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="end">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testOneWay">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="testSincrono">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testAsincronoSimmetrico">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testAsincronoAsimmetrico">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+   <wsdl:operation name="checkTestAsincronoAsimmetrico">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTraccia">
+      <soap:operation/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QualificazionePDDWSService">
+    <wsdl:port binding="intf:QualificazionePDDWSSoapBinding" name="QualificazionePDDWS">
+      <soap:address location="http://localhost:9080/ErogatoreQualificazioneWEB/services/QualificazionePDDWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

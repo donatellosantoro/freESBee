@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:intf="http://progettoicar.it/AP3interprotoQry/interrogaFascWS" xmlns:tns="http://progettoicar.it/AP3interprotoQry/types" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://progettoicar.it/AP3interprotoQry/types" targetNamespace="http://progettoicar.it/AP3interprotoQry/interrogaFascWS">
+	<wsdl:import namespace="http://progettoicar.it/AP3interprotoQry/types" location="Types.xsd"/>
+	<wsdl:message name="richiesta_RichiestaRispostaSincrona_InterrogaFasc_Msg">
+		<wsdl:part name="parameters" element="tns:richiesta_RichiestaRispostaSincrona_InterrogaFasc"/>
+	</wsdl:message>
+	<wsdl:message name="risposta_RichiestaRispostaSincrona_InterrogaFasc_Msg">
+		<wsdl:part name="parameters" element="tns:risposta_RichiestaRispostaSincrona_InterrogaFasc"/>
+	</wsdl:message>
+	<wsdl:portType name="InterrogaFascWS">
+		<wsdl:operation name="RichiestaRispostaSincrona_InterrogaFasc">
+			<wsdl:input message="intf:richiesta_RichiestaRispostaSincrona_InterrogaFasc_Msg"/>
+			<wsdl:output message="intf:risposta_RichiestaRispostaSincrona_InterrogaFasc_Msg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

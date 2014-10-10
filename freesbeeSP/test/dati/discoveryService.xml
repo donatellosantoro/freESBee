@@ -1,0 +1,192 @@
+<html>
+	<head>
+		<link rel="stylesheet" title="normal" type="text/css"
+    href="wayf.css" />
+		<title>Identity Provider Selection</title>
+	</head>
+
+	<body>
+		<div class="head">
+			<h1>
+
+Select an identity provider
+
+			</h1>
+		</div>
+
+		<div class="selector">
+			<p class="text">
+
+				<!--CONFIG-->
+
+The Service you are trying to reach requires that you
+authenticate with your home institution, please select it from the
+list below.
+
+			</p>
+
+
+			<div class="list">
+
+				<h2>
+
+Choose from a list:
+
+				</h2>
+
+
+
+
+
+
+				<form method="get" action="/DS/WAYF">
+
+
+					<input type="hidden" name="entityID" value="https://sp.example.unibas.org/shibboleth-sp" />
+					<input type="hidden" name="returnX" value="https://sp.example.unibas.org/Shibboleth.sso/DS?SAMLDS=1&amp;target=cookie%3A385c863e" />
+					<input type="hidden" name="returnIDParam" value="entityID" />
+
+					<table id="tab">
+						<tr>
+							<th>Federation </th>
+							<th>Institution</th>
+						</tr>
+						<tr>
+							<td>
+								<select name="FedSelector" size="10" id="FedSelect"
+                             onchange="changedFed(this.form.origin,
+                                                  this.form.FedSelector[this.form.FedSelector.selectedIndex].value);">
+
+
+
+									<option value="Test Shib">
+                         Test Shib
+									</option>
+
+
+
+
+									<!-- More than one site so select the 'All' -->
+
+									<option value="ALL" selected="selected">
+                         All Sites
+									</option>
+
+								</select>
+							</td>
+							<td>
+								<input type="hidden" name="action" value="selection" />
+								<select name="origin" size="10" id="originIdp">
+
+
+
+
+
+									<option value="https://icarlab.unibas.it/idp/shibboleth">
+                           icarlab.unibas.it
+									</option>
+
+
+
+								</select>
+							</td>
+						</tr>
+					</table>
+					<p>
+						<input type="submit" value="Select" />
+						<select name="cache">
+							<option value="false"> Do not remember</option>
+							<option value="session" selected="selected"> Remember for session</option>
+							<option value="perm"> Remember for a week</option>
+						</select>
+					</p>
+				</form>
+
+			</div>
+			<div class="search">
+				<span class="option">or</span>
+
+				<h2>
+
+Search by keyword:
+
+				</h2>
+
+				<form method="get" action="/DS/WAYF">
+					<p>
+
+
+
+						<input type="hidden" name="entityID" value="https://sp.example.unibas.org/shibboleth-sp" />
+						<input type="hidden" name="returnX" value="https://sp.example.unibas.org/Shibboleth.sso/DS?SAMLDS=1&amp;target=cookie%3A385c863e" />
+						<input type="hidden" name="returnIDParam" value="entityID" />
+
+
+						<input type="hidden" name="action" value="search" />
+						<input type="text" name="string" />
+						<input type="submit" value="Search" />
+					</p>
+				</form>
+
+
+
+
+			</div>
+		</div>
+
+		<div class="footer">
+			<p class="text">
+				<!--CONFIG-->
+Need assistance? Send mail to <a href="mailto:user@domain"> administrator's name</a> with description.
+			</p>
+			<div class="logo">
+				<img src="images/internet2.gif" alt="InQueue" />
+			</div>
+		</div>
+
+
+
+
+		<script language="javascript" type="text/javascript">
+			<!--
+
+function changedFed(X, Selected) {
+
+
+
+     while (X.length > 0) {
+        X.options[(X.length-1)] = null;
+     }
+
+
+
+      if (Selected == "Test Shib") {
+        var opt;
+
+          opt = new Option ("icarlab.unibas.it");
+          X.options[X.length] = opt;
+          opt.value = "https://icarlab.unibas.it/idp/shibboleth";
+
+      }
+
+
+      if (Selected == "ALL") {
+        var opt;
+
+
+
+
+
+
+              opt = new Option ("icarlab.unibas.it");
+              X.options[X.length] = opt;
+              opt.value = "https://icarlab.unibas.it/idp/shibboleth";
+    }
+}
+-->
+		</script>
+
+
+
+	</body>
+</html>

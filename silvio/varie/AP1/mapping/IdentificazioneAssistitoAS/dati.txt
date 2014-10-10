@@ -1,0 +1,22 @@
+IdAssistito fruitore
+
+ Dati Costanti 
+o   RegioneMittente con il valore 170 , 
+o   CodiceAsl con il valore 102 , 
+o   IdOperatore con il valore 0 , 
+o   DataOra con il valore 2001-12-17T09:30:47.0Z , 
+o   IdMessaggio con il valore 1 , 
+o   IdComunicazione con il valore 8 
+ 
+ Dati da Richiedere all’utente  
+o   CodiceFiscale , 
+o   RegioneDestinatario , 
+o   CodiceAslDestinatario , 
+o   IdOperatoreDestinatario , 
+o   CodiceAslResidenza , 
+o   CodiceAslAssistenza 
+
+
+IdAssistito erogatore
+
+  Inserire come query sorgente “SELECT * FROM paziente join medico on paziente.medico = medico.id” e confermare con il tasto + Union 

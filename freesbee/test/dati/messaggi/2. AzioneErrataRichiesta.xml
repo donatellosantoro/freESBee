@@ -1,0 +1,35 @@
+<soapenv:Envelope xmlns:SOAP_ENV="http://schemas.xmlsoap.org/soap/envelope/"  
+xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"  
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> 
+
+	<soapenv:Header xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"> 
+		<eGov_IT:Intestazione soapenv:actor="http://www.cnipa.it/eGov_it/portadominio" soapenv:mustUnderstand="1" 
+xmlns:eGov_IT="http://www.cnipa.it/schemas/2003/eGovIT/Busta1_0/"  
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"> 
+			<eGov_IT:IntestazioneMessaggio> 
+				<eGov_IT:Mittente> 
+					<eGov_IT:IdentificativoParte tipo="SPC">CNIPA</eGov_IT:IdentificativoParte>  
+				</eGov_IT:Mittente> 
+				<eGov_IT:Destinatario> 
+					<eGov_IT:IdentificativoParte tipo="SPC">PAGenerica</eGov_IT:IdentificativoParte>  
+				</eGov_IT:Destinatario> 
+				<eGov_IT:ProfiloCollaborazione>EGOV_IT_ServizioSincrono</eGov_IT:ProfiloCollaborazione>  
+				<eGov_IT:Servizio tipo="SPC">QualificazionePDD</eGov_IT:Servizio>  
+				<eGov_IT:Azione>AzioneErrata</eGov_IT:Azione>  
+				<eGov_IT:Messaggio> 
+					<eGov_IT:Identificatore>CNIPA_CNIPAspcoopit_0000001_2007-11-07_16:28</eGov_IT:Identificatore>  
+					<eGov_IT:OraRegistrazione tempo="EGOV_IT_SPC">2007-11-07T16:28:09</eGov_IT:OraRegistrazione>  
+				</eGov_IT:Messaggio> 
+			</eGov_IT:IntestazioneMessaggio> 
+		</eGov_IT:Intestazione> 
+	</soapenv:Header> 
+
+	<soapenv:Body> 
+		<p891:richiesta_RichiestaRispostaSincrona_testSincrono xmlns:p891="http://sica.spcoop.it/servizi/QualificazionePDDWS/types"> 
+			<p891:TokenSessione>1ab955960a3281e965c0393ad0071f1e</p891:TokenSessione>  
+		</p891:richiesta_RichiestaRispostaSincrona_testSincrono> 
+	</soapenv:Body> 
+
+</soapenv:Envelope> 

@@ -1,0 +1,181 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Servizi Applicativi" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="bloccoCentrale">     
+            
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiAccordoServizio:boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiAccordoServizio:boxErrore',duration:0.8"/>
+            
+            <t:saveState value="#{vistaGestioneServiziApplicativi}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestioneServiziApplicativi.png" alt="Gestione Servizi Applicativi"/>
+            </h:panelGroup>
+            
+            <rich:modalPanel id="panelEliminaServizioApplicativo" showWhenRendered="#{vistaGestioneServiziApplicativi.elimina}" height="160" width="350">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                        <h:outputText value="Conferma eliminazione"/>
+                    </h:panelGroup>
+                </f:facet>    
+                <h:form>
+                    <h:outputText styleClass="confermaMessaggio" value="#{controlloGestioneServiziApplicativi.conferma}"/>            
+                    
+                    <h:panelGrid columns="2" style="margin:0px 7px 0px 7px;">
+                        <h:outputText style="font-weight: bold;" value="Nome"/>
+                        <h:outputText value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.nome}"/> 
+                        
+                        <h:outputText style="font-weight: bold;" value="Connettore"/>
+                        <h:outputText value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.connettore}"/>
+                    </h:panelGrid>
+                    
+                    
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Elimina" action="#{controlloGestioneServiziApplicativi.elimina}" rendered="#{vistaGestioneServiziApplicativi.elimina}" />   
+                        <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelEliminaServizioApplicativo')" action="#{controlloGestioneServiziApplicativi.caricaGestioneServiziApplicativi}" immediate="true"/>  
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+            
+            <h:form id="formCampiServizioApplicativo">
+                <rich:simpleTogglePanel opened="#{vistaGestioneServiziApplicativi.pannelloVisibile}" id="boxNuovoServizioApplicativo" 
+                                        style="width:220px;" switchType="ajax">
+                    
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/servizio_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuovo Servizio Applicativo"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    
+                    <h:panelGrid columns="2">
+                        <h:panelGroup id="boxAccordo" >
+                            <rich:messages>
+                                <f:facet name="errorMarker">
+                                    <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>   
+                                </f:facet>
+                            </rich:messages>                
+                            <h:panelGrid columns="2">                                
+                                <h:outputText value="Nome" style="font-size:8pt"/>
+                                <h:inputText id="textNome" label="nome" style="font-size:8pt" value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.nome}" required="true" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
+                                
+                                <h:outputText value="Connettore" style="font-size:8pt"/>
+                                <h:inputText id="textConnettore" label="connettore" style="font-size:8pt" value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.connettore}" required="true" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
+                                
+                                <h:outputText value="Descrizione" style="font-size:8pt"/>
+                                <h:inputText id="textDescrizione" label="descrizione" style="font-size:8pt" value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.descrizione}" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
+                            </h:panelGrid>                                
+                            
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Inserisci" action="#{controlloGestioneServiziApplicativi.inserisci}" rendered="#{!vistaGestioneServiziApplicativi.modifica && !vistaGestioneServiziApplicativi.elimina}" />
+                                <h:commandButton value="Modifica" action="#{controlloGestioneServiziApplicativi.modifica}" rendered="#{vistaGestioneServiziApplicativi.modifica}" />  
+                                <h:commandButton value="Annulla" action="#{controlloGestioneServiziApplicativi.caricaGestioneServiziApplicativi}" rendered="#{!vistaGestioneServiziApplicativi.elimina}" immediate="true"/>        
+                            </h:panelGroup>
+                            
+                        </h:panelGroup> 
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+                
+                <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestioneServiziApplicativi.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneServiziApplicativi.messaggio}"/>
+                </h:panelGroup>
+                <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestioneServiziApplicativi.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneServiziApplicativi.errore}"/>
+                </h:panelGroup>
+            </h:form>
+            
+            
+            <rich:tabPanel style="width:520px;margin-top:30px" headerAlignment="right" binding="#{vistaGestioneServiziApplicativi.tabPanel}" >
+                <rich:tab disabled="true">
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/detail.png"  styleClass="linkPicture" />
+                            <h:outputText value="Dettagli"/>
+                        </h:panelGroup>
+                    </f:facet>          
+                    <h:outputText styleClass="intestazioneTab" value="Lista dei Servizi Applicativi"/>   
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>  
+                    <h:outputText styleClass="intestazioneTab" value="Lista dei Servizi Applicativi"/>
+                    
+                    <h:form >
+                        <rich:datascroller align="left"  for="listaServiziApplicativi" maxPages="10" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="500" id="listaServiziApplicativi" rows="10" columnClasses="col" binding="#{vistaGestioneServiziApplicativi.tabellaServiziApplicativi}"
+                                        value="#{vistaGestioneServiziApplicativi.listaServiziApplicativi}" var="servizioApplicativo">
+                            
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Id" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Connettore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Descrizione" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>                                
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{servizioApplicativo.id}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizioApplicativo.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizioApplicativo.connettore}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizioApplicativo.descrizione}" />
+                            </h:column>
+                            <h:column><h:commandLink action="#{controlloGestioneServiziApplicativi.schermoModificaDaTabella}"><img title="Modifica servizio applicativo" alt="Modifica servizio applicativo" src="${pageContext.request.contextPath}/images/icons/servizio_edit.png" /></h:commandLink>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestioneServiziApplicativi.schermoEliminaDaTabella}"><img title="Elimina servizio applicativo" alt="Elimina servizio applicativo" src="${pageContext.request.contextPath}/images/icons/servizio_delete.png" /></h:commandLink>
+                            </h:column>
+                            
+                        </rich:dataTable> 
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

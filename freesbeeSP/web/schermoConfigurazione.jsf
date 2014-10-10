@@ -1,0 +1,202 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Configurazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>
+    <t:saveState value="#{vistaSchermoConfigurazione}" />
+    <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formElenco:boxSuccesso',delay:2.0,duration:0.8"/>
+    <h:panelGroup styleClass="imgTitle">
+        <h:graphicImage value="/images/title/logo.png" alt="freESBeeSP"/>
+    </h:panelGroup>
+
+    <!-- PANNELLO ELIMINA ACCORDO -->
+    <rich:modalPanel id="panelEliminaIstanza" showWhenRendered="#{vistaSchermoConfigurazione.elimina}" rendered="#{vistaSchermoConfigurazione.elimina}" height="100" width="240">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                <h:outputText value="Elimina Istanza"/>
+            </h:panelGroup>
+        </f:facet>
+        <h:form>
+            <h:outputText styleClass="confermaMessaggio" value="Sei sicuro di voler eliminare l'istanza #{vistaSchermoConfigurazione.istanzaEliminare.accordoServizio}?"/>
+            <h:panelGroup styleClass="bloccoPulsantiDialog">
+                <h:commandLink action="#{controlloSchermoConfigurazione.chiudiEliminaIstanza}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelEliminaIstanza')">
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_annulla.png"  styleClass="linkPicture"/>
+                </h:commandLink>
+                <h:commandLink action="#{controlloSchermoConfigurazione.eliminaIstanza}">
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_conferma.png"  styleClass="linkPicture"/>
+                </h:commandLink>
+            </h:panelGroup>
+        </h:form>
+    </rich:modalPanel>
+
+    <!-- PANNELLO MODIFICA REGISTRO -->
+    <rich:modalPanel id="panelModificaRegistro" showWhenRendered="#{vistaSchermoConfigurazione.visualizzaRegistroServizi}" rendered="#{vistaSchermoConfigurazione.visualizzaRegistroServizi}" height="130" width="260">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                <h:outputText value="Registro dei Servizi"/>
+            </h:panelGroup>
+        </f:facet>
+        <h:form>
+            <rich:messages style="text-align:left" styleClass="erroreLogin"/>
+            <h:panelGrid columns="1">
+                <h:outputText value="Indirizzo del Registro dei Servizi"/>
+                <h:inputText label="Indirizzo Registro Servizi" value="#{vistaSchermoConfigurazione.indirizzoRegistroServizi}" style="width:220px" required="true"/>
+            </h:panelGrid>
+
+            <h:panelGroup styleClass="bloccoPulsantiDialog">
+                <h:commandLink action="#{controlloSchermoConfigurazione.chiudiRegistro}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelModificaRegistro')">
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_annulla.png"  styleClass="linkPicture"/>
+                </h:commandLink>
+                <h:commandLink action="#{controlloSchermoConfigurazione.salvaRegistro}">
+                    <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_conferma.png"  styleClass="linkPicture"/>
+                </h:commandLink>
+            </h:panelGroup>
+        </h:form>
+    </rich:modalPanel>
+
+
+    <h:panelGrid styleClass="bloccoUnico" style="width:370px;padding:0px" columns="1" columnClasses="bloccoCentrale">
+        <h:panelGrid columns="1">
+            <rich:panel bodyClass="descrizioneFreESBeeSP">
+                <h:outputText>
+                    freESBeeSP è il componente per la gestione dell'identificazione federata della porta di dominio freESBee. E' possibile configurare le istanze da proteggere
+                </h:outputText>
+            </rich:panel>
+
+            <h:outputText styleClass="erroreLogin" value="#{controlloSchermoConfigurazione.errore}" rendered="#{controlloSchermoConfigurazione.errore != null}"/>
+
+            <rich:panel style="width:350px;margin: 0px auto" id="Descrizione">
+                <f:facet name="header">
+                    <h:panelGroup  style="width:370px">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/configurazione.png"  styleClass="linkPicture" />
+                        <h:outputText value="Configura istanze"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form id="selezionaOperazione">
+                    <h:panelGrid columns="2" styleClass="loginForm">
+                        <h:outputText value="Visualizza istanze configurate: "/>
+                        <h:commandLink action="#{controlloSchermoConfigurazione.caricaConfigurazione}" id="caricaConfigurazione">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_visualizza.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                        <h:outputText value="Aggiungi nuova istanza: "/>
+                        <h:commandLink action="#{controlloSchermoConfigurazione.aggiungi}" id="aggiungiIstanza">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_aggiungi.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                        <h:outputText value="Indirizzo registro servizi: "/>
+                        <h:commandLink action="#{controlloSchermoConfigurazione.registro}" id="registro">
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_registro.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                    </h:panelGrid>
+                </h:form>
+                <h:outputText style="font-size:11px;margin-top:7px;color:grey;display:block" value="Per rendere effettive le modifiche è necessario riavviare freesbeeSP"/>
+            </rich:panel>
+
+            <rich:panel style="width:370px;margin: 0 auto" id="PannelloNuovo" rendered="#{vistaSchermoConfigurazione.visualizzaPannelloAggiungi}">
+                <f:facet name="header">
+                    <h:panelGroup  style="width:370px">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/configurazione.png"  styleClass="linkPicture" />
+                        <h:outputText value="Inserisci informazioni istanza"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form id="nuovaIstanza">
+                    <h:panelGroup styleClass="loginForm">
+                        <rich:messages style="text-align:left" styleClass="erroreLogin"/>
+                        <h:panelGrid columns="4">
+                            <h:outputText value="Accordo servizio: "/>
+                            <h:inputText label="AccordoServizio" value="#{vistaSchermoConfigurazione.accordoServizio}" required="true"/>
+                            <h:graphicImage style="margin:auto 5px auto" id="tooltipAccordoServizio" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                            <rich:toolTip for="tooltipAccordoServizio" showDelay="200">
+                                <h:outputText value="Specificare il nome dell'accordo di servizio da cui prelevare la policy"/>
+                            </rich:toolTip>
+                            <h:outputText value="Risorsa: "/>
+                            <h:inputText label="Risorsa" value="#{vistaSchermoConfigurazione.risorsa}" required="true"/>
+                            <h:graphicImage style="margin:auto 5px auto" id="tooltipRisorsa" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                            <rich:toolTip for="tooltipRisorsa" showDelay="200">
+                                <h:outputText value="Specificare l'URL della risorsa da proteggere"/>
+                            </rich:toolTip>
+                            <h:outputText value="Uri Ascolto: "/>
+                            <h:inputText label="UriAscolto" value="#{vistaSchermoConfigurazione.uriAscolto}" required="true"/>
+                            <h:graphicImage style="margin:auto 5px auto" id="tooltipUriAscolto" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                            <rich:toolTip for="tooltipUriAscolto" showDelay="200">
+                                <h:outputText value="Nome dell'endpoint di protezione su cui la PdD deve inoltrare la richiesta"/>
+                            </rich:toolTip>
+                            <h:commandLink action="#{controlloSchermoConfigurazione.aggiungiIstanza}">
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_ok.png"  styleClass="linkPicture" />
+                            </h:commandLink>
+                            <h:commandLink action="#{controlloSchermoConfigurazione.annullaIstanza}" immediate="true">
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_annulla.png"  styleClass="linkPicture" />
+                            </h:commandLink>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </h:form>
+            </rich:panel>
+
+
+
+            <h:form id="formElenco">
+                <rich:panel style="width:370px;margin:0 auto" id="ListaAccordiCollaborazione" rendered="#{vistaSchermoConfigurazione.visualizzaIstanze}">
+                    <f:facet name="header">
+                        <h:panelGroup  style="width:370px">
+                            <h:outputText styleClass="headerProfilo"/>
+                            <h:panelGroup styleClass="headerNome"  style="width:370px">
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione_add.png"  styleClass="linkPicture" />
+                                <h:outputText value="Lista istanze configurate"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <h:outputText value="#{controlloSchermoConfigurazione.errore}" rendered="#{controlloSchermoConfigurazione.errore != null}" styleClass="errorText"/>
+                    <h:outputText id="boxSuccesso" value="#{controlloSchermoConfigurazione.successo}" rendered="#{controlloSchermoConfigurazione.successo != null}" styleClass="confirmText"/>
+                    <h:outputText value="#{controlloSchermoConfigurazione.messaggio}" rendered="#{controlloSchermoConfigurazione.messaggio != null}" styleClass="infoText"/>
+
+
+                    <h:panelGroup>
+
+                        <rich:dataGrid value="#{vistaSchermoConfigurazione.listaIstanza}" id="listaIstanzaGrid"
+                                       var="istanza" styleClass="gridAccordi" columnClasses="gridAccordiCell" columns="1" elements="5" binding="#{vistaSchermoConfigurazione.listaIstanzaGrid}">
+                            <rich:panel styleClass="pannelloAccordo">
+                                <f:facet name="header">
+                                    <h:panelGroup style="width:350px">
+                                        <h:outputText styleClass="headerProfilo"/>
+                                        <h:panelGroup styleClass="headerNome" style="width:350px">
+                                            <h:panelGroup styleClass="bloccoHeader">
+                                                <h:graphicImage styleClass="iconHeader" value="#{pageContext.request.contextPath}/images/icons/accordoCollaborazione.png" />
+                                                <h:outputText styleClass="textHeader" value="#{istanza.accordoServizio}"/>
+                                            </h:panelGroup>
+                                            <h:commandLink action="#{controlloSchermoConfigurazione.confermaEliminazione}">
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/cestino.png"  styleClass="linkPicture" />
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Uri Ascolto" styleClass="textHeader"/>
+                                    <h:outputText value="#{istanza.uriAscolto}" />
+
+                                    <h:outputText value="Risorsa" styleClass="textHeader"/>
+                                    <h:outputText value="#{istanza.risorsa}" />
+                                </h:panelGrid>
+                            </rich:panel>
+                        </rich:dataGrid>
+                        <rich:datascroller align="left" for="listaIstanzaGrid" maxPages="5" renderIfSinglePage="false"/>
+                    </h:panelGroup>
+                </rich:panel>
+            </h:form>
+        </h:panelGrid>
+    </h:panelGrid>
+</f:view>
+<br/>
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:ge="http://ge.freesbee.unibas.it/">
+    <SOAP-ENV:Body>
+        <ge:aggiungiPubblicatore>
+            <nome>comune_avigliano</nome>
+            <tipo>SPC</tipo>
+            <descrizione></descrizione>
+        </ge:aggiungiPubblicatore>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

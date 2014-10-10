@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiCompleti">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiDB" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ricetta.numero" type="xs:integer" />
+              <xs:element name="ricetta.diagnosi" type="xs:string" />
+              <xs:element name="ricetta.data" type="xs:string" />
+              <xs:element name="ricetta.posizione_utente_ticket" type="xs:string" />
+              <xs:element name="ricetta.importo_ticket" type="xs:decimal" />
+              <xs:element name="ricetta.importo_totale" type="xs:decimal" />
+              <xs:element name="ricetta.codice_struttura_erogatrice" type="xs:integer" />
+              <xs:element name="ricetta.codice_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.codifica_nomenclatore" type="xs:integer" />
+              <xs:element name="ricetta.quantita" type="xs:integer" />
+              <xs:element name="ricetta.importo" type="xs:decimal" />
+              <xs:element name="ricetta.id_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.paziente" type="xs:integer" />
+              <xs:element name="paziente.id" type="xs:integer" />
+              <xs:element name="paziente.cognome" type="xs:string" />
+              <xs:element name="paziente.nome" type="xs:string" />
+              <xs:element name="paziente.codice_fiscale" type="xs:string" />
+              <xs:element name="paziente.data_nascita" type="xs:string" />
+              <xs:element name="paziente.sesso" type="xs:string" />
+              <xs:element name="paziente.comune_residenza" type="xs:string" />
+              <xs:element name="paziente.regione_residenza" type="xs:integer" />
+              <xs:element name="paziente.asl_residenza" type="xs:integer" />
+              <xs:element name="paziente.medico" type="xs:integer" />
+              <xs:element name="paziente.codice_ssr" type="xs:string" />
+              <xs:element name="ricetta.numero" type="xs:integer" />
+              <xs:element name="ricetta.diagnosi" type="xs:string" />
+              <xs:element name="ricetta.data" type="xs:string" />
+              <xs:element name="ricetta.posizione_utente_ticket" type="xs:string" />
+              <xs:element name="ricetta.importo_ticket" type="xs:decimal" />
+              <xs:element name="ricetta.importo_totale" type="xs:decimal" />
+              <xs:element name="ricetta.codice_struttura_erogatrice" type="xs:integer" />
+              <xs:element name="ricetta.codice_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.codifica_nomenclatore" type="xs:integer" />
+              <xs:element name="ricetta.quantita" type="xs:integer" />
+              <xs:element name="ricetta.importo" type="xs:decimal" />
+              <xs:element name="ricetta.id_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.paziente" type="xs:integer" />
+              <xs:element name="paziente.id" type="xs:integer" />
+              <xs:element name="paziente.cognome" type="xs:string" />
+              <xs:element name="paziente.nome" type="xs:string" />
+              <xs:element name="paziente.codice_fiscale" type="xs:string" />
+              <xs:element name="paziente.data_nascita" type="xs:string" />
+              <xs:element name="paziente.sesso" type="xs:string" />
+              <xs:element name="paziente.comune_residenza" type="xs:string" />
+              <xs:element name="paziente.regione_residenza" type="xs:integer" />
+              <xs:element name="paziente.asl_residenza" type="xs:integer" />
+              <xs:element name="paziente.medico" type="xs:integer" />
+              <xs:element name="paziente.codice_ssr" type="xs:string" />
+              <xs:element name="ricetta.numero" type="xs:integer" />
+              <xs:element name="ricetta.diagnosi" type="xs:string" />
+              <xs:element name="ricetta.data" type="xs:string" />
+              <xs:element name="ricetta.posizione_utente_ticket" type="xs:string" />
+              <xs:element name="ricetta.importo_ticket" type="xs:decimal" />
+              <xs:element name="ricetta.importo_totale" type="xs:decimal" />
+              <xs:element name="ricetta.codice_struttura_erogatrice" type="xs:integer" />
+              <xs:element name="ricetta.codice_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.codifica_nomenclatore" type="xs:integer" />
+              <xs:element name="ricetta.quantita" type="xs:integer" />
+              <xs:element name="ricetta.importo" type="xs:decimal" />
+              <xs:element name="ricetta.id_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.paziente" type="xs:integer" />
+              <xs:element name="paziente.id" type="xs:integer" />
+              <xs:element name="paziente.cognome" type="xs:string" />
+              <xs:element name="paziente.nome" type="xs:string" />
+              <xs:element name="paziente.codice_fiscale" type="xs:string" />
+              <xs:element name="paziente.data_nascita" type="xs:string" />
+              <xs:element name="paziente.sesso" type="xs:string" />
+              <xs:element name="paziente.comune_residenza" type="xs:string" />
+              <xs:element name="paziente.regione_residenza" type="xs:integer" />
+              <xs:element name="paziente.asl_residenza" type="xs:integer" />
+              <xs:element name="paziente.medico" type="xs:integer" />
+              <xs:element name="paziente.codice_ssr" type="xs:string" />
+              <xs:element name="ricetta.numero" type="xs:integer" />
+              <xs:element name="ricetta.diagnosi" type="xs:string" />
+              <xs:element name="ricetta.data" type="xs:string" />
+              <xs:element name="ricetta.posizione_utente_ticket" type="xs:string" />
+              <xs:element name="ricetta.importo_ticket" type="xs:decimal" />
+              <xs:element name="ricetta.importo_totale" type="xs:decimal" />
+              <xs:element name="ricetta.codice_struttura_erogatrice" type="xs:integer" />
+              <xs:element name="ricetta.codice_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.codifica_nomenclatore" type="xs:integer" />
+              <xs:element name="ricetta.quantita" type="xs:integer" />
+              <xs:element name="ricetta.importo" type="xs:decimal" />
+              <xs:element name="ricetta.id_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.paziente" type="xs:integer" />
+              <xs:element name="paziente.id" type="xs:integer" />
+              <xs:element name="paziente.cognome" type="xs:string" />
+              <xs:element name="paziente.nome" type="xs:string" />
+              <xs:element name="paziente.codice_fiscale" type="xs:string" />
+              <xs:element name="paziente.data_nascita" type="xs:string" />
+              <xs:element name="paziente.sesso" type="xs:string" />
+              <xs:element name="paziente.comune_residenza" type="xs:string" />
+              <xs:element name="paziente.regione_residenza" type="xs:integer" />
+              <xs:element name="paziente.asl_residenza" type="xs:integer" />
+              <xs:element name="paziente.medico" type="xs:integer" />
+              <xs:element name="paziente.codice_ssr" type="xs:string" />
+              <xs:element name="ricetta.numero" type="xs:integer" />
+              <xs:element name="ricetta.diagnosi" type="xs:string" />
+              <xs:element name="ricetta.data" type="xs:string" />
+              <xs:element name="ricetta.posizione_utente_ticket" type="xs:string" />
+              <xs:element name="ricetta.importo_ticket" type="xs:decimal" />
+              <xs:element name="ricetta.importo_totale" type="xs:decimal" />
+              <xs:element name="ricetta.codice_struttura_erogatrice" type="xs:integer" />
+              <xs:element name="ricetta.codice_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.codifica_nomenclatore" type="xs:integer" />
+              <xs:element name="ricetta.quantita" type="xs:integer" />
+              <xs:element name="ricetta.importo" type="xs:decimal" />
+              <xs:element name="ricetta.id_prestazione" type="xs:integer" />
+              <xs:element name="ricetta.paziente" type="xs:integer" />
+              <xs:element name="paziente.id" type="xs:integer" />
+              <xs:element name="paziente.cognome" type="xs:string" />
+              <xs:element name="paziente.nome" type="xs:string" />
+              <xs:element name="paziente.codice_fiscale" type="xs:string" />
+              <xs:element name="paziente.data_nascita" type="xs:string" />
+              <xs:element name="paziente.sesso" type="xs:string" />
+              <xs:element name="paziente.comune_residenza" type="xs:string" />
+              <xs:element name="paziente.regione_residenza" type="xs:integer" />
+              <xs:element name="paziente.asl_residenza" type="xs:integer" />
+              <xs:element name="paziente.medico" type="xs:integer" />
+              <xs:element name="paziente.codice_ssr" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiInterattivi">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RegioneDestinatario" type="xs:string" />
+              <xs:element name="CodiceAslDestinatario" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiCostanti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RegioneMittente" type="xs:string" />
+              <xs:element name="CodiceAslMittente" type="xs:string" />
+              <xs:element name="IdOperatoreMittente" type="xs:string" />
+              <xs:element name="DataOra" type="xs:string" />
+              <xs:element name="IdMessaggio" type="xs:string" />
+              <xs:element name="IdComunicazione" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

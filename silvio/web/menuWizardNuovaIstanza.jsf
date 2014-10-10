@@ -1,0 +1,173 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<h:form>    
+    <h:panelGroup styleClass="menu">                
+        <h:panelGroup  styleClass="menuSeparator">               
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/trasparent.png"/>
+        </h:panelGroup>
+        
+        <rich:panel style="width:248px;" >
+            <f:facet name="header">  
+                <h:panelGroup  style="width:248px">                    
+                    <h:panelGroup styleClass="headerNome"  style="width:248px">                                                 
+                        <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step1_titolo}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet>
+            <h:outputText value="#{msg.wizard_istanza_step1}" styleClass="infoText"/>
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Accordo" styleClass="intestazioneWizard" rendered="#{vistaIstanzeAccordi.secondoPasso}"/>
+                    <h:outputText value="#{vistaIstanzeAccordi.accordoSelezionato}" rendered="#{vistaIstanzeAccordi.secondoPasso}" styleClass="testoPiccolo"/>
+                    <h:outputText value="Ruolo" styleClass="intestazioneWizard" rendered="#{vistaIstanzeAccordi.secondoPasso}"/>
+                    <h:outputText value="#{vistaIstanzeAccordi.sceltaRuolo}" rendered="#{vistaIstanzeAccordi.secondoPasso}" styleClass="testoPiccolo"/>                    
+                </h:panelGrid>
+            </h:panelGroup>                
+        </rich:panel>
+        
+        <h:panelGroup styleClass="menu" rendered="#{vistaIstanzeAccordi.sceltaRuolo=='FRUITORE'}">
+            <br/><rich:separator height="1" lineType="solid" rendered="#{vistaIstanzeAccordi.secondoPasso}"/><br/>
+            
+            <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaIstanzeAccordi.secondoPasso}">
+                <f:facet name="header">  
+                    <h:panelGroup  style="width:248px">                              
+                        <h:panelGroup styleClass="headerNome"  style="width:248px">                                                      
+                            <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step2_fruitore_titolo}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{msg.wizard_istanza_step2_fruitore}" styleClass="infoText"/>
+                <h:panelGroup styleClass="pannello">
+                    <h:panelGrid columns="1" rendered="#{vistaIstanzeAccordi.terzoPasso}">                    
+                        <h:panelGroup >
+                            <h:outputText value="#{msg.wizard_istanza_step2_no_dati}" styleClass="intestazioneWizard" rendered="#{!vistaIstanzeAccordi.datiPM.datiDBSelezionati && !vistaIstanzeAccordi.datiPM.datiCostantiSelezionati && !vistaIstanzeAccordi.datiPM.datiInterattiviSelezionati && !vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}"/>
+                            <h:outputText value="#{msg.wizard_istanza_step2_dati}" styleClass="intestazioneWizard" rendered="#{vistaIstanzeAccordi.datiPM.datiDBSelezionati || vistaIstanzeAccordi.datiPM.datiCostantiSelezionati || vistaIstanzeAccordi.datiPM.datiInterattiviSelezionati}"/>
+                            <h:outputText value="#{msg.wizard_istanza_step2_payload}" styleClass="intestazioneWizard" rendered="#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}"/>
+                            <h:outputText value="Dati DB" rendered="#{vistaIstanzeAccordi.datiPM.datiDBSelezionati}" styleClass="testoPiccolo"/>
+                            <h:outputText value="Dati Costanti" rendered="#{vistaIstanzeAccordi.datiPM.datiCostantiSelezionati}" styleClass="testoPiccolo"/>
+                            <h:outputText value="Dati Interattivi" rendered="#{vistaIstanzeAccordi.datiPM.datiInterattiviSelezionati}" styleClass="testoPiccolo"/>                                                                                    
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </rich:panel>
+            
+            <br/><rich:separator height="1" lineType="solid" rendered="#{vistaIstanzeAccordi.terzoPasso}"/><br/>
+            
+            <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaIstanzeAccordi.terzoPasso}">
+                <f:facet name="header" >  
+                    <h:panelGroup  style="width:248px">                              
+                        <h:panelGroup styleClass="headerNome"  style="width:248px">                                        
+                            <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step3_fruitore_titolo}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{msg.wizard_istanza_step3_fruitore}" styleClass="infoText"/>
+                <h:panelGroup styleClass="pannello">
+                    <h:panelGrid columns="1" rendered="#{vistaIstanzeAccordi.terzoPasso}">                    
+                        <h:panelGroup >
+                            <h:outputText value="#{msg.wizard_istanza_step3_fileXSLT_fruitore}" rendered="#{vistaIstanzeAccordi.quartoPasso && !vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}" styleClass="intestazioneWizard"/>                       
+                            <h:outputText value="#{msg.wizard_istanza_step3_fileXSLT_fruitore_payload}" rendered="#{vistaIstanzeAccordi.quartoPasso && vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}" styleClass="intestazioneWizard"/>                       
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </rich:panel>
+            
+            <br/><rich:separator height="1" lineType="solid" rendered="#{vistaIstanzeAccordi.quartoPasso}"/><br/>
+            
+            <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaIstanzeAccordi.quartoPasso}">
+                <f:facet name="header">  
+                    <h:panelGroup  style="width:248px">                              
+                        <h:panelGroup styleClass="headerNome"  style="width:248px">                                                   
+                            <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step4_fruitore_titolo}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{msg.wizard_istanza_step2_erogatore}" styleClass="infoText"/>
+                <h:panelGroup styleClass="pannello">
+                    <h:panelGrid columns="2" rendered="#{vistaIstanzeAccordi.quartoPasso}">                    
+                        <h:panelGroup rendered="#{vistaIstanzeAccordi.istanzaOperation.elaboraRisposta && vistaIstanzeAccordi.quintoPasso}">
+                            <h:outputText value="#{msg.wizard_istanza_step4_fileXSLT_fruitore}" styleClass="intestazioneWizard"/>                            
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{!vistaIstanzeAccordi.istanzaOperation.elaboraRisposta && vistaIstanzeAccordi.quintoPasso}">
+                            <h:outputText value="#{msg.wizard_istanza_step3_fruitore_no_risposta}" styleClass="intestazioneWizard"/>                        
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </rich:panel>                
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="menu" rendered="#{vistaIstanzeAccordi.sceltaRuolo=='EROGATORE'}">
+            <br/><rich:separator height="1" lineType="solid" rendered="#{vistaIstanzeAccordi.secondoPasso}"/><br/>
+            
+            <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaIstanzeAccordi.secondoPasso}">
+                <f:facet name="header">  
+                    <h:panelGroup  style="width:248px">                              
+                        <h:panelGroup styleClass="headerNome"  style="width:248px">                                                    
+                            <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step2_erogatore_titolo}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{msg.wizard_istanza_step2_erogatore}" styleClass="infoText"/>
+                <h:panelGroup styleClass="pannello">
+                    <h:panelGrid columns="2" rendered="#{vistaIstanzeAccordi.terzoPasso}">                    
+                        <h:panelGroup rendered="#{vistaIstanzeAccordi.elaboraRichiesta}">
+                            <h:outputText value="File trasformazioni" styleClass="intestazioneWizard"/>
+                            <h:outputText value="#{vistaIstanzeAccordi.fileXSLTErogatoreRichiestaInsert.name}" />
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{!vistaIstanzeAccordi.elaboraRichiesta}">
+                            <h:outputText value="#{msg.wizard_istanza_step2_erogatore_no_richiesta}" styleClass="intestazioneWizard"/>                        
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </rich:panel>
+            
+            <br/><rich:separator height="1" lineType="solid" rendered="#{vistaIstanzeAccordi.terzoPasso}"/><br/>
+            
+            <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaIstanzeAccordi.terzoPasso}">
+                <f:facet name="header">  
+                    <h:panelGroup  style="width:248px">                             
+                        <h:panelGroup styleClass="headerNome"  style="width:248px">                              
+                            <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step3_erogatore_titolo}"/> 
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{msg.wizard_istanza_step3_erogatore}" styleClass="infoText"/>
+                <h:panelGroup styleClass="pannello">
+                    <h:panelGrid columns="1" rendered="#{vistaIstanzeAccordi.terzoPasso}">                    
+                        <h:panelGroup >
+                            <h:outputText value="#{msg.wizard_istanza_step2_no_dati}" styleClass="intestazioneWizard" rendered="#{!vistaIstanzeAccordi.datiPM.datiDBSelezionati && !vistaIstanzeAccordi.datiPM.datiCostantiSelezionati && !vistaIstanzeAccordi.datiPM.datiInterattiviSelezionati && !vistaIstanzeAccordi.datiPM.datiPayloadSelezionati && vistaIstanzeAccordi.quartoPasso}"/>
+                            <h:outputText value="#{msg.wizard_istanza_step2_dati}" styleClass="intestazioneWizard" rendered="#{vistaIstanzeAccordi.datiPM.datiDBSelezionati || vistaIstanzeAccordi.datiPM.datiCostantiSelezionati || vistaIstanzeAccordi.datiPM.datiInterattiviSelezionati && vistaIstanzeAccordi.quartoPasso}"/>
+                            <h:outputText value="#{msg.wizard_istanza_step2_payload}" styleClass="intestazioneWizard" rendered="#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}"/>
+                            <h:outputText value="Dati DB" rendered="#{vistaIstanzeAccordi.datiPM.datiDBSelezionati}" styleClass="testoPiccolo"/>
+                            <h:outputText value="Dati Costanti" rendered="#{vistaIstanzeAccordi.datiPM.datiCostantiSelezionati}" styleClass="testoPiccolo"/>                           
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </rich:panel>
+            
+            <br/><rich:separator height="1" lineType="solid" rendered="#{vistaIstanzeAccordi.quartoPasso}"/><br/>
+            
+            <rich:panel style="width:248px;" styleClass="menu" rendered="#{vistaIstanzeAccordi.quartoPasso}">
+                <f:facet name="header" >  
+                    <h:panelGroup  style="width:248px">                            
+                        <h:panelGroup styleClass="headerNome"  style="width:248px">                              
+                            <h:outputText styleClass="headerWizard" value="#{msg.wizard_istanza_step4_erogatore_titolo}"/>  
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="#{msg.wizard_istanza_step4_erogatore}" styleClass="infoText"/>
+                <h:panelGroup styleClass="pannello">
+                    <h:panelGrid columns="1" rendered="#{vistaIstanzeAccordi.quartoPasso}">                    
+                        <h:panelGroup >
+                            <h:outputText value="#{msg.wizard_istanza_step3_fileXSLT_erogatore}" rendered="#{vistaIstanzeAccordi.quintoPasso && !vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}" styleClass="intestazioneWizard"/>
+                            <h:outputText value="#{msg.wizard_istanza_step3_fileXSLT_erogatore_payload}" rendered="#{vistaIstanzeAccordi.quintoPasso && vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}" styleClass="intestazioneWizard"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </rich:panel>
+        </h:panelGroup> 
+    </h:panelGroup>
+</h:form>

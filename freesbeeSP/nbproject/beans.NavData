@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="index.jsp" x="650" y="150" zoom="true"/>
+        <Node id="schermoConfigurazione.jsf" x="150" y="450" zoom="true"/>
+        <Node id="pieDiPagina.jsf" x="400" y="300" zoom="true"/>
+        <Node id="schermoLogin.jsf" x="150" y="300" zoom="true"/>
+        <Node id="intestazione.jsf" x="400" y="150" zoom="true"/>
+        <Node id="redirectASchermoApplicazione.jsf" x="150" y="150" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

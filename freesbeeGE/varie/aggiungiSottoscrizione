@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:ge="http://ge.freesbee.unibas.it/">
+    <SOAP-ENV:Body>
+        <ge:aggiungiSottoscrizione>
+            <sottoscrittore>
+            	<nome>comune_potenza</nome>
+            	<tipo>SPC</tipo>
+            	<descrizione></descrizione>
+            </sottoscrittore>
+            <tipoSottoscrizione>CONSEGNA</tipoSottoscrizione>
+            <filtroData>
+            	<dataInizio>2010-11-12 16:47:00</dataInizio>
+            	<dataFine>2011-11-12 16:30:00</dataFine>
+            </filtroData>
+        </ge:aggiungiSottoscrizione>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

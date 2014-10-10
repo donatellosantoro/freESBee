@@ -1,0 +1,40 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Schermo" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>
+    <h:panelGroup styleClass="imgTitle">
+        <h:graphicImage value="/images/title/logo.png" alt="freESBeeSP"/>
+    </h:panelGroup>
+    <h:form>
+        <h:panelGrid styleClass="bloccoUnico" style="width:370px;padding:0px"  columns="1" columnClasses="bloccoCentrale">
+            <rich:panel style="width:270px;margin:0 auto" id="loginFederato" >
+                <f:facet name="header">
+                    <h:panelGroup >
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/key_start.png"  styleClass="linkPicture" />
+                        <h:outputText value="Login"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Il portafoglio è stato acquisito correttamente"/>
+                    <h:commandLink action="#{controlloRedirectASchermoApplicazione.redirectASchermoApplicazione}">
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_procedi.png"  styleClass="linkPicture" />
+                    </h:commandLink>
+                </h:panelGrid>
+            </rich:panel>
+        </h:panelGrid>
+    </h:form>
+</f:view>
+<br/>
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

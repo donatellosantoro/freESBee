@@ -1,0 +1,152 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+
+<rich:modalPanel id="panelEliminaSelectFruitore" showWhenRendered="#{vistaIstanzeAccordi.elimina}" rendered="#{vistaIstanzeAccordi.elimina}" height="100" width="240">
+    <f:facet name="header">
+        <h:panelGroup>
+            <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+            <h:outputText value="#{msg.confermaEliminazione}"/>
+        </h:panelGroup>
+    </f:facet>    
+    <h:form>
+        <h:outputText styleClass="confermaMessaggio" value="#{msg.query_confermaElimina} #{vistaIstanzeAccordi.datiPM.selectEliminare}?"/>
+        <h:panelGroup styleClass="bloccoPulsantiDialog">                    
+            <h:commandLink action="#{controlloIstanzeAccordi.chiudiModalPanel}" immediate="true" onclick="javascript:Richfaces.hideModalPanel('panelEliminaSelectFruitore')">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_annulla}.png"  styleClass="linkPicture"/>
+            </h:commandLink>
+            <h:commandLink action="#{controlloIstanzeAccordi.eliminaSelect}">               
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msg.button_conferma}.png"  styleClass="linkPicture"/>
+            </h:commandLink>  
+        </h:panelGroup>
+    </h:form>
+</rich:modalPanel>
+
+
+
+<h:form id="formDBFruitore">
+    <rich:panel id="pannelloDatiDBFruitore" headerClass="pannelloHeaderPiccolo" bodyClass="pannelloAperto#{vistaIstanzeAccordi.datiPM.datiDBSelezionati}">     
+        <f:facet name="header">              
+            <h:panelGroup>  
+                <h:selectBooleanCheckbox value="#{vistaIstanzeAccordi.datiPM.datiDBSelezionati}" styleClass="pannelloCheckHeaderPiccolo"
+                                         disabled="#{vistaIstanzeAccordi.datiPM.datiPayloadSelezionati}">
+                    <a4j:support event="onchange" reRender="pannelloDatiDBFruitore" immediate="true" action="#{controlloIstanzeAccordi.switchDB}"/>
+                </h:selectBooleanCheckbox>
+                <h:panelGroup styleClass="pannelloTestoHeaderPiccolo">  
+                    <h:outputText value="#{msgx.database}"/>                                
+                </h:panelGroup>       
+            </h:panelGroup>
+        </f:facet> 
+        <h:panelGroup rendered="#{vistaIstanzeAccordi.datiPM.datiDBSelezionati}">                                 
+            <h:outputText value="#{msgx.database}" styleClass="infoText"/>
+            <h:panelGrid columns="2" styleClass="pannello">
+                <h:outputText value="#{msgx.query_sorgente}"/>
+                <h:panelGroup>
+                    <h:graphicImage id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                    <rich:toolTip for="help1" showDelay="200">
+                        <h:outputText value="#{msgx.query_sorgente_tooltip}"/>
+                    </rich:toolTip>
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGrid columns="1">
+                <h:inputTextarea label="Select" style="width:350px" value="#{vistaIstanzeAccordi.datiPM.select}"/>
+                <h:panelGroup>  
+                    <h:commandLink id="union" action="#{controlloIstanzeAccordi.unisciStringhe}" style="text-align:right">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_select_union}.png"  styleClass="linkPicture" rendered="true"/>                                 
+                    </h:commandLink>   
+                    <rich:toolTip for="union" showDelay="500">
+                        <h:outputText value="#{msgx.query_sorgente_tooltip_add}"/>
+                    </rich:toolTip>   
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <h:panelGroup rendered="#{!empty vistaIstanzeAccordi.datiPM.listaSelect}">
+                <rich:dataTable id="listaSelectFruitore" rows="10" columnClasses="col"  binding="#{vistaIstanzeAccordi.datiPM.listaSelectGridFruitore}"
+                                value="#{vistaIstanzeAccordi.datiPM.listaSelect}" var="select" styleClass="tabellaSelect" 
+                                width="362px" columnsWidth="350">
+                    <f:facet name="header">
+                        <rich:columnGroup styleClass="headerTabella">
+                            <h:column>
+                                <h:outputText styleClass="headerText" value="#{msgx.datiDB_header}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText styleClass="headerText" value="" />
+                            </h:column>
+                        </rich:columnGroup>                                
+                    </f:facet>
+                    <h:column>
+                        <h:outputText value="#{select}" />
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{controlloIstanzeAccordi.confermaEliminazione}" id="eliminaQueryFruitore" immediate="true">               
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/cestino.png"  styleClass="linkPicture" />
+                        </h:commandLink>
+                        <rich:toolTip for="eliminaQueryFruitore" showDelay="200">
+                            <h:outputText value="#{msgx.eliminare}"/>
+                        </rich:toolTip>
+                    </h:column>
+                </rich:dataTable> 
+            </h:panelGroup>                
+        </h:panelGroup>
+        
+        
+        <h:panelGroup styleClass="pannello">
+            <rich:panel header="#{msgx.informazioniDB}" headerClass="simplePanel" bodyClass="bodyDB">                                                                                                     
+                <h:panelGrid columns="4" style="width:360px" columnClasses="testoPiccolo">                                                                                   
+                    <h:outputText  value="#{msgx.nome_utente}"/>
+                    <h:inputText label="NomeUtente" style="width:100px" value="#{vistaIstanzeAccordi.datiPM.datiDB.select.nomeUtente}"/>
+                    <h:panelGroup rendered="false">
+                        <h:graphicImage id="helpNomeUtente" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="helpNomeUtente" showDelay="200">
+                            <h:outputText value="#{msgx.nome_utente_tooltip}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                    <h:outputText  value="#{msgx.pwd_utente}"/>
+                    <h:inputSecret label="PwdUtente" style="width:100px" value="#{vistaIstanzeAccordi.datiPM.datiDB.select.password}"/>
+                    <h:panelGroup rendered="false">
+                        <h:graphicImage id="helpPwdUtente" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="helpPwdUtente" showDelay="200">
+                            <h:outputText value="#{msgx.pwd_utente_tooltip}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                    <h:outputText  value="#{msgx.nome_DB}"/>
+                    <h:inputText label="NomeDB" style="width:100px" value="#{vistaIstanzeAccordi.datiPM.datiDB.select.nomeDB}"/>
+                    <h:panelGroup rendered="false">
+                        <h:graphicImage id="helpNomeDB" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="helpNomeDB" showDelay="200">
+                            <h:outputText value="#{msgx.nome_DB_tooltip}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>
+                    <h:outputText  value="#{msgx.tipo_DB}"/>
+                    <h:selectOneMenu id="selectTipoDB" label="TipoDB" style="width:104px"
+                                     value="#{vistaIstanzeAccordi.datiPM.datiDB.select.tipoDB}">
+                        <f:selectItems value="#{vistaIstanzeAccordi.datiPM.listaTipiDB}" />
+                    </h:selectOneMenu> 
+                    <h:panelGroup rendered="false">
+                        <h:graphicImage id="helpTipoDB" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="helpTipoDB" showDelay="200">
+                            <h:outputText value="#{msgx.tipo_DB_tooltip}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>       
+                </h:panelGrid>                                                
+                <h:panelGrid columns="4" style="width:300px" columnClasses="testoPiccolo">     
+                    <h:outputText  value="#{msgx.indirizzo_DB}"/>
+                    <h:inputText label="Select" style="width: 110px; margin-top: 0px; margin-right: 0px; margin-left: 11px;" value="#{vistaIstanzeAccordi.datiPM.datiDB.select.indirizzoDB}"/>
+                    <h:panelGroup>
+                        <h:graphicImage id="helpIndirizzoDB" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                        <rich:toolTip for="helpIndirizzoDB" showDelay="200">
+                            <h:outputText value="#{msgx.indirizzo_DB_tooltip}"/>
+                        </rich:toolTip>
+                    </h:panelGroup>  
+                    <h:commandLink action="#{controlloIstanzeAccordi.confermaInformazioniDB}">               
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/btn_#{msgx.button_conferma}.png"  styleClass="linkPicture"/>
+                    </h:commandLink>
+                </h:panelGrid>  
+            </rich:panel>
+        </h:panelGroup>
+    </rich:panel>
+</h:form>

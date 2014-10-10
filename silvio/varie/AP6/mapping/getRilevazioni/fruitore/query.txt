@@ -1,0 +1,8 @@
+select rilevazione.idrilevazione, rilevazione.codimpianto, superifcie, numero_addetti, numero_dipendenti, tipologia, att_commericale, autolavaggio, officina, self_services, stato, bandiera,
+       rilevazione_has_carburante.carburante,  rilevazione_has_carburante.serbatoio,
+       rilevazione_has_pagamento.pagamento, rilevazione_has_servizio.servizio, rilevazione_has_servizioaccessorio.servizioaccessorio 
+from rilevazione 
+join rilevazione_has_carburante on(rilevazione.idrilevazione=rilevazione_has_carburante.idrilevazione)
+join rilevazione_has_pagamento on(rilevazione.idrilevazione=rilevazione_has_pagamento.idrilevazione)
+join rilevazione_has_servizio on(rilevazione.idrilevazione=rilevazione_has_servizio.idrilevazione)
+join rilevazione_has_servizioaccessorio on(rilevazione.idrilevazione=rilevazione_has_servizioaccessorio.idrilevazione)

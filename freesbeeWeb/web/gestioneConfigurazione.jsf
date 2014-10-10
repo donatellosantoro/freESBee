@@ -1,0 +1,136 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Configurazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="bloccoCentrale">     
+            
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiConfigurazione:boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiConfigurazione:boxErrore',duration:0.8"/>
+            
+            <t:saveState value="#{vistaGestioneConfigurazione}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/configurazione.png" alt="Gestione Configurazione"/>   
+            </h:panelGroup>
+            
+            
+            <h:form id="formCampiConfigurazione">
+                <rich:simpleTogglePanel opened="#{vistaGestioneConfigurazione.pannelloVisibile}" id="boxNuovaConfigurazione" 
+                                        style="width:370px" switchType="ajax">
+                    
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/servizio_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuova Configurazione"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    
+                    <h:panelGrid columns="2" style="height:470px">
+                        <h:panelGroup id="boxConfigurazione" >
+                            <rich:messages>
+                                <f:facet name="errorMarker">
+                                    <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>   
+                                </f:facet>
+                            </rich:messages>                
+                            <h:panelGrid columns="2">                                
+                                <h:outputText value="Indirizzo Porta Delegata" style="font-size:8pt"/>
+                                <h:inputTextarea rows="3" id="textIndirizzoPD" label="Indirizzo Porta Delegata" style="font-size:8pt;width:220px" value="#{vistaGestioneConfigurazione.configurazione.indirizzoPortaDelegata}" required="true"/>
+                                
+                                <h:outputText value="Indirizzo Porta Applicativa" style="font-size:8pt"/>
+                                <h:inputTextarea rows="3" id="textIndirizzoPA" label="Indirizzo Porta Applicativa" style="font-size:8pt;width:220px" value="#{vistaGestioneConfigurazione.configurazione.indirizzoPortaApplicativa}" required="true"/>
+                                
+                                <h:outputLabel value="" style="font-size:7pt;color:grey"/>
+                                <h:outputLabel value="Sia per la porta delegata che applicativa è possibile indicare una lista di indirizzi sui quali freesbee si metterà all'ascolto. Per farlo basta separarli con un ; (punto e virgola). Inoltre è possibile scegliere http o https." style="font-size:7pt;color:grey;width: 220px;display:block"/>
+                                
+                                <h:outputLabel value="" style="font-size:7pt;color:grey"/>
+                                <h:outputLabel value="NB: Per applicare le modifiche bisogna riavviare freESBee" style="font-size:7pt;color:grey;width: 220px;display:block"/>
+                                
+                                <h:outputText value="Tempo" style="font-size:8pt"/>
+                                <h:selectOneRadio id="tempo" value="#{vistaGestioneConfigurazione.configurazione.tempo}" required="true" style="font-size:8pt">
+                                    <f:selectItem itemValue="EGOV_IT_Locale" itemLabel="Locale"/>
+                                    <f:selectItem itemValue="EGOV_IT_SPC" itemLabel="Sincronizzato"/>
+                                </h:selectOneRadio>                              
+                                
+                                <rich:separator height="2" lineType="dotted"/>
+                                <rich:separator height="2" lineType="dotted"/>
+                                
+                                <h:outputText value="Invia al NICA" style="font-size:8pt"/>
+                                <a4j:region>
+                                    <h:selectBooleanCheckbox id="checkboxInviaANICA" value="#{vistaGestioneConfigurazione.configurazione.inviaANICA}">
+
+                                        <!-- da ripristinare una volta gestito il connettore dei servizi  -->
+                                        <a4j:support event="onclick" actionListener="#{controlloGestioneConfigurazione.gestioneInviaANICA}" reRender="textConnettoreRegistroServizi,textSoggettoErogatoreRegistroServizi"/>
+                                    </h:selectBooleanCheckbox>
+                                </a4j:region>
+                                
+                                <h:outputText value="Connettore Registro dei Servizi" style="font-size:8pt"/>
+                                <h:inputText id="textConnettoreRegistroServizi" label="Connettore Registro dei Servizi" style="font-size:8pt" value="#{vistaGestioneConfigurazione.configurazione.connettoreRegistroServizi}" disabled="#{!vistaGestioneConfigurazione.inviaANICAChecked}" required="false"/> <!-- da ripristinare a required=true -->
+                                
+                                 <h:outputText value="Registro freESBee" style="font-size:8pt"/>
+                               
+                                    <h:selectBooleanCheckbox id="checkboxisFreesbee" value="#{vistaGestioneConfigurazione.configurazione.registroFreesbee}">                                                                 
+                                    </h:selectBooleanCheckbox>                               
+                                
+                                <h:outputText value="Soggetto NICA" style="font-size:8pt"/>
+                                <h:selectOneMenu id="textSoggettoErogatoreRegistroServizi" style="font-size:8pt;width:126px" label="Soggetto Erogatore Registro Servizi" value="#{vistaGestioneConfigurazione.configurazione.idSoggettoErogatoreRegistroServizi}" disabled="#{!vistaGestioneConfigurazione.inviaANICAChecked}" required="true">
+                                    <f:selectItems value="#{vistaGestioneConfigurazione.listaSoggettiErogatoreRegistroServizi}"/>
+                                    <a4j:support event="onchange" actionListener="#{controlloGestioneConfigurazione.gestioneSelezioneSoggetto}" reRender="textSoggettoErogatoreRegistroServizi,textErogatoreNICA"/>
+                                </h:selectOneMenu>
+                                
+                                <rich:separator height="2" lineType="dotted"/>
+                                <rich:separator height="2" lineType="dotted"/>
+                                
+                                <h:outputText value="NICA" style="font-size:8pt"/>
+                                <a4j:region>
+                                    <h:selectBooleanCheckbox id="checkboxNICA" value="#{vistaGestioneConfigurazione.configurazione.NICA}">
+                                        <a4j:support event="onclick" actionListener="#{controlloGestioneConfigurazione.gestioneStatoNICA}" reRender="textErogatoreNICA"/>
+                                    </h:selectBooleanCheckbox>
+                                </a4j:region>
+                                
+                                <h:outputText value="Soggetto Erogatore" style="font-size:8pt"/>
+                                <h:selectOneMenu id="textErogatoreNICA" style="font-size:8pt;width:126px" label="Soggtto Erogatore" value="#{vistaGestioneConfigurazione.configurazione.idSoggettoErogatoreNICA}" disabled="#{!vistaGestioneConfigurazione.NICAChecked}" required="true">
+                                    <f:selectItems value="#{vistaGestioneConfigurazione.listaSoggettiErogatoreNICA}"/>
+                                    <a4j:support event="onchange" actionListener="#{controlloGestioneConfigurazione.gestioneSelezioneSoggetto}" reRender="textSoggettoErogatoreRegistroServizi,textErogatoreNICA"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>    
+                            
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Inserisci" action="#{controlloGestioneConfigurazione.inserisci}" rendered="#{!vistaGestioneConfigurazione.modifica}" />
+                                <h:commandButton value="Modifica" action="#{controlloGestioneConfigurazione.modifica}" rendered="#{vistaGestioneConfigurazione.modifica}" />
+                                <h:commandButton value="Annulla" action="#{controlloGestioneConfigurazione.caricaConfigurazione}" immediate="true"/>
+                            </h:panelGroup>
+                            
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+                
+                <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestioneConfigurazione.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneConfigurazione.messaggio}"/>
+                </h:panelGroup>
+                <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestioneConfigurazione.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneConfigurazione.errore}"/>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

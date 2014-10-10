@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    
+    <application>
+        <message-bundle>messaggiErrore</message-bundle>
+    </application>
+    
+    <managed-bean>
+        <managed-bean-name>utente</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.modello.Utente</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>vistaSchermoLoginConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.vista.VistaSchermoLoginConfigurazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>vistaSchermoLogin</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.vista.VistaSchermoLogin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>vistaSchermoConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.vista.VistaSchermoConfigurazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloSchermoLoginConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.controllo.ControlloSchermoLoginConfigurazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vistaSchermoLoginConfigurazione</property-name>
+            <value>#{vistaSchermoLoginConfigurazione}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloSchermoLogin</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.controllo.ControlloSchermoLogin</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>vistaSchermoLogin</property-name>
+            <value>#{vistaSchermoLogin}</value>
+        </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>controlloRedirectASchermoApplicazione</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.controllo.ControlloRedirectASchermoApplicazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlloSchermoConfigurazione</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.controllo.ControlloSchermoConfigurazione</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>vistaSchermoConfigurazione</property-name>
+            <value>#{vistaSchermoConfigurazione}</value>
+        </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>controlloSchermoInviaMessaggio</managed-bean-name>
+        <managed-bean-class>it.unibas.icar.freesbeesp.controllo.ControlloSchermoInviaMessaggio</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>utente</property-name>
+            <value>#{utente}</value>
+        </managed-property>
+    </managed-bean>
+    
+  
+    <!--
+    <lifecycle>
+        <phase-listener>it.unibas.acijsfhibernate.controllo.PhaseListener</phase-listener>
+    </lifecycle>
+    -->
+    
+</faces-config>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="datiCompleti">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="datiInterattivi">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodiceFiscale" type="xs:string" />
+              <xs:element name="RegioneDestinatario" type="xs:string" />
+              <xs:element name="CodiceAslDestinatario" type="xs:string" />
+              <xs:element name="IdOperatoreDestinatario" type="xs:string" />
+              <xs:element name="CodiceAslResidenza" type="xs:string" />
+              <xs:element name="CodiceAslAssistenza" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="datiCostanti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RegioneMittente" type="xs:string" />
+              <xs:element name="CodiceAsl" type="xs:string" />
+              <xs:element name="IdOperatore" type="xs:string" />
+              <xs:element name="DataOra" type="xs:string" />
+              <xs:element name="IdMessaggio" type="xs:string" />
+              <xs:element name="IdComunicazione" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

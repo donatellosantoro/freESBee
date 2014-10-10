@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.ap6.progettoicar.it/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:getRilevazioniResponse>
+         <return xmlvalido="true" anno="2008" codistatregione="ab22" recordricevuti="2" recordinseriti="2" recordscartati="0">
+         </return>
+      </ws:getRilevazioniResponse>
+   </soapenv:Body>
+</soapenv:Envelope>

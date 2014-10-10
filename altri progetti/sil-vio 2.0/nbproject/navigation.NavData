@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="visualizzaMessaggi.jsf" x="1900" y="300" zoom="true"/>
+        <Node id="configurazione.jsf" x="400" y="600" zoom="true"/>
+        <Node id="eseguiIstanzaOperation.jsf" x="650" y="900" zoom="true"/>
+        <Node id="nuovoAccordoCollaborazione.jsf" x="900" y="150" zoom="true"/>
+        <Node id="home.jsf" x="150" y="150" zoom="true"/>
+        <Node id="pieDiPagina.jsf" x="400" y="150" zoom="true"/>
+        <Node id="schermoCambiaPassword.jsf" x="900" y="300" zoom="true"/>
+        <Node id="eseguiIstanza.jsf" x="150" y="1200" zoom="true"/>
+        <Node id="app/acquisisciPortafoglioApp.jsf" x="2650" y="150" zoom="true"/>
+        <Node id="app/index.jsf" x="150" y="750" zoom="true"/>
+        <Node id="elencoAccordi.jsf" x="650" y="450" zoom="true"/>
+        <Node id="index.jsp" x="400" y="300" zoom="true"/>
+        <Node id="intestazione.jsf" x="650" y="150" zoom="true"/>
+        <Node id="eseguiIstanzaTestOperation.jsf" x="1400" y="600" zoom="true"/>
+        <Node id="acquisisciPortafoglio.jsf" x="1650" y="600" zoom="true"/>
+        <Node id="eseguiIstanzaTest.jsf" x="1650" y="450" zoom="true"/>
+        <Node id="acquisisciPortafoglioInvalida.jsf" x="650" y="1200" zoom="true"/>
+        <Node id="nuovaIstanzaConferma.jsf" x="900" y="450" zoom="true"/>
+        <Node id="schermoLogin.jsf" x="150" y="300" zoom="true"/>
+        <Node id="nuovaIstanzaOperation.jsf" x="1150" y="300" zoom="true"/>
+        <Node id="elencoSbloccoMessaggi.jsf" x="2400" y="150" zoom="true"/>
+        <Node id="elencoIstanze.jsf" x="650" y="600" zoom="true"/>
+        <Node id="app/acquisisciPortafoglioInvalidaApp.jsf" x="150" y="450" zoom="true"/>
+        <Node id="nuovaIstanza.jsf" x="1400" y="150" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

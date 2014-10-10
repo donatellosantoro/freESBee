@@ -1,0 +1,26 @@
+body, html {
+    height:99% !important;
+    margin:0pt;
+    padding:0pt;
+    background-image:url(../images/back.gif);
+    background-repeat:y-repeat;
+    border-top:2px solid #085196;
+}
+
+#nonFooter{
+    position: relative;
+    min-height: 99%;
+}
+
+* html #nonFooter{
+    height: 100%;
+}
+
+.footer{
+    position: relative;
+    background-color:#073399;
+    height:90px;
+    margin:-90px 0px 0px;
+    text-align:center;
+    background-image:url(../images/footer.jpg);
+}

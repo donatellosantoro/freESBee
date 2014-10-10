@@ -1,0 +1,83 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Configurazione" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaConfigurazioneSP}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/configurazioneFreesbeeSP.png" alt="Configurazione FreESBeeSP"/>
+            </h:panelGroup>
+
+            <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:600px;" rendered="#{controlloConfigurazioneSP.visualizzaMessaggio}">
+                <h:outputText styleClass="successoMessaggio" value="#{controlloConfigurazioneSP.messaggio}"/>
+            </h:panelGroup>
+            <h:panelGroup id="boxErrore" styleClass="errore" style="width:600px;" rendered="#{controlloConfigurazioneSP.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloConfigurazioneSP.errore}"/>
+            </h:panelGroup>
+
+    <h:form id="formConfigurazioneSP">
+            <rich:simpleTogglePanel opened="true" id="boxNuovaConfigurazione" style="width:600px;" switchType="ajax">
+
+
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/servizio_add.png"  styleClass="linkPicture" />
+                        <h:outputText value="Nuova Configurazione SP"/>
+                    </h:panelGroup>
+                </f:facet>
+
+
+                <h:panelGrid columns="1" cellspacing="">
+                    <h:panelGrid columns="2" cellspacing="20">
+                        <h:outputText value="Indirizzo freESBeeSP: "/>
+                        <h:inputText style="width:250px" value="#{vistaConfigurazioneSP.datiConfigurazione.urlFreesbeeSP}"/>
+
+                        <rich:separator height="2" lineType="dotted"/>
+                        <rich:separator height="2" lineType="dotted"/>
+
+                        <h:outputText value="Risorsa: "/>
+                        <h:inputText style="width:250px" value="#{vistaConfigurazioneSP.datiConfigurazione.risorsa}"/>
+
+                        <h:outputText value="Risorsa Monitoraggio Stato: "/>
+                        <h:inputText style="width:250px" value="#{vistaConfigurazioneSP.datiConfigurazione.risorsaPdMonitoraggioStato}"/>
+
+                        <h:outputText value="Risorsa Monitoraggio SLA "/>
+                        <h:inputText style="width:250px" value="#{vistaConfigurazioneSP.datiConfigurazione.risorsaPdMonitoraggioSLA}"/>
+
+                      
+                    </h:panelGrid>
+                    <h:panelGroup styleClass="bloccoPulsanti" >
+                         <h:commandButton value="Modifica" action="#{controlloConfigurazioneSP.modifica}"  />
+                        <h:commandButton value="Annulla" action="#{controlloConfigurazioneSP.caricaConfigurazioneSP}" immediate="true"/>
+                    </h:panelGroup>
+
+                </h:panelGrid>
+
+            </rich:simpleTogglePanel>
+            </h:form>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

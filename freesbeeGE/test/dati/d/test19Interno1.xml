@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ge="http://ge.freesbee.unibas.it/">
+    <soap:Header/>
+    <soap:Body>
+        <ge:consegnaMessaggio>
+            <messaggioSoap>
+                <comunicazioneEliminazioneSottoscrizione>
+                    <sottoscrittore>
+                        <nomeSottoscrittore>M</nomeSottoscrittore>
+                        <tipoSottoscrittore>SPC</tipoSottoscrittore>
+                    </sottoscrittore>
+                    <categoriaPubblicata>Test5</categoriaPubblicata>
+                    <causa>Eliminazione di tutti i pubblicatori specificati nei filtri</causa>
+                </comunicazioneEliminazioneSottoscrizione>
+            </messaggioSoap>
+            <nomePubblicatore>NICA_PUGLIA</nomePubblicatore>
+            <tipoPubblicatore>SPC</tipoPubblicatore>
+            <categoriaEventi>GEControlProtocol</categoriaEventi>
+        </ge:consegnaMessaggio>
+    </soap:Body>
+</soap:Envelope>

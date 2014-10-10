@@ -1,0 +1,1155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ws.registry.openspcoop.org" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://ws.registry.openspcoop.org" xmlns:intf="http://ws.registry.openspcoop.org" xmlns:tns2="http://registry.dao.openspcoop.org" xmlns:tns3="http://driver.registry.dao.openspcoop.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://ws.registry.openspcoop.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://registry.dao.openspcoop.org"/>
+   <import namespace="http://driver.registry.dao.openspcoop.org"/>
+   <element name="getAccordoServizio">
+    <complexType>
+     <sequence>
+      <element name="nomeAccordo" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAccordoServizioResponse">
+    <complexType>
+     <sequence>
+      <element name="getAccordoServizioReturn" type="tns2:AccordoServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_tns2_Azione">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:Azione"/>
+    </sequence>
+   </complexType>
+   <complexType name="WSRegistrySearchException">
+    <sequence/>
+   </complexType>
+   <element name="fault" type="impl:WSRegistrySearchException"/>
+   <complexType name="WSRegistryNotFound">
+    <complexContent>
+     <extension base="impl:WSRegistrySearchException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <element name="fault1" type="impl:WSRegistryNotFound"/>
+   <element name="getAllIdAccordiServizio">
+    <complexType>
+     <sequence>
+      <element name="filtroRicerca" type="tns3:FiltroSPCoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllIdAccordiServizioResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllIdAccordiServizioReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsAccordoServizio">
+    <complexType>
+     <sequence>
+      <element name="nome" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsAccordoServizioResponse">
+    <complexType>
+     <sequence>
+      <element name="existsAccordoServizioReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getSoggettoSPCoop">
+    <complexType>
+     <sequence>
+      <element name="idSoggetto" type="tns3:IDSoggetto"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getSoggettoSPCoopResponse">
+    <complexType>
+     <sequence>
+      <element name="getSoggettoSPCoopReturn" type="tns2:SoggettoSpcoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_tns2_ConnettoreProperty">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:ConnettoreProperty"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns2_ServizioSpcoopAzioneFruitore">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:ServizioSpcoopAzioneFruitore"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns2_ServizioSpcoopAzione">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:ServizioSpcoopAzione"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns2_Fruitore">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:Fruitore"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns2_ServizioSpcoop">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:ServizioSpcoop"/>
+    </sequence>
+   </complexType>
+   <element name="getAllIdSoggettiSPCoop">
+    <complexType>
+     <sequence>
+      <element name="filtroRicerca" type="tns3:FiltroSPCoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllIdSoggettiSPCoopResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllIdSoggettiSPCoopReturn" type="tns3:IDSoggetto"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsSoggettoSPCoop">
+    <complexType>
+     <sequence>
+      <element name="idSoggetto" type="tns3:IDSoggetto"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsSoggettoSPCoopResponse">
+    <complexType>
+     <sequence>
+      <element name="existsSoggettoSPCoopReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getServizioSPCoop">
+    <complexType>
+     <sequence>
+      <element name="idService" type="tns3:IDServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getServizioSPCoopResponse">
+    <complexType>
+     <sequence>
+      <element name="getServizioSPCoopReturn" type="tns2:ServizioSpcoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getServizioSPCoopCorrelato">
+    <complexType>
+     <sequence>
+      <element name="idService" type="tns3:IDServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getServizioSPCoopCorrelatoResponse">
+    <complexType>
+     <sequence>
+      <element name="getServizioSPCoopCorrelatoReturn" type="tns2:ServizioSpcoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getServizioSPCoopCorrelatoByAccordo">
+    <complexType>
+     <sequence>
+      <element name="idSoggetto" type="tns3:IDSoggetto"/>
+      <element name="nomeAccordo" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getServizioSPCoopCorrelatoByAccordoResponse">
+    <complexType>
+     <sequence>
+      <element name="getServizioSPCoopCorrelatoByAccordoReturn" type="tns2:ServizioSpcoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllIdServiziSPCoop">
+    <complexType>
+     <sequence>
+      <element name="filtroRicerca" type="tns3:FiltroServiziSPCoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllIdServiziSPCoopResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllIdServiziSPCoopReturn" type="tns3:IDServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllIdServiziSPCoopCorrelati">
+    <complexType>
+     <sequence>
+      <element name="filtroRicerca" type="tns3:FiltroServiziSPCoop"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllIdServiziSPCoopCorrelatiResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllIdServiziSPCoopCorrelatiReturn" type="tns3:IDServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsServizioSpcoop">
+    <complexType>
+     <sequence>
+      <element name="idServizio" type="tns3:IDServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsServizioSpcoopResponse">
+    <complexType>
+     <sequence>
+      <element name="existsServizioSpcoopReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsServizioSpcoopCorrelato">
+    <complexType>
+     <sequence>
+      <element name="idServizio" type="tns3:IDServizio"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existsServizioSpcoopCorrelatoResponse">
+    <complexType>
+     <sequence>
+      <element name="existsServizioSpcoopCorrelatoReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://registry.dao.openspcoop.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://ws.registry.openspcoop.org"/>
+   <import namespace="http://driver.registry.dao.openspcoop.org"/>
+   <complexType name="Azione">
+    <sequence>
+     <element name="confermaRicezione" nillable="true" type="xsd:string"/>
+     <element name="consegnaInOrdine" nillable="true" type="xsd:string"/>
+     <element name="filtroDuplicati" nillable="true" type="xsd:string"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="idAccordo" nillable="true" type="xsd:long"/>
+     <element name="idCollaborazione" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="profAzione" nillable="true" type="xsd:string"/>
+     <element name="profiloCollaborazione" nillable="true" type="xsd:string"/>
+     <element name="scadenza" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="AccordoServizio">
+    <sequence>
+     <element maxOccurs="unbounded" name="azione" nillable="true" type="tns2:Azione"/>
+     <element name="azioneList" nillable="true" type="impl:ArrayOf_tns2_Azione"/>
+     <element name="byteWsdlConcettuale" nillable="true" type="xsd:base64Binary"/>
+     <element name="byteWsdlDefinitorio" nillable="true" type="xsd:base64Binary"/>
+     <element name="byteWsdlLogicoErogatore" nillable="true" type="xsd:base64Binary"/>
+     <element name="byteWsdlLogicoFruitore" nillable="true" type="xsd:base64Binary"/>
+     <element name="confermaRicezione" nillable="true" type="xsd:string"/>
+     <element name="consegnaInOrdine" nillable="true" type="xsd:string"/>
+     <element name="descrizione" nillable="true" type="xsd:string"/>
+     <element name="filtroDuplicati" nillable="true" type="xsd:string"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="idCollaborazione" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="oldNomeForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oraRegistrazione" nillable="true" type="xsd:dateTime"/>
+     <element name="profiloCollaborazione" nillable="true" type="xsd:string"/>
+     <element name="scadenza" nillable="true" type="xsd:string"/>
+     <element name="superUser" nillable="true" type="xsd:string"/>
+     <element name="utilizzoSenzaAzione" type="xsd:boolean"/>
+     <element name="wsdlConcettuale" nillable="true" type="xsd:string"/>
+     <element name="wsdlDefinitorio" nillable="true" type="xsd:string"/>
+     <element name="wsdlLogicoErogatore" nillable="true" type="xsd:string"/>
+     <element name="wsdlLogicoFruitore" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ConnettoreProperty">
+    <sequence>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="valore" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Connettore">
+    <sequence>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="properties" nillable="true" type="apachesoap:Map"/>
+     <element maxOccurs="unbounded" name="property" nillable="true" type="tns2:ConnettoreProperty"/>
+     <element name="propertyList" nillable="true" type="impl:ArrayOf_tns2_ConnettoreProperty"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ServizioSpcoopAzioneFruitore">
+    <sequence>
+     <element name="connettore" nillable="true" type="tns2:Connettore"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ServizioSpcoopAzione">
+    <sequence>
+     <element name="connettore" nillable="true" type="tns2:Connettore"/>
+     <element maxOccurs="unbounded" name="fruitore" nillable="true" type="tns2:ServizioSpcoopAzioneFruitore"/>
+     <element name="fruitoreList" nillable="true" type="impl:ArrayOf_tns2_ServizioSpcoopAzioneFruitore"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Fruitore">
+    <sequence>
+     <element name="byteWsdlImplementativoErogatore" nillable="true" type="xsd:base64Binary"/>
+     <element name="byteWsdlImplementativoFruitore" nillable="true" type="xsd:base64Binary"/>
+     <element name="confermaRicezione" nillable="true" type="xsd:string"/>
+     <element name="connettore" nillable="true" type="tns2:Connettore"/>
+     <element name="consegnaInOrdine" nillable="true" type="xsd:string"/>
+     <element name="filtroDuplicati" nillable="true" type="xsd:string"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="idCollaborazione" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="oraRegistrazione" nillable="true" type="xsd:dateTime"/>
+     <element name="scadenza" nillable="true" type="xsd:string"/>
+     <element maxOccurs="unbounded" name="servizioApplicativo" nillable="true" type="xsd:string"/>
+     <element name="servizioApplicativoList" nillable="true" type="impl:ArrayOf_xsd_string"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+     <element name="wsdlImplementativoErogatore" nillable="true" type="xsd:string"/>
+     <element name="wsdlImplementativoFruitore" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ServizioSpcoop">
+    <sequence>
+     <element name="accordoServizio" nillable="true" type="xsd:string"/>
+     <element maxOccurs="unbounded" name="azione" nillable="true" type="tns2:ServizioSpcoopAzione"/>
+     <element name="azioneList" nillable="true" type="impl:ArrayOf_tns2_ServizioSpcoopAzione"/>
+     <element name="byteWsdlImplementativoErogatore" nillable="true" type="xsd:base64Binary"/>
+     <element name="byteWsdlImplementativoFruitore" nillable="true" type="xsd:base64Binary"/>
+     <element name="confermaRicezione" nillable="true" type="xsd:string"/>
+     <element name="connettore" nillable="true" type="tns2:Connettore"/>
+     <element name="consegnaInOrdine" nillable="true" type="xsd:string"/>
+     <element name="filtroDuplicati" nillable="true" type="xsd:string"/>
+     <element maxOccurs="unbounded" name="fruitore" nillable="true" type="tns2:Fruitore"/>
+     <element name="fruitoreList" nillable="true" type="impl:ArrayOf_tns2_Fruitore"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="idAccordo" nillable="true" type="xsd:long"/>
+     <element name="idCollaborazione" nillable="true" type="xsd:string"/>
+     <element name="idSoggetto" nillable="true" type="xsd:long"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="nomeSoggettoErogatore" nillable="true" type="xsd:string"/>
+     <element name="oldNomeForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oldNomeSoggettoErogatoreForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oldTipoForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oldTipoSoggettoErogatoreForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oraRegistrazione" nillable="true" type="xsd:dateTime"/>
+     <element name="scadenza" nillable="true" type="xsd:string"/>
+     <element name="servizioCorrelato" type="xsd:boolean"/>
+     <element name="superUser" nillable="true" type="xsd:string"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+     <element name="tipoSoggettoErogatore" nillable="true" type="xsd:string"/>
+     <element name="wsdlImplementativoErogatore" nillable="true" type="xsd:string"/>
+     <element name="wsdlImplementativoFruitore" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="SoggettoSpcoop">
+    <sequence>
+     <element name="connettore" nillable="true" type="tns2:Connettore"/>
+     <element name="descrizione" nillable="true" type="xsd:string"/>
+     <element name="id" nillable="true" type="xsd:long"/>
+     <element name="identificativoPorta" nillable="true" type="xsd:string"/>
+     <element name="isRouter" type="xsd:boolean"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="oldNomeForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oldTipoForUpdate" nillable="true" type="xsd:string"/>
+     <element name="oraRegistrazione" nillable="true" type="xsd:dateTime"/>
+     <element name="server" nillable="true" type="xsd:string"/>
+     <element maxOccurs="unbounded" name="servizio" nillable="true" type="tns2:ServizioSpcoop"/>
+     <element maxOccurs="unbounded" name="servizioCorrelato" nillable="true" type="tns2:ServizioSpcoop"/>
+     <element name="servizioCorrelatoList" nillable="true" type="impl:ArrayOf_tns2_ServizioSpcoop"/>
+     <element name="servizioList" nillable="true" type="impl:ArrayOf_tns2_ServizioSpcoop"/>
+     <element name="superUser" nillable="true" type="xsd:string"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://driver.registry.dao.openspcoop.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://ws.registry.openspcoop.org"/>
+   <import namespace="http://registry.dao.openspcoop.org"/>
+   <complexType name="FiltroSPCoop">
+    <sequence>
+     <element name="maxDate" nillable="true" type="xsd:dateTime"/>
+     <element name="minDate" nillable="true" type="xsd:dateTime"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="IDSoggetto">
+    <sequence>
+     <element name="codicePorta" nillable="true" type="xsd:string"/>
+     <element name="nome" nillable="true" type="xsd:string"/>
+     <element name="tipo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="IDServizio">
+    <sequence>
+     <element name="accordo" nillable="true" type="xsd:string"/>
+     <element name="azione" nillable="true" type="xsd:string"/>
+     <element name="correlato" type="xsd:boolean"/>
+     <element name="servizio" nillable="true" type="xsd:string"/>
+     <element name="soggettoErogatore" nillable="true" type="tns3:IDSoggetto"/>
+     <element name="tipoServizio" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="FiltroServiziSPCoop">
+    <complexContent>
+     <extension base="tns3:FiltroSPCoop">
+      <sequence>
+       <element name="nomeAccordo" nillable="true" type="xsd:string"/>
+       <element name="nomeSoggettoErogatore" nillable="true" type="xsd:string"/>
+       <element name="tipoSoggettoErogatore" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://ws.registry.openspcoop.org"/>
+   <import namespace="http://registry.dao.openspcoop.org"/>
+   <import namespace="http://driver.registry.dao.openspcoop.org"/>
+   <complexType name="mapItem">
+    <sequence>
+     <element name="key" nillable="true" type="xsd:anyType"/>
+     <element name="value" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="Map">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getServizioSPCoopResponse">
+
+      <wsdl:part element="impl:getServizioSPCoopResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsServizioSpcoopCorrelatoResponse">
+
+      <wsdl:part element="impl:existsServizioSpcoopCorrelatoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getServizioSPCoopCorrelatoByAccordoResponse">
+
+      <wsdl:part element="impl:getServizioSPCoopCorrelatoByAccordoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getServizioSPCoopCorrelatoByAccordoRequest">
+
+      <wsdl:part element="impl:getServizioSPCoopCorrelatoByAccordo" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdSoggettiSPCoopResponse">
+
+      <wsdl:part element="impl:getAllIdSoggettiSPCoopResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdAccordiServizioRequest">
+
+      <wsdl:part element="impl:getAllIdAccordiServizio" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="WSRegistrySearchException">
+
+      <wsdl:part element="impl:fault" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsSoggettoSPCoopResponse">
+
+      <wsdl:part element="impl:existsSoggettoSPCoopResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSoggettoSPCoopRequest">
+
+      <wsdl:part element="impl:getSoggettoSPCoop" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdServiziSPCoopResponse">
+
+      <wsdl:part element="impl:getAllIdServiziSPCoopResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsAccordoServizioRequest">
+
+      <wsdl:part element="impl:existsAccordoServizio" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccordoServizioRequest">
+
+      <wsdl:part element="impl:getAccordoServizio" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getServizioSPCoopCorrelatoResponse">
+
+      <wsdl:part element="impl:getServizioSPCoopCorrelatoResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsAccordoServizioResponse">
+
+      <wsdl:part element="impl:existsAccordoServizioResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAccordoServizioResponse">
+
+      <wsdl:part element="impl:getAccordoServizioResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdServiziSPCoopCorrelatiResponse">
+
+      <wsdl:part element="impl:getAllIdServiziSPCoopCorrelatiResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsServizioSpcoopRequest">
+
+      <wsdl:part element="impl:existsServizioSpcoop" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getServizioSPCoopCorrelatoRequest">
+
+      <wsdl:part element="impl:getServizioSPCoopCorrelato" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdAccordiServizioResponse">
+
+      <wsdl:part element="impl:getAllIdAccordiServizioResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsServizioSpcoopResponse">
+
+      <wsdl:part element="impl:existsServizioSpcoopResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="WSRegistryNotFound">
+
+      <wsdl:part element="impl:fault1" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsServizioSpcoopCorrelatoRequest">
+
+      <wsdl:part element="impl:existsServizioSpcoopCorrelato" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdServiziSPCoopCorrelatiRequest">
+
+      <wsdl:part element="impl:getAllIdServiziSPCoopCorrelati" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdSoggettiSPCoopRequest">
+
+      <wsdl:part element="impl:getAllIdSoggettiSPCoop" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSoggettoSPCoopResponse">
+
+      <wsdl:part element="impl:getSoggettoSPCoopResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getServizioSPCoopRequest">
+
+      <wsdl:part element="impl:getServizioSPCoop" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllIdServiziSPCoopRequest">
+
+      <wsdl:part element="impl:getAllIdServiziSPCoop" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existsSoggettoSPCoopRequest">
+
+      <wsdl:part element="impl:existsSoggettoSPCoop" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="WSRegistrySearch">
+
+      <wsdl:operation name="getAccordoServizio">
+
+         <wsdl:input message="impl:getAccordoServizioRequest" name="getAccordoServizioRequest"/>
+
+         <wsdl:output message="impl:getAccordoServizioResponse" name="getAccordoServizioResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdAccordiServizio">
+
+         <wsdl:input message="impl:getAllIdAccordiServizioRequest" name="getAllIdAccordiServizioRequest"/>
+
+         <wsdl:output message="impl:getAllIdAccordiServizioResponse" name="getAllIdAccordiServizioResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsAccordoServizio">
+
+         <wsdl:input message="impl:existsAccordoServizioRequest" name="existsAccordoServizioRequest"/>
+
+         <wsdl:output message="impl:existsAccordoServizioResponse" name="existsAccordoServizioResponse"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSoggettoSPCoop">
+
+         <wsdl:input message="impl:getSoggettoSPCoopRequest" name="getSoggettoSPCoopRequest"/>
+
+         <wsdl:output message="impl:getSoggettoSPCoopResponse" name="getSoggettoSPCoopResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdSoggettiSPCoop">
+
+         <wsdl:input message="impl:getAllIdSoggettiSPCoopRequest" name="getAllIdSoggettiSPCoopRequest"/>
+
+         <wsdl:output message="impl:getAllIdSoggettiSPCoopResponse" name="getAllIdSoggettiSPCoopResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsSoggettoSPCoop">
+
+         <wsdl:input message="impl:existsSoggettoSPCoopRequest" name="existsSoggettoSPCoopRequest"/>
+
+         <wsdl:output message="impl:existsSoggettoSPCoopResponse" name="existsSoggettoSPCoopResponse"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getServizioSPCoop">
+
+         <wsdl:input message="impl:getServizioSPCoopRequest" name="getServizioSPCoopRequest"/>
+
+         <wsdl:output message="impl:getServizioSPCoopResponse" name="getServizioSPCoopResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getServizioSPCoopCorrelato">
+
+         <wsdl:input message="impl:getServizioSPCoopCorrelatoRequest" name="getServizioSPCoopCorrelatoRequest"/>
+
+         <wsdl:output message="impl:getServizioSPCoopCorrelatoResponse" name="getServizioSPCoopCorrelatoResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getServizioSPCoopCorrelatoByAccordo">
+
+         <wsdl:input message="impl:getServizioSPCoopCorrelatoByAccordoRequest" name="getServizioSPCoopCorrelatoByAccordoRequest"/>
+
+         <wsdl:output message="impl:getServizioSPCoopCorrelatoByAccordoResponse" name="getServizioSPCoopCorrelatoByAccordoResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdServiziSPCoop">
+
+         <wsdl:input message="impl:getAllIdServiziSPCoopRequest" name="getAllIdServiziSPCoopRequest"/>
+
+         <wsdl:output message="impl:getAllIdServiziSPCoopResponse" name="getAllIdServiziSPCoopResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdServiziSPCoopCorrelati">
+
+         <wsdl:input message="impl:getAllIdServiziSPCoopCorrelatiRequest" name="getAllIdServiziSPCoopCorrelatiRequest"/>
+
+         <wsdl:output message="impl:getAllIdServiziSPCoopCorrelatiResponse" name="getAllIdServiziSPCoopCorrelatiResponse"/>
+
+         <wsdl:fault message="impl:WSRegistryNotFound" name="WSRegistryNotFound"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsServizioSpcoop">
+
+         <wsdl:input message="impl:existsServizioSpcoopRequest" name="existsServizioSpcoopRequest"/>
+
+         <wsdl:output message="impl:existsServizioSpcoopResponse" name="existsServizioSpcoopResponse"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsServizioSpcoopCorrelato">
+
+         <wsdl:input message="impl:existsServizioSpcoopCorrelatoRequest" name="existsServizioSpcoopCorrelatoRequest"/>
+
+         <wsdl:output message="impl:existsServizioSpcoopCorrelatoResponse" name="existsServizioSpcoopCorrelatoResponse"/>
+
+         <wsdl:fault message="impl:WSRegistrySearchException" name="WSRegistrySearchException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Search?wsdlSoapBinding" type="impl:WSRegistrySearch">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getAccordoServizio">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAccordoServizioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAccordoServizioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdAccordiServizio">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllIdAccordiServizioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllIdAccordiServizioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsAccordoServizio">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="existsAccordoServizioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="existsAccordoServizioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSoggettoSPCoop">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSoggettoSPCoopRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSoggettoSPCoopResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdSoggettiSPCoop">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllIdSoggettiSPCoopRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllIdSoggettiSPCoopResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsSoggettoSPCoop">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="existsSoggettoSPCoopRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="existsSoggettoSPCoopResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getServizioSPCoop">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getServizioSPCoopRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getServizioSPCoopResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getServizioSPCoopCorrelato">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getServizioSPCoopCorrelatoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getServizioSPCoopCorrelatoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getServizioSPCoopCorrelatoByAccordo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getServizioSPCoopCorrelatoByAccordoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getServizioSPCoopCorrelatoByAccordoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdServiziSPCoop">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllIdServiziSPCoopRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllIdServiziSPCoopResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllIdServiziSPCoopCorrelati">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllIdServiziSPCoopCorrelatiRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllIdServiziSPCoopCorrelatiResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistryNotFound">
+
+            <wsdlsoap:fault name="WSRegistryNotFound" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsServizioSpcoop">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="existsServizioSpcoopRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="existsServizioSpcoopResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="existsServizioSpcoopCorrelato">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="existsServizioSpcoopCorrelatoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="existsServizioSpcoopCorrelatoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="WSRegistrySearchException">
+
+            <wsdlsoap:fault name="WSRegistrySearchException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WSRegistrySearchService">
+
+      <wsdl:port binding="impl:Search?wsdlSoapBinding" name="Search?wsdl">
+
+         <wsdlsoap:address location="http://localhost:8080//openspcoopRegistroServiziSearch/Search?wsdl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,17 @@
+# File di properties dependent.properties        
+
+lib.dir             = ./lib
+
+catalina.dir        = 
+servlet.api.jar     = ${catalina.dir}/lib/servlet-api.jar
+catalina.host       = 
+catalina.port       = 8080
+catalina.username   = admin
+catalina.password   = 
+
+jetty.ver           = 6.1.8
+camel.ver           = 1.5.0
+cxf.ver             = 2.0.4
+jsf.ver             = 1.2
+tomahawk.ver 		= 1.1
+richfaces.ver 		= 3.3.0

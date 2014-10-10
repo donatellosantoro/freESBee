@@ -1,0 +1,233 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Monitoragggio Stato Servizi Fruiti" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaMonitoraggioStatoServiziFruiti}" />
+
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/monitoraggioStatoServiziFruiti.png" alt="Monitoragggio Stato Servizi Fruiti"/>
+            </h:panelGroup>
+
+            <h:panelGroup id="boxSuccesso" styleClass="successo" style="width:570px;" rendered="#{controlloMonitoraggioStatoServiziFruiti.visualizzaMessaggio}">
+                <h:outputText styleClass="successoMessaggio" value="#{controlloMonitoraggioStatoServiziFruiti.messaggio}"/>
+            </h:panelGroup>
+            <h:panelGroup id="boxErrore" styleClass="errore" style="width:570px;" rendered="#{controlloMonitoraggioStatoServiziFruiti.visualizzaErrore}">
+                <h:outputText styleClass="erroreMessaggio" value="#{controlloMonitoraggioStatoServiziFruiti.errore}"/>
+            </h:panelGroup>
+
+
+            <h:form>
+                <rich:simpleTogglePanel id="boxGestioneAggiungiServizio" style="width:570px;" switchType="ajax">
+
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordo_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Aggiungi Servizio Fruito"/>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <rich:messages>
+                        <f:facet name="errorMarker">
+                            <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>
+                        </f:facet>
+                    </rich:messages>
+
+                    <h:panelGrid columns="2" cellspacing="20" rendered="#{vistaMonitoraggioStatoServiziFruiti.tabellaServizioVisibile}">
+                        <h:panelGroup id="boxNuovoServizioDaMonitorare" >
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Servizio: "/>
+                                <h:outputText value="#{vistaMonitoraggioStatoServiziFruiti.webServizioSelezionato.nome}"/>
+                                <h:outputText value="Erogatore: "/>
+                                <h:outputText value="#{vistaMonitoraggioStatoServiziFruiti.webServizioSelezionato.erogatore}"/>
+                                <h:outputText value="Fruitore: "/>
+                                <h:outputText value="#{vistaMonitoraggioStatoServiziFruiti.webServizioSelezionato.fruitore}"/>
+                                <h:outputText />
+                                <h:outputText />
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Soggetto Erogatore degli SLA: "/>
+                                <h:selectOneMenu id="selectModuloSLA" value="#{vistaMonitoraggioStatoServiziFruiti.soggettoSlaSelezionato}" required="true">
+                                    <f:selectItems value="#{vistaMonitoraggioStatoServiziFruiti.listaItem}" />
+                                </h:selectOneMenu>
+                                <%--h:outputText value="Porta Delegata: "/>
+                                <h:inputText label="Porta Delegata" disabled="#{!vistaMonitoraggioStatoServiziFruiti.aggiungi}" value="#{vistaMonitoraggioStatoServiziFruiti.portaDelegataMonitoraggioStato}"  style="width:200px;" required="true"/>
+                                <h:outputText  value="Tipo FreESBee: "/>
+                                <h:selectBooleanCheckbox  disabled="#{!vistaMonitoraggioStatoServiziFruiti.aggiungi}"  id="checkboxTipoFreesbee" value="#{vistaMonitoraggioStatoServiziFruiti.tipo}" /--%>
+
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="bloccoPulsanti" >
+                            <h:commandButton value="Aggiungi" action="#{controlloMonitoraggioStatoServiziFruiti.aggiungi}" disabled="#{!vistaMonitoraggioStatoServiziFruiti.aggiungi}" />
+                            <h:commandButton value="Annulla" action="#{controlloMonitoraggioStatoServiziFruiti.deselezionaServizio}"  immediate="true"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+            </h:form>
+
+
+            <h:form id="formVerificaServizioFruito">
+                <rich:simpleTogglePanel id="boxGestioneVerificaStato" style="width:570px;margin-top:30px;" switchType="ajax">
+
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/true.png"  styleClass="linkPicture" />
+                            <h:outputText value="Verifica Servizio Fruito"/>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <h:panelGrid rendered="#{vistaMonitoraggioStatoServiziFruiti.tabellaServiziAggiuntiVisibile}">
+                        <h:panelGroup>
+                            <h:panelGrid>
+                                <rich:tabPanel style="width:550px" rendered="true"  headerAlignment="right" binding="#{vistaMonitoraggioStatoServiziFruiti.tabPanelServiziAggiunti}" >
+                                    <rich:tab disabled="true">
+                                        <h:outputText styleClass="serviziAggiuntiTab" value="Servizi Aggiunti"/>
+                                    </rich:tab>
+                                    <rich:tab>
+                                        <f:facet name="label">
+                                            <h:panelGroup>
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                                                <h:outputText value="Tabella"/>
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <h:outputText styleClass="intestazioneTab" value="Servizi Aggiunti"/>
+
+                                        <rich:datascroller align="left"  for="tabellaServiziAggiunti" />
+                                        <rich:spacer height="30" />
+                                        <rich:dataTable id="tabellaServiziAggiunti" width="500" rows="2" columnClasses="col" binding="#{vistaMonitoraggioStatoServiziFruiti.tabellaServiziAggiunti}"
+                                                        value="#{vistaMonitoraggioStatoServiziFruiti.listaServiziAggiunti}" var="servizioAggiunto">
+                                            <f:facet name="header">
+                                                <rich:columnGroup>
+                                                    <h:column>
+                                                        <h:outputText styleClass="headerText" value="Nome Servizio" />
+                                                    </h:column>
+                                                    <h:column>
+                                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                                    </h:column>
+                                                    <h:column>
+                                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                                    </h:column>
+                                                    <h:column rendered="#{vistaMonitoraggioStatoServiziFruiti.verificato}" >
+                                                        <h:outputText styleClass="headerText" value="Stato" />
+                                                    </h:column>
+                                                    <h:column rendered="#{vistaMonitoraggioStatoServiziFruiti.verificato}">
+                                                        <h:outputText styleClass="headerText" value="Richieste in fase di elaborazione" />
+                                                    </h:column>
+                                                </rich:columnGroup>
+                                            </f:facet>
+                                            <h:column>
+                                                <h:outputText value="#{servizioAggiunto.nome}" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText value="#{servizioAggiunto.erogatore}" />
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText value="#{servizioAggiunto.fruitore}" />
+                                            </h:column>
+                                            <h:column rendered="#{vistaMonitoraggioStatoServiziFruiti.verificato}" >
+                                                <h:outputText value="#{servizioAggiunto.stato}"  />
+                                            </h:column >
+                                            <h:column rendered="#{vistaMonitoraggioStatoServiziFruiti.verificato}">
+                                                <center>
+                                                    <h:outputText value="#{servizioAggiunto.contatoreRichieste}" />
+                                                </center>
+                                            </h:column>
+                                        </rich:dataTable>
+                                    </rich:tab>
+                                </rich:tabPanel>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="bloccoPulsanti" >
+                            <h:commandButton value="Verifica Stato" action="#{controlloMonitoraggioStatoServiziFruiti.verifica}" disabled="#{vistaMonitoraggioStatoServiziFruiti.verificato}" />
+                            <h:commandButton value="Annulla" action="#{controlloMonitoraggioStatoServiziFruiti.annullaVerifica}"  immediate="true"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+            </h:form>
+
+
+
+            <rich:tabPanel style="width:570px;margin-top:30px;" rendered="true"  headerAlignment="right" binding="#{vistaMonitoraggioStatoServiziFruiti.tabPanelServizi}" >
+                <rich:tab disabled="true">
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Erogati"/>
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:outputText styleClass="intestazioneTab" value="Servizi Fruiti"/>
+
+                    <h:form>
+                        <rich:datascroller align="left"  for="listaServizi" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="550" id="listaServizi" rows="5" columnClasses="col" binding="#{vistaMonitoraggioStatoServiziFruiti.tabellaServizi}"
+                                        value="#{vistaMonitoraggioStatoServiziFruiti.listaServizi}" var="servizio">
+
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome Servizio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Erogatore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Fruitore" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{servizio.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.erogatore}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{servizio.fruitore}" />
+                            </h:column>
+                            <h:column>
+                                <center>
+                                    <h:commandLink action="#{controlloMonitoraggioStatoServiziFruiti.selezionaServizio}">
+                                        <img title="Aggiungi Servizio" alt="Aggiungi Servizio" src="${pageContext.request.contextPath}/images/icons/add.png" />
+                                    </h:commandLink>
+                                </center>
+                            </h:column>
+                        </rich:dataTable>
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

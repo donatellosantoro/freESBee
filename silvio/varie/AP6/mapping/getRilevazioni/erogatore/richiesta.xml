@@ -1,0 +1,116 @@
+POST /EROGATORE/AP6WS_65536/ HTTP/1.1
+VALOREPROFILOCOLLABORAZIONE: SINCRONO
+User-Agent: Jakarta Commons-HttpClient/3.1-rc1
+Host: 127.0.0.1:19192
+Content-Length: 3970
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header>
+      <wsaw:MessageID xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">SILVIO-1216124281875</wsaw:MessageID>
+      <wsaw:Action xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">getRilevazioni</wsaw:Action>
+      <wsaw:To xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">http://www.w3.org/2005/08/addressing/anonymous</wsaw:To>
+      <sil:istanza_test xmlns:sil="http://silvio.unibas.it/">false</sil:istanza_test>
+      <sil:nome_operation xmlns:sil="http://silvio.unibas.it/">getRilevazioni</sil:nome_operation>
+   </SOAP-ENV:Header>
+   <SOAP-ENV:Body>
+      <getRilevazioni xmlns="http://ws.ap6.progettoicar.it/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ws.ap6.progettoicar.it/ C:/DOCUME~1/LAGUAR~1/Desktop/target.xsd">  
+         <rilevazioniXML codistatregione="ab22" data_rilevazione="2008-10-10">    
+            <rilevazionitype>      
+               <rilevazioneitem>        
+                  <cod_impianto>1</cod_impianto>        
+                  <superficie>250</superficie>        
+                  <addetti>          
+                     <n>14</n>        
+                  </addetti>        
+                  <dipendenti>          
+                     <n>18</n>        
+                  </dipendenti>        
+                  <tipologia>generico</tipologia>        
+                  <att_commerciali>sup150_250mq</att_commerciali>        
+                  <autolavaggio>non_rilevato</autolavaggio>        
+                  <carburanti_disponibili>          
+                     <carburantedisponibile>            
+                        <gpl>              
+                           <serbatoio>0</serbatoio>            
+                        </gpl>            
+                        <benzina>              
+                           <serbatoio>2000</serbatoio>            
+                        </benzina>            
+                        <gasolio>              
+                           <serbatoio>0</serbatoio>            
+                        </gasolio>            
+                        <metano>              
+                           <serbatoio>0</serbatoio>            
+                        </metano>          
+                     </carburantedisponibile>        
+                  </carburanti_disponibili>        
+                  <officine_disponibili>          
+                     <officina>autoriparazioni</officina>        
+                  </officine_disponibili>        
+                  <pagamenti_disponibili>          
+                     <pagamento>bancomat</pagamento>        
+                  </pagamenti_disponibili>        
+                  <servizi_accessori>          
+                     <servizioaccessorio>internet_point</servizioaccessorio>        
+                  </servizi_accessori>        
+                  <servizi>          
+                     <servizio>bar</servizio>        
+                  </servizi>        
+                  <self_service>nessuno</self_service>        
+                  <stato>attivo</stato>        
+                  <bandiera>          
+                     <anonimo/>        
+                  </bandiera>      
+               </rilevazioneitem>      
+               <rilevazioneitem>        
+                  <cod_impianto>2</cod_impianto>        
+                  <superficie>150</superficie>        
+                  <addetti>          
+                     <n>19</n>        
+                  </addetti>        
+                  <dipendenti>          
+                     <n>22</n>        
+                  </dipendenti>        
+                  <tipologia>generico</tipologia>        
+                  <att_commerciali>sup150_250mq</att_commerciali>        
+                  <autolavaggio>non_rilevato</autolavaggio>        
+                  <carburanti_disponibili>          
+                     <carburantedisponibile>            
+                        <gpl>              
+                           <serbatoio>0</serbatoio>            
+                        </gpl>            
+                        <benzina>              
+                           <serbatoio>1000</serbatoio>            
+                        </benzina>            
+                        <gasolio>              
+                           <serbatoio>0</serbatoio>            
+                        </gasolio>            
+                        <metano>              
+                           <serbatoio>0</serbatoio>            
+                        </metano>          
+                     </carburantedisponibile>        
+                  </carburanti_disponibili>        
+                  <officine_disponibili>          
+                     <officina>autoriparazioni</officina>        
+                  </officine_disponibili>        
+                  <pagamenti_disponibili>          
+                     <pagamento>bancomat</pagamento>        
+                  </pagamenti_disponibili>        
+                  <servizi_accessori>          
+                     <servizioaccessorio>internet_point</servizioaccessorio>        
+                  </servizi_accessori>        
+                  <servizi>          
+                     <servizio>bar</servizio>        
+                  </servizi>        
+                  <self_service>nessuno</self_service>        
+                  <stato>attivo</stato>        
+                  <bandiera>          
+                     <marchio>            
+                        <nome>agip</nome>          
+                     </marchio>        
+                  </bandiera>      
+               </rilevazioneitem>    
+            </rilevazionitype>  
+         </rilevazioniXML>
+      </getRilevazioni>
+   </SOAP-ENV:Body></SOAP-ENV:Envelope>

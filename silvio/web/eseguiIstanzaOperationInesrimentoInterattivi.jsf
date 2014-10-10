@@ -1,0 +1,53 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+
+
+<a4j:region>  
+    <%--t:saveState value="#{vistaEseguiIstanza}"/--%>
+    <a4j:region selfRendered="true">
+        <rich:panel style="width:380px;margin-top:10px" id="EseguiIstanzaOperationInterattivi"  rendered="#{vistaEseguiIstanza.visualizzaDatiInterattivi}">  
+            <f:facet name="header">  
+                <h:panelGroup  style="width:380px">  
+                    <h:panelGroup styleClass="headerNome"  style="width:380px">  
+                        <h:outputText value="#{msg.istanza_operation_esegui_title_interattivi}"/>   
+                    </h:panelGroup>
+                </h:panelGroup>
+            </f:facet> 
+            <h:outputText value="#{msg.istanza_operation_esegui_info_interattivi}" styleClass="infoText"/>
+            
+            <h:panelGroup styleClass="pannello">
+                <h:panelGrid columns="1">
+                    <rich:dataTable id="listaParametriInterattivi" columnClasses="col" binding="#{vistaEseguiIstanza.tabellaParametriInterattivi}"
+                                    width="350" value="#{vistaEseguiIstanza.listaParametriInterattivi}" var="parametro">
+                        <f:facet name="header">
+                            <rich:columnGroup>
+                                <h:column>
+                                    <h:outputText styleClass="headerText" value="#{msg.parametro}" />
+                                </h:column>
+                                <h:column>
+                                    <h:outputText styleClass="headerText" value="#{msg.valore}" />
+                                </h:column>
+                            </rich:columnGroup>                                 
+                        </f:facet>
+                        <h:column>
+                            <h:outputText value="#{parametro.nome}" />
+                        </h:column>
+                        <h:column>
+                            <center><h:inputText value="#{parametro.valore}" label="#{parametro.nome}" required="true"/>
+                                <h:graphicImage style="margin:auto 5px auto"id="help1" value="#{pageContext.request.contextPath}/images/infoTooltip.png" alt="Tooltip" styleClass="pictureTooltip" />
+                                <rich:toolTip for="help1" showDelay="200">
+                                    <h:outputText value="#{msg.istanza_operation_esegui_tooltip_interattivi}"/>
+                                </rich:toolTip></center>
+                        </h:column>
+                    </rich:dataTable>                   
+                </h:panelGrid>
+            </h:panelGroup>
+        </rich:panel>
+    </a4j:region>
+    </a4j:region>     
+    
+    

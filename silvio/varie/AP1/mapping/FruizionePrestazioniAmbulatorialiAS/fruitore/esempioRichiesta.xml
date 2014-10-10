@@ -1,0 +1,36 @@
+<NS:richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali version="2.2" xsi:schemaLocation="http://www.intemaweb.com/iron/datatypes Types2.2.xsd" xmlns:NS="http://www.intemaweb.com/iron/datatypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<NS:Intestazione>
+		<NS:InfoMittente>
+			<NS:Regione>000</NS:Regione>
+		</NS:InfoMittente>
+		<NS:InfoDestinatario>
+			<NS:Regione>000</NS:Regione>
+		</NS:InfoDestinatario>
+		<NS:DataOra>2001-12-17T09:30:47.0Z</NS:DataOra>
+		<NS:IdMessaggio>0</NS:IdMessaggio>
+		<NS:IdComunicazione>0</NS:IdComunicazione>
+	</NS:Intestazione>
+	<NS:SegnalazioneFruizionePrestazioniAmbulatoriali>
+		<NS:DatiAnagrafici>
+			<NS:Sesso>1</NS:Sesso>
+			<NS:ComuneResidenza>000000</NS:ComuneResidenza>
+		</NS:DatiAnagrafici>
+		<NS:DatiPrestazioniAmbulatoriali>
+			<NS:DatiRicetta>
+				<NS:Data>1967-08-13</NS:Data>
+				<NS:PosizioneUtenteTicket>1</NS:PosizioneUtenteTicket>
+				<NS:ImportoTicket>,00</NS:ImportoTicket>
+				<NS:ImportoTotale>,00</NS:ImportoTotale>
+			</NS:DatiRicetta>
+			<NS:DatiPrestazioniRicetta>
+				<NS:Prestazione progressivo="2">
+					<NS:CodicePrestazione>a</NS:CodicePrestazione>
+					<NS:CodificaNomenclatore>N</NS:CodificaNomenclatore>
+					<NS:Quantita>1</NS:Quantita>
+					<NS:Importo>,00</NS:Importo>
+				</NS:Prestazione>
+				<NS:ID>aaaaaaaaaaaaaaaaaaaa</NS:ID>
+			</NS:DatiPrestazioniRicetta>
+		</NS:DatiPrestazioniAmbulatoriali>
+	</NS:SegnalazioneFruizionePrestazioniAmbulatoriali>
+</NS:richiesta_RichiestaRispostaAsincrona_SegnalazioneFruizionePrestazioniAmbulatoriali> 

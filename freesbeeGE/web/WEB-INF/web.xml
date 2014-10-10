@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <listener>
+        <description>Avvia e distrugge il CamelContext</description>
+        <listener-class>it.unibas.springfreesbee.ge.ContextStartup</listener-class>
+    </listener>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+     <!--filter>
+            <filter-name>filterWsdl</filter-name>
+            <filter-class>it.unibas.freesbee.ge.filtri.FiltroWsdl</filter-class>
+    </filter>
+    <filter-mapping>
+         <filter-name>filterWsdl</filter-name>
+         <servlet-name>default</servlet-name>
+     </filter-mapping>
+     <filter-mapping>
+            <filter-name>filterWsdl</filter-name>
+           <url-pattern>*</url-pattern>
+    </filter-mapping-->
+    
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+   
+</web-app>

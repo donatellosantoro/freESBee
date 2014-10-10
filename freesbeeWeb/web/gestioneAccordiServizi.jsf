@@ -1,0 +1,469 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Accordi di Servizio" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>
+    <!-- MODAL PANEL POLICY XACML -->
+
+    <rich:modalPanel id="panel" width="500" height="500" showWhenRendered="#{vistaGestioneAccordiServizio.visualizzaPolicy}"
+                     rendered="#{vistaGestioneAccordiServizio.visualizzaPolicy}">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/plus_shield.png"  styleClass="linkPicture" />
+                <h:outputText value="Policy XACML"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/close.png" style="cursor:pointer;margin:2px" id="hidelink"/>
+                <rich:componentControl for="panel" attachTo="hidelink" operation="hide" event="onclick" />
+            </h:panelGroup>
+        </f:facet>
+        <h:form>
+            <h:panelGroup styleClass="infoText">
+                <h:commandButton styleClass="bloccoSalva" value="Conferma"
+                                 image="#{pageContext.request.contextPath}/images/icons/disk.png"
+                                 action="#{controlloGestioneAccordiServizio.confermaPolicy}"/>
+                <h:outputText value="Salva Policy"/>
+            </h:panelGroup>
+            <h:panelGroup styleClass="schemaPolicy">
+                <h:inputTextarea value="#{vistaGestioneAccordiServizio.policyAccordoServizio.policyXACML}" styleClass="schemaPolicyText"/>
+            </h:panelGroup>
+        </h:form>
+    </rich:modalPanel>
+
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+
+        <h:panelGroup styleClass="bloccoCentrale">
+
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiAccordoServizio:boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiAccordoServizio:boxErrore',duration:0.8"/>
+
+            <t:saveState value="#{vistaGestioneAccordiServizio}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestioneAccordiServizio.png" alt="Gestione Accordi di Servizio"/>
+            </h:panelGroup>
+
+
+
+            <!-- PANNELLO ELIMINA ACCORDO -->
+            <rich:modalPanel id="panelEliminaAccordo" showWhenRendered="#{vistaGestioneAccordiServizio.elimina}" height="150" width="320" rendered="#{!vistaGestioneAccordiServizio.nicaPresente}">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                        <h:outputText value="Conferma eliminazione"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <h:outputText styleClass="confermaMessaggio" value="#{controlloGestioneAccordiServizio.conferma}"/>
+
+                    <h:panelGrid columns="2" style="margin:0px 7px 0px 7px;">
+                        <h:outputText style="font-weight: bold;" value="Nome"/>
+                        <h:outputText value="#{vistaGestioneAccordiServizio.accordoServizioEliminare.nome}"/>
+
+                        <h:outputText style="font-weight: bold;" value="Descrizione"/>
+                        <h:outputText value="#{vistaGestioneAccordiServizio.accordoServizioEliminare.descrizione}"/>
+                    </h:panelGrid>
+
+
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Elimina" action="#{controlloGestioneAccordiServizio.elimina}"/>
+                        <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelEliminaAccordo')" action="#{controlloGestioneAccordiServizio.caricaGestioneAccordiServizi}" immediate="true"/>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <!-- PANNELLO AGGIUNGI AZIONE -->
+            <rich:modalPanel id="panelAggiungiAzione" showWhenRendered="#{vistaGestioneAccordiServizio.inserisciAzione}" height="310" width="280" rendered="#{!vistaGestioneAccordiServizio.nicaPresente}">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/azione_add.png"  styleClass="linkPicture" />
+                        <h:outputText value="Nuova azione"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:form>
+                    <rich:messages>
+                        <f:facet name="errorMarker">
+                            <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>
+                        </f:facet>
+                    </rich:messages>
+                    <h:panelGrid columns="1" columnClasses="bloccoASdx,bloccoASsx">
+                        <h:panelGrid columns="2">
+                            <h:outputText style="font-weight: bold;" value="Nome"/>
+                            <h:inputText id="textNomeAzione" label="nome azione" value="#{vistaGestioneAccordiServizio.azioneAggiungere.nome}" required="true"/>
+
+                            <h:outputText style="font-weight: bold;" value="Descrizione"/>
+                            <h:inputText id="textDescrizioneAzione" label="descrizione azione" value="#{vistaGestioneAccordiServizio.azioneAggiungere.descrizione}"/>
+
+                            <h:outputText value="Profilo Collaborazione"/>
+                            <h:selectOneMenu style="font-size:8pt;width:126px" value="#{vistaGestioneAccordiServizio.azioneAggiungere.profiloCollaborazione}">
+                                <f:selectItems value="#{vistaGestioneAccordiServizio.listaProfiliCollaborazione}"/>
+                            </h:selectOneMenu>
+
+                            <h:outputText value="Ridefinisci prof. egov"/>
+                            <h:selectBooleanCheckbox onclick="submit()" value="#{vistaGestioneAccordiServizio.profiloEgovSpecifico}">
+
+                            </h:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGroup>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Data scadenza"/>
+                                <rich:calendar value="#{vistaGestioneAccordiServizio.profiloAggiungere.scadenza}" disabled="#{!vistaGestioneAccordiServizio.profiloEgovSpecifico}"
+                                               popup="true" datePattern="dd MMM yyyy" zindex="2"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Gestione duplicati"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.profiloAggiungere.gestioneDuplicati}" disabled="#{!vistaGestioneAccordiServizio.profiloEgovSpecifico}"/>
+                                <h:outputText value="Conferma ricezione"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.profiloAggiungere.confermaRicezione}" disabled="#{!vistaGestioneAccordiServizio.profiloEgovSpecifico}"/>
+                                <h:outputText value="ID collaborazione"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.profiloAggiungere.idCollaborazione}" disabled="#{!vistaGestioneAccordiServizio.profiloEgovSpecifico}"/>
+                                <h:outputText value="Consegna in ordine"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.profiloAggiungere.consegnaInOrdine}" disabled="#{!vistaGestioneAccordiServizio.profiloEgovSpecifico}"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Inserisci" action="#{controlloGestioneAccordiServizio.inserisciAzione}"/>
+                        <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelAggiungiAzione')" action="#{controlloGestioneAccordiServizio.caricaGestioneAccordiServizi}" immediate="true"/>
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+
+            <h:form id="formCampiAccordoServizio"  rendered="#{!vistaGestioneAccordiServizio.nicaPresente}">
+                <rich:simpleTogglePanel opened="#{vistaGestioneAccordiServizio.pannelloVisibile}" id="boxNuovoAccordoServizio"
+                                        style="width:430px;" switchType="ajax">
+
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordo_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuovo Accordo di Servizio"/>
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <h:panelGrid columns="2">
+                        <h:panelGroup id="boxAccordo" >
+                            <rich:messages>
+                                <f:facet name="errorMarker">
+                                    <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>
+                                </f:facet>
+                            </rich:messages>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Nome"/>
+                                <h:inputText id="textNome" label="nome" value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.nome}" required="true" readonly="#{vistaGestioneAccordiServizio.elimina}"/>
+
+                                <h:outputText value="Descrizione"/>
+                                <h:inputText id="textDescrizione" value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.descrizione}" readonly="#{vistaGestioneAccordiServizio.elimina}"/>
+
+                                <h:outputText value="Profilo di collab."/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" id="textProfiloCollaborazione" value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.profiloCollaborazione}" readonly="#{vistaGestioneAccordiServizio.elimina}">
+                                    <f:selectItems value="#{vistaGestioneAccordiServizio.listaProfiliCollaborazione}"/>
+                                </h:selectOneMenu>
+
+                                <h:outputText value="Privato"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.privato}"/>
+
+                            </h:panelGrid>
+
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Inserisci" action="#{controlloGestioneAccordiServizio.inserisci}" rendered="#{!vistaGestioneAccordiServizio.modifica}" />
+                                <h:commandButton value="Modifica" action="#{controlloGestioneAccordiServizio.modifica}" rendered="#{vistaGestioneAccordiServizio.modifica}" />
+                                <h:commandButton value="Annulla" action="#{controlloGestioneAccordiServizio.caricaGestioneAccordiServizi}" immediate="true"/>
+                            </h:panelGroup>
+
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Data scadenza"/>
+                                <rich:calendar value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.profiloEGov.scadenza}"
+                                               popup="true" datePattern="dd MMM yyyy" zindex="2"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Gestione duplicati"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.profiloEGov.gestioneDuplicati}"/>
+                                <h:outputText value="Conferma ricezione"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.profiloEGov.confermaRicezione}"/>
+                                <h:outputText value="ID collaborazione"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.profiloEGov.idCollaborazione}"/>
+                                <h:outputText value="Consegna in ordine"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneAccordiServizio.nuovoAccordoServizio.profiloEGov.consegnaInOrdine}"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+
+                <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestioneAccordiServizio.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneAccordiServizio.messaggio}"/>
+                </h:panelGroup>
+                <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestioneAccordiServizio.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneAccordiServizio.errore}"/>
+                </h:panelGroup>
+            </h:form>
+
+            <rich:tabPanel style="width:530px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
+                           binding="#{vistaGestioneAccordiServizio.tabPanel}"  rendered="#{!vistaGestioneAccordiServizio.nicaPresente}">
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/detail.png"  styleClass="linkPicture" />
+                            <h:outputText value="Dettagli"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:outputText styleClass="intestazioneTab" value="Lista degli Accordi di Servizio"/>
+                    <h:form>
+                        <rich:datascroller align="left"  for="listaDettagliAccordi" maxPages="5" />
+                        <rich:spacer height="30" />
+                        <rich:dataGrid value="#{vistaGestioneAccordiServizio.listaAccordi}" id="listaDettagliAccordi"
+                                       styleClass="dettagliAccordi" columnClasses="dettagliAccordiCell" var="accordo" columns="1" elements="5">
+
+
+                            <rich:panel style="width:410px;">
+                                <f:facet name="header">
+                                    <h:panelGroup  style="width:410px">
+                                        <h:outputText styleClass="headerProfilo" value="#{accordo.profiloCollaborazioneBreve}"/>
+                                        <h:outputText styleClass="headerNome" value="#{accordo.nome}"/>
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:inputHidden value="#{accordo.id}" binding="#{vistaGestioneAccordiServizio.accordoSelezionato}"/>
+                                <h:panelGrid columns="2" style="width:410px;margin-top:-4px" columnClasses="bloccoASsx,bloccoASdx">
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="Descrizione:" rendered="#{not empty accordo.descrizione}"/>
+                                        <h:outputText value="#{accordo.descrizione}" rendered="#{not empty accordo.descrizione}"/>
+                                        <h:outputText value="" rendered="#{not empty accordo.descrizione}"/>
+                                        <h:outputText value="" rendered="#{not empty accordo.descrizione}"/>
+                                        <h:outputText value="Gestione duplicati"/>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/#{accordo.profiloEGov.gestioneDuplicati}.png" styleClass="linkPicture"/>
+                                        <h:outputText value="Conferma ricezione"/>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/#{accordo.profiloEGov.confermaRicezione}.png" styleClass="linkPicture"/>
+                                        <h:outputText value="ID collaborazione"/>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/#{accordo.profiloEGov.idCollaborazione}.png" styleClass="linkPicture"/>
+                                        <h:outputText value="Consegna in ordine"/>
+                                        <h:graphicImage value="#{pageContext.request.contextPath}/images/#{accordo.profiloEGov.consegnaInOrdine}.png" styleClass="linkPicture"/>
+                                        <h:outputText value="Data scadenza" rendered="#{not empty accordo.profiloEGov.scadenza}"/>
+                                        <h:outputText value="#{accordo.profiloEGov.scadenza}" rendered="#{not empty accordo.profiloEGov.scadenza}"/>
+                                    </h:panelGrid>
+                                    <h:panelGroup styleClass="linkAccordo">
+                                        <h:panelGrid >
+                                            <h:panelGroup styleClass="righeAS" >
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordo_edit.png" styleClass="linkPicture"/>
+                                                <h:commandLink action="#{controlloGestioneAccordiServizio.schermoModificaDaDettagli}" styleClass="linkText">
+                                                    <h:outputText value="Modifica"></h:outputText>
+                                                </h:commandLink>
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/accordo_delete.png" styleClass="linkPicture"/>
+                                                <h:commandLink action="#{controlloGestioneAccordiServizio.schermoEliminaDaDettagli}" styleClass="linkText">
+                                                    <h:outputText value="Elimina"></h:outputText>
+                                                </h:commandLink>
+                                            </h:panelGroup>
+                                            <h:outputText value="" style="margin:10px"/>
+                                            <h:panelGroup styleClass="righeAS" >
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/plus_shield.png" styleClass="linkPicture"/>
+                                                <h:commandLink action="#{controlloGestioneAccordiServizio.apriModalPanelPolicy}" styleClass="linkText">
+                                                    <h:outputText value="Definisci Policy"></h:outputText>
+                                                </h:commandLink>
+                                            </h:panelGroup>
+                                            <h:outputText value="" style="margin:10px"/>
+                                            <h:panelGroup styleClass="righeAS" >
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/servizio_add.png" styleClass="linkPicture"/>
+                                                <h:commandLink action="#{controlloGestioneServizi.caricaGestioneServizi}" styleClass="linkText">
+                                                    <h:outputText value="Aggiungi servizio"></h:outputText>
+                                                </h:commandLink>
+                                            </h:panelGroup>
+                                            <h:outputText value="" />
+                                            <h:panelGroup styleClass="righeAS" >
+                                                <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/azione_add.png" styleClass="linkPicture"/>
+                                                <h:commandLink action="#{controlloGestioneAccordiServizio.schermoAggiungiServizioDaDettagli}" styleClass="linkText">
+                                                    <h:outputText value="Aggiungi azione"></h:outputText>
+                                                </h:commandLink>
+                                            </h:panelGroup>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+
+
+                                <rich:panel header="Servizi">
+                                    <h:outputText value="Nessun servizio specificato per quest'accordo"  rendered="#{empty accordo.servizi}"/>
+
+
+                                    <rich:dataTable width="360" id="listaServizi" rows="10" styleClass="tabellaAzioni" columnClasses="colAzioni"
+                                                    value="#{accordo.servizi}" var="servizio"  rendered="#{not empty accordo.servizi}">
+
+                                        <f:facet name="header">
+                                            <rich:columnGroup>
+                                                <h:column>
+                                                    <h:outputText value="Tipo" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="Nome" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="Accordo Serv." />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="Erogatore" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="Corr." />
+                                                </h:column>
+                                                <%--h:column>
+                                                    <h:outputText value="" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="" />
+                                                </h:column--%>
+                                            </rich:columnGroup>
+                                        </f:facet>
+                                        <h:column>
+                                            <h:outputText value="#{servizio.tipo}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText value="#{servizio.nome}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText value="#{servizio.accordoServizio.nome}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText value="#{servizio.erogatore.nomeBreve}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:graphicImage value="#{pageContext.request.contextPath}/images/#{servizio.correlato}.png" styleClass="linkPicture"/>
+                                        </h:column>
+                                        <%--h:column><h:commandLink action="#{controlloGestioneServizi.schermoModificaDaTabella}" disabled="true"><img title="Modifica servizio" alt="Modifica servizio" src="${pageContext.request.contextPath}/images/icons/servizio_edit.png" /></h:commandLink>
+                                        </h:column>
+                                        <h:column>
+                                            <h:commandLink action="#{controlloGestioneServizi.schermoEliminaDaTabella}" disabled="true"><img title="Elimina servizio" alt="Elimina servizio" src="${pageContext.request.contextPath}/images/icons/servizio_delete.png" /></h:commandLink>
+                                        </h:column--%>
+
+                                    </rich:dataTable>
+
+                                </rich:panel>
+                                <rich:panel header="Azioni">
+                                    <h:outputText value="Nessuna azione specificata per quest'accordo" rendered="#{empty accordo.azioni}"/>
+
+                                    <rich:dataTable width="360" id="listaAzioni" styleClass="tabellaAzioni" columnClasses="colAzioni" binding="#{vistaGestioneAccordiServizio.tabellaAzioni}"
+                                                    value="#{accordo.azioni}" var="azione"  rendered="#{not empty accordo.azioni}">
+                                        <f:facet name="header">
+                                            <rich:columnGroup >
+                                                <h:column>
+                                                    <h:outputText value="Nome" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="Descrizione" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="ProfiloCollaborazione" />
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText value="" />
+                                                </h:column>
+                                            </rich:columnGroup>
+                                        </f:facet>
+                                        <h:column>
+                                            <h:outputText value="#{azione.nome}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText value="#{azione.descrizione}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:outputText value="#{azione.profiloCollaborazioneBreve}" />
+                                        </h:column>
+                                        <h:column>
+                                            <h:commandLink action="#{controlloGestioneAccordiServizio.schermoEliminaAzioneDaTabella}">
+                                                <img title="Elimina azione" alt="Elimina azione" src="${pageContext.request.contextPath}/images/icons/accordo_delete.png" />
+                                            </h:commandLink>
+                                        </h:column>
+                                    </rich:dataTable>
+
+                                </rich:panel>
+                            </rich:panel>
+                        </rich:dataGrid>
+                    </h:form>
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:outputText styleClass="intestazioneTab" value="Lista degli Accordi di Servizio"/>
+
+                    <h:form>
+                        <rich:datascroller align="left"  for="listaAccordi" maxPages="10" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="400" id="listaAccordi" rows="10" columnClasses="col" binding="#{vistaGestioneAccordiServizio.tabellaAccordi}"
+                                        value="#{vistaGestioneAccordiServizio.listaAccordi}" var="accordo">
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Descrizione" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Profilo Coll." />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{accordo.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{accordo.descrizione}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{accordo.profiloCollaborazioneBreve}" />
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestioneAccordiServizio.schermoModificaDaTabella}">
+                                    <img title="Modifica accordo" alt="Modifica accordo" src="${pageContext.request.contextPath}/images/icons/accordo_edit.png" />
+                                </h:commandLink>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestioneAccordiServizio.schermoEliminaDaTabella}">
+                                    <img title="Elimina accordo" alt="Elimina accordo" src="${pageContext.request.contextPath}/images/icons/accordo_delete.png" />
+                                </h:commandLink>
+                            </h:column>
+                        </rich:dataTable>
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+
+            <rich:panel style="margin: 80px 10px; width: 250px;" rendered="#{vistaGestioneAccordiServizio.nicaPresente}">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/info.png"  styleClass="linkPicture" />
+                        <h:outputText value="Informazioni"/>
+                    </h:panelGroup>
+                </f:facet>
+                <h:outputText value="Gli accordi di servizio non vanno configurati su questa porta di dominio, ma nel registro dei servizi associato."/>
+            </rich:panel>
+
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->

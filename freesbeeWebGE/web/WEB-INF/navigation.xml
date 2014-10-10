@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    
+    <!--                     navigazione                        -->
+
+    <navigation-rule>
+
+        <navigation-case>
+            <from-outcome>loginEffettuato</from-outcome>
+            <to-view-id>/home.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>logoutEffettuato</from-outcome>
+            <to-view-id>/schermoLogin.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>forwardCambioPassword</from-outcome>
+            <to-view-id>/schermoCambioPassword.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>passwordCambiata</from-outcome>
+            <to-view-id>/home.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>schermoGestioneConfigurazione</from-outcome>
+            <to-view-id>/schermoGestioneConfigurazione.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>schermoGestioneConfigurazioneSP</from-outcome>
+            <to-view-id>/schermoGestioneConfigurazioneSP.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>schermoGestioneCategoriaEventiInterna</from-outcome>
+            <to-view-id>/schermoGestioneCategoriaEventiInterna.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>schermoGestioneCategoriaEventiEsterna</from-outcome>
+            <to-view-id>/schermoGestioneCategoriaEventiEsterna.jsf</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>schermoGestioneGestoreEventi</from-outcome>
+            <to-view-id>/schermoGestioneGestoreEventi.jsf</to-view-id>
+        </navigation-case>
+
+
+    </navigation-rule>
+</faces-config>

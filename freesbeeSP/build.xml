@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="build" name="freesbeesp">
+    
+ <!-- ***************************************************
+                    Importazioni
+      *************************************************** -->
+    
+    <import file="./web-template-build.xml" />
+	<import file="./framework-lib-build.xml" />    
+            
+ <!-- ***************************************************
+                    Librerie
+      *************************************************** -->
+
+    <echo message="Versione di JSF: ${jsf.ver}" />
+    
+    <fileset id="jsf.jars" dir="${lib.dir}/jsf-${jsf.ver}">
+        <include name="jsf-api.jar" />
+        <include name="jsf-impl.jar" />
+    </fileset>
+ 
+    <echo message="Versione di Tomahawk: ${tomahawk.ver}" />
+    
+    <fileset id="tomahawk.jars" dir="${lib.dir}/tomahawk-${tomahawk.ver}">
+        <include name="tomahawk-*.jar" />
+        <include name="commons-el.jar" />
+        <include name="commons-fileupload-*.jar" />
+        <include name="commons-lang-*.jar" />
+    </fileset>
+    
+    <echo message="Versione di RichFaces: ${richfaces.ver}" />
+    
+    <fileset id="richfaces.jars" dir="${lib.dir}/richfaces-${richfaces.ver}">
+        <include name="richfaces-*.jar" />
+        <include name="commons-*.jar" />
+		<include name="darkX-3.3.0.GA.jar" />
+    </fileset>
+    
+    <echo message="Versione di CXF: ${cxf.ver}" />
+    
+    <fileset id="cxf.jars" dir="${lib.dir}/cxf-${cxf.ver}">
+        <include name="*.jar" />
+    </fileset>
+
+ <!-- ***************************************************
+                    Target Ridefiniti
+      *************************************************** -->
+
+    <!--target name="-init-classpath" depends="-init-folders, -init-jars">
+        <property name="build.sysclasspath" value="ignore" />
+        <path id="jsf.classpath">
+            <fileset refid="jsf.jars"/>
+            <fileset refid="tomahawk.jars"/>
+            <fileset refid="cxf.jars"/>
+            <fileset refid="richfaces.jars"/>
+        </path>
+        <path id="servlet.classpath">
+            <pathelement location="${servlet.api.jar}"/>
+            <pathelement location="${build.webapp.classes.dir}" />
+            <fileset refid="commons-logging.jars" />
+            <fileset refid="camel.jars" />
+            <fileset refid="hibernate.jars" />  
+            <fileset refid="cxf.jars"/>
+	        <fileset refid="jetty.jars" />
+            <fileset refid="other.jars"/>
+        </path>
+        <path id="driver.classpath">
+            <fileset refid="driver.jars" />
+        </path>        
+		<path id="hibernate.classpath">
+            <fileset refid="hibernate.jars" />
+        </path>
+        <path id="compile.classpath">
+            <path refid="jsf.classpath" />
+            <path refid="servlet.classpath" />
+            <path refid="hibernate.classpath" />
+            <fileset refid="commons-logging.jars" />
+            <pathelement location="${build.webapp.classes.dir}" />
+        </path>
+        <path id="test.classpath">
+            <path refid="compile.classpath" />
+            <pathelement location="${test.build.dir}" />
+            <fileset refid="test.jars" />
+        </path>
+        <path id="web.classpath">
+            <path refid="servlet.classpath" />
+            <fileset refid="jsf.jars" />
+            <fileset refid="tomahawk.jars" />
+            <fileset refid="cxf.jars"/>
+            <fileset refid="richfaces.jars"/>
+            <fileset refid="web.jars" />
+        </path>
+    </target-->    
+
+    <!--target name="-prepare-build" depends="init">
+        <copy todir="${build.webapp.dir}">
+            <fileset dir="${web.dir}" />
+        </copy>
+        <copy todir="${build.webapp.lib.dir}">
+            <fileset dir="${lib.dir}" includes="${driver.name}" />
+            <fileset refid="jsf.jars"/>
+            <fileset refid="tomahawk.jars"/>
+            <fileset refid="cxf.jars"/>
+            <fileset refid="richfaces.jars"/>
+            <fileset refid="logging.jars" />
+            <fileset refid="web.jars" />
+        </copy>
+    </target-->
+ 
+    <!--target name="-init-build-files" depends="init">
+        <fileset id="build.file.templates" dir="..">
+            <include name="web-template-build.xml" />
+            <include name="tomcat-template-build.xml" />
+            <include name="framework-template-build.xml" />
+        </fileset>
+    </target-->
+
+	
+<!-- ***************************************************
+             AGGIUNGI LICENZA
+      *************************************************** -->   
+	<target name="licenza" depends="init">
+		<loadfile property="contents" srcfile="${misc.dir}/licenza.txt"/>
+		<replace dir="${src.dir}" value="${contents}">
+			<include name="**/*.java"/>
+			<replacetoken>package it.unibas.</replacetoken>
+		</replace>
+	</target>
+    
+</project>

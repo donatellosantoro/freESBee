@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsag:GuaranteeTerms xmlns:wsag="http://schemas.ggf.org/graap/2007/03/ws-agreement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.ggf.org/graap/2007/03/ws-agreement GuaranteeTerms.xsd">
+	<wsag:GuaranteeTerm wsag:Name="MassimoTempoRispostaUniUrg" wsag:Obligated="ServiceProvider">
+		<wsag:ServiceLevelObjective>
+			<wsag:CustomServiceLevel>
+				<wsag:Threshold wsag:Operator="Less" wsag:Value="45"></wsag:Threshold>
+					<wsag:Function wsag:resultType="double" xsi:type="wsag:Sum">
+						<wsag:BasicMetric wsag:Unit="seconds">tempoRisposta</wsag:BasicMetric>
+						<wsag:Window>
+							<wsag:Interval>ThreeMonths</wsag:Interval>
+						</wsag:Window>
+					</wsag:Function>
+			</wsag:CustomServiceLevel>
+		</wsag:ServiceLevelObjective>
+	<wsag:BusinessValueList>
+	</wsag:BusinessValueList>
+	</wsag:GuaranteeTerm>
+</wsag:GuaranteeTerms>        
+                        

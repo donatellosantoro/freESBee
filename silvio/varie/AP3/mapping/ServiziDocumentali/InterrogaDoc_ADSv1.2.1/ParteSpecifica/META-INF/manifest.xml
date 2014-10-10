@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soggetto-spcoop tipo="SPC" nome="FVG" identificativo-porta="FVGSPCoopIT" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.spcoop.it/registry/v0.9"  xsi:schemaLocation="http://www.spcoop.it/registry/v0.9 manifest_ADS.xsd">
+	<servizio tipo="SPC" nome="InterrogaDocWS" 
+	accordo-servizio="ASAP3InterrogaDoc">
+		<informazioni-egov riferimento="informazioniEGov.xml"/> 
+		<fruitore tipo="SPC" nome="FVGFruitore">
+			<specifica-interfaccia 
+			wsdl-implementativo-erogatore="SpecificaInterfacciaParteSpecifica\WS_ErogatoreImplementativo.wsdl" 
+			wsdl-implementativo-fruitore="SpecificaInterfacciaParteSpecifica\WS_FruitoreImplementativo.wsdl"/>
+			 <!-- il nome dell'attributo non è specificato nell'xsd 
+				 wsag-parametri-SLA="SpecificaInterfacciaParteSpecificaFVG/WS_ParametriSLA.wsag" 
+			-->
+			<!-- non servirebbe ma nell'xsd è obbligatorio -->
+			<informazioni-egov riferimento="informazioniEGov.xml"/>
+		</fruitore>
+	</servizio>
+</soggetto-spcoop>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD-xhtml1/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it">
+
+<head>
+    <meta name="author" content="Gruppo ICAR icar.unibas@gmail.com" />
+    <title>SIL-VIO 2.0 [${param.titolo}]</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stile.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stileStruttura.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stileTabelle.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/stileTree.css" type="text/css"/>
+</head>
+<body>
+    <div id="nonFooter">
+        <!-- ******************************************* -->
+
+        <div style="margin:0 auto;text-align:center;">
+            <center>
+            <img src="${pageContext.request.contextPath}/images/logoSilvio.png" styleClass="imgLogin" alt="Logo SIL-VIO"/>
+            <h1>Work in Progress</h1>
+            </center>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="contentFooter">
+            © COPYRIGHT 2008 <a href="http://freesbee.unibas.it">GRUPPO freESBee</a>
+            <img src="${pageContext.request.contextPath}/images/footerSilvio.png" class="footerSilvio"/>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      >
+
+    <head>
+        <meta name="author" content="Gruppo ICAR icar.unibas@gmail.com" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="${request.contextPath}/app/css/stile.css" type="text/css"/>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+    </head>
+    <f:loadBundle basename="messaggi" var="msg"/>
+    <a4j:loadBundle basename="messaggi" var="msgx"/>
+    <body>
+        <div id="top">
+            <ui:insert name="top"/>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="elencoIstanze"/>
+            </div>
+            <div>
+                <div id="right">
+                    <ui:insert name="logout"/>
+                </div>
+
+                <h:form styleClass="center_content">
+                    <center>
+                        <h:panelGroup>
+                            <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+                                <a4j:outputPanel id="pannelloEseguiIstanza">
+                                    <ui:insert name="messaggi"/>
+
+                                    <h:panelGroup styleClass="pannello">
+                                        <h:panelGroup>
+                                            <ui:include src="eseguiIstanzaOperationInesrimentoURLErogatore.jsf"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaDatiDB}">
+                                            <ui:include src="eseguiIstanzaOperationInesrimentoDB.jsf"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaDatiInterattivi}">
+                                            <ui:include src="eseguiIstanzaOperationInesrimentoInterattivi.jsf"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{vistaEseguiIstanza.visualizzaPannelloRispostaSincrona}">
+                                            <ui:include src="eseguiIstanzaOperationRisposta.jsf"/>
+                                        </h:panelGroup>
+
+                                        <ui:insert name="button"/>
+
+                                    </h:panelGroup>
+                                </a4j:outputPanel>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </center>
+                </h:form>
+
+            </div>
+        </div>
+
+    </body>
+
+</html>

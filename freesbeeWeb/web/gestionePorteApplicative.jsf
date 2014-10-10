@@ -1,0 +1,237 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t" %>
+<%@ taglib uri="http://richfaces.org/a4j" prefix="a4j"%>
+<%@ taglib uri="http://richfaces.org/rich" prefix="rich"%>
+
+<!-- ************** intestazione *************** -->
+<c:import url="intestazione.jsf">
+    <c:param name="titolo" value="Gestione Porte Applicative" />
+</c:import>
+<!-- ******************************************* -->
+
+<f:view>    
+    <h:panelGrid columns="2" columnClasses="bloccoMenu,bloccoCentrale">
+        <h:panelGroup>
+            <c:import url="menu.jsf"/>
+        </h:panelGroup>
+        
+        <h:panelGroup styleClass="bloccoCentrale">     
+            
+            <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiPorteApplicative:boxSuccesso',delay:2.0,duration:0.8"/>
+            <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiPorteApplicative:boxErrore',duration:0.8"/>
+            
+            <t:saveState value="#{vistaGestionePorteApplicative}" />
+            <h:panelGroup styleClass="imgTitle">
+                <h:graphicImage value="/images/title/gestionePorteApplicative.png" alt="Gestione Porte Applicative"/>   
+            </h:panelGroup>
+            
+            <rich:modalPanel id="panelEliminaPorta" showWhenRendered="#{vistaGestionePorteApplicative.elimina}" height="150" width="320">
+                <f:facet name="header">
+                    <h:panelGroup>
+                        <h:graphicImage value="#{pageContext.request.contextPath}/images/help.png"  styleClass="linkPicture" />
+                        <h:outputText value="Conferma eliminazione"/>
+                    </h:panelGroup>
+                </f:facet>    
+                <h:form>
+                    <h:outputText styleClass="confermaMessaggio" value="#{controlloGestionePorteApplicative.conferma}"/>            
+                    
+                    <h:panelGrid columns="2" style="margin:0px 7px 0px 7px;">
+                        <h:outputText style="font-weight: bold;" value="Nome"/>
+                        <h:outputText value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.nome}"/>
+                    </h:panelGrid>
+                    
+                    <h:panelGroup styleClass="bloccoPulsantiDialog">
+                        <h:commandButton value="Elimina" action="#{controlloGestionePorteApplicative.elimina}"/>   
+                        <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelEliminaAccordo')" action="#{controlloGestionePorteApplicative.gestionePorteApplicative}" immediate="true"/>        
+                    </h:panelGroup>
+                </h:form>
+            </rich:modalPanel>
+            
+            <h:form id="formCampiPorteApplicative">
+                <rich:simpleTogglePanel opened="#{vistaGestionePorteApplicative.pannelloVisibile}" id="boxNuovaPorta" 
+                                        style="width:300px;" switchType="ajax">
+                    
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/portaApplicativa_add.png"  styleClass="linkPicture" />
+                            <h:outputText value="Nuova Porta Applicativa"/>
+                        </h:panelGroup>
+                    </f:facet>
+                    
+                    <h:panelGrid columns="2">
+                        <h:panelGroup id="boxServizioApplicativo" >
+                            <rich:messages>
+                                <f:facet name="errorMarker">
+                                    <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>   
+                                </f:facet>
+                            </rich:messages>                
+                            <h:panelGrid columns="2">     
+                                <h:outputText value="Nome" />
+                                <h:inputText id="textNome" label="Nome" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.nome}" required="true" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+                                
+                                <h:outputText value="Descrizione" />
+                                <h:inputText id="textTipo" label="Tipo" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.descrizione}" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+                                
+                                <h:outputText value="Servizio"  rendered="#{!vistaGestionePorteApplicative.nicaPresente}" />
+                                <a4j:region rendered="#{!vistaGestionePorteApplicative.nicaPresente}" >
+                                    <h:selectOneMenu style="font-size:8pt;width:126px" required="true" label="Servizio"  rendered="#{!vistaGestionePorteApplicative.nicaPresente}" 
+                                                     value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.servizio.id}" readonly="#{vistaGestionePorteApplicative.elimina}">
+                                        <f:selectItems value="#{vistaGestionePorteApplicative.listaServizi}"/>
+                                        <a4j:support event="onchange" actionListener="#{controlloGestionePorteApplicative.servizioCambiato}"  reRender="listaAzioni"  />
+                                    </h:selectOneMenu>
+                                </a4j:region>
+                                
+                                
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                
+                                <h:outputText value="Tipo Erogatore"  rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <h:inputText id="textTipoErogatore" label="Tipo Erogatore" rendered="#{vistaGestionePorteApplicative.nicaPresente}" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.stringaTipoErogatore}" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+
+                                <h:outputText value="Erogatore"  rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <h:inputText id="textErogatore" label="Erogatore" rendered="#{vistaGestionePorteApplicative.nicaPresente}" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.stringaErogatore}" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+
+                              <h:outputText value="Tipo Servizio"  rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <h:inputText id="textTipoServizio" label="Tipo Servizio" rendered="#{vistaGestionePorteApplicative.nicaPresente}" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.stringaTipoServizio}" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+
+                                <h:outputText value="Servizio"  rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <h:inputText id="textServizio" label="Servizio" rendered="#{vistaGestionePorteApplicative.nicaPresente}" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.stringaServizio}" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+
+                                <h:outputText value="Servizio Applicativo"/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" required="true" label="Servizio Applicativo"
+                                                 value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.servizioApplicativo.id}" readonly="#{vistaGestionePorteApplicative.elimina}">
+                                    <f:selectItems value="#{vistaGestionePorteApplicative.listaServiziApplicativi}"/>
+                                </h:selectOneMenu>
+                                
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                <rich:separator height="2" lineType="dotted" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                                
+                                <h:outputText value="Azione"/>
+                                <h:selectOneMenu style="font-size:8pt;width:126px" label="Azione" id="listaAzioni"  rendered="#{!vistaGestionePorteApplicative.nicaPresente}"
+                                                 value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.azione.id}" readonly="#{vistaGestionePorteApplicative.elimina}">
+                                    <f:selectItems value="#{vistaGestionePorteApplicative.listaAzioni}"/>
+                                </h:selectOneMenu>
+                                <h:inputText label="Azione" rendered="#{vistaGestionePorteApplicative.nicaPresente}" value="#{vistaGestionePorteApplicative.nuovoPortaApplicativa.stringaAzione}" readonly="#{vistaGestionePorteApplicative.elimina}"/>
+                                
+                            </h:panelGrid>
+                            
+                            <h:panelGroup styleClass="bloccoPulsanti" >
+                                <h:commandButton value="Inserisci" action="#{controlloGestionePorteApplicative.inserisci}" rendered="#{!vistaGestionePorteApplicative.modifica && !vistaGestionePorteApplicative.elimina}" />  
+                                <h:commandButton value="Modifica" action="#{controlloGestionePorteApplicative.modifica}" rendered="#{vistaGestionePorteApplicative.modifica}" />
+                                <h:commandButton value="Annulla" onclick="javascript:Richfaces.hideModalPanel('panelEliminaAccordo')" action="#{controlloGestionePorteApplicative.gestionePorteApplicative}" immediate="true"/>     
+                            </h:panelGroup>
+                            
+                        </h:panelGroup> 
+                    </h:panelGrid>
+                </rich:simpleTogglePanel>
+                
+                <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestionePorteApplicative.visualizzaMessaggio}">
+                    <h:outputText styleClass="successoMessaggio" value="#{controlloGestionePorteApplicative.messaggio}"/>
+                </h:panelGroup>
+                <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestionePorteApplicative.visualizzaErrore}">
+                    <h:outputText styleClass="erroreMessaggio" value="#{controlloGestionePorteApplicative.errore}"/>
+                </h:panelGroup>
+            </h:form>
+            
+            <rich:tabPanel style="width:520px;margin-top:30px" headerAlignment="right" binding="#{vistaGestionePorteApplicative.tabPanel}" >
+                <rich:tab disabled="true">
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/detail.png"  styleClass="linkPicture" />
+                            <h:outputText value="Dettagli"/>
+                        </h:panelGroup>
+                    </f:facet>          
+                    <h:outputText styleClass="intestazioneTab" value="Lista delle Porte Applicative"/>   
+                </rich:tab>
+                <rich:tab>
+                    <f:facet name="label">
+                        <h:panelGroup>
+                            <h:graphicImage value="#{pageContext.request.contextPath}/images/icons/table.png"  styleClass="linkPicture" />
+                            <h:outputText value="Tabella"/>
+                        </h:panelGroup>
+                    </f:facet>  
+                    <h:outputText styleClass="intestazioneTab" value="Lista delle Porte Applicative"/>
+                    
+                    <h:form >
+                        <rich:datascroller align="left"  for="listaPorteApplicative" maxPages="10" />
+                        <rich:spacer height="30" />
+                        <rich:dataTable width="500" id="listaPorteApplicative" rows="10" columnClasses="col" binding="#{vistaGestionePorteApplicative.tabellaPorteApplicative}"
+                                        value="#{vistaGestionePorteApplicative.listaPorteApplicative}" var="portaApplicativa">
+                            
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Id" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Nome" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Descrizione" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Servizio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Servizio Applicativo" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Azione" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="" />
+                                    </h:column>
+                                </rich:columnGroup>                                
+                            </f:facet>
+                            <h:column>
+                                <h:outputText value="#{portaApplicativa.id}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{portaApplicativa.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{portaApplicativa.descrizione}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{portaApplicativa.servizio.nomeBreve}" rendered="#{!vistaGestionePorteApplicative.nicaPresente}" />
+                                <h:outputText value="#{portaApplicativa.stringaTipoServizio}" rendered="#{vistaGestionePorteApplicative.nicaPresente}" />
+                                <h:outputText value="\\" rendered="#{vistaGestionePorteApplicative.nicaPresente}" />
+                                <h:outputText value="#{portaApplicativa.stringaServizio}" rendered="#{vistaGestionePorteApplicative.nicaPresente}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{portaApplicativa.servizioApplicativo.nome}" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{portaApplicativa.azione.nome}" rendered="#{!vistaGestionePorteApplicative.nicaPresente}"/>
+                                <h:outputText value="#{portaApplicativa.stringaAzione}" rendered="#{vistaGestionePorteApplicative.nicaPresente}"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestionePorteApplicative.schermoModificaDaTabella}"><img title="Modifica porta applicativa" alt="Modifica porta applicativa" src="${pageContext.request.contextPath}/images/icons/portaApplicativa_edit.png" /></h:commandLink>
+                            </h:column>
+                            <h:column>
+                                <h:commandLink action="#{controlloGestionePorteApplicative.schermoEliminaDaTabella}"><img title="Elimina porta applicativa" alt="Elimina porta applicativa" src="${pageContext.request.contextPath}/images/icons/portaApplicativa_delete.png" /></h:commandLink>
+                            </h:column>                            
+                        </rich:dataTable> 
+                    </h:form>
+                </rich:tab>
+            </rich:tabPanel>
+        </h:panelGroup>
+    </h:panelGrid>
+</f:view>
+
+
+
+<!-- ************** pie' di pagina *************** -->
+<c:import url="pieDiPagina.jsf" />
+<!-- ******************************************* -->
