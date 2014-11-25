@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://comune.ws.com/" xmlns:tns="http://comune.ws.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="cercaCittadino" nillable="true" type="tns:cercaCittadino"/>
+
+  <xs:element name="cercaCittadinoResponse" nillable="true" type="tns:cercaCittadinoResponse"/>
+
+  <xs:complexType name="cercaCittadino">
+    <xs:sequence>
+      <xs:element name="codiceFiscale" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cercaCittadinoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:cittadino" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cittadino">
+    <xs:sequence>
+      <xs:element name="codiceFiscale" type="xs:string" minOccurs="0"/>
+      <xs:element name="cognome" type="xs:string" minOccurs="0"/>
+      <xs:element name="dataNascita" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="nome" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
