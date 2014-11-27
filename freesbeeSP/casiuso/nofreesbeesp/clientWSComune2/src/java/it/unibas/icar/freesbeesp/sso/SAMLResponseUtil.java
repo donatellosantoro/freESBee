@@ -37,11 +37,13 @@ public class SAMLResponseUtil {
     private static Log logger = LogFactory.getLog(SAMLResponseUtil.class);
 
     // TODO cambiare percorsi certificati e passw
-    private static final String percorsoFileCertificatoSP = "/Users/enzoveltri/Temp/certificati/sp/sp.jks";
+//    private static final String percorsoFileCertificatoSP = "/Users/enzoveltri/Temp/certificati/sp/sp.jks";
+    private static final String percorsoFileCertificatoSP = "/home/sp_comunepz/certificati/sp/sp.jks";
     private static final String passwordSP = "*prova*";
     private static final String nomeCertificatoSP = "sp";
 
-    private static final String percorsoFileCertificatoIdP = "/Users/enzoveltri/Temp/certificati/idp/idp.jks";
+//    private static final String percorsoFileCertificatoIdP = "/Users/enzoveltri/Temp/certificati/idp/idp.jks";
+    private static final String percorsoFileCertificatoIdP = "/home/sp_comunepz/certificati/idp/idp.jks";
     private static final String passwordIdP = "*prova*";
     private static final String nomeCertificatoIdP = "idp";
 
@@ -57,6 +59,7 @@ public class SAMLResponseUtil {
         Decrypter decrypter = new Decrypter(null, new StaticKeyInfoCredentialResolver(credential), new InlineEncryptedKeyResolver());
 
         Signature signatureAss = CredentialUtil.createSignature(percorsoFileCertificatoIdP, passwordIdP, nomeCertificatoIdP);
+
         List<EncryptedAssertion> listEncAssertion = response.getEncryptedAssertions();
         for (EncryptedAssertion encryptedAssertion : listEncAssertion) {
             if (logger.isDebugEnabled()) {
@@ -74,15 +77,15 @@ public class SAMLResponseUtil {
         }
         response.getEncryptedAssertions().clear();
 
-        Signature signature = CredentialUtil.createSignature(percorsoFileCertificatoIdP, passwordIdP, nomeCertificatoIdP);
-        response.setSignature(signature);
-        marshallerFactory.getMarshaller(response).marshall(response);
-
-        org.opensaml.xml.signature.Signer.signObject(signature);
-        String stringaSAMLResponse = XMLUtils.toString(response.getDOM());
-        if (logger.isDebugEnabled()) {
-            logger.debug("SAML Response decriptata: " + stringaSAMLResponse);
-        }
+//        Signature signature = CredentialUtil.createSignature(percorsoFileCertificatoIdP, passwordIdP, nomeCertificatoIdP);
+//        response.setSignature(signature);
+//        marshallerFactory.getMarshaller(response).marshall(response);
+//        
+//        org.opensaml.xml.signature.Signer.signObject(signature);
+//        String stringaSAMLResponse = XMLUtils.toString(response.getDOM());
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("SAML Response decriptata: " + stringaSAMLResponse);
+//        }
 
         DOMBuilder builder = new DOMBuilder();
         org.jdom.Document jdomSAMLResponse = builder.build(response.getDOM().getOwnerDocument());

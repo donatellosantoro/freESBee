@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Danilo
  */
 @WebService(serviceName = "AciWS")
-@HandlerChain(file = "handler-chain.xml")
+//@HandlerChain(file = "handler-chain.xml")
 public class AciWS {
 
     private Log logger = LogFactory.getLog(this.getClass());

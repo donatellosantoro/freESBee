@@ -43,7 +43,7 @@ public class AzioneNuovaImmatricolazione extends Action {
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utente");
         FormImmatricolazione formImmatricolazione = (FormImmatricolazione) form;
-        String freesbeespSession = formImmatricolazione.getFreesbeeSPSessionId();
+//        String freesbeespSession = formImmatricolazione.getFreesbeeSPSessionId();
         String codiceFiscale = formImmatricolazione.getCodiceFiscale();
         String targa = formImmatricolazione.getTarga();
         String telaio = formImmatricolazione.getTelaio();

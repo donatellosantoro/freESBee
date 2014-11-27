@@ -8,6 +8,10 @@ import org.apache.struts.action.ActionMapping;
 
 public class FormCerca extends ActionForm {
 
+    private String targa;
+
+    public String freesbeeSPSessionId;
+
     public String getFreesbeeSPSessionId() {
         return freesbeeSPSessionId;
     }
@@ -15,25 +19,20 @@ public class FormCerca extends ActionForm {
     public void setFreesbeeSPSessionId(String freesbeeSPSessionId) {
         this.freesbeeSPSessionId = freesbeeSPSessionId;
     }
-    
-    private String targa;
 
-    public String freesbeeSPSessionId;
-    
     public String getTarga() {
         return targa;
     }
 
     public void setTarga(String targa) {
-        this.targa =targa;
+        this.targa = targa;
     }
-    
 
     public ActionErrors validate(ActionMapping mapping,
-                                 HttpServletRequest request){
+            HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-         if (targa==null||targa.equals("")){
-            errors.add(ActionErrors.GLOBAL_MESSAGE, new ActionMessage("Il codice fiscale non puo essere vuoto",false));
+        if (targa == null || targa.equals("")) {
+            errors.add(ActionErrors.GLOBAL_MESSAGE, new ActionMessage("Il codice fiscale non puo essere vuoto", false));
         }
         return errors;
     }

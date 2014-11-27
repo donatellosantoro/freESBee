@@ -59,9 +59,9 @@ public class ShibbolethDriver implements ISSODriver {
             logger.info("Prelevo la SAML Response dall'IdP");
             SAMLResponse mySamlResponse = SAMLResponseUtil.extractSAMLResponse(isSamlResponse);
             ssoSession = this.getShibSession(mySamlResponse);
-
             logger.debug("Decripto la SAML Response");
             org.jdom.Document mySamlResponseDecriptata = SAMLResponseUtil.decryptAssertion(mySamlResponse);
+            logger.info("**************");
 
             logger.info("Estraggo le asserzioni dal messaggio SAML");
             org.jdom.Element samlElementRoot = mySamlResponseDecriptata.getRootElement();
