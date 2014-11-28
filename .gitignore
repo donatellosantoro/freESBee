@@ -10,3 +10,10 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/freesbeeSP/nbproject/private/
+/freesbeeSP/casiuso/nofreesbeesp/aciWebService/dist/
+/freesbeeSP/casiuso/nofreesbeesp/aciWebService/build/
+/freesbeeSP/casiuso/nofreesbeesp/comuneWSApplication/build/
+/freesbeeSP/casiuso/nofreesbeesp/comuneWSApplication/dist/
+/freesbeeSP/casiuso/nofreesbeesp/clientWSComune2/build/
+/freesbeeSP/casiuso/nofreesbeesp/clientWSComune2/dist/
