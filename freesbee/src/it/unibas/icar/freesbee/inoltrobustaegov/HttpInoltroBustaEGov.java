@@ -7,6 +7,7 @@ import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.exception.SOAPFaultException;
 import it.unibas.icar.freesbee.modello.Configurazione;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
+//import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.modello.Soggetto;
 import it.unibas.icar.freesbee.persistenza.DBManager;

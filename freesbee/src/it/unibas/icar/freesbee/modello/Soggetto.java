@@ -23,6 +23,8 @@ public class Soggetto implements Serializable, Comparable{
     private List<Servizio> listaServiziFruitore;
     private List<PortaDelegata> listaPorteDelegateFruitore;
     private Date oraRegistrazione;
+    private boolean mutuaAutenticazione;
+    private String urlCertificato;
     private String oldNomeForUpdate;
     private String oldTipoForUpdate;
 
@@ -117,6 +119,22 @@ public class Soggetto implements Serializable, Comparable{
 
     public void setListaServiziFruitore(List<Servizio> listaServiziFruitore) {
         this.listaServiziFruitore = listaServiziFruitore;
+    }
+
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
+        this.mutuaAutenticazione = mutuaAutenticazione;
+    }
+
+    public String getUrlCertificato() {
+        return urlCertificato;
+    }
+
+    public void setUrlCertificato(String urlCertificato) {
+        this.urlCertificato = urlCertificato;
     }
 
     @Transient

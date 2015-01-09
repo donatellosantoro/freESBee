@@ -33,7 +33,10 @@ public class Servizio implements Serializable, Comparable {
     private List<PortaDelegata> listaPorteDelegate = new ArrayList<PortaDelegata>();
     private boolean correlato;
     private boolean privato;
+    private boolean urlRidefinito;
     private String urlServizio;
+    private boolean mutuaAutenticazione;
+    private String urlCertificato;
     private Date oraRegistrazione;
     private String oldNomeForUpdate;
     private String oldTipoForUpdate;
@@ -126,12 +129,36 @@ public class Servizio implements Serializable, Comparable {
         this.privato = privato;
     }
 
+    public boolean isUrlRidefinito() {
+        return urlRidefinito;
+    }
+
+    public void setUrlRidefinito(boolean urlRidefinito) {
+        this.urlRidefinito = urlRidefinito;
+    }
+
     public String getUrlServizio() {
         return urlServizio;
     }
 
     public void setUrlServizio(String urlServizio) {
         this.urlServizio = urlServizio;
+    }
+
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
+        this.mutuaAutenticazione = mutuaAutenticazione;
+    }
+
+    public String getUrlCertificato() {
+        return urlCertificato;
+    }
+
+    public void setUrlCertificato(String urlCertificato) {
+        this.urlCertificato = urlCertificato;
     }
 
     public int compareTo(Object o) {
