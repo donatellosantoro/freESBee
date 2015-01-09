@@ -18,6 +18,7 @@ import it.unibas.icar.freesbee.processors.ProcessorTrace;
 import it.unibas.icar.freesbee.processors.SOAPProcessorReader;
 import it.unibas.icar.freesbee.processors.SOAPProcessorWriterFactory;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
+import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
@@ -29,6 +30,7 @@ import it.unibas.icar.freesbee.ws.registroservizi.client.stub.WSRegistroServiziI
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -155,11 +157,24 @@ logger.info("\n\n connettoreDestinatario = " + connettoreDestinatario + "\n\n");
                 logger.error("Errore nell'inoltro della busta EGov. Il messaggio non viaggia in una connessione SSL. " + ssle);
                 String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ". Il messaggio non viaggia in una connessione SSL.";
                 throw new FreesbeeException(errore + ". - " + ssle.getMessage());
-            } catch (HttpOperationFailedException hfe) {
-                logger.error("Errore nell'inoltro della busta EGov. " + hfe + "\n Risposta: " + hfe.getResponseBody());
-                String errore = "Si e' verificato un errore mentre si cercava di contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
-                hfe.printStackTrace();
-                throw new FreesbeeException(errore + ". -  " + hfe.getMessage());
+            } catch (HttpOperationFailedException hofe) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
+                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
+                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
+                        .append("\nDescrizione errore: ").append(hofe.getMessage());
+                //logger.error(sb.toString());
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+                throw new FreesbeeException(sb.toString());
+            } catch (UnknownHostException uhe) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
+                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
+                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
+                        .append("\nDescrizione errore: ").append(uhe.getMessage());
+                //logger.error(sb.toString());
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+                throw new FreesbeeException(sb.toString());
             } catch (Exception e) {
                 logger.error("Errore nell'inoltro della busta EGov. " + e);
                 String errore = "Si e' verificato un errore mentre si cercava di contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";

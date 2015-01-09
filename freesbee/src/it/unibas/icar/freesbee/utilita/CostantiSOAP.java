@@ -77,5 +77,7 @@ public class CostantiSOAP {
     public static final String INTEGRAZIONE_ID_MESSAGGIO = "SPCoopID";
     public static final String INTEGRAZIONE_RIFERIMENTO_MESSAGGIO = "SPCoopRiferimentoMessaggio";
     
+    public static final String SOAP_HEADER_MESSAGE_EXCEPTION = "messaggio.eccezione";
+    
 
 }
