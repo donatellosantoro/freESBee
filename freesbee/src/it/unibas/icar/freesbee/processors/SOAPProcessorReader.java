@@ -13,8 +13,7 @@ import java.util.Properties;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.Source;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -30,22 +29,22 @@ import org.apache.servicemix.soap.marshalers.SoapMessage;
 import org.apache.servicemix.soap.marshalers.SoapReader;
 
 public class SOAPProcessorReader implements Processor {
-
+    
     private static Log logger = LogFactory.getLog(SOAPProcessorReader.class);
     private static SOAPProcessorReader singleton = new SOAPProcessorReader();
-
+    
     private SOAPProcessorReader() {
     }
-
+    
     public static SOAPProcessorReader getInstance() {
         return singleton;
     }
-
+    
     public void process(Exchange exchange) throws Exception {
         //ContextStartup.aggiungiThread(this.getClass().getName());
         ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()).process(exchange);
         if (MessageUtil.isEmpty(exchange.getIn())) {
-            if (logger.isInfoEnabled())logger.info("Ricevuto un messaggio vuoto. Probabilemente è un ack di risposta");
+            if (logger.isInfoEnabled()) logger.info("Ricevuto un messaggio vuoto. Probabilemente è un ack di risposta");
             MessageUtil.setString(exchange.getIn(), "");
             return;
         }
@@ -73,30 +72,36 @@ public class SOAPProcessorReader implements Processor {
                 //AGGIUNGO GLI ATTACHMENT ALLA MAPPA DELLE INTESTAZIONI
                 exchange.setProperty(CostantiSOAP.SOAP_ATTACHMENT, soapMessage.getAttachments());
             } else {
-                InputStream bodyStream = MessageUtil.getStream(exchange.getIn());        
+                InputStream bodyStream = MessageUtil.getStream(exchange.getIn());
                 soapMessage = soapReader.read(bodyStream);
             }
             if (logger.isDebugEnabled()) logger.debug("soapMessage.getBodyName()" + soapMessage.getBodyName());
             if (logger.isDebugEnabled()) logger.debug("soapMessage.hasAttachments()" + soapMessage.hasAttachments());
-            MessageUtil.setSource(exchange.getIn(), soapMessage.getSource());
+            
+            if (soapMessage.getSource() != null) MessageUtil.setSource(exchange.getIn(), soapMessage.getSource());
             exchange.setProperty(CostantiSOAP.SOAP_HEADERS, soapMessage.getHeaders());
             if (soapMessage.getFault() != null) {
+                logger.error("Ricevuto un soap Fault.");
+                Source details = soapMessage.getFault().getDetails();
+                logger.error("Messaggio Eccezione: " + MessageUtil.printXmlSource(details, "value"));
                 exchange.setProperty(CostantiSOAP.SOAP_FAULT, soapMessage.getFault());
+                
             }
         } catch (Exception e) {
             if (logger.isDebugEnabled()) e.printStackTrace();
+            logger.error("HEADER ERROR: " + exchange.getProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION));
             logger.error("Errore generico nel parsing del messaggio SOAP. " + e.getMessage());
             exchange.setException(new FreesbeeException(e.getMessage()));
             return;
         }
-
+        
         if (logger.isDebugEnabled()) logger.debug("Il messaggio soap letto e': " + MessageUtil.getString(exchange.getIn()));
         exchange.setProperty(CostantiBusta.FIGLI_MULTIPLI, "false");
         InputStream messaggio = MessageUtil.getStream(exchange.getIn());
         verificaFigliMultipli(messaggio, exchange.getIn());
         messaggio.reset();
     }
-
+    
     private void verificaFigliMultipli(InputStream messaggio, Message messaggioIn) {
         try {
             Document docMessaggio = XMLUtils.parse(messaggio);
@@ -105,7 +110,7 @@ public class SOAPProcessorReader implements Processor {
                 NodeList envChild = envElem.getChildNodes();
                 Node elementBody = null;
                 for (int i = 0; i < envChild.getLength(); i++) {
-
+                    
                     if (envChild.item(i).getLocalName() != null && envChild.item(i).getLocalName().equalsIgnoreCase("body")) {
                         elementBody = envChild.item(i);
                     }
@@ -119,7 +124,7 @@ public class SOAPProcessorReader implements Processor {
                         messaggioIn.getExchange().setProperty(CostantiBusta.FIGLI_MULTIPLI, "true");
                         Properties props = new Properties();
                         props.put(OutputKeys.OMIT_XML_DECLARATION, "yes");
-
+                        
                         String stringaBody = "";
                         for (int i = 0; i < bodyChild.getLength(); i++) {
                             stringaBody += XmlUtil.stampaDocument(bodyChild.item(i));
@@ -129,12 +134,12 @@ public class SOAPProcessorReader implements Processor {
                     }
                 }
             }
-
+            
         } catch (Exception e) {
             if (logger.isDebugEnabled()) logger.debug("Impossibile verificare se il body ha piu' figli " + e);
         }
     }
-
+    
     static boolean startsWithCaseInsensitive(String s1, String s2) {
         return s1.regionMatches(true, 0, s2, 0, s2.length());
     }

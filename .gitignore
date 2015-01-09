@@ -20,3 +20,7 @@ hs_err_pid*
 /freesbeeSP/casiuso/michele/applicazione/nbproject/private/
 /freesbeeSP/casiuso/michele/applicazione/dist/
 /freesbeeSP/casiuso/michele/applicazione/build/
+dependent.properties
+freesbee/build
+.DS_Store
+nbproject.properties

@@ -16,6 +16,7 @@ import it.unibas.icar.freesbee.processors.ProcessorTrace;
 import it.unibas.icar.freesbee.processors.SOAPProcessorReader;
 import it.unibas.icar.freesbee.processors.SOAPProcessorWriterFactory;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
+import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
@@ -26,6 +27,7 @@ import it.unibas.icar.freesbee.ws.registroservizi.client.stub.IWSRegistroServizi
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.WSRegistroServiziImplService;
 import java.net.ConnectException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.camel.Endpoint;
@@ -34,6 +36,7 @@ import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
+import org.apache.camel.component.http.HttpOperationFailedException;
 import org.apache.commons.httpclient.ProtocolException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -90,12 +93,16 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
                 httpComponent.createEndpoint(connettoreDestinatario);
+//                HttpEndpoint endpoint = (HttpEndpoint) getContext().getEndpoint(connettoreDestinatario);
                 Endpoint endpoint = getContext().getEndpoint(connettoreDestinatario);
                 ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_PA_REQ").process(exchange);
+//                HttpProducer producer = (HttpProducer) endpoint.createProducer();
                 Producer producer = endpoint.createProducer();
                 producer.start();
                 producer.process(exchange);
                 producer.stop();
+                endpoint.stop();
+                httpComponent.stop();
                 ProcessorTrace.getInstance(ProcessorTrace.OUT, "SEND_TO_PA_RESP").process(exchange);
                 //     producer.stop();
                 if (logger.isDebugEnabled()) {
@@ -111,7 +118,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                     log.append("\n\n");
                     logger.debug(log);
                 } else {
-                    if (logger.isInfoEnabled()) logger.info("Ho inviato il messaggio all'indirizzo: "+connettoreDestinatario);
+                    if (logger.isInfoEnabled()) logger.info("Ho inviato il messaggio all'indirizzo: " + connettoreDestinatario);
                 }
             } catch (ConnectException e) {
                 logger.error("Errore nell'inoltro della busta EGov. " + e);
@@ -121,10 +128,29 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 logger.error("Errore nell'inoltro della busta EGov. Il messaggio non viaggia in una connessione SSL. " + ssle);
                 String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ". Il messaggio non viaggia in una connessione SSL.";
                 throw new FreesbeeException(errore + ". - " + ssle.getMessage());
+            } catch (HttpOperationFailedException hofe) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
+                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
+                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
+                        .append("\nDescrizione errore: ").append(hofe.getMessage());
+                //logger.error(sb.toString());
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+                throw new FreesbeeException(sb.toString());
+            } catch (UnknownHostException uhe) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
+                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
+                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
+                        .append("\nDescrizione errore: ").append(uhe.getMessage());
+                //logger.error(sb.toString());
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+                throw new FreesbeeException(sb.toString());
             } catch (Exception e) {
                 logger.error("Errore nell'inoltro della busta EGov. " + e);
                 String errore = "Si e' verificato un errore mentre si cercava di contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
-                e.printStackTrace();
+                if (logger.isDebugEnabled()) e.printStackTrace();
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, errore + ". -  " + e.getMessage());
                 throw new FreesbeeException(errore + ". -  " + e.getMessage());
             }
             try {
@@ -147,7 +173,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             soapReader.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());
             FreesbeeUtil.copiaIntestazioniMime(exchange.getIn(), exchange.getOut());
-            if(logger.isInfoEnabled()) logger.info("Risposta ricevuta dall'erogatore");
+            if (logger.isInfoEnabled()) logger.info("Risposta ricevuta dall'erogatore");
         }
 
         private String getConnettoreDestinatario(Messaggio messaggio, Configurazione configurazione) throws FreesbeeException {
@@ -159,7 +185,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 if (connettoreDestinatario == null || connettoreDestinatario.equals("")) {
                     throw new FreesbeeException("Impossibile inoltrare la busta EGov. Nessun connettore specificato per l'erogatore " + messaggio.getErogatore());
                 }
-                if (logger.isInfoEnabled()) logger.info("Invio la busta EGov direttamente all'erogatore all'indirizzo " + connettoreDestinatario);       
+                if (logger.isInfoEnabled()) logger.info("Invio la busta EGov direttamente all'erogatore all'indirizzo " + connettoreDestinatario);
             }
             return connettoreDestinatario;
         }

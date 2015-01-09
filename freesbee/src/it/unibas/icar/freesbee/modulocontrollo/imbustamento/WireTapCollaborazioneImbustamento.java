@@ -79,7 +79,7 @@ public class WireTapCollaborazioneImbustamento extends RouteBuilder {
                     if (logger.isInfoEnabled()) logger.info("Abbiamo ricevuto una richiesta di stato per un servizio asincrono asimmetrico.");
                     Messaggio messaggioCollegato = daoMessaggioCorr.findByIDSil(messaggio.getSilRelatesTo(), Messaggio.TIPO_INVIATO);
                     if (messaggioCollegato == null) {
-                        throw new FreesbeeException("Impossibile correlare il messaggio di stato. Non � stato inviato nessun messaggio con idSil " + messaggio.getSilRelatesTo());
+                        throw new FreesbeeException("Impossibile correlare il messaggio di stato. Non e' stato inviato nessun messaggio con idSil " + messaggio.getSilRelatesTo());
                     }
                     messaggio.setCollaborazione(messaggioCollegato.getIdMessaggio());
                 }

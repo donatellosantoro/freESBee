@@ -47,19 +47,19 @@ public class HttpPortaDelegata extends RouteBuilder {
         if (logger.isInfoEnabled()) logger.info("Avvio la porta delegata all'indirizzo " + indirizzo);
         this.from(indirizzo)
                 .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PD_REQ"))
-//                .choice().when(header("CamelHttpMethod").isEqualTo("POST"))
+                //                .choice().when(header("CamelHttpMethod").isEqualTo("POST"))
                 .choice()
-                    .when(body().isNull())
-                    .otherwise().when(header("CamelHttpMethod").isEqualTo("POST"))
-                        .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                        .doTry()
-                        //.process(new SOAPProcessorReader())
-                        .process(SOAPProcessorReader.getInstance())
-                        .process(new ProcessInitialize())
-                        .to(FreesbeeCamel.SEDA_FILTRO_AUTENTICAZIONE)
-                        .process(new ProcessorPolling())
-                        .doCatch(Exception.class)
-                        .process(new FaultProcessor())
+                .when(body().isNull())
+                .otherwise().when(header("CamelHttpMethod").isEqualTo("POST"))
+                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+                .doTry()
+                //.process(new SOAPProcessorReader())
+                .process(SOAPProcessorReader.getInstance())
+                .process(new ProcessInitialize())
+                .to(FreesbeeCamel.SEDA_FILTRO_AUTENTICAZIONE)
+                .process(new ProcessorPolling())
+                .doCatch(Exception.class)
+                .process(new FaultProcessor())
                 .end()
                 .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PD_RESP"));
 
@@ -133,7 +133,9 @@ public class HttpPortaDelegata extends RouteBuilder {
 
         public void process(Exchange exchange) throws Exception {
             //ContextStartup.aggiungiThread(this.getClass().getName());
-            logger.error("Ricevuto messaggio SOAP non valido");
+            Exception e = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
+            if (logger.isDebugEnabled()) e.printStackTrace();
+            logger.error("Ricevuto messaggio SOAP non valido." + e.getMessage());
             Processor soapWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter("300", "SOAP_ENV:Server");
             soapWriter.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());

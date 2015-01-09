@@ -10,12 +10,17 @@ import it.unibas.icar.freesbee.utilita.MessageUtil;
 import it.unibas.icar.freesbee.xml.XmlUtil;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -27,11 +32,11 @@ import org.apache.cxf.helpers.XMLUtils;
 import org.apache.servicemix.soap.SoapFault;
 import org.apache.servicemix.soap.marshalers.SoapMarshaler;
 import org.apache.servicemix.soap.marshalers.SoapMessage;
-import org.apache.servicemix.soap.marshalers.SoapWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 public class SOAPProcessorWriterFactory {
 
@@ -89,7 +94,7 @@ public class SOAPProcessorWriterFactory {
             String eccezioneRestituire = (String) exchange.getProperty(CostantiBusta.ECCEZIONE_DA_RESTITUIRE);
             SoapFault faultApplicativo = (SoapFault) exchange.getProperty(CostantiSOAP.SOAP_FAULT);
             SoapMessage soapMessage = new SoapMessage();
-
+            String messaggioEccezione = (String) exchange.getProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION);
 //        Exception e = (Exception) exchange.getIn().getHeader("caught.exception");
             Exception e = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
             if (e != null) {
@@ -103,8 +108,16 @@ public class SOAPProcessorWriterFactory {
 //                stringaEccezione = "\n<![CDATA[ EGOV_IT_" + codiceErrore + " - Formato Busta non corretto]]>\n";
                 }
                 Map mappaHeaderSoapFault = (Map) exchange.getProperty(CostantiSOAP.SOAP_HEADERS + ".fault");
-                SoapFault soapFault = new SoapFault(QName.valueOf(tipoErrore), stringaEccezione);
-
+                SoapFault soapFault = null;
+                if (messaggioEccezione != null && !messaggioEccezione.isEmpty()) {
+                    String mex = "<value>\n\t" + messaggioEccezione + "\n</value>";
+                    DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                    Document doc = db.parse(new InputSource(new StringReader(mex)));
+                    DOMSource detail = new DOMSource(doc);
+                    soapFault = new SoapFault(QName.valueOf(tipoErrore), stringaEccezione, null, null, detail);
+                } else {
+                    soapFault = new SoapFault(QName.valueOf(tipoErrore), stringaEccezione);
+                }
                 soapMessage.setFault(soapFault);
                 if (logger.isInfoEnabled()) logger.info("MappaHeaderSoapFault " + mappaHeaderSoapFault);
                 soapMessage.setHeaders(mappaHeaderSoapFault);
@@ -144,8 +157,8 @@ public class SOAPProcessorWriterFactory {
                 }
                 soapMessage.setHeaders(mappaHeaderSoap);
             }
-            
-          SoapWriterFix soapWriter = new SoapWriterFix(soapMarshaler, soapMessage);
+
+            SoapWriterFix soapWriter = new SoapWriterFix(soapMarshaler, soapMessage);
 //            SoapWriter soapWriter = new SoapWriter(soapMarshaler, soapMessage);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             soapWriter.write(outputStream);
@@ -172,7 +185,9 @@ public class SOAPProcessorWriterFactory {
             exchange.setProperty(CostantiBusta.MESSAGGIO, messaggio);
             exchange.setProperty(CostantiBusta.RUOLO_NICA, nica);
             exchange.setProperty(CostantiBusta.VALOREPROFILOCOLLABORAZIONE, profiloColl);
-
+            exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, messaggioEccezione);
+            FreesbeeUtil.aggiungiInstestazioniHttp(messageIn, CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, messaggioEccezione);
+            messageIn.setHeader(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, messaggioEccezione);
             if (soapMessage.hasAttachments()) {
                 FreesbeeUtil.aggiungiInstestazioniHttp(messageIn, "Content-Type", soapWriter.getContentType());
             } else {

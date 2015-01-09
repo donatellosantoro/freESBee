@@ -131,6 +131,7 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
 //            Exception e = (Exception) exchange.getIn().getHeader("caught.exception");
             Exception e = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
             if (logger.isDebugEnabled()) e.printStackTrace();
+            e.printStackTrace();
             logger.error("Ricevuto messaggio SOAP non valido. " + e.getMessage());
             Processor soapWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter("001", "SOAP_ENV:Client");
             soapWriter.process(exchange);

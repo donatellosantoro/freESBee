@@ -7,8 +7,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -127,6 +129,32 @@ public class MessageUtil {
         } catch (IOException ex) {
             throw new FreesbeeException("Errore interno. Impossibile copiare il messaggio. " + ex.getLocalizedMessage());
         }
+    }
+
+    public static String printXmlSource(Source source) throws FreesbeeException {
+        StreamResult xmlOutput = null;
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            xmlOutput = new StreamResult(new StringWriter());
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            transformer.transform(source, xmlOutput);
+            return xmlOutput.getWriter().toString();
+        } catch (Exception e) {
+            throw new FreesbeeException("Errore nella scrittura del SOAP Fault");
+        }
+    }
+
+    public static String printXmlSource(Source source, String tagName) throws FreesbeeException {
+        String content = printXmlSource(source);
+        String startTag = "<" + tagName + ">";
+        String endTag = "</" + tagName + ">";
+        int startIndex = content.indexOf(startTag);
+        int endIndex = content.indexOf(endTag);
+        if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
+            return content.substring(startIndex + 2 + tagName.length(), endIndex).trim();
+        }
+        return null;
     }
 //    public static void copyHeaders(Message src, Message dest) {
 //        Map<String, Object> header = new HashMap<String, Object>();

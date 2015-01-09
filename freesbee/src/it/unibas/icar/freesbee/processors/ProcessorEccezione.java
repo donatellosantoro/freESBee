@@ -29,7 +29,7 @@ public class ProcessorEccezione implements Processor {
     private ProcessorWrapper processorWrapper;
     @Inject
     private ProcessorEnricherRisposta processorEnricherRisposta;
-    
+
     public ProcessorEccezione() {
     }
 
@@ -48,6 +48,8 @@ public class ProcessorEccezione implements Processor {
 
         String stringaEccezione = eccezione.getMessage();
         logger.error("E' stata lanciata una eccezione di FreESBee : \n\n'" + stringaEccezione + "'\n\n");
+        String messaggioEccezione = (String) exchange.getProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION);
+        logger.error("Messaggio Eccezione: "+messaggioEccezione);
 //        eccezione.printStackTrace();
 
 //        int codiceErrore = 300;
@@ -64,7 +66,6 @@ public class ProcessorEccezione implements Processor {
 //            logger.error("E' stato lanciato un eccezione generica " + eccezione);
 //            logger.error("Si stava processando il messaggio " + messaggio);
 //        }
-
         if (isGeneraIntestazioniEGov() == true) {
             //Il messaggio d'errore dovrà essere consegnato ad una porta di 
             //dominio, quindi bisogna preparare le intestazioni egov.
@@ -73,7 +74,6 @@ public class ProcessorEccezione implements Processor {
 //            Eccezione ecc = fac.getEccezione(codiceErrore);
 //            messaggio.getListaEccezioni().add(ecc);
 //            ecc.setMessaggio(messaggio);
-
             messaggio.setRiferimentoMessaggio(messaggio.getIdMessaggio());
             salvaMessaggio(messaggio);
             processorEnricherRisposta.process(exchange);
@@ -86,13 +86,11 @@ public class ProcessorEccezione implements Processor {
                 }
             }
             exchange.setProperty(CostantiSOAP.SOAP_HEADERS + ".fault", mappaHeaderSoapFault);
-
             SoapFault soapFault = new SoapFault(QName.valueOf(tipoErrore), stringaEccezione);
 
             SoapMessage soapMessage = new SoapMessage();
             soapMessage.setFault(soapFault);
-            if (logger.isInfoEnabled())
-                logger.info("MappaHeaderSoapFault " + mappaHeaderSoapFault);
+            if (logger.isInfoEnabled()) logger.info("MappaHeaderSoapFault " + mappaHeaderSoapFault);
             soapMessage.setHeaders(mappaHeaderSoapFault);
         }
     }

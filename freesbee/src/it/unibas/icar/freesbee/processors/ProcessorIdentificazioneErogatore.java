@@ -133,6 +133,7 @@ public class ProcessorIdentificazioneErogatore implements Processor {
             }
         }
         messaggio.aggiungiEccezione(CostantiEccezioni.AZIONE_NON_RICONOSCIUTA);
+        logger.error("Non esiste alcuna azione " + stringaAzione + " nell'accordo di servizio " + as.getNome());
         throw new FreesbeeException("Non esiste alcuna azione " + stringaAzione + " nell'accordo di servizio " + as.getNome());
     }
 
@@ -146,6 +147,7 @@ public class ProcessorIdentificazioneErogatore implements Processor {
             }
         }
         messaggio.aggiungiEccezione(CostantiEccezioni.AZIONE_NON_RICONOSCIUTA);
+        logger.error("Non esiste alcuna azione " + stringaAzione + " nel servizio " + servizio.getNome());
         throw new FreesbeeException("Non esiste alcuna azione " + stringaAzione + " nel servizio " + servizio.getNome());
     }
 

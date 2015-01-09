@@ -40,7 +40,7 @@ public class ContentBasedRouterSbustamento extends RouteBuilder {
             //ContextStartup.aggiungiThread(this.getClass().getName());
             logger.error("L'intestazione " + CostantiBusta.IMBUSTA_RICHIESTA_RISPOSTA + " contiene un valore sconosciuto o nullo: " +
                          exchange.getIn().getHeader(CostantiBusta.IMBUSTA_RICHIESTA_RISPOSTA));
-            logger.error("Il messaggio verr� scartato.");
+            logger.error("Il messaggio verra' scartato.");
         }
 
     }

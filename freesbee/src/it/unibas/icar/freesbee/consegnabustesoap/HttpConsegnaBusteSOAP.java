@@ -2,11 +2,9 @@ package it.unibas.icar.freesbee.consegnabustesoap;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import it.unibas.guicefreesbee.ContextStartup;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.exception.SOAPFaultException;
 import it.unibas.icar.freesbee.modello.AccordoServizio;
-import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.processors.ProcessorSbloccaPollingConsumerPortaApplicativa;
@@ -18,13 +16,17 @@ import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
+import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.Map;
-import org.apache.camel.Endpoint;
+import java.util.Set;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
+import org.apache.camel.component.http.HttpEndpoint;
+import org.apache.camel.component.http.HttpOperationFailedException;
+import org.apache.camel.component.http.HttpProducer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -84,7 +86,7 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
             //ContextStartup.aggiungiThread(this.getClass().getName());
             Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
             if (logger.isDebugEnabled()) logger.debug("Intestazioni del messaggio: " + FreesbeeUtil.stampaIntestazioni(exchange));
-            
+
             String connettoreServizioApplicativo = messaggio.getConnettoreServizioApplicativo();
             if (logger.isDebugEnabled()) logger.debug("Connettore servizio applicativo: " + connettoreServizioApplicativo);
             if (connettoreServizioApplicativo == null) {
@@ -97,11 +99,11 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
             if (logger.isInfoEnabled()) logger.info(generaMessaggioLog(messaggio));
             HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
             httpComponent.createEndpoint(connettoreServizioApplicativo);
-            Endpoint endpoint = getContext().getEndpoint(connettoreServizioApplicativo);
+            HttpEndpoint endpoint = (HttpEndpoint) getContext().getEndpoint(connettoreServizioApplicativo);
 
             try {
                 ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_SA_REQ").process(exchange);
-                Producer producer = endpoint.createProducer();
+                HttpProducer producer = (HttpProducer) endpoint.createProducer();
                 producer.start();
                 producer.process(exchange);
                 producer.stop();
@@ -115,11 +117,34 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
                     exchange.setProperty(Exchange.EXCEPTION_CAUGHT, new SOAPFaultException((String) objectEx));
                 }
 
+            } catch (HttpOperationFailedException hofe) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
+                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
+                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
+                        .append("\nDescrizione errore: ").append(hofe.getMessage());
+                //logger.error(sb.toString());
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+//                FreesbeeUtil.aggiungiInstestazioniHttp(exchange.getOut(), CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+                throw new FreesbeeException(sb.toString());
+            } catch (UnknownHostException uhe) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
+                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
+                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
+                        .append("\nDescrizione errore: Host sconosciuto: ").append(uhe.getMessage());
+                //logger.error(sb.toString());
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+//                FreesbeeUtil.aggiungiInstestazioniHttp(exchange.getOut(), CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
+                throw new FreesbeeException(sb.toString());
             } catch (Exception e) {
-                e.printStackTrace();
-                logger.error("Errore nell'inoltro della busta soap. " + e);
-                logger.error("Body: "+ MessageUtil.getString(exchange.getIn()));
+                if (logger.isDebugEnabled()) e.printStackTrace();
+                logger.error("Errore nell'inoltro della busta soap. " + e.getMessage());
+                //logger.error("Body: " + MessageUtil.getString(exchange.getIn()));
                 String errore = "Impossibile inoltrare la busta soap al servizio applicativo " + connettoreServizioApplicativo;
+                exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, errore + ". " + e.getMessage());
+//                FreesbeeUtil.aggiungiInstestazioniHttp(exchange.getOut(), CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, errore + ". " + e.getMessage());
+
                 throw new FreesbeeException(errore + ". " + e.getMessage());
             }
             try {
@@ -153,7 +178,11 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
             soapReader.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());
             FreesbeeUtil.copiaIntestazioniMime(exchange.getIn(), exchange.getOut());
-            if(logger.isInfoEnabled()) logger.info("Ricevuta risposta dal servizio applicativo");
+            InputStream streamIn = MessageUtil.getStream(exchange.getIn());
+            InputStream streamOut = MessageUtil.getStream(exchange.getOut());
+            streamIn.close();
+            streamOut.close();
+            if (logger.isInfoEnabled()) logger.info("Ricevuta risposta dal servizio applicativo");
         }
     }
 
