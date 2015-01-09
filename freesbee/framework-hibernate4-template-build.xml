@@ -60,6 +60,17 @@
                     outputfilename="${ant.project.name}.sql" />
         </hibernatetool>
     </target>
+    
+    <target name="schemaexport-delta" depends="-init-hibernate-tasks, build">
+        <hibernatetool destdir="${misc.dir}">
+            <classpath>
+                <path location="${build.dir}"/>
+            </classpath>
+            <annotationconfiguration configurationfile="${conf.dir}/hibernate.cfg.xml"/> 
+            <hbm2ddl export="false" update="true" drop="true" format="true"
+                    outputfilename="${ant.project.name}-delta.sql" />
+        </hibernatetool>
+    </target>
 
     <target name="-prepare-hbm" depends="prepare">
         <copy todir="${build.dir}">

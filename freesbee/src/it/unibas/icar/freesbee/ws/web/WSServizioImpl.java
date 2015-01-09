@@ -137,6 +137,9 @@ public class WSServizioImpl implements IWSServizio {
         servizioModificare.setTipo(servizio.getTipo());
         servizioModificare.setUrlServizio(servizio.getUrlServizio());
         servizioModificare.setAzioni(servizio.getAzioni());
+        servizioModificare.setMutuaAutenticazione(servizio.isMutuaAutenticazione());
+        servizioModificare.setUrlCertificato(servizio.getUrlCertificato());
+        servizioModificare.setUrlRidefinito(servizio.isUrlRidefinito());
     }
 
     private void riempiRiferimenti(Servizio servizio) throws DAOException {
