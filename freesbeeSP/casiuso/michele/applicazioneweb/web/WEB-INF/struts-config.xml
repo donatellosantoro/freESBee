@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="formLogin" type="com.myapp.struts.form.FormLogin"/>
+        <form-bean  name="formCerca" type="com.myapp.struts.form.FormCerca"/>
+        <form-bean  name="formImmatricolazione" type="com.myapp.struts.form.FormImmatricolazione"/>
+    </form-beans>
+    
+   
+
+
+   
+
+    <action-mappings>
+        <action path="/index"
+                type="com.myapp.struts.controllo.AzioneIniziale">
+            <forward name="successo"    path="/login.jsp"/> 
+        </action>
+        
+        <action path="/login"
+                input="/index.jsp"
+                type="com.myapp.struts.controllo.AzioneLogin"
+                name="formLogin"
+                scope="request"
+                validate="true">
+            <forward name="successo"    path="/paginaServizi.jsp"/> 
+            <forward name="fallimento"        path="/index.jsp"/>
+        </action>
+        
+        
+        <action   path="/cercaCittadino"
+                   input="/paginaCerca.jsp"
+                   type="com.myapp.struts.controllo.AzioneCerca"
+                   name="formCerca"
+                   scope="request"
+                   validate="true">
+            <forward name="ricercaFallita"        path="/paginaCerca.jsp"/>          
+            <forward name="successo"              path="/paginaImmatricolazione.jsp"/>
+            <forward name="accessoNegato"        path="/paginaAccessoNegato.jsp"/>
+          
+        </action>
+    
+        <action   path="/nuovaImmatricolazione"
+                  input="/paginaNuovaImmatricolazione.jsp"
+                  type="com.myapp.struts.controllo.AzioneNuovaImmatricolazione"
+                  name="formImmatricolazione"
+                  scope="request"
+                  validate="true">
+            <forward name="errore"        path="/paginaNuovaImmatricolazione.jsp"/>          
+            <forward name="successo"              path="/paginaSuccesso.jsp"/>
+            <forward name="accessoNegato"        path="/paginaAccessoNegato.jsp"/>
+        </action>
+    
+    
+    
+    </action-mappings>
+    
+    
+
+    <message-resources parameter="messaggi" />    
+    
+    
+
+  
+</struts-config>

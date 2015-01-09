@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Danilo/Desktop/configurazioni/ComuneWS.wsdl" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/ComuneWS.wsdl"/>
+    <system systemId="file:/C:/Users/Danilo/Desktop/configurazioni/ComuneWS_schema1.xsd" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/ComuneWS_schema1.xsd"/>
+    <system systemId="http://localhost:8080/comuneWSApplication/ComuneWS?wsdl" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/localhost_8080/comuneWSApplication/ComuneWS.wsdl"/>
+    <system systemId="http://localhost:8080/comuneWSApplication/ComuneWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/localhost_8080/comuneWSApplication/ComuneWS.xsd_1.xsd"/>
+    <system systemId="http://192.168.10.16:8080/comuneWSApplication/ComuneWS?wsdl" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/localhost_8080/comuneWSApplication/ComuneWS.wsdl"/>
+    <system systemId="http://192.168.10.16:8080/comuneWSApplication/ComuneWS?xsd=1" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/localhost_8080/comuneWSApplication/ComuneWS.xsd_1.xsd"/>
+    <system systemId="file:/C:/Users/Danilo/Desktop/EsempioWS/comuneWSApplication/ComuneWS.wsdl" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/ComuneWS.wsdl"/>
+    <system systemId="file:/C:/Users/Danilo/Desktop/EsempioWS/comuneWSApplication/ComuneWS_schema1.xsd" uri="src/conf/xml-resources/web-service-references/ComuneWS/wsdl/ComuneWS_schema1.xsd"/>
+</catalog>

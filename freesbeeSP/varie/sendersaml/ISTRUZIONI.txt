@@ -1,0 +1,11 @@
+ISTRUZIONI ESECUZIONE
+
+digitare da riga di comando (posizionandosi con il terminale in questa cartella)
+
+ant run
+
+
+NOTE:
+
+Se si devono modificare dei percorsi o degli indirizzi da contattare, modificare il file it.unibas.sendersaml.controllo.Controllo
+

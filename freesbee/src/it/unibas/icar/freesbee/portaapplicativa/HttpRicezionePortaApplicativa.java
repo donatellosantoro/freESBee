@@ -14,12 +14,21 @@ import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.direct.DirectEndpoint;
+import org.apache.camel.component.jetty.JettyHttpComponent;
+import org.apache.camel.util.jsse.ClientAuthentication;
+import org.apache.camel.util.jsse.KeyManagersParameters;
+import org.apache.camel.util.jsse.KeyStoreParameters;
+import org.apache.camel.util.jsse.SSLContextParameters;
+import org.apache.camel.util.jsse.SSLContextServerParameters;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
 
 @Singleton
 public class HttpRicezionePortaApplicativa extends RouteBuilder {
@@ -35,6 +44,27 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
         Configurazione configurazione = dbManager.getConfigurazione();
         List<String> indirizziPortaApplicativa = configurazione.getListaIndirizziPortaApplicativa();
         for (String indirizzo : indirizziPortaApplicativa) {
+
+JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
+SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
+sslConnector.setPort(28080);
+//sslConnector.setKeystore("/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
+sslConnector.setKeystore("/Users/michele/Desktop/Regione/SOGEI/testsogei_RB.jks");
+sslConnector.setKeyPassword("password");
+//sslConnector.setTruststore("/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
+sslConnector.setTruststore("/Users/michele/Desktop/Regione/SOGEI/testsogei_RB.jks");
+
+//sslConnector.setKeystore("/home/HOSTING/michele.santomauro/testsogei/testsogei.jks");
+//sslConnector.setTruststore("/home/HOSTING/michele.santomauro/testsogei/testsogei.jks");
+
+sslConnector.setTrustPassword("password");
+sslConnector.setPassword("password");
+sslConnector.setNeedClientAuth(true);
+Map<Integer, SslSelectChannelConnector> connectors = new HashMap<Integer, SslSelectChannelConnector>();
+connectors.put(28080, sslConnector);
+jettyComponent.setSslSocketConnectors(connectors);
+logger.info("\n\n indirizzo = " + indirizzo + "\n\n");
+
             this.avviaPortaApplicativa("jetty:" + indirizzo);
         }
     }

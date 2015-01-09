@@ -2,6 +2,7 @@ package it.unibas.icar.freesbee.inoltrobustaegov;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import it.unibas.icar.freesbee.contrib.AuthSSLProtocolSocketFactoryCustomized;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.exception.SOAPFaultException;
 import it.unibas.icar.freesbee.modello.Configurazione;
@@ -24,17 +25,22 @@ import it.unibas.icar.freesbee.ws.registroservizi.SoggettoRSRisposta;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.GetSoggettoSPCoop;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.IWSRegistroServizi;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.WSRegistroServiziImplService;
+import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
+import org.apache.camel.component.http.HttpOperationFailedException;
 import org.apache.commons.httpclient.ProtocolException;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -89,6 +95,33 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 }
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
+                
+//KeyStoreParameters ksp = new KeyStoreParameters();
+//ksp.setResource("/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
+//ksp.setPassword("password");
+// 
+//KeyManagersParameters kmp = new KeyManagersParameters();
+//kmp.setKeyStore(ksp);
+//kmp.setKeyPassword("password");
+// 
+//SSLContextParameters scp = new SSLContextParameters();
+//scp.setKeyManagers(kmp);
+// 
+//ProtocolSocketFactory factory = new SSLContextParametersSecureProtocolSocketFactory(scp);
+                
+InputStream inStream = ConfigurazioneStatico.class.getResourceAsStream("/freesbee.properties");
+Properties properties = new Properties();
+properties.load(inStream);
+
+
+//URL keystoreUrl = new URL("file:/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
+URL keystoreUrl = new URL("file:" + properties.getProperty("url.keystore"));
+URL truststoreUrl = new URL("file:" + properties.getProperty("url.truststore"));
+ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, "password", truststoreUrl, "password");
+ 
+Protocol.registerProtocol("https",new Protocol("https",factory,443));
+logger.info("\n\n connettoreDestinatario = " + connettoreDestinatario + "\n\n");
+                
                 httpComponent.createEndpoint(connettoreDestinatario);
                 Endpoint endpoint = getContext().getEndpoint(connettoreDestinatario);
                 ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_PA_REQ").process(exchange);
@@ -121,6 +154,11 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 logger.error("Errore nell'inoltro della busta EGov. Il messaggio non viaggia in una connessione SSL. " + ssle);
                 String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ". Il messaggio non viaggia in una connessione SSL.";
                 throw new FreesbeeException(errore + ". - " + ssle.getMessage());
+            } catch (HttpOperationFailedException hfe) {
+                logger.error("Errore nell'inoltro della busta EGov. " + hfe + "\n Risposta: " + hfe.getResponseBody());
+                String errore = "Si e' verificato un errore mentre si cercava di contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
+                hfe.printStackTrace();
+                throw new FreesbeeException(errore + ". -  " + hfe.getMessage());
             } catch (Exception e) {
                 logger.error("Errore nell'inoltro della busta EGov. " + e);
                 String errore = "Si e' verificato un errore mentre si cercava di contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
