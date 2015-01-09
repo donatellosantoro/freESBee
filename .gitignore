@@ -14,7 +14,14 @@ hs_err_pid*
 /freesbeeSP/casiuso/michele/applicazione/nbproject/
 /freesbeeSP/casiuso/michele/applicazione/dist/
 /freesbeeSP/casiuso/michele/applicazione/build/
+<<<<<<< HEAD
 /freesbeeSP/varie/sendersaml/build/classes/
 
 /freesbee/build/
 /freesbee/src/conf/freesbee.properties
+=======
+dependent.properties
+freesbee/build
+.DS_Store
+nbproject.properties
+>>>>>>> 6da697987a1a3066820e5eac3b9b95c0acfce708
