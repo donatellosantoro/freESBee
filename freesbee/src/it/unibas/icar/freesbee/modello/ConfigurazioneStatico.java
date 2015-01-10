@@ -31,6 +31,10 @@ public class ConfigurazioneStatico {
     private int threadJettyPoolMax;
     private long intervalloSincronizzazione;
     private int intervalloSincronizzazioneTotale;
+    private String fileKeyStore;
+    private String passwordKeyStore;
+    private String fileTrustStore;
+    private String passwordTrustStore;
     private boolean attivo = true;
     private boolean tracciaFile = false;
     private int concurrentConsumer;
@@ -59,6 +63,10 @@ public class ConfigurazioneStatico {
             this.threadJettyPoolMax = Integer.parseInt(properties.getProperty("thread.jetty.pool.max"));
             this.intervalloSincronizzazione = Long.parseLong(properties.getProperty("sincronizzazione.intervallo"));
             this.intervalloSincronizzazioneTotale = Integer.parseInt(properties.getProperty("sincronizzazioneTotale.intervallo"));
+            this.fileKeyStore = properties.getProperty("keystore.file");
+            this.passwordKeyStore = properties.getProperty("keystore.password");
+            this.fileTrustStore = properties.getProperty("truststore.file");
+            this.passwordTrustStore = properties.getProperty("truststore.password");
             this.percorsoFile = properties.getProperty("file.percorso");
             String tracciaAttiva = properties.getProperty("file.traccia");
             if (tracciaAttiva.equalsIgnoreCase("true")) {
@@ -75,6 +83,7 @@ public class ConfigurazioneStatico {
                 this.cacheWS = Boolean.parseBoolean(cacheWSString);
             }
             this.concurrentConsumer = Integer.parseInt(properties.getProperty("concurrentConsumer"));
+            
             inStream = ConfigurazioneStatico.class.getResourceAsStream("/build.properties");
             properties.load(inStream);
             String majorVersion = properties.getProperty("major.version");
@@ -165,6 +174,38 @@ public class ConfigurazioneStatico {
 
     public void setIntervalloSincronizzazioneTotale(int intervalloSincronizzazioneTotale) {
         this.intervalloSincronizzazioneTotale = intervalloSincronizzazioneTotale;
+    }
+
+    public String getFileKeyStore() {
+        return fileKeyStore;
+    }
+
+    public void setFileKeyStore(String fileKeyStore) {
+        this.fileKeyStore = fileKeyStore;
+    }
+
+    public String getPasswordKeyStore() {
+        return passwordKeyStore;
+    }
+
+    public void setPasswordKeyStore(String passwordKeyStore) {
+        this.passwordKeyStore = passwordKeyStore;
+    }
+
+    public String getFileTrustStore() {
+        return fileTrustStore;
+    }
+
+    public void setFileTrustStore(String fileTrustStore) {
+        this.fileTrustStore = fileTrustStore;
+    }
+
+    public String getPasswordTrustStore() {
+        return passwordTrustStore;
+    }
+
+    public void setPasswordTrustStore(String passwordTrustStore) {
+        this.passwordTrustStore = passwordTrustStore;
     }
 
     public boolean isAttivo() {

@@ -2,7 +2,6 @@ package it.unibas.icar.freesbee.modello;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 public class Configurazione{    
@@ -21,7 +18,9 @@ public class Configurazione{
     
     private long id;
     private String indirizzoPortaDelegata = "https://localhost:8192/PD/";
+    private boolean mutuaAutenticazionePortaDelegata;
     private String indirizzoPortaApplicativa = "http://localhost:8196/PA/";
+    private boolean mutuaAutenticazionePortaApplicativa;
     private String tempo = TEMPO_LOCALE;
     private boolean inviaANICA;
     private String connettoreRegistroServizi = "http://localhost:8191/ws/registroServizi";
@@ -90,6 +89,15 @@ public class Configurazione{
     public void setIndirizzoPortaApplicativa(String indirizzoPortaApplicativa) {
         this.indirizzoPortaApplicativa = indirizzoPortaApplicativa;
     }
+
+    @Column(nullable=false)
+    public boolean isMutuaAutenticazionePortaApplicativa() {
+        return mutuaAutenticazionePortaApplicativa;
+    }
+
+    public void setMutuaAutenticazionePortaApplicativa(boolean mutuaAutenticazionePortaApplicativa) {
+        this.mutuaAutenticazionePortaApplicativa = mutuaAutenticazionePortaApplicativa;
+    }
     
     @Column(nullable=false)
     public String getIndirizzoPortaDelegata() {
@@ -109,9 +117,17 @@ public class Configurazione{
         return listaIndirizzi;
     }
 
-
     public void setIndirizzoPortaDelegata(String indirizzoPortaDelegata) {
         this.indirizzoPortaDelegata = indirizzoPortaDelegata;
+    }
+    
+    @Column(nullable=false)
+    public boolean isMutuaAutenticazionePortaDelegata() {
+        return mutuaAutenticazionePortaDelegata;
+    }
+
+    public void setMutuaAutenticazionePortaDelegata(boolean mutuaAutenticazionePortaDelegata) {
+        this.mutuaAutenticazionePortaDelegata = mutuaAutenticazionePortaDelegata;
     }
     
     @Column

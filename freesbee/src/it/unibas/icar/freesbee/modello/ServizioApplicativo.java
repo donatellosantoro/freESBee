@@ -16,7 +16,6 @@ public class ServizioApplicativo implements Serializable{
     private String descrizione;
     private String connettore;
     private boolean mutuaAutenticazione;
-    private String urlCertificato;
     private List<PortaApplicativa> listaPorteApplicative;
 
     @Id 
@@ -59,14 +58,6 @@ public class ServizioApplicativo implements Serializable{
 
     public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
         this.mutuaAutenticazione = mutuaAutenticazione;
-    }
-
-    public String getUrlCertificato() {
-        return urlCertificato;
-    }
-
-    public void setUrlCertificato(String urlCertificato) {
-        this.urlCertificato = urlCertificato;
     }
     
     @XmlTransient()

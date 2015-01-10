@@ -67,6 +67,7 @@ public class Messaggio {
     private boolean nica = false;
     private Soggetto nomeNica;
     private boolean mittentiMultipli = false;
+    private boolean mutuaAutenticazione;
     private List<Eccezione> listaEccezioni = new ArrayList<Eccezione>();
     private List<Trasmissione> listaTrasmissioni = new ArrayList<Trasmissione>();
     private List<Riscontro> listaRiscontri = new ArrayList<Riscontro>();
@@ -456,6 +457,15 @@ public class Messaggio {
 
     public void setMittentiMultipli(boolean mittentiMultipli) {
         this.mittentiMultipli = mittentiMultipli;
+    }
+
+    @Transient
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
+        this.mutuaAutenticazione = mutuaAutenticazione;
     }
     
 
