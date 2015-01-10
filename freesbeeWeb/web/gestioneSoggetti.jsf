@@ -84,7 +84,7 @@
                         <h:outputText value="Descrizione"/>
                         <h:inputText id="textDescrizione" value="#{vistaGestioneSoggetti.nuovoSoggetto.descrizione}" readonly="#{vistaGestioneSoggetti.elimina}"/>
 
-                        <h:outputText value="Mutua Autenticazione"/>
+                        <h:outputText value="Esegui Autenticazione"/>
                         <h:selectBooleanCheckbox value="#{vistaGestioneSoggetti.nuovoSoggetto.mutuaAutenticazione}" readonly="#{vistaGestioneSoggetti.elimina}"/>
                     </h:panelGrid>
 
@@ -144,7 +144,7 @@
                                         <h:outputText styleClass="headerText" value="Porta Dominio" />
                                     </h:column>
                                     <h:column>
-                                        <h:outputText styleClass="headerText" value="Mutua Autenticazione" />
+                                        <h:outputText styleClass="headerText" value="Autent." />
                                     </h:column>
                                     <h:column>
                                         <h:outputText styleClass="headerText" value="" />

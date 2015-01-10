@@ -59,6 +59,15 @@
                                 <h:outputLabel value="" style="font-size:7pt;color:grey"/>
                                 <h:outputLabel value="NB: Per applicare le modifiche bisogna riavviare freESBee" style="font-size:7pt;color:grey;width: 220px;display:block"/>
                                 
+                                <h:outputText value="Richiedi aut. Porta Delegata"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneConfigurazione.configurazione.mutuaAutenticazionePortaDelegata}"/>
+                                
+                                <h:outputText value="Richiedi aut. Porta Applicativa"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneConfigurazione.configurazione.mutuaAutenticazionePortaApplicativa}"/>
+                                
+                                <h:outputLabel value="" style="font-size:7pt;color:grey"/>
+                                <h:outputLabel value="TODO: spiegare significato di queste 2 check box" style="font-size:7pt;color:grey;width: 220px;display:block"/>
+                                
                                 <h:outputText value="Tempo" style="font-size:8pt"/>
                                 <h:selectOneRadio id="tempo" value="#{vistaGestioneConfigurazione.configurazione.tempo}" required="true" style="font-size:8pt">
                                     <f:selectItem itemValue="EGOV_IT_Locale" itemLabel="Locale"/>

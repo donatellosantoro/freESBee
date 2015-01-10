@@ -81,7 +81,7 @@
                                 <h:outputText value="Descrizione" style="font-size:8pt"/>
                                 <h:inputText id="textDescrizione" label="descrizione" style="font-size:8pt" value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.descrizione}" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
                                 
-                                <h:outputText value="Mutua Autenticazione"/>
+                                <h:outputText value="Esegui Autenticazione"/>
                                 <h:selectBooleanCheckbox value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.mutuaAutenticazione}" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
                             </h:panelGrid>                                
                             
@@ -144,7 +144,7 @@
                                         <h:outputText styleClass="headerText" value="Descrizione" />
                                     </h:column>
                                     <h:column>
-                                        <h:outputText styleClass="headerText" value="M. Auth" />
+                                        <h:outputText styleClass="headerText" value="Autent." />
                                     </h:column>
                                     <h:column>
                                         <h:outputText styleClass="headerText" value="" />
