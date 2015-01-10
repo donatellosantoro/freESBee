@@ -127,5 +127,7 @@ public class WSSoggettoImpl implements IWSSoggetto {
         soggettoModificare.setNome(soggetto.getNome());
         soggettoModificare.setPortaDominio(soggetto.getPortaDominio());
         soggettoModificare.setTipo(soggetto.getTipo());
+        soggettoModificare.setMutuaAutenticazione(soggetto.isMutuaAutenticazione());
+        soggettoModificare.setUrlCertificato(soggetto.getUrlCertificato());
     }
 }
