@@ -3,11 +3,11 @@ package it.unibas.icar.freesbee.modello;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Configurazione implements Serializable{
-    
+public class Configurazione implements Serializable {
+
     private int idProgressivo = 1;
     private Date oraUltimoRilascio = new Date();
-    
+
     private long id;
     private String indirizzoPortaDelegata;
     private String indirizzoPortaApplicativa;
@@ -21,8 +21,9 @@ public class Configurazione implements Serializable{
     private Soggetto soggettoErogatoreNICA;
     private boolean registroFreesbee;
     private String freesbeeVersion;
+    private boolean mutuaAutenticazionePortaDelegata;
+    private boolean mutuaAutenticazionePortaApplicativa;
 
-    
     public long getId() {
         return id;
     }
@@ -38,7 +39,7 @@ public class Configurazione implements Serializable{
     public void setConnettoreRegistroServizi(String connettoreRegistroServizi) {
         this.connettoreRegistroServizi = connettoreRegistroServizi;
     }
-    
+
     public String getIndirizzoPortaApplicativa() {
         return indirizzoPortaApplicativa;
     }
@@ -46,7 +47,7 @@ public class Configurazione implements Serializable{
     public void setIndirizzoPortaApplicativa(String indirizzoPortaApplicativa) {
         this.indirizzoPortaApplicativa = indirizzoPortaApplicativa;
     }
-    
+
     public String getIndirizzoPortaDelegata() {
         return indirizzoPortaDelegata;
     }
@@ -54,7 +55,7 @@ public class Configurazione implements Serializable{
     public void setIndirizzoPortaDelegata(String indirizzoPortaDelegata) {
         this.indirizzoPortaDelegata = indirizzoPortaDelegata;
     }
-    
+
     public boolean isInviaANICA() {
         return inviaANICA;
     }
@@ -62,7 +63,7 @@ public class Configurazione implements Serializable{
     public void setInviaANICA(boolean inviaANICA) {
         this.inviaANICA = inviaANICA;
     }
-            
+
     public boolean isNICA() {
         return NICA;
     }
@@ -70,7 +71,7 @@ public class Configurazione implements Serializable{
     public void setNICA(boolean NICA) {
         this.NICA = NICA;
     }
-    
+
     public String getTempo() {
         return tempo;
     }
@@ -126,5 +127,20 @@ public class Configurazione implements Serializable{
     public void setFreesbeeVersion(String freesbeeVersion) {
         this.freesbeeVersion = freesbeeVersion;
     }
-    
+
+    public boolean isMutuaAutenticazionePortaDelegata() {
+        return mutuaAutenticazionePortaDelegata;
+    }
+
+    public void setMutuaAutenticazionePortaDelegata(boolean mutuaAutenticazionePortaDelegata) {
+        this.mutuaAutenticazionePortaDelegata = mutuaAutenticazionePortaDelegata;
+    }
+
+    public boolean isMutuaAutenticazionePortaApplicativa() {
+        return mutuaAutenticazionePortaApplicativa;
+    }
+
+    public void setMutuaAutenticazionePortaApplicativa(boolean mutuaAutenticazionePortaApplicativa) {
+        this.mutuaAutenticazionePortaApplicativa = mutuaAutenticazionePortaApplicativa;
+    }
 }

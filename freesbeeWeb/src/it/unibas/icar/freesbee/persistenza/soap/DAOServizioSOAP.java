@@ -170,6 +170,7 @@ public class DAOServizioSOAP implements IDAOServizio {
         servizio.setTipo(servizioStub.getTipo());
         servizio.setCorrelato(servizioStub.isCorrelato());
         servizio.setUrlServizio(servizioStub.getUrlServizio());
+        servizio.setMutuaAutenticazione(servizioStub.isMutuaAutenticazione());
         if (servizioStub.getAzioni() != null) {
             servizio.setAllAzioni(false);
             servizio.setAzioni(servizioStub.getAzioni());
@@ -185,6 +186,7 @@ public class DAOServizioSOAP implements IDAOServizio {
         servizioStub.setTipo(servizio.getTipo());
         servizioStub.setCorrelato(servizio.isCorrelato());
         servizioStub.setUrlServizio(servizio.getUrlServizio());
+        servizioStub.setMutuaAutenticazione(servizio.isMutuaAutenticazione());
         if (!servizio.isAllAzioni()) servizioStub.setAzioni(servizio.getAzioni());
     }
 

@@ -114,5 +114,6 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
         servizioApplicativoModificare.setConnettore(servizioApplicativo.getConnettore());
         servizioApplicativoModificare.setDescrizione(servizioApplicativo.getDescrizione());
         servizioApplicativoModificare.setNome(servizioApplicativo.getNome());
+        servizioApplicativoModificare.setMutuaAutenticazione(servizioApplicativo.isMutuaAutenticazione());
     }
 }

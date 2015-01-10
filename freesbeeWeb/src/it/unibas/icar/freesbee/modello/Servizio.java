@@ -23,6 +23,7 @@ public class Servizio implements Serializable, Comparable {
     private String urlServizio;
     private String azioni;
     private boolean allAzioni = true;
+    private boolean mutuaAutenticazione;
 
     public long getId() {
         return id;
@@ -173,6 +174,14 @@ public class Servizio implements Serializable, Comparable {
         this.idFruitori = idFruitori;
     }
 
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
+        this.mutuaAutenticazione = mutuaAutenticazione;
+    }
+
     public long[] getArrayIdFruitori() {
         long[] array = new long[getIdFruitori().size()];
         for (int i = 0; i < array.length; i++) {
@@ -192,7 +201,6 @@ public class Servizio implements Serializable, Comparable {
         }
         this.azioni = builder.toString();
     }
-    
 
     @Override
     public String toString() {

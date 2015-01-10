@@ -110,6 +110,7 @@ public class DAOSoggettoSOAP implements IDAOSoggetto {
         soggetto.setTipo(soggettoStub.getTipo());
         soggetto.setDescrizione(soggettoStub.getDescrizione());
         soggetto.setPortaDominio(soggettoStub.getPortaDominio());
+        soggetto.setMutuaAutenticazione(soggettoStub.isMutuaAutenticazione());
     }
 
     private void copiaProprietaModelloToStub(it.unibas.icar.freesbee.ws.client.soggetto.cxf.Soggetto soggettoStub, Soggetto soggetto) {
@@ -118,5 +119,6 @@ public class DAOSoggettoSOAP implements IDAOSoggetto {
         soggettoStub.setTipo(soggetto.getTipo());
         soggettoStub.setDescrizione(soggetto.getDescrizione());
         soggettoStub.setPortaDominio(soggetto.getPortaDominio());
+        soggettoStub.setMutuaAutenticazione(soggetto.isMutuaAutenticazione());
     }
 }

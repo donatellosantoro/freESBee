@@ -92,6 +92,8 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
         configurazioneModificare.setNICA(freesbeeConfig.isNICA());
         configurazioneModificare.setTempo(freesbeeConfig.getTempo());
         configurazioneModificare.setRegistroFreesbee(freesbeeConfig.isRegistroFreesbee());
+        configurazioneModificare.setMutuaAutenticazionePortaApplicativa(freesbeeConfig.isMutuaAutenticazionePortaApplicativa());
+        configurazioneModificare.setMutuaAutenticazionePortaDelegata(freesbeeConfig.isMutuaAutenticazionePortaDelegata());
     }
 
     private void settaRiferimenti(Configurazione freesbeeConfig) throws DAOException {

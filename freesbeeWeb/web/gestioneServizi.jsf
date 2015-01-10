@@ -99,6 +99,8 @@
                                 <h:outputText value="Correlato" style="font-size:8pt"/>
                                 <h:selectBooleanCheckbox value="#{vistaGestioneServizi.nuovoServizio.correlato}" style="font-size:8pt"/>
 
+                                <h:outputText value="M. Auth"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneServizi.nuovoServizio.mutuaAutenticazione}" readonly="#{vistaGestioneServizi.elimina}"/>
 
                             </h:panelGrid>    
 
@@ -223,6 +225,9 @@
                                         <h:outputText styleClass="headerText" value="Correl." />
                                     </h:column>
                                     <h:column>
+                                        <h:outputText styleClass="headerText" value="M. Auth" />
+                                    </h:column>
+                                    <h:column>
                                         <h:outputText styleClass="headerText" value="" />
                                     </h:column>
                                     <h:column>
@@ -253,6 +258,9 @@
                             </h:column>
                             <h:column>
                                 <h:graphicImage value="#{pageContext.request.contextPath}/images/#{servizio.correlato}.png" styleClass="linkPicture"/>
+                            </h:column>
+                             <h:column>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/#{servizio.mutuaAutenticazione}.png" styleClass="linkPicture"/>
                             </h:column>
                             <h:column>
                                 <h:commandLink action="#{controlloGestioneServizi.schermoModificaDaTabella}">

@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="connettore" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descrizione" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="mutuaAutenticazione" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="nome" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlType;
     "connettore",
     "descrizione",
     "id",
+    "mutuaAutenticazione",
     "nome"
 })
 public class ServizioApplicativo {
@@ -40,6 +42,7 @@ public class ServizioApplicativo {
     protected String connettore;
     protected String descrizione;
     protected long id;
+    protected boolean mutuaAutenticazione;
     protected String nome;
 
     /**
@@ -104,6 +107,22 @@ public class ServizioApplicativo {
      */
     public void setId(long value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the mutuaAutenticazione property.
+     * 
+     */
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    /**
+     * Sets the value of the mutuaAutenticazione property.
+     * 
+     */
+    public void setMutuaAutenticazione(boolean value) {
+        this.mutuaAutenticazione = value;
     }
 
     /**

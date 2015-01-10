@@ -80,6 +80,9 @@
                                 
                                 <h:outputText value="Descrizione" style="font-size:8pt"/>
                                 <h:inputText id="textDescrizione" label="descrizione" style="font-size:8pt" value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.descrizione}" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
+                                
+                                <h:outputText value="Mutua Autenticazione"/>
+                                <h:selectBooleanCheckbox value="#{vistaGestioneServiziApplicativi.nuovoServizioApplicativo.mutuaAutenticazione}" readonly="#{vistaGestioneServiziApplicativi.elimina}"/>
                             </h:panelGrid>                                
                             
                             <h:panelGroup styleClass="bloccoPulsanti" >
@@ -141,6 +144,9 @@
                                         <h:outputText styleClass="headerText" value="Descrizione" />
                                     </h:column>
                                     <h:column>
+                                        <h:outputText styleClass="headerText" value="M. Auth" />
+                                    </h:column>
+                                    <h:column>
                                         <h:outputText styleClass="headerText" value="" />
                                     </h:column>
                                     <h:column>
@@ -159,6 +165,9 @@
                             </h:column>
                             <h:column>
                                 <h:outputText value="#{servizioApplicativo.descrizione}" />
+                            </h:column>
+                            <h:column>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/#{servizioApplicativo.mutuaAutenticazione}.png" styleClass="linkPicture"/>
                             </h:column>
                             <h:column><h:commandLink action="#{controlloGestioneServiziApplicativi.schermoModificaDaTabella}"><img title="Modifica servizio applicativo" alt="Modifica servizio applicativo" src="${pageContext.request.contextPath}/images/icons/servizio_edit.png" /></h:commandLink>
                             </h:column>

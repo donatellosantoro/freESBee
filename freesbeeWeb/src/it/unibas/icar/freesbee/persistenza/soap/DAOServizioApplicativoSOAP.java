@@ -121,6 +121,7 @@ public class DAOServizioApplicativoSOAP implements IDAOServizioApplicativo {
         servizioApplicativo.setNome(servizioStub.getNome());
         servizioApplicativo.setConnettore(servizioStub.getConnettore());
         servizioApplicativo.setDescrizione(servizioStub.getDescrizione());
+        servizioApplicativo.setMutuaAutenticazione(servizioStub.isMutuaAutenticazione());
     }
 
     private void copiaProprietaModelloToStub(it.unibas.icar.freesbee.ws.client.servizioapplicativo.cxf.ServizioApplicativo servizioStub, ServizioApplicativo servizioApplicativo) {
@@ -128,5 +129,6 @@ public class DAOServizioApplicativoSOAP implements IDAOServizioApplicativo {
         servizioStub.setNome(servizioApplicativo.getNome());
         servizioStub.setConnettore(servizioApplicativo.getConnettore());
         servizioStub.setDescrizione(servizioApplicativo.getDescrizione());
+        servizioStub.setMutuaAutenticazione(servizioApplicativo.isMutuaAutenticazione());
     }
 }

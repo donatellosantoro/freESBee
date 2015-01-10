@@ -28,6 +28,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="idErogatore" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="idFruitori" type="{http://www.w3.org/2001/XMLSchema}long" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="idPortaApplicativa" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="mutuaAutenticazione" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="nome" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="oldNomeForUpdate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="oldNomeSoggettoErogatoreForUpdate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -54,6 +55,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "idErogatore",
     "idFruitori",
     "idPortaApplicativa",
+    "mutuaAutenticazione",
     "nome",
     "oldNomeForUpdate",
     "oldNomeSoggettoErogatoreForUpdate",
@@ -74,6 +76,7 @@ public class Servizio {
     @XmlElement(nillable = true)
     protected List<Long> idFruitori;
     protected long idPortaApplicativa;
+    protected boolean mutuaAutenticazione;
     protected String nome;
     protected String oldNomeForUpdate;
     protected String oldNomeSoggettoErogatoreForUpdate;
@@ -216,6 +219,22 @@ public class Servizio {
      */
     public void setIdPortaApplicativa(long value) {
         this.idPortaApplicativa = value;
+    }
+
+    /**
+     * Gets the value of the mutuaAutenticazione property.
+     * 
+     */
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    /**
+     * Sets the value of the mutuaAutenticazione property.
+     * 
+     */
+    public void setMutuaAutenticazione(boolean value) {
+        this.mutuaAutenticazione = value;
     }
 
     /**

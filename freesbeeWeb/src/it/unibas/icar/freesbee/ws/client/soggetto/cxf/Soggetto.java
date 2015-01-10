@@ -20,6 +20,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence>
  *         &lt;element name="descrizione" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="mutuaAutenticazione" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="nome" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="oldNomeForUpdate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="oldTipoForUpdate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -38,6 +39,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "soggetto", propOrder = {
     "descrizione",
     "id",
+    "mutuaAutenticazione",
     "nome",
     "oldNomeForUpdate",
     "oldTipoForUpdate",
@@ -49,6 +51,7 @@ public class Soggetto {
 
     protected String descrizione;
     protected long id;
+    protected boolean mutuaAutenticazione;
     protected String nome;
     protected String oldNomeForUpdate;
     protected String oldTipoForUpdate;
@@ -95,6 +98,22 @@ public class Soggetto {
      */
     public void setId(long value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the mutuaAutenticazione property.
+     * 
+     */
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    /**
+     * Sets the value of the mutuaAutenticazione property.
+     * 
+     */
+    public void setMutuaAutenticazione(boolean value) {
+        this.mutuaAutenticazione = value;
     }
 
     /**

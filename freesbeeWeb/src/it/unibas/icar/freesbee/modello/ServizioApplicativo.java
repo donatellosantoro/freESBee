@@ -2,13 +2,13 @@ package it.unibas.icar.freesbee.modello;
 
 import java.io.Serializable;
 
+public class ServizioApplicativo implements Serializable, Comparable {
 
-public class ServizioApplicativo implements Serializable,Comparable{
-    
     private long Id;
     private String nome;
     private String descrizione;
     private String connettore;
+    private boolean mutuaAutenticazione;
 
     public long getId() {
         return Id;
@@ -42,8 +42,16 @@ public class ServizioApplicativo implements Serializable,Comparable{
         this.descrizione = descrizione;
     }
 
-    public int compareTo(Object o) {
-        return this.getNome().compareToIgnoreCase(((ServizioApplicativo)o).getNome());
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
     }
-    
+
+    public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
+        this.mutuaAutenticazione = mutuaAutenticazione;
+    }
+
+    public int compareTo(Object o) {
+        return this.getNome().compareToIgnoreCase(((ServizioApplicativo) o).getNome());
+    }
+
 }

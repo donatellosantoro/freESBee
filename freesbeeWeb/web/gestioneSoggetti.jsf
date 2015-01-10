@@ -16,17 +16,17 @@
         <h:panelGroup>
             <c:import url="menu.jsf"/>
         </h:panelGroup>
-        
+
         <h:panelGroup styleClass="bloccoCentrale">     
-            
+
             <rich:effect for="window" event="onload" type="DropOut" params="targetId:'formCampiSoggetto:boxSuccesso',delay:2.0,duration:0.8"/>
             <rich:effect for="window" event="onload" type="Highlight" params="targetId:'formCampiSoggetto:boxErrore',duration:0.8"/>
-            
+
             <t:saveState value="#{vistaGestioneSoggetti}" />
             <h:panelGroup styleClass="imgTitle">
                 <h:graphicImage value="/images/title/gestioneSoggetti.png" alt="Gestione Soggetti"/>   
             </h:panelGroup>
-            
+
             <rich:modalPanel id="panelEliminaSoggetto" showWhenRendered="#{vistaGestioneSoggetti.elimina}" height="160" width="320">
                 <f:facet name="header">
                     <h:panelGroup>
@@ -36,25 +36,25 @@
                 </f:facet>    
                 <h:form>
                     <h:outputText styleClass="confermaMessaggio" value="#{controlloGestioneSoggetti.conferma}"/>            
-                    
+
                     <h:panelGrid columns="2" style="margin:0px 7px 0px 7px;">
                         <h:outputText style="font-weight: bold;" value="Nome"/>
                         <h:outputText value="#{vistaGestioneSoggetti.nuovoSoggetto.nome}"/> 
-                        
+
                         <h:outputText style="font-weight: bold;" value="Descrizione"/>
                         <h:outputText value="#{vistaGestioneSoggetti.nuovoSoggetto.tipo}"/>
                     </h:panelGrid>
-                    
-                    
+
+
                     <h:panelGroup styleClass="bloccoPulsantiDialog">
                         <h:commandButton value="Elimina" action="#{controlloGestioneSoggetti.elimina}"/> 
                         <h:commandButton value="Annulla" action="#{controlloGestioneSoggetti.caricaGestioneSoggetti}" immediate="true"/>        
                     </h:panelGroup>
                 </h:form>
             </rich:modalPanel>
-            
+
             <h:form id="formCampiSoggetto">
-                
+
                 <rich:simpleTogglePanel id="boxNuovoSoggetto" opened="#{vistaGestioneSoggetti.pannelloVisibile}"  
                                         switchType="ajax" style="width:290px">
                     <f:facet name="header">
@@ -63,44 +63,47 @@
                             <h:outputText value="Nuovo Soggetto"/>
                         </h:panelGroup>
                     </f:facet>  
-                    
+
                     <rich:messages>
                         <f:facet name="errorMarker">
                             <h:graphicImage value="/images/error.gif" style="margin-right:5px"/>   
                         </f:facet>
                     </rich:messages>
-                    
+
                     <h:panelGrid columns="2">
                         <h:outputText value="Tipo"/>
                         <h:inputText id="textTipo" label="tipo" value="#{vistaGestioneSoggetti.nuovoSoggetto.tipo}" required="true"  readonly="#{vistaGestioneSoggetti.elimina}"/>
-                        
+
                         <h:outputText value="Nome"/>
                         <h:inputText id="textNome" label="nome" value="#{vistaGestioneSoggetti.nuovoSoggetto.nome}" required="true" readonly="#{vistaGestioneSoggetti.elimina}"/>
-                        
-                        
+
+
                         <h:outputText value="Porta Dominio"/>
                         <h:inputText id="textPortaDominio" value="#{vistaGestioneSoggetti.nuovoSoggetto.portaDominio}" readonly="#{vistaGestioneSoggetti.elimina}"/>
-                        
+
                         <h:outputText value="Descrizione"/>
                         <h:inputText id="textDescrizione" value="#{vistaGestioneSoggetti.nuovoSoggetto.descrizione}" readonly="#{vistaGestioneSoggetti.elimina}"/>
+
+                        <h:outputText value="Mutua Autenticazione"/>
+                        <h:selectBooleanCheckbox value="#{vistaGestioneSoggetti.nuovoSoggetto.mutuaAutenticazione}" readonly="#{vistaGestioneSoggetti.elimina}"/>
                     </h:panelGrid>
-                    
+
                     <h:panelGroup styleClass="bloccoPulsanti">
                         <h:commandButton value="Inserisci" action="#{controlloGestioneSoggetti.inserisci}" rendered="#{vistaGestioneSoggetti.inserisci}" />  
                         <h:commandButton value="Modifica" action="#{controlloGestioneSoggetti.modifica}" rendered="#{vistaGestioneSoggetti.modifica}" /> 
                         <h:commandButton value="Annulla" action="#{controlloGestioneSoggetti.caricaGestioneSoggetti}" rendered="#{!vistaGestioneSoggetti.elimina}" immediate="true"/>        
                     </h:panelGroup>
                 </rich:simpleTogglePanel>
-                
+
             </h:form>
-            
+
             <h:panelGroup id="boxSuccesso" styleClass="successo" rendered="#{controlloGestioneSoggetti.visualizzaMessaggio}">
                 <h:outputText styleClass="successoMessaggio" value="#{controlloGestioneSoggetti.messaggio}"/>
             </h:panelGroup>
             <h:panelGroup id="boxErrore" styleClass="errore" rendered="#{controlloGestioneSoggetti.visualizzaErrore}">
                 <h:outputText styleClass="erroreMessaggio" value="#{controlloGestioneSoggetti.errore}"/>
             </h:panelGroup>
-            
+
             <rich:tabPanel style="width:290px;margin-top:30px" headerAlignment="right"  disabledTabClass="titoloTab"
                            binding="#{vistaGestioneSoggetti.tabPanel}" >
                 <rich:tab disabled="true">
@@ -125,7 +128,7 @@
                         <rich:spacer height="30" />
                         <rich:dataTable id="listaSoggetti" rows="10" columnClasses="col" binding="#{vistaGestioneSoggetti.tabellaSoggetti}"
                                         value="#{vistaGestioneSoggetti.listaSoggetti}" var="soggetto">
-                            
+
                             <f:facet name="header">
                                 <rich:columnGroup>
                                     <h:column>
@@ -139,6 +142,9 @@
                                     </h:column>
                                     <h:column>
                                         <h:outputText styleClass="headerText" value="Porta Dominio" />
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText styleClass="headerText" value="Mutua Autenticazione" />
                                     </h:column>
                                     <h:column>
                                         <h:outputText styleClass="headerText" value="" />
@@ -160,12 +166,15 @@
                             <h:column>
                                 <h:outputText value="#{soggetto.portaDominio}" />
                             </h:column>
+                            <h:column>
+                                <h:graphicImage value="#{pageContext.request.contextPath}/images/#{soggetto.mutuaAutenticazione}.png" styleClass="linkPicture"/>
+                            </h:column>
                             <h:column><h:commandLink action="#{controlloGestioneSoggetti.schermoModificaDaTabella}"><img title="Modifica soggetto" alt="Modifica soggetto" src="${pageContext.request.contextPath}/images/icons/user_edit.png" /></h:commandLink>
                             </h:column>
                             <h:column>
                                 <h:commandLink action="#{controlloGestioneSoggetti.schermoEliminaDaTabella}"><img title="Elimina soggetto" alt="Elimina soggetto" src="${pageContext.request.contextPath}/images/icons/user_delete.png" /></h:commandLink>
                             </h:column>
-                            
+
                         </rich:dataTable> 
                     </h:form>
                 </rich:tab>

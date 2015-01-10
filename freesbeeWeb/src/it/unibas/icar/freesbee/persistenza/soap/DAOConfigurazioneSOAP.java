@@ -98,6 +98,8 @@ public class DAOConfigurazioneSOAP implements IDAOConfigurazione {
         c.setNICA(configurazione.isNICA());
         c.setTempo(configurazione.getTempo());
         c.setRegistroFreesbee(configurazione.isRegistroFreesbee());
+        c.setMutuaAutenticazionePortaApplicativa(configurazione.isMutuaAutenticazionePortaApplicativa());
+        c.setMutuaAutenticazionePortaDelegata(configurazione.isMutuaAutenticazionePortaDelegata());
     }
 
     private void copiaProprietaModelloToStub(it.unibas.icar.freesbee.ws.client.configurazione.cxf.Configurazione c, Configurazione configurazione) {
@@ -111,6 +113,8 @@ public class DAOConfigurazioneSOAP implements IDAOConfigurazione {
         c.setNICA(configurazione.isNICA());
         c.setTempo(configurazione.getTempo());
         c.setRegistroFreesbee(configurazione.isRegistroFreesbee());
+        c.setMutuaAutenticazionePortaApplicativa(configurazione.isMutuaAutenticazionePortaApplicativa());
+        c.setMutuaAutenticazionePortaDelegata(configurazione.isMutuaAutenticazionePortaDelegata());
     }
 
     private void settaRiferimenti(Utente utente, Configurazione c) throws DAOException {
@@ -122,8 +126,8 @@ public class DAOConfigurazioneSOAP implements IDAOConfigurazione {
             c.setSoggettoErogatoreNICA(daoSoggetto.findById(utente, c.getIdSoggettoErogatoreNICA(), false));
         }
     }
-    
-    private void copiaVersioneFreesbee(IWSConfigurazione port, Configurazione configurazione) throws DAOException{
+
+    private void copiaVersioneFreesbee(IWSConfigurazione port, Configurazione configurazione) throws DAOException {
         try {
             configurazione.setFreesbeeVersion(port.getFreesbeeVersion());
         } catch (Exception ex) {
