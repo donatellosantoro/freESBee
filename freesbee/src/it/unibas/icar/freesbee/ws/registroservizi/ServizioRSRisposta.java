@@ -25,6 +25,8 @@ public class ServizioRSRisposta {
     private String oldTipoForUpdate;
     private String oldNomeSoggettoErogatoreForUpdate;
     private String oldTipoSoggettoErogatoreForUpdate;
+    private String urlServizio;
+    private boolean mutuaAutenticazione;
 
     public ServizioRSRisposta() {
 
@@ -42,6 +44,8 @@ public class ServizioRSRisposta {
         this.oldTipoForUpdate = servizio.getOldTipoForUpdate();
         this.oldNomeSoggettoErogatoreForUpdate = servizio.getOldNomeSoggettoErogatoreForUpdate();
         this.oldTipoSoggettoErogatoreForUpdate = servizio.getOldTipoSoggettoErogatoreForUpdate();
+        this.urlServizio = servizio.getUrlServizio();
+        this.mutuaAutenticazione = servizio.isMutuaAutenticazione();
         for (Soggetto fruitore : servizio.getFruitori()) {
             fruitori.add(new SoggettoRSRisposta(fruitore));
         }
@@ -62,7 +66,8 @@ public class ServizioRSRisposta {
         servizio.setOldTipoForUpdate(this.oldTipoForUpdate);
         servizio.setOldNomeSoggettoErogatoreForUpdate(this.oldNomeSoggettoErogatoreForUpdate);
         servizio.setOldTipoSoggettoErogatoreForUpdate(this.oldTipoSoggettoErogatoreForUpdate);
-        
+        servizio.setUrlServizio(this.urlServizio);
+        servizio.setMutuaAutenticazione(this.mutuaAutenticazione);
         return servizio;
     }
 
@@ -170,4 +175,21 @@ public class ServizioRSRisposta {
     public void setOraRegistrazione(Date oraRegistrazione) {
         this.oraRegistrazione = oraRegistrazione;
     }
+
+    public String getUrlServizio() {
+        return urlServizio;
+    }
+
+    public void setUrlServizio(String urlServizio) {
+        this.urlServizio = urlServizio;
+    }
+
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    public void setMutuaAutenticazione(boolean isMutuaAutenticazione) {
+        this.mutuaAutenticazione = isMutuaAutenticazione;
+    }
+    
 }

@@ -41,7 +41,7 @@ public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
                 .process(processorIdentificaNica)
                 .choice()
                 .when(header(CostantiBusta.RUOLO_NICA)
-                .isEqualTo(true))
+                        .isEqualTo(true))
                 .to(FreesbeeCamel.SEDA_ENRICHER_NICA)
                 .otherwise()
                 .to(FreesbeeCamel.SEDA_ENRICHER_IDENTIFICATORE_EROGATORE);

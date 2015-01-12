@@ -98,21 +98,23 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 }
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
-                
+
                 if (messaggio.isMutuaAutenticazione()) {
-                    if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario);}
-                    
+                    if (logger.isInfoEnabled()) {
+                        logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario);
+                    }
+
                     URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
                     String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
-                    
+
                     URL truststoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileTrustStore());
                     String trustStorePassword = ConfigurazioneStatico.getInstance().getPasswordTrustStore();
-                    
+
                     ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, keyStorePassword, truststoreUrl, trustStorePassword);
 
-                    Protocol.registerProtocol("https",new Protocol("https",factory,443));
+                    Protocol.registerProtocol("https", new Protocol("https", factory, 443));
                 }
-                
+
                 httpComponent.createEndpoint(connettoreDestinatario);
                 Endpoint endpoint = getContext().getEndpoint(connettoreDestinatario);
                 ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_PA_REQ").process(exchange);
@@ -135,7 +137,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                     log.append("\n\n");
                     logger.debug(log);
                 } else {
-                    if (logger.isInfoEnabled()) logger.info("Ho inviato il messaggio all'indirizzo: "+connettoreDestinatario);
+                    if (logger.isInfoEnabled()) logger.info("Ho inviato il messaggio all'indirizzo: " + connettoreDestinatario);
                 }
             } catch (ConnectException e) {
                 logger.error("Errore nell'inoltro della busta EGov. " + e);
@@ -189,26 +191,26 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             soapReader.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());
             FreesbeeUtil.copiaIntestazioniMime(exchange.getIn(), exchange.getOut());
-            if(logger.isInfoEnabled()) logger.info("Risposta ricevuta dall'erogatore");
+            if (logger.isInfoEnabled()) logger.info("Risposta ricevuta dall'erogatore");
         }
 
         private String getConnettoreDestinatario(Messaggio messaggio, Configurazione configurazione) throws FreesbeeException {
             String connettoreDestinatario;
             if (configurazione.isInviaANICA()) {
-                connettoreDestinatario = getConnettoreNica(configurazione);
+                connettoreDestinatario = getConnettoreNica(configurazione, messaggio);
             } else {
                 connettoreDestinatario = messaggio.getConnettoreErogatore();
                 if (connettoreDestinatario == null || connettoreDestinatario.equals("")) {
                     throw new FreesbeeException("Impossibile inoltrare la busta EGov. Nessun connettore specificato per l'erogatore " + messaggio.getErogatore());
                 }
-                if (logger.isInfoEnabled()) logger.info("Invio la busta EGov direttamente all'erogatore all'indirizzo " + connettoreDestinatario);       
+                if (logger.isInfoEnabled()) logger.info("Invio la busta EGov direttamente all'erogatore all'indirizzo " + connettoreDestinatario);
             }
             return connettoreDestinatario;
         }
 
-        private String getConnettoreNica(Configurazione configurazione) throws FreesbeeException {
+        private String getConnettoreNica(Configurazione configurazione ,Messaggio messaggio) throws FreesbeeException {
             String connettoreDestinatario = null;
-            Soggetto soggettoNICA = configurazione.getSoggettoErogatoreRegistroServizi();
+            Soggetto soggettoNICA = configurazione.getSoggettoErogatoreRegistroServizi();  
             //                connettoreDestinatario = soggettoNICA.getPortaDominio();
             String chiave = soggettoNICA.getNomeBreve();
             if (ConfigurazioneStatico.getInstance().isCacheWS() && cacheConnettoreNica.containsKey(chiave)) {
@@ -245,6 +247,9 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 cacheConnettoreNica.put(chiave, connettoreDestinatario);
             }
             if (logger.isInfoEnabled()) logger.info("E' presente un nica. Inoltro tutto all'indirizzo " + connettoreDestinatario);
+            boolean mutuaAutenticazione = soggettoNICA.isMutuaAutenticazione();
+            if (logger.isDebugEnabled()) logger.info("Mutua Autenticazione " + mutuaAutenticazione);
+            messaggio.setMutuaAutenticazione(mutuaAutenticazione);
             return connettoreDestinatario;
         }
     }

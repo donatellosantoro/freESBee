@@ -71,6 +71,7 @@ public class CostantiSOAP {
     public static final String GRAVE = "GRAVE";
     
     public static final String SERVIZIO_NON_TROVATO = "-Servizio non trovato-";
+    public static final String SOGGETTO_NON_TROVATO = "-Soggetto non trovato-";
     
     //INTEGRAZIONE - HEADER
     //Con Camle 2.9 vengono salvate in lower case. Quindi li confrontiamo con ignoreCase
