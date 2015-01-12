@@ -3,6 +3,7 @@ package it.unibas.icar.freesbee.portaapplicativa;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import it.unibas.icar.freesbee.modello.Configurazione;
+import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DBManager;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
@@ -21,11 +22,6 @@ import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.direct.DirectEndpoint;
 import org.apache.camel.component.jetty.JettyHttpComponent;
-import org.apache.camel.util.jsse.ClientAuthentication;
-import org.apache.camel.util.jsse.KeyManagersParameters;
-import org.apache.camel.util.jsse.KeyStoreParameters;
-import org.apache.camel.util.jsse.SSLContextParameters;
-import org.apache.camel.util.jsse.SSLContextServerParameters;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
@@ -42,35 +38,32 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         Configurazione configurazione = dbManager.getConfigurazione();
+
         List<String> indirizziPortaApplicativa = configurazione.getListaIndirizziPortaApplicativa();
         for (String indirizzo : indirizziPortaApplicativa) {
 
-JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
-SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
-sslConnector.setPort(28080);
-//sslConnector.setKeystore("/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
-sslConnector.setKeystore("/Users/michele/Desktop/Regione/SOGEI/testsogei_RB.jks");
-sslConnector.setKeyPassword("password");
-//sslConnector.setTruststore("/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
-sslConnector.setTruststore("/Users/michele/Desktop/Regione/SOGEI/testsogei_RB.jks");
-
-//sslConnector.setKeystore("/home/HOSTING/michele.santomauro/testsogei/testsogei.jks");
-//sslConnector.setTruststore("/home/HOSTING/michele.santomauro/testsogei/testsogei.jks");
-
-sslConnector.setTrustPassword("password");
-sslConnector.setPassword("password");
-sslConnector.setNeedClientAuth(true);
-Map<Integer, SslSelectChannelConnector> connectors = new HashMap<Integer, SslSelectChannelConnector>();
-connectors.put(28080, sslConnector);
-jettyComponent.setSslSocketConnectors(connectors);
-logger.info("\n\n indirizzo = " + indirizzo + "\n\n");
-
+            if ((configurazione.isMutuaAutenticazionePortaApplicativa()) && (indirizzo.contains("https"))) {
+                JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
+                SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
+                sslConnector.setPort(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo));
+                sslConnector.setKeystore(ConfigurazioneStatico.getInstance().getFileKeyStore());
+                sslConnector.setKeyPassword(ConfigurazioneStatico.getInstance().getPasswordKeyStore());
+                sslConnector.setTruststore(ConfigurazioneStatico.getInstance().getFileTrustStore());
+                sslConnector.setTrustPassword(ConfigurazioneStatico.getInstance().getPasswordTrustStore());
+//                sslConnector.setPassword("password");
+                sslConnector.setNeedClientAuth(true);
+                Map<Integer, SslSelectChannelConnector> connectors = new HashMap<Integer, SslSelectChannelConnector>();
+                connectors.put(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo), sslConnector);
+                jettyComponent.setSslSocketConnectors(connectors);
+            }
+            
             this.avviaPortaApplicativa("jetty:" + indirizzo);
         }
     }
 
     private void avviaPortaApplicativa(String indirizzo) {
-        if (logger.isInfoEnabled()) logger.info("Avvio la porta applicativa all'indirizzo " + indirizzo);
+        if (logger.isInfoEnabled())
+            logger.info("Avvio la porta applicativa all'indirizzo " + indirizzo);
         this.from(indirizzo)
                 .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PA_REQ"))
                 //                .choice().when(header("CamelHttpMethod").isEqualTo("POST"))
@@ -113,7 +106,8 @@ logger.info("\n\n indirizzo = " + indirizzo + "\n\n");
             String idPortaApplicativaChannel = messaggio.getPortaApplicativaChannel();
 //            String canale = FreesbeeCamel.SEDA_POLLING_CONSUMER_PORTA_APPLICATIVA_CHANNEL + idPortaApplicativaChannel+FreesbeeCamel.SEDA_ARGS;
             String canale = FreesbeeCamel.DIRECT_POLLING_CONSUMER_PORTA_APPLICATIVA_CHANNEL + idPortaApplicativaChannel;
-            if (logger.isDebugEnabled()) logger.debug("Mi metto in attesa sul canale " + canale);
+            if (logger.isDebugEnabled())
+                logger.debug("Mi metto in attesa sul canale " + canale);
 
 //            SedaComponent sedaComponent = (SedaComponent) getContext().getComponent("seda");
 //            sedaComponent.createEndpoint(canale)
@@ -121,26 +115,32 @@ logger.info("\n\n indirizzo = " + indirizzo + "\n\n");
             endpoint.setExchangePattern(ExchangePattern.InOnly);
 //            Endpoint endpoint = getContext().getEndpoint(canale);
 
-            if (logger.isDebugEnabled()) logger.debug("Endpoint: " + endpoint);
+            if (logger.isDebugEnabled())
+                logger.debug("Endpoint: " + endpoint);
             PollingConsumer consumer = endpoint.createPollingConsumer();
             consumer.start();
             Exchange newExchange = consumer.receive();
             consumer.stop();
 
             if (newExchange.getProperty("FREESBEE_ACK") != null && !newExchange.isFailed()) {
-                if (logger.isInfoEnabled()) logger.info("Ho ricevuto una risposta di ack. Probabilmente il profilo di collaborazione non e' sincrono");
+                if (logger.isInfoEnabled())
+                    logger.info("Ho ricevuto una risposta di ack. Probabilmente il profilo di collaborazione non e' sincrono");
                 MessageUtil.setString(exchange.getOut(), "");
                 return;
             }
-            if (logger.isInfoEnabled()) logger.info("Ricevuta risposta sincrona");
+            if (logger.isInfoEnabled())
+                logger.info("Ricevuta risposta sincrona");
 
             Processor processorWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter();
             processorWriter.process(newExchange);
             MessageUtil.copyMessage(newExchange.getIn(), exchange.getOut());
             FreesbeeUtil.copiaIntestazioniMime(newExchange.getIn(), exchange.getOut());
-            if (logger.isInfoEnabled()) logger.info(generaMessaggioLog(messaggio));
-            if (logger.isDebugEnabled()) logger.debug("Intestazioni del messaggio: " + FreesbeeUtil.stampaIntestazioni(exchange));
-            if (logger.isDebugEnabled()) logger.debug("@ Messaggio Ricevuto!");
+            if (logger.isInfoEnabled())
+                logger.info(generaMessaggioLog(messaggio));
+            if (logger.isDebugEnabled())
+                logger.debug("Intestazioni del messaggio: " + FreesbeeUtil.stampaIntestazioni(exchange));
+            if (logger.isDebugEnabled())
+                logger.debug("@ Messaggio Ricevuto!");
         }
 
         private String generaMessaggioLog(Messaggio messaggio) {
@@ -160,7 +160,8 @@ logger.info("\n\n indirizzo = " + indirizzo + "\n\n");
             //ContextStartup.aggiungiThread(this.getClass().getName());
 //            Exception e = (Exception) exchange.getIn().getHeader("caught.exception");
             Exception e = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
-            if (logger.isDebugEnabled()) e.printStackTrace();
+            if (logger.isDebugEnabled())
+                e.printStackTrace();
             logger.error("Ricevuto messaggio SOAP non valido. " + e.getMessage());
             Processor soapWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter("001", "SOAP_ENV:Client");
             soapWriter.process(exchange);

@@ -56,12 +56,15 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
         String tipoErogatore = portaDelegata.getServizio().getErogatore().getTipo();
         String servizio = portaDelegata.getServizio().getNome();
         String tipoServizio = portaDelegata.getServizio().getTipo();
+        boolean mutuaAutenticazione;
 //        String connettoreErogatore = portaDelegata.getServizio().getErogatore().getPortaDominio();
         String connettoreErogatore = "";
         if ((portaDelegata.getServizio().getUrlServizio() == null) || (portaDelegata.getServizio().getUrlServizio().equals(""))) {
             connettoreErogatore = portaDelegata.getServizio().getErogatore().getPortaDominio();
+            mutuaAutenticazione = portaDelegata.getServizio().getErogatore().isMutuaAutenticazione();
         } else {
             connettoreErogatore = portaDelegata.getServizio().getUrlServizio();
+            mutuaAutenticazione = portaDelegata.getServizio().isMutuaAutenticazione();
         }
         boolean correlato = portaDelegata.getServizio().isCorrelato();
 
@@ -90,6 +93,7 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
         if (logger.isDebugEnabled()) logger.debug("confermaRicezione: " + confermaRicezione);
         if (logger.isDebugEnabled()) logger.debug("connettoreErogatore: " + connettoreErogatore);
         if (logger.isDebugEnabled()) logger.debug("correlato: " + correlato);
+        if (logger.isDebugEnabled()) logger.debug("mutuaAutenticazione: " + mutuaAutenticazione);
         if (logger.isDebugEnabled()) logger.debug("servizioCorrelato: " + servizioCorrelato);
 
         messaggio.setFruitore(fruitore);
@@ -105,6 +109,7 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
         messaggio.setInoltro(inoltro);
         messaggio.setConfermaRicezione(confermaRicezione);
         messaggio.setConnettoreErogatore(connettoreErogatore);
+        messaggio.setMutuaAutenticazione(mutuaAutenticazione);
         messaggio.setCorrelato(correlato);
         if (servizioCorrelato != null) {
             messaggio.setServizioCorrelato(servizioCorrelato.getNome());

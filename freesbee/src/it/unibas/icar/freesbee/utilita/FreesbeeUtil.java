@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
 @SuppressWarnings("unchecked")
 public class FreesbeeUtil {
 
-    private static Log logger = LogFactory.getLog(BustaUtil.class);
+    private static Log logger = LogFactory.getLog(FreesbeeUtil.class);
     public static final String PATTERN_INONLY = "http://www.w3.org/2004/08/wsdl/in-only";
     public static final String PATTERN_INOUT = "http://www.w3.org/2004/08/wsdl/in-out";
     public static final QName defaultQName = new QName("http://icar.unibas.it/FreESBee", "frsb");
@@ -64,12 +64,14 @@ public class FreesbeeUtil {
     public static void aggiungiInstestazioniHttp(Message messaggio, String chiave, String valore) {
         if (messaggio == null || chiave == null) {
             if (logger.isInfoEnabled()) {
-                if (logger.isInfoEnabled()) logger.info("Si vogliono aggiungere delle instestazioni http ad un messaggio nullo o con una chiave nulla");
+                if (logger.isInfoEnabled())
+                    logger.info("Si vogliono aggiungere delle instestazioni http ad un messaggio nullo o con una chiave nulla");
             }
             return;
         }
         //AGGIUNGO LE INTESTAZIONI DIRETTAMENTE AL MESSAGGIO        
-        if (logger.isInfoEnabled()) logger.info("Aggiungo l'intestazioni HTTP " + chiave + ": " + valore);
+        if (logger.isInfoEnabled())
+            logger.info("Aggiungo l'intestazioni HTTP " + chiave + ": " + valore);
         messaggio.setHeader(chiave, valore);
     }
 
@@ -144,13 +146,15 @@ public class FreesbeeUtil {
 
     public static String cercaIntestazioniIDRelatesToWsa(Exchange exchange) {
         Map<QName, DocumentFragment> mappaHeaders = (Map<QName, DocumentFragment>) exchange.getProperty(CostantiSOAP.SOAP_HEADERS);
-        if (logger.isInfoEnabled()) logger.info("La mappa delle instestazioni del messaggio vale: " + mappaHeaders);
+        if (logger.isInfoEnabled())
+            logger.info("La mappa delle instestazioni del messaggio vale: " + mappaHeaders);
         if (mappaHeaders == null) {
             return null;
         }
         Set<QName> setQ = mappaHeaders.keySet();
         for (QName qName : setQ) {
-            if (logger.isInfoEnabled()) logger.info("\t" + qName);
+            if (logger.isInfoEnabled())
+                logger.info("\t" + qName);
         }
         if (mappaHeaders == null) {
             return null;
@@ -172,7 +176,8 @@ public class FreesbeeUtil {
 
     public static void aggiungiIntestazioniInteroperabilita(Message message, Messaggio messaggio) {
         if (message == null || messaggio == null) {
-            if (logger.isInfoEnabled()) logger.info("Messaggio nullo da cui prendere le informazioni da aggiungere");
+            if (logger.isInfoEnabled())
+                logger.info("Messaggio nullo da cui prendere le informazioni da aggiungere");
             return;
         }
         if (messaggio.getIdSil() != null) {
@@ -220,5 +225,26 @@ public class FreesbeeUtil {
         if (content != null) {
             FreesbeeUtil.aggiungiInstestazioniHttp(dest, "Content-Type", content);
         }
+    }
+
+    public static int impostaNumeroPortaDaIndirizzo(String indirizzoCompleto) {
+        if (!(indirizzoCompleto.contains("https"))) {
+            logger.error("Il protocollo utilizzato non e' HTTPS. L'indirizzo specificato e': " + indirizzoCompleto);
+        }
+        
+        try {
+            if ((indirizzoCompleto.contains(":"))) {
+                String sottostringaIndirizzo = indirizzoCompleto.substring(indirizzoCompleto.indexOf(":") + 3);
+                String stringaNumeroPorta = sottostringaIndirizzo.substring(sottostringaIndirizzo.indexOf(":") + 1, sottostringaIndirizzo.indexOf("/"));
+                return Integer.parseInt(stringaNumeroPorta);
+            } else {
+                return Integer.parseInt("443");
+            }
+        } catch (NumberFormatException nfe) {
+            logger.error("Numero porta errato. L'indirizzo specificato e': " + indirizzoCompleto);
+            logger.error("Eccezione: " + nfe.toString());
+        }
+
+        return 0;
     }
 }

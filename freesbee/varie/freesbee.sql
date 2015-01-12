@@ -28,6 +28,8 @@
         indirizzoPortaApplicativa varchar(255) not null,
         indirizzoPortaDelegata varchar(255) not null,
         inviaANICA boolean,
+        mutuaAutenticazionePortaApplicativa boolean not null,
+        mutuaAutenticazionePortaDelegata boolean not null,
         registroFreesbee boolean not null,
         tempo varchar(255) not null,
         soggettoErogatoreNICA_id int8,
@@ -127,6 +129,7 @@
         id int8 not null,
         azioni varchar(255),
         correlato boolean not null,
+        mutuaAutenticazione boolean not null,
         nome varchar(255) not null,
         oraRegistrazione timestamp,
         privato boolean not null,
@@ -141,6 +144,7 @@
         id int8 not null,
         connettore varchar(255),
         descrizione varchar(255),
+        mutuaAutenticazione boolean not null,
         nome varchar(255),
         primary key (id)
     );
@@ -161,6 +165,7 @@
     create table Soggetto (
         id int8 not null,
         descrizione varchar(255),
+        mutuaAutenticazione boolean not null,
         nome varchar(255) not null,
         oraRegistrazione timestamp,
         portaDominio varchar(255),

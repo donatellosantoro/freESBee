@@ -1,6 +1,7 @@
 package it.unibas.icar.freesbee.portadelegatahttp;
 
 import it.unibas.icar.freesbee.modello.Configurazione;
+import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DBManager;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
@@ -12,12 +13,16 @@ import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.direct.DirectEndpoint;
+import org.apache.camel.component.jetty.JettyHttpComponent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
 
 public class HttpPortaDelegata extends RouteBuilder {
 
@@ -35,10 +40,26 @@ public class HttpPortaDelegata extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         Configurazione configurazione = dbManager.getConfigurazione();
+        
         List<String> listaIndirizziPortaDelegata = configurazione.getListaIndirizziPortaDelegata();
         for (String indirizzo : listaIndirizziPortaDelegata) {
             String indirizzoPortaDelegata = indirizzo + portaDelegataContattata + "/";
             // this.avviaPortaDelegata("jetty:" + indirizzoPortaDelegata + "?continuationTimeout=0");
+            
+            if ((configurazione.isMutuaAutenticazionePortaDelegata()) && (indirizzo.contains("https"))) {
+                JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
+                SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
+                sslConnector.setPort(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo));
+                sslConnector.setKeystore(ConfigurazioneStatico.getInstance().getFileKeyStore());
+                sslConnector.setKeyPassword(ConfigurazioneStatico.getInstance().getPasswordKeyStore());
+                sslConnector.setTruststore(ConfigurazioneStatico.getInstance().getFileTrustStore());
+                sslConnector.setTrustPassword(ConfigurazioneStatico.getInstance().getPasswordTrustStore());
+                sslConnector.setNeedClientAuth(true);
+                Map<Integer, SslSelectChannelConnector> connectors = new HashMap<Integer, SslSelectChannelConnector>();
+                connectors.put(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo), sslConnector);
+                jettyComponent.setSslSocketConnectors(connectors);
+            }
+            
             this.avviaPortaDelegata("jetty:" + indirizzoPortaDelegata); //FIXME
         }
     }

@@ -97,8 +97,10 @@ public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
 
             if ((servizioErogatore.getUrlServizio() == null) || (servizioErogatore.getUrlServizio().equals(""))) {
                 messaggio.setConnettoreErogatore(soggettoErogatore.getPortaDominio());
+                messaggio.setMutuaAutenticazione(soggettoErogatore.isMutuaAutenticazione());
             } else {
                 messaggio.setConnettoreErogatore(servizioErogatore.getUrlServizio());
+                messaggio.setMutuaAutenticazione(servizioErogatore.isMutuaAutenticazione());
             }
         }
     }

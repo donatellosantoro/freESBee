@@ -99,31 +99,19 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
                 
-//KeyStoreParameters ksp = new KeyStoreParameters();
-//ksp.setResource("/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
-//ksp.setPassword("password");
-// 
-//KeyManagersParameters kmp = new KeyManagersParameters();
-//kmp.setKeyStore(ksp);
-//kmp.setKeyPassword("password");
-// 
-//SSLContextParameters scp = new SSLContextParameters();
-//scp.setKeyManagers(kmp);
-// 
-//ProtocolSocketFactory factory = new SSLContextParametersSecureProtocolSocketFactory(scp);
-                
-InputStream inStream = ConfigurazioneStatico.class.getResourceAsStream("/freesbee.properties");
-Properties properties = new Properties();
-properties.load(inStream);
+                if (messaggio.isMutuaAutenticazione()) {
+                    if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario);}
+                    
+                    URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
+                    String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
+                    
+                    URL truststoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileTrustStore());
+                    String trustStorePassword = ConfigurazioneStatico.getInstance().getPasswordTrustStore();
+                    
+                    ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, keyStorePassword, truststoreUrl, trustStorePassword);
 
-
-//URL keystoreUrl = new URL("file:/Data/lavoro/git/bfh/project/persemid/Code/webid-jetty/src/main/resources/conf/certs/server/webid.jks");
-URL keystoreUrl = new URL("file:" + properties.getProperty("url.keystore"));
-URL truststoreUrl = new URL("file:" + properties.getProperty("url.truststore"));
-ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, "password", truststoreUrl, "password");
- 
-Protocol.registerProtocol("https",new Protocol("https",factory,443));
-logger.info("\n\n connettoreDestinatario = " + connettoreDestinatario + "\n\n");
+                    Protocol.registerProtocol("https",new Protocol("https",factory,443));
+                }
                 
                 httpComponent.createEndpoint(connettoreDestinatario);
                 Endpoint endpoint = getContext().getEndpoint(connettoreDestinatario);

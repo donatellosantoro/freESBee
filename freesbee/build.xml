@@ -15,7 +15,7 @@
     <target name="-init-build-files" depends="init">
         <fileset id="build.file.templates" dir=".">
             <include name="tomcat-template-build.xml" />
-            <include name="framework-hibernate-template-build.xml" />
+            <include name="framework-hibernate4-template-build.xml" />
             <include name="framework-lib-build.xml" />    
         </fileset>
     </target>

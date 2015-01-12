@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.modello;
 
+import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -10,14 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 @Entity
-public class Configurazione{    
+public class Configurazione {
+
+    private static Log logger = LogFactory.getLog(FreesbeeUtil.class);
     public static String TEMPO_LOCALE = "EGOV_IT_Locale";
     public static String TEMPO_SINCRONIZZATO = "EGOV_IT_SPC";
-    
     private long id;
-    private String indirizzoPortaDelegata = "https://localhost:8192/PD/";
+    private String indirizzoPortaDelegata = "http://localhost:8192/PD/";
     private boolean mutuaAutenticazionePortaDelegata;
     private String indirizzoPortaApplicativa = "http://localhost:8196/PA/";
     private boolean mutuaAutenticazionePortaApplicativa;
@@ -30,9 +34,9 @@ public class Configurazione{
     private long idSoggettoErogatoreNICA;
     private boolean registroFreesbee;
     private Soggetto soggettoErogatoreNICA;
-    
-    @Id 
-    @GeneratedValue(strategy=GenerationType.TABLE)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public long getId() {
         return id;
     }
@@ -40,7 +44,7 @@ public class Configurazione{
     public void setId(long id) {
         this.id = id;
     }
-    
+
     @Column
     public String getConnettoreRegistroServizi() {
         return connettoreRegistroServizi;
@@ -49,7 +53,7 @@ public class Configurazione{
     public void setConnettoreRegistroServizi(String connettoreRegistroServizi) {
         this.connettoreRegistroServizi = connettoreRegistroServizi;
     }
-    
+
     @Transient
     public long getIdSoggettoErogatoreRegistroServizi() {
         return idSoggettoErogatoreRegistroServizi;
@@ -58,7 +62,7 @@ public class Configurazione{
     public void setIdSoggettoErogatoreRegistroServizi(long idSoggettoErogatoreRegistroServizi) {
         this.idSoggettoErogatoreRegistroServizi = idSoggettoErogatoreRegistroServizi;
     }
-    
+
     @Transient
     public long getIdSoggettoErogatoreNICA() {
         return idSoggettoErogatoreNICA;
@@ -67,21 +71,21 @@ public class Configurazione{
     public void setIdSoggettoErogatoreNICA(long idSoggettoErogatoreNICA) {
         this.idSoggettoErogatoreNICA = idSoggettoErogatoreNICA;
     }
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     public String getIndirizzoPortaApplicativa() {
         return indirizzoPortaApplicativa;
     }
-    
+
     @Transient
-    public List<String> getListaIndirizziPortaApplicativa(){
+    public List<String> getListaIndirizziPortaApplicativa() {
         List<String> listaIndirizzi = new ArrayList<String>();
-        if(indirizzoPortaApplicativa==null){
+        if (indirizzoPortaApplicativa == null) {
             return listaIndirizzi;
         }
         String[] arrayIndirizzi = indirizzoPortaApplicativa.split(";");
         for (int i = 0; i < arrayIndirizzi.length; i++) {
-            listaIndirizzi.add(arrayIndirizzi[i].trim());   
+            listaIndirizzi.add(arrayIndirizzi[i].trim());
         }
         return listaIndirizzi;
     }
@@ -90,7 +94,7 @@ public class Configurazione{
         this.indirizzoPortaApplicativa = indirizzoPortaApplicativa;
     }
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     public boolean isMutuaAutenticazionePortaApplicativa() {
         return mutuaAutenticazionePortaApplicativa;
     }
@@ -98,21 +102,21 @@ public class Configurazione{
     public void setMutuaAutenticazionePortaApplicativa(boolean mutuaAutenticazionePortaApplicativa) {
         this.mutuaAutenticazionePortaApplicativa = mutuaAutenticazionePortaApplicativa;
     }
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     public String getIndirizzoPortaDelegata() {
         return indirizzoPortaDelegata;
     }
-    
+
     @Transient
-    public List<String> getListaIndirizziPortaDelegata(){
+    public List<String> getListaIndirizziPortaDelegata() {
         List<String> listaIndirizzi = new ArrayList<String>();
-        if(indirizzoPortaDelegata==null){
+        if (indirizzoPortaDelegata == null) {
             return listaIndirizzi;
         }
         String[] arrayIndirizzi = indirizzoPortaDelegata.split(";");
         for (int i = 0; i < arrayIndirizzi.length; i++) {
-            listaIndirizzi.add(arrayIndirizzi[i].trim());   
+            listaIndirizzi.add(arrayIndirizzi[i].trim());
         }
         return listaIndirizzi;
     }
@@ -120,8 +124,8 @@ public class Configurazione{
     public void setIndirizzoPortaDelegata(String indirizzoPortaDelegata) {
         this.indirizzoPortaDelegata = indirizzoPortaDelegata;
     }
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     public boolean isMutuaAutenticazionePortaDelegata() {
         return mutuaAutenticazionePortaDelegata;
     }
@@ -129,7 +133,7 @@ public class Configurazione{
     public void setMutuaAutenticazionePortaDelegata(boolean mutuaAutenticazionePortaDelegata) {
         this.mutuaAutenticazionePortaDelegata = mutuaAutenticazionePortaDelegata;
     }
-    
+
     @Column
     public boolean isInviaANICA() {
         return inviaANICA;
@@ -138,7 +142,7 @@ public class Configurazione{
     public void setInviaANICA(boolean inviaANICA) {
         this.inviaANICA = inviaANICA;
     }
-    
+
     @Column
     public boolean isNICA() {
         return NICA;
@@ -147,8 +151,8 @@ public class Configurazione{
     public void setNICA(boolean NICA) {
         this.NICA = NICA;
     }
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     public String getTempo() {
         return tempo;
     }
@@ -156,8 +160,8 @@ public class Configurazione{
     public void setTempo(String tempo) {
         this.tempo = tempo;
     }
-    
-    @OneToOne(optional=true)
+
+    @OneToOne(optional = true)
     @XmlTransient
     public Soggetto getSoggettoErogatoreNICA() {
         return soggettoErogatoreNICA;
@@ -166,8 +170,8 @@ public class Configurazione{
     public void setSoggettoErogatoreNICA(Soggetto soggettoErogatoreNICA) {
         this.soggettoErogatoreNICA = soggettoErogatoreNICA;
     }
-    
-    @OneToOne(optional=true)
+
+    @OneToOne(optional = true)
     @XmlTransient
     public Soggetto getSoggettoErogatoreRegistroServizi() {
         return soggettoErogatoreRegistroServizi;

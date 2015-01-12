@@ -267,15 +267,12 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
         Protocol protocol = new Protocol("https", easy, 8443);
         Protocol.registerProtocol("https", protocol);
 
-        //Configurazione sul server: parametri per l'acquisizione del certificato
-        Properties properties = new Properties();
-        InputStream inStream = ConfigurazioneStatico.class.getResourceAsStream("/freesbee.properties");
-        properties.load(inStream);
-        String percorsoKeyStore = properties.getProperty("keystore.path");
-        String fileKeyStore = properties.getProperty("keystore.file");
-        String password = properties.getProperty("keystore.password");
+        //Configurazione sul server: parametri per l'acquisizione dei dati del certificato
+        
+        String fileKeyStore = ConfigurazioneStatico.getInstance().getFileKeyStore();
+        String password = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
 
-        File sorgente = new File(percorsoKeyStore + "/" + fileKeyStore);
+        File sorgente = new File(fileKeyStore);
 
         KeyStoreParameters keyStoreParameters = new KeyStoreParameters();
         keyStoreParameters.setResource(sorgente.getPath());
@@ -290,20 +287,5 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
 
         JettyHttpComponent componentJetty = (JettyHttpComponent) context.getComponent("jetty", JettyHttpComponent.class);
         componentJetty.setSslContextParameters(sslContextParameters);
-
-
-//        componentJetty.setKeystore(sorgente.getPath());
-//        componentJetty.setSslKeyPassword(password);
-//        componentJetty.setSslPassword(password);
-//
-//        SslSocketConnector sslSocketConnector = componentJetty.getSslSocketConnector();
-//
-//        sslSocketConnector.setKeystore(sorgente.getPath());
-//        sslSocketConnector.setKeyPassword(password);
-//        sslSocketConnector.setTruststore(sorgente.getPath());
-//        sslSocketConnector.setTrustPassword(password);
-//        sslSocketConnector.setPassword(password);
-//        sslSocketConnector.setTruststoreType("JKS");
-
     }
 }
