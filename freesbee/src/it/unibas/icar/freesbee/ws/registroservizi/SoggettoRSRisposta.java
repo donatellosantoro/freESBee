@@ -17,6 +17,7 @@ public class SoggettoRSRisposta implements Serializable, Comparable {
     private Date oraRegistrazione;
     private String oldNomeForUpdate;
     private String oldTipoForUpdate;
+    private boolean mutuaAutenticazione;
     
     public SoggettoRSRisposta(){
         
@@ -31,6 +32,7 @@ public class SoggettoRSRisposta implements Serializable, Comparable {
         this.oraRegistrazione = soggetto.getOraRegistrazione();
         this.oldNomeForUpdate = soggetto.getOldNomeForUpdate();
         this.oldTipoForUpdate = soggetto.getOldTipoForUpdate();
+        this.mutuaAutenticazione = soggetto.isMutuaAutenticazione();
     }
     
     public Soggetto trasformaSoggetto(){
@@ -43,6 +45,7 @@ public class SoggettoRSRisposta implements Serializable, Comparable {
         soggetto.setOraRegistrazione(this.getOraRegistrazione());
         soggetto.setOldNomeForUpdate(this.getOldNomeForUpdate());
         soggetto.setOldTipoForUpdate(this.getOldTipoForUpdate());
+        soggetto.setMutuaAutenticazione(this.mutuaAutenticazione);
         return soggetto;
     }
 
@@ -118,4 +121,13 @@ public class SoggettoRSRisposta implements Serializable, Comparable {
     public void setOraRegistrazione(Date oraRegistrazione) {
         this.oraRegistrazione = oraRegistrazione;
     }
+
+    public boolean isMutuaAutenticazione() {
+        return mutuaAutenticazione;
+    }
+
+    public void setMutuaAutenticazione(boolean mutuaAutenticazione) {
+        this.mutuaAutenticazione = mutuaAutenticazione;
+    }
+    
 }

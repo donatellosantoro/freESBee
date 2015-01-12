@@ -13,10 +13,12 @@ import it.unibas.icar.freesbee.ws.registroservizi.AzioneRSRisposta;
 import it.unibas.icar.freesbee.ws.registroservizi.ServizioRS;
 import it.unibas.icar.freesbee.ws.registroservizi.ServizioRSRisposta;
 import it.unibas.icar.freesbee.ws.registroservizi.SoggettoRS;
+import it.unibas.icar.freesbee.ws.registroservizi.SoggettoRSRisposta;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.DAOException_Exception;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.GetServizioSPCoop;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.GetServizioSPCoopCorrelato;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.GetServizioSPCoopCorrelatoByAccordo;
+import it.unibas.icar.freesbee.ws.registroservizi.client.stub.GetSoggettoSPCoop;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.IWSRegistroServizi;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.SOAPFault_Exception;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.WSRegistroServiziImplService;
@@ -69,7 +71,6 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
 
         Date oraRegistrazione = new Date();
 
-
         String connettoreErogatore = ""; // CHIEDERE AL REGISTRO L'INDIRIZZO DEL NICA
         boolean correlato; // LEGGERE IL SERVIZIO DAL REGISTRO E VEDERE SE E' CORRELATO
         String profiloCollaborazione; // LEGGERE ACCORDO DI SERVIZIO
@@ -89,7 +90,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
                 indirizzoWSDL = indirizzoWSDL + "?wsdl";
             }
         }
-
+        boolean mutuaAutenticazione;
         try {
             ServizioRS servizioRS = new ServizioRS(tipoServizio, nomeServizio);
             servizioRS.setSoggettoErogatore(new SoggettoRS(tipoErogatore, erogatore));
@@ -131,6 +132,13 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
                     profiloCollaborazione = profiloCollaborazioneAzione;
                 }
             }
+            if ((servizio.getUrlServizio() == null) || (servizio.getUrlServizio().equals(""))) {
+                SoggettoRS soggettoErogatore = servizioRS.getSoggettoErogatore();
+                SoggettoRSRisposta soggettoRisposta = cercaSoggettoSPCoop(port, indirizzoRichiesta, soggettoErogatore);
+                mutuaAutenticazione = soggettoRisposta.isMutuaAutenticazione();
+            } else {
+                mutuaAutenticazione = servizio.isMutuaAutenticazione();
+            }
         } catch (Exception ex) {
             if (logger.isDebugEnabled()) ex.printStackTrace();
             logger.error("Errore mentre si richiedevano informazioni al registro dei servizi " + ex);
@@ -143,6 +151,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         if (logger.isDebugEnabled()) logger.debug("connettoreErogatore: " + connettoreErogatore);
         if (logger.isDebugEnabled()) logger.debug("correlato: " + correlato);
         if (logger.isDebugEnabled()) logger.debug("servizioCorrelato: " + servizioCorrelato);
+        if (logger.isDebugEnabled()) logger.debug("mutuaAutenticazione: " + mutuaAutenticazione);
 
         messaggio.setFruitore(fruitore);
         messaggio.setTipoFruitore(tipoFruitore);
@@ -158,6 +167,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         messaggio.setConfermaRicezione(confermaRicezione);
         messaggio.setConnettoreErogatore(connettoreErogatore);
         messaggio.setCorrelato(correlato);
+        messaggio.setMutuaAutenticazione(mutuaAutenticazione);
         if (servizioCorrelato != null) {
             messaggio.setServizioCorrelato(servizioCorrelato.getNome());
             messaggio.setTipoServizioCorrelato(servizioCorrelato.getTipo());
@@ -173,15 +183,16 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         return null;
     }
 
-    private static  Map<String, ServizioRSRisposta> cacheCorrelato = new HashMap<String, ServizioRSRisposta>();
+    private static Map<String, ServizioRSRisposta> cacheCorrelato = new HashMap<String, ServizioRSRisposta>();
+
     private ServizioRSRisposta cercaCorrelato(String indirizzoRichiesta, GetServizioSPCoopCorrelatoByAccordo correlatoRichiesta, IWSRegistroServizi port) {
         try {
             String chiave = correlatoRichiesta.getAccordoServizio().getNome() + "#" + correlatoRichiesta.getSoggetto().getTipo() + "#" + correlatoRichiesta.getSoggetto().getNome();
-            if(useCache && cacheCorrelato.containsKey(chiave)){
+            if (useCache && cacheCorrelato.containsKey(chiave)) {
                 return cacheCorrelato.get(chiave);
             }
             ServizioRSRisposta servizioCorrelato = port.getServizioSPCoopCorrelatoByAccordo(correlatoRichiesta, indirizzoRichiesta).getReturn();
-            if(useCache){
+            if (useCache) {
                 cacheCorrelato.put(chiave, servizioCorrelato);
             }
             return servizioCorrelato;
@@ -192,16 +203,17 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
     }
 
     private static Map<String, ServizioRSRisposta> cacheServizio = new HashMap<String, ServizioRSRisposta>();
+
     private ServizioRSRisposta cercaServizioSPCoop(IWSRegistroServizi port, String indirizzoRichiesta, ServizioRS servizioRS) throws DAOException_Exception, SOAPFault_Exception {
         try {
             String chiave = servizioRS.getTipo() + "#" + servizioRS.getNome() + servizioRS.getSoggettoErogatore().getTipo() + "#" + servizioRS.getSoggettoErogatore().getNome();
-            if(useCache && cacheServizio.containsKey(chiave)){
+            if (useCache && cacheServizio.containsKey(chiave)) {
                 return cacheServizio.get(chiave);
             }
             GetServizioSPCoop richiesta = new GetServizioSPCoop();
             richiesta.setServizio(servizioRS);
             ServizioRSRisposta servizio = port.getServizioSPCoop(richiesta, indirizzoRichiesta).getReturn();
-            if(useCache){
+            if (useCache) {
                 cacheServizio.put(chiave, servizio);
             }
             return servizio;
@@ -216,17 +228,44 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         }
     }
 
+    private static Map<String, SoggettoRSRisposta> cacheSoggetto = new HashMap<String, SoggettoRSRisposta>();
+
+    private SoggettoRSRisposta cercaSoggettoSPCoop(IWSRegistroServizi port, String indirizzoRichiesta, SoggettoRS soggettoRS) throws DAOException_Exception, SOAPFault_Exception {
+        try {
+            String chiave = soggettoRS.getTipo() + "#" + soggettoRS.getNome();
+            if (useCache && cacheSoggetto.containsKey(chiave)) {
+                return cacheSoggetto.get(chiave);
+            }
+            GetSoggettoSPCoop richiesta = new GetSoggettoSPCoop();
+            richiesta.setSoggetto(soggettoRS);
+            SoggettoRSRisposta soggetto = port.getSoggettoSPCoop(richiesta, indirizzoRichiesta).getReturn();
+            if (useCache) {
+                cacheSoggetto.put(chiave, soggetto);
+            }
+            return soggetto;
+        } catch (SOAPFault_Exception ex) {
+            String messaggioErrore = ex.getMessage();
+            logger.warn("Soggetto non trovato " + messaggioErrore);
+            if (messaggioErrore.contains(CostantiSOAP.SOGGETTO_NON_TROVATO)) {
+                return null;
+            } else {
+                throw ex;
+            }
+        }
+    }
+
     private static Map<String, ServizioRSRisposta> cacheServizioSPCoopCorrelato = new HashMap<String, ServizioRSRisposta>();
+
     private ServizioRSRisposta cercaServizioSPCoopCorrelato(IWSRegistroServizi port, String indirizzoRichiesta, ServizioRS servizioRS) throws DAOException_Exception, SOAPFault_Exception {
         try {
             String chiave = servizioRS.getTipo() + "#" + servizioRS.getNome() + servizioRS.getSoggettoErogatore().getTipo() + "#" + servizioRS.getSoggettoErogatore().getNome();
-            if(useCache && cacheServizioSPCoopCorrelato.containsKey(chiave)){
+            if (useCache && cacheServizioSPCoopCorrelato.containsKey(chiave)) {
                 return cacheServizioSPCoopCorrelato.get(chiave);
             }
             GetServizioSPCoopCorrelato richiesta = new GetServizioSPCoopCorrelato();
             richiesta.setServizio(servizioRS);
             ServizioRSRisposta servizio = port.getServizioSPCoopCorrelato(richiesta, indirizzoRichiesta).getReturn();
-            if(useCache){
+            if (useCache) {
                 cacheServizioSPCoopCorrelato.put(chiave, servizio);
             }
             return servizio;
