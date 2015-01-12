@@ -41,7 +41,11 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
 
         List<String> indirizziPortaApplicativa = configurazione.getListaIndirizziPortaApplicativa();
         for (String indirizzo : indirizziPortaApplicativa) {
-
+      
+            //TODO [Michele]: Errore: ERROR [it.unibas.icar.freesbee.modello.ConfigurazioneStatico - caricaValidatore] - Il file IntestazioniEGov.xsd non è valido. src-resolve: impossibile risolvere il nome "SOAP_ENV:actor" in un componente attribute declaration. - ERROR [it.unibas.icar.freesbee.modello.ConfigurazioneStatico - <init>] - Impossibile caricare la configurazione statica it.unibas.icar.freesbee.xml.XmlException: Il file IntestazioniEGov.xsd non è valido.
+            
+            //TODO [Michele]: Messaggio non visualizzato: quando si invia un msg alla PA e l'ID del messaggio è duplicato non viene mostrato questo errore
+            
             if ((configurazione.isMutuaAutenticazionePortaApplicativa()) && (indirizzo.contains("https"))) {
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();

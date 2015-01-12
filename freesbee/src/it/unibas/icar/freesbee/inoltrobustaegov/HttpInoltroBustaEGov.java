@@ -99,7 +99,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
                 
-                if (messaggio.isMutuaAutenticazione()) {
+                if ((configurazione.isMutuaAutenticazionePortaApplicativa()) && (connettoreDestinatario.contains("https"))) {
                     if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario);}
                     
                     URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
@@ -110,7 +110,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                     
                     ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, keyStorePassword, truststoreUrl, trustStorePassword);
 
-                    Protocol.registerProtocol("https",new Protocol("https",factory,443));
+                    Protocol.registerProtocol("https",new Protocol("https",factory,443)); //TODO [Michele]: verificare come impostare questa porta
                 }
                 
                 httpComponent.createEndpoint(connettoreDestinatario);

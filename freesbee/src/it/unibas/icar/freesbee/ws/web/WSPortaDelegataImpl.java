@@ -262,9 +262,9 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
     }
     
     private void impostaParametriSicurezza() throws IOException {
-        //Configurazione sui client: accettare anche connessioni non sicure (con certificati non validi)
+        //Configurazione sui client: accettare anche connessioni non sicure (con certificati autofirmati)
         ProtocolSocketFactory easy = new EasySSLProtocolSocketFactory();
-        Protocol protocol = new Protocol("https", easy, 8443);
+        Protocol protocol = new Protocol("https", easy, 8443); //TODO [Michele]: verificare come impostare questa porta
         Protocol.registerProtocol("https", protocol);
 
         //Configurazione sul server: parametri per l'acquisizione dei dati del certificato
