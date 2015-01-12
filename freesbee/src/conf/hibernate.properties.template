@@ -1,4 +1,4 @@
 hibernate.connection.driver_class = org.postgresql.Driver
 hibernate.connection.url = jdbc:postgresql:freesbee
 hibernate.connection.username = freesbee
-hibernate.connection.password= **freesbee**
+hibernate.connection.password= freesbee

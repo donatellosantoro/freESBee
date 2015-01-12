@@ -8,9 +8,11 @@ interoperabilita.registro.nica = http://localhost:8195/nica/registroServizi
 sincronizzazione.intervallo = 4000000
 sincronizzazioneTotale.intervallo = 10
 
-keystore.path         = ${user.home}/Temp/freesbee/certificato
-keystore.file         = freesbee.keystore
-keystore.password     = freesbee
+keystore.file         = # PATH OF KEYSTORE
+keystore.password     = # PASSWORD OF KEYSTORE
+
+truststore.file       = # PATH OF TRUSTSTORE
+truststore.password   = # PASSWORD OF TRUSTSTORE
 
 file.traccia	      = false
 file.percorso	      = ${user.home}/Temp/freesbee/tracciamento
