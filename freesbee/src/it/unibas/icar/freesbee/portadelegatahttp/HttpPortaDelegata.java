@@ -47,6 +47,7 @@ public class HttpPortaDelegata extends RouteBuilder {
             // this.avviaPortaDelegata("jetty:" + indirizzoPortaDelegata + "?continuationTimeout=0");
             
             if ((configurazione.isMutuaAutenticazionePortaDelegata()) && (indirizzo.contains("https"))) {
+                if(logger.isInfoEnabled()) {logger.info("Sto configurando la PD per richiedere l'autenticazione client sull'indirizzo " + indirizzo);}
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
                 sslConnector.setPort(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo));

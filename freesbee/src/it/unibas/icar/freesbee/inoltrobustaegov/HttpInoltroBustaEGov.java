@@ -99,7 +99,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
 
-                if ((configurazione.isMutuaAutenticazionePortaApplicativa()) && (connettoreDestinatario.contains("https"))) {
+                if ((messaggio.isMutuaAutenticazione()) && (connettoreDestinatario.contains("https"))) {
                     if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario);}
                     URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
                     String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
@@ -233,6 +233,9 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 richiesta.setSoggetto(new SoggettoRS(soggettoNICA));
                 SoggettoRSRisposta risposta = port.getSoggettoSPCoop(richiesta, indirizzoRichiesta).getReturn();
                 connettoreDestinatario = risposta.getPortaDominio();
+                
+                if (logger.isDebugEnabled()) logger.debug("Mutua Autenticazione " + risposta.isMutuaAutenticazione());
+                messaggio.setMutuaAutenticazione(risposta.isMutuaAutenticazione());
             } catch (Exception ex) {
                 logger.error("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". " + ex);
                 throw new FreesbeeException("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". " + ex);
@@ -244,9 +247,6 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 cacheConnettoreNica.put(chiave, connettoreDestinatario);
             }
             if (logger.isInfoEnabled()) logger.info("E' presente un nica. Inoltro tutto all'indirizzo " + connettoreDestinatario);
-            boolean mutuaAutenticazione = soggettoNICA.isMutuaAutenticazione();
-            if (logger.isDebugEnabled()) logger.info("Mutua Autenticazione " + mutuaAutenticazione);
-            messaggio.setMutuaAutenticazione(mutuaAutenticazione);
             return connettoreDestinatario;
         }
     }

@@ -47,6 +47,7 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
             //TODO [Michele]: Messaggio non visualizzato: quando si invia un msg alla PA e l'ID del messaggio è duplicato non viene mostrato questo errore
             
             if ((configurazione.isMutuaAutenticazionePortaApplicativa()) && (indirizzo.contains("https"))) {
+                if(logger.isInfoEnabled()) {logger.info("Sto configurando la PA per richiedere l'autenticazione client sull'indirizzo " + indirizzo);}
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
                 sslConnector.setPort(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo));
