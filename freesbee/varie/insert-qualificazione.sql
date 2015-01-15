@@ -24,7 +24,7 @@ INSERT INTO azione (id, nome, accordoservizio_id, profiloegov_id, profilocollabo
 INSERT INTO azione (id, nome, accordoservizio_id, profiloegov_id, profilocollaborazione) VALUES (327687, 'riceviRispostaTestAsincronoSimmetrico', 327680, NULL, 'EGOV_IT_ServizioAsincronoSimmetrico');
 
 DELETE FROM configurazione;
-INSERT INTO configurazione (id, nica, connettoreregistroservizi, indirizzoportaapplicativa, indirizzoportadelegata, inviaanica, registrofreesbee, tempo, soggettoerogatoreregistroservizi_id, soggettoerogatorenica_id) VALUES (1, false, '', 'http://localhost:8196/PA/', 'http://localhost:8192/PD/', false, true, 'EGOV_IT_SPC', NULL, NULL);
+INSERT INTO configurazione (id, nica, connettoreregistroservizi, indirizzoportaapplicativa, indirizzoportadelegata, inviaanica, mutuaautenticazioneportaapplicativa, mutuaautenticazioneportadelegata, registrofreesbee, tempo, soggettoerogatoreregistroservizi_id, soggettoerogatorenica_id) VALUES (1, false, '', 'http://localhost:8196/PA/', 'http://localhost:8192/PD/', false, false, false, true, 'EGOV_IT_SPC', NULL, NULL);
 
 DELETE FROM hibernate_sequences;
 INSERT INTO hibernate_sequences (sequence_name, sequence_next_hi_value) VALUES ('Sincronizzazione', 10);
@@ -57,10 +57,10 @@ INSERT INTO profiloegov (id, confermaricezione, consegnainordine, gestioneduplic
 INSERT INTO profiloegov (id, confermaricezione, consegnainordine, gestioneduplicati, idcollaborazione, scadenza) VALUES (327680, false, false, true, false, NULL);
 
 DELETE FROM servizio;
-INSERT INTO servizio (id, correlato, nome, oraregistrazione, privato, tipo, erogatore_id, accordoservizio_id, azioni) VALUES (131072, false, 'QualificazionePDD', '2009-01-08 15:37:38.002', false, 'SPC', 163841, 131072, 'start, end, testOneWay, testSincrono, testAsincronoAsimmetrico, checkTestAsincronoAsimmetrico, testAsincronoSimmetrico');
-INSERT INTO servizio (id, correlato, nome, oraregistrazione, privato, tipo, erogatore_id, accordoservizio_id, azioni) VALUES (327680, true, 'QualificazionePDDCorrelato', '2009-01-14 13:00:55.679', false, 'SPC', 163840, 131072, 'riceviRispostaTestAsincronoSimmetrico');
-INSERT INTO servizio (id, correlato, nome, oraregistrazione, privato, tipo, erogatore_id, accordoservizio_id, azioni) VALUES (360448, false, 'QualificazionePDD', '2009-01-19 16:11:12.752', false, 'SPC', 163840, 327680, 'start, end, testOneWay, testSincrono, testAsincronoAsimmetrico, checkTestAsincronoAsimmetrico, testAsincronoSimmetrico');
-INSERT INTO servizio (id, correlato, nome, oraregistrazione, privato, tipo, erogatore_id, accordoservizio_id, azioni) VALUES (360449, true, 'QualificazionePDDCorrelato', '2009-01-19 16:12:01.222', false, 'SPC', 163841, 327680, 'riceviRispostaTestAsincronoSimmetrico');
+INSERT INTO servizio (id, correlato, nome, mutuaautenticazione, oraregistrazione, privato, tipo, urlservizio, erogatore_id, accordoservizio_id, azioni) VALUES (131072, false, 'QualificazionePDD', false, '2009-01-08 15:37:38.002', false, 'SPC', '', 163841, 131072, 'start, end, testOneWay, testSincrono, testAsincronoAsimmetrico, checkTestAsincronoAsimmetrico, testAsincronoSimmetrico');
+INSERT INTO servizio (id, correlato, nome, mutuaautenticazione, oraregistrazione, privato, tipo, urlservizio, erogatore_id, accordoservizio_id, azioni) VALUES (327680, true, 'QualificazionePDDCorrelato', false, '2009-01-14 13:00:55.679', false, 'SPC', '', 163840, 131072, 'riceviRispostaTestAsincronoSimmetrico');
+INSERT INTO servizio (id, correlato, nome, mutuaautenticazione, oraregistrazione, privato, tipo, urlservizio, erogatore_id, accordoservizio_id, azioni) VALUES (360448, false, 'QualificazionePDD', false, '2009-01-19 16:11:12.752', false, 'SPC', '', 163840, 327680, 'start, end, testOneWay, testSincrono, testAsincronoAsimmetrico, checkTestAsincronoAsimmetrico, testAsincronoSimmetrico');
+INSERT INTO servizio (id, correlato, nome, mutuaautenticazione, oraregistrazione, privato, tipo, urlservizio, erogatore_id, accordoservizio_id, azioni) VALUES (360449, true, 'QualificazionePDDCorrelato', false, '2009-01-19 16:12:01.222', false, 'SPC', '', 163841, 327680, 'riceviRispostaTestAsincronoSimmetrico');
 
 DELETE FROM servizio_soggetto;
 INSERT INTO servizio_soggetto (listaservizifruitore_id, fruitori_id) VALUES (131072, 163840);
@@ -69,18 +69,18 @@ INSERT INTO servizio_soggetto (listaservizifruitore_id, fruitori_id) VALUES (360
 INSERT INTO servizio_soggetto (listaservizifruitore_id, fruitori_id) VALUES (360449, 163840);
 
 DELETE FROM servizioapplicativo;
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (131072, 'http://localhost:9192/EROGATORE/QualificazionePDD_1/', '', 'SILVIO-Qualifica_start');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (131073, 'http://localhost:9192/EROGATORE/QualificazionePDD_32768/', '', 'SILVIO-Qualifica_sincrono');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (131074, 'http://localhost:9192/EROGATORE/QualificazionePDD_65536/', '', 'SILVIO-Qualifica_asincrono');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (327680, 'http://localhost:9192/EROGATORE/QualificazionePDDCorrelato_360448/', '', 'SILVIO-Qualifica_RiceviRisposta');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (360448, 'http://localhost:9192/EROGATORE/QualificazionePDD_196608/', '', 'SILVIO-Qualifica_end');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (393216, 'http://localhost:9192/EROGATORE/QualificazionePDD_229376/', '', 'SILVIO-Qualifica_asincrono_asimmetrico');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (425984, 'http://localhost:9192/EROGATORE/QualificazionePDD_262145/', '', 'SILVIO-Qualifica_check_asincrono_asimmetrico');
-INSERT INTO servizioapplicativo (id, connettore, descrizione, nome) VALUES (458752, 'http://localhost:9192/EROGATORE/QualificazionePDD_163840/', '', 'SILVIO-Qualifica_one_way');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (131072, 'http://localhost:9192/EROGATORE/QualificazionePDD_1/', '', false, 'SILVIO-Qualifica_start');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (131073, 'http://localhost:9192/EROGATORE/QualificazionePDD_32768/', '', false, 'SILVIO-Qualifica_sincrono');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (131074, 'http://localhost:9192/EROGATORE/QualificazionePDD_65536/', '', false, 'SILVIO-Qualifica_asincrono');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (327680, 'http://localhost:9192/EROGATORE/QualificazionePDDCorrelato_360448/', '', false, 'SILVIO-Qualifica_RiceviRisposta');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (360448, 'http://localhost:9192/EROGATORE/QualificazionePDD_196608/', '', false, 'SILVIO-Qualifica_end');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (393216, 'http://localhost:9192/EROGATORE/QualificazionePDD_229376/', '', false, 'SILVIO-Qualifica_asincrono_asimmetrico');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (425984, 'http://localhost:9192/EROGATORE/QualificazionePDD_262145/', '', false, 'SILVIO-Qualifica_check_asincrono_asimmetrico');
+INSERT INTO servizioapplicativo (id, connettore, descrizione, mutuaautenticazione, nome) VALUES (458752, 'http://localhost:9192/EROGATORE/QualificazionePDD_163840/', '', false, 'SILVIO-Qualifica_one_way');
 
 DELETE FROM soggetto;
-INSERT INTO soggetto (id, descrizione, nome, oraregistrazione, portadominio, tipo) VALUES (163841, '', 'PAGenerica', '2009-01-08 15:15:23.28', 'http://localhost:18196/PA/', 'SPC');
-INSERT INTO soggetto (id, descrizione, nome, oraregistrazione, portadominio, tipo) VALUES (163840, '', 'CNIPA', '2009-01-19 16:18:17.119', 'http://localhost:18196/PA/', 'SPC');
+INSERT INTO soggetto (id, descrizione, mutuaautenticazione, nome, oraregistrazione, portadominio, tipo) VALUES (163841, '', false, 'PAGenerica', '2009-01-08 15:15:23.28', 'http://localhost:18196/PA/', 'SPC');
+INSERT INTO soggetto (id, descrizione, mutuaautenticazione, nome, oraregistrazione, portadominio, tipo) VALUES (163840, '', false, 'CNIPA', '2009-01-19 16:18:17.119', 'http://localhost:18196/PA/', 'SPC');
 
 DELETE FROM utente;
 INSERT INTO utente VALUES (1 , 'admin' , '21232f297a57a5a743894a0e4a801fc3', 'amministratore');
