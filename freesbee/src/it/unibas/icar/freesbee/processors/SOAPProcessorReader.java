@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.processors;
 
+import it.unibas.icar.freesbee.contrib.SoapReaderFix;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import it.unibas.icar.freesbee.utilita.CostantiSOAP;
@@ -10,11 +11,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.util.Properties;
+import java.util.StringTokenizer;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,7 +27,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
 import org.apache.servicemix.soap.marshalers.SoapMarshaler;
 import org.apache.servicemix.soap.marshalers.SoapMessage;
-import org.apache.servicemix.soap.marshalers.SoapReader;
 
 public class SOAPProcessorReader implements Processor {
 
@@ -49,15 +48,19 @@ public class SOAPProcessorReader implements Processor {
             MessageUtil.setString(exchange.getIn(), "");
             return;
         }
-        
+
         String contentType = (String) exchange.getIn().getHeader("Content-Type");
+        
+        String charset = estraiCharset(contentType);
+                
         if (logger.isInfoEnabled()) logger.info("contentType: " + contentType);
         SoapMarshaler soapMarshaler = new SoapMarshaler(true);
 //        soapMarshaler.setSoap(true);
 //        soapMarshaler.setUseDom(true);
         soapMarshaler.setSoapUri(CostantiSOAP.SOAP_VERSION);
-//        soapMarshaler.setUseDom(true);      
-        SoapReader soapReader = new SoapReader(soapMarshaler);
+////        soapMarshaler.setUseDom(true);      
+//        SoapReader soapReader = new SoapReader(soapMarshaler);
+        SoapReaderFix soapReader = new SoapReaderFix(soapMarshaler);
         SoapMessage soapMessage;
         try {
             if (contentType != null && startsWithCaseInsensitive(contentType, SoapMarshaler.MULTIPART_CONTENT)) {
@@ -73,8 +76,8 @@ public class SOAPProcessorReader implements Processor {
                 //AGGIUNGO GLI ATTACHMENT ALLA MAPPA DELLE INTESTAZIONI
                 exchange.setProperty(CostantiSOAP.SOAP_ATTACHMENT, soapMessage.getAttachments());
             } else {
-                InputStream bodyStream = MessageUtil.getStream(exchange.getIn());        
-                soapMessage = soapReader.read(bodyStream);
+                InputStream bodyStream = MessageUtil.getStream(exchange.getIn());
+                soapMessage = soapReader.read(bodyStream,charset);
             }
             if (logger.isDebugEnabled()) logger.debug("soapMessage.getBodyName()" + soapMessage.getBodyName());
             if (logger.isDebugEnabled()) logger.debug("soapMessage.hasAttachments()" + soapMessage.hasAttachments());
@@ -91,11 +94,11 @@ public class SOAPProcessorReader implements Processor {
         }
 
         if (logger.isDebugEnabled()) logger.debug("Il messaggio soap letto e': " + MessageUtil.getString(exchange.getIn()));
-        exchange.setProperty(CostantiBusta.FIGLI_MULTIPLI, "false");
-        InputStream messaggio = MessageUtil.getStream(exchange.getIn());
-        verificaFigliMultipli(messaggio, exchange.getIn());
-        messaggio.reset();
-    }
+            exchange.setProperty(CostantiBusta.FIGLI_MULTIPLI, "false");
+            InputStream messaggio = MessageUtil.getStream(exchange.getIn());
+            verificaFigliMultipli(messaggio, exchange.getIn());
+            messaggio.reset();
+        }
 
     private void verificaFigliMultipli(InputStream messaggio, Message messaggioIn) {
         try {
@@ -138,4 +141,20 @@ public class SOAPProcessorReader implements Processor {
     static boolean startsWithCaseInsensitive(String s1, String s2) {
         return s1.regionMatches(true, 0, s2, 0, s2.length());
     }
+    
+    private String estraiCharset(String contentType) {
+        if (contentType == null) {
+            return null;
+        }
+    
+        StringTokenizer tokenizer = new StringTokenizer(contentType, ";");
+        while (tokenizer.hasMoreTokens()) {
+            String token = tokenizer.nextToken();
+            if (token.contains("charset=")) {
+                return token.replace("charset=", "");
+            }
+        }
+        return null;
+    }
+
 }

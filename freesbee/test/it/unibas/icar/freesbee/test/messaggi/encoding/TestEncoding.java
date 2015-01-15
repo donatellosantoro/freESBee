@@ -1,6 +1,8 @@
-package it.unibas.icar.freesbee.test.qualificazione.fruitore;
+package it.unibas.icar.freesbee.test.messaggi.encoding;
 
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
+import it.unibas.icar.freesbee.test.qualificazione.fruitore.AbstractPATest;
+import it.unibas.icar.freesbee.test.qualificazione.fruitore.TestQualificazione01Start;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
