@@ -44,15 +44,12 @@ public class SOAPProcessorReader implements Processor {
         //ContextStartup.aggiungiThread(this.getClass().getName());
         ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()).process(exchange);
         if (MessageUtil.isEmpty(exchange.getIn())) {
-            if (logger.isInfoEnabled())logger.info("Ricevuto un messaggio vuoto. Probabilemente è un ack di risposta");
+            if (logger.isInfoEnabled()) logger.info("Ricevuto un messaggio vuoto. Probabilemente è un ack di risposta");
             MessageUtil.setString(exchange.getIn(), "");
             return;
         }
-
         String contentType = (String) exchange.getIn().getHeader("Content-Type");
-        
         String charset = estraiCharset(contentType);
-                
         if (logger.isInfoEnabled()) logger.info("contentType: " + contentType);
         if (logger.isInfoEnabled()) logger.info("charset estratto: |" + charset + "|");
         SoapMarshaler soapMarshaler = new SoapMarshaler(true);
@@ -78,7 +75,7 @@ public class SOAPProcessorReader implements Processor {
                 exchange.setProperty(CostantiSOAP.SOAP_ATTACHMENT, soapMessage.getAttachments());
             } else {
                 InputStream bodyStream = MessageUtil.getStream(exchange.getIn());
-                soapMessage = soapReader.read(bodyStream,charset);
+                soapMessage = soapReader.read(bodyStream, charset);
             }
             if (logger.isDebugEnabled()) logger.debug("soapMessage.getBodyName()" + soapMessage.getBodyName());
             if (logger.isDebugEnabled()) logger.debug("soapMessage.hasAttachments()" + soapMessage.hasAttachments());
@@ -143,19 +140,18 @@ public class SOAPProcessorReader implements Processor {
     static boolean startsWithCaseInsensitive(String s1, String s2) {
         return s1.regionMatches(true, 0, s2, 0, s2.length());
     }
-    
+
     private String estraiCharset(String contentType) {
         if (contentType == null) {
             return null;
         }
-    
         StringTokenizer tokenizer = new StringTokenizer(contentType, ";");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             if (token.contains("charset=")) {
                 return token.replace("charset=", "").trim();
+                }
             }
-        }
         return null;
     }
 
