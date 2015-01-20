@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.modello.Configurazione;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
+import it.unibas.icar.freesbee.modello.CostantiEccezioni;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.DBManager;
@@ -39,11 +40,11 @@ public class WireTapTracciamentoImbustamento extends RouteBuilder {
                 //                .threads(ConfigurazioneStatico.getInstance().getCamelThreadPool(),
                 //                ConfigurazioneStatico.getInstance().getCamelThreadPoolMax())
                 //.process(new ProcessorLog(this.getClass()))
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
                 .process(new ProcessorStore())
                 .to(FreesbeeCamel.SEDA_ENRICHER_TEST)
-                .doCatch(Exception.class)
+            .doCatch(Exception.class)
                 .process(processorErroreImbustamento);
     }
 
@@ -60,18 +61,36 @@ public class WireTapTracciamentoImbustamento extends RouteBuilder {
             try {
                 sessionFactory.getCurrentSession().beginTransaction();
                 if (idMessaggio != null && daoMessaggio.findByIdMessaggio(idMessaggio, Messaggio.TIPO_INVIATO) != null) {
-                    if (logger.isInfoEnabled()) logger.info("E' stato gia' inviato un messaggio con questo ID Egov!" + idMessaggio);
-//                    messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_DUPLICATO); //TODO: Se viene lanciato qui significa che e' un errore di richiesta, quindi da non aggiungere
-                    throw new FreesbeeException("E' stato gia' inviato un messaggio con questo ID Egov! " + idMessaggio);
+//                    logger.error("E' stato gia' inviato un messaggio con ID-EGOV = " + idMessaggio);
+                    messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_DUPLICATO); //COMMENTO: Se viene lanciato qui significa che e' un errore di richiesta, quindi da non aggiungere
+                    throw new FreesbeeException("E' stato gia' inviato un messaggio con ID-EGOV = " + idMessaggio);
+//                    return;
                 }
+                
 //                if (idSil != null && daoMessaggio.findByIDSil(idSil, Messaggio.TIPO_INVIATO) != null) {
 //                    if (logger.isInfoEnabled()) logger.info("E' stato gia' inviato un messaggio con questo ID SIL" + idSil);
 //                    //TODO: Se utilizziamo freESBee fruitore e erogatore sulla stessa macchina possono essere generati due volte gli stessi ID.
 //                    //throw new FreesbeeException("E' stato gia' inviato un messaggio con questo ID " + idSil, 110);
 //                }
-                if (logger.isInfoEnabled()) logger.info("Salvo il messaggio con ID-Sil: " + messaggio.getIdSil());
+                
+                if ((!messaggio.getListaEccezioni().isEmpty()) && (idSil == null)) {
+//                    logger.error("E' stato ricevuto un messaggio con ID-SIL nullo.");
+                    messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_NON_VALORIZZATO);
+                    throw new FreesbeeException("E' stato ricevuto un messaggio con ID-SIL nullo.");
+//                    return;
+                }
+                
+                if (daoMessaggio.findByIDSil(idSil, Messaggio.TIPO_RICEVUTO) != null) {
+//                    logger.error("E' stato gia' ricevuto un messaggio con ID-SIL = " + idSil);
+                    messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_DUPLICATO);
+                    throw new FreesbeeException("E' stato gia' ricevuto un messaggio con ID-SIL = " + idSil);
+//                    return;
+                }
+                
+                if (logger.isInfoEnabled()) logger.info("Salvo il messaggio con ID-SIL: " + messaggio.getIdSil());
                 daoMessaggio.makePersistent(messaggio);
                 sessionFactory.getCurrentSession().getTransaction().commit();
+                
                 if (configurazioneStatico.isTracciaFile()) {
                     Configurazione configurazione = dbManager.getConfigurazione();
                     messaggio.setTempo(configurazione.getTempo());

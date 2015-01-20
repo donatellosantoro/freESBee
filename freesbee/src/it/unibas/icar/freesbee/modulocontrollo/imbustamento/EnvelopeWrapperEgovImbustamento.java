@@ -2,7 +2,6 @@ package it.unibas.icar.freesbee.modulocontrollo.imbustamento;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.processors.ProcessorErroreImbustamento;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.processors.ProcessorWrapper;
@@ -28,8 +27,8 @@ public class EnvelopeWrapperEgovImbustamento extends RouteBuilder {
             .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
             .doTry()
                 .process(processorWrapper)
-            .to(FreesbeeCamel.SEDA_CONTENT_BASED_ROUTER_IMBUSTAMENTO)
-                .doCatch(Exception.class)
+                .to(FreesbeeCamel.SEDA_CONTENT_BASED_ROUTER_IMBUSTAMENTO)
+            .doCatch(Exception.class)
                 .process(processorErroreImbustamento);
     }
 

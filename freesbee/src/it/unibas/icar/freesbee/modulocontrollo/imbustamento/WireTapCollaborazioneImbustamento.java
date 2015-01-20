@@ -33,11 +33,11 @@ public class WireTapCollaborazioneImbustamento extends RouteBuilder {
         this.from(FreesbeeCamel.SEDA_WIRETAP_COLLABORAZIONE_IMBUSTAMENTO)
 //                .threads(ConfigurazioneStatico.getInstance().getCamelThreadPool(),
 //                ConfigurazioneStatico.getInstance().getCamelThreadPoolMax())
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
                 .process(new ProcessorCorrelazioneMessaggi())
                 .to(FreesbeeCamel.SEDA_WIRETAP_TRACCIAMENTO_IMBUSTAMENTO)
-                .doCatch(Exception.class)
+            .doCatch(Exception.class)
                 .process(processorErroreImbustamento);
     }
 
@@ -45,7 +45,6 @@ public class WireTapCollaborazioneImbustamento extends RouteBuilder {
     private class ProcessorCorrelazioneMessaggi implements Processor {
 
         public void process(Exchange exchange) throws Exception {
-//            if(true)return;
             //ContextStartup.aggiungiThread(this.getClass().getName());
             Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
             if (messaggio.isNica()) {

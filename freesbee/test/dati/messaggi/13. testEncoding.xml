@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <soapenv:Header>
       <eGov_IT:Intestazione xmlns:eGov_IT="http://www.cnipa.it/schemas/2003/eGovIT/Busta1_0/" xmlns:SOAP_ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP_ENV:actor="http://www.cnipa.it/eGov_it/portadominio" SOAP_ENV:mustUnderstand="1">
@@ -38,7 +37,7 @@
             <esitoOperazione>
                <codiceEsito>0</codiceEsito>
                <descrizioneEsito>OK</descrizioneEsito>
-               <dettaglio>Statistiche Scarti non trovate. La trasmissione non Ã± stata ancora elaborata</dettaglio>
+               <dettaglio>Statistiche Scarti non trovate. La trasmissione non ñ stata ancora elaborata</dettaglio>
                <timeStamp>2015-01-14T11:32:47.764Z</timeStamp>
             </esitoOperazione>
          </statisticheScartiAsAttachmentReturn>

@@ -163,10 +163,10 @@ public class SoapReaderFix {
     private SoapMessage readSoapUsingStax(InputStream is,String charset) throws Exception {
         SoapMessage message = new SoapMessage();
         XMLStreamReader reader = null;
-        if (charset == null) {
+        if ((charset == null) || (charset.trim().equalsIgnoreCase("utf-8"))) {
             reader = marshaler.getInputFactory().createXMLStreamReader(is);
         } else {
-            reader = marshaler.getInputFactory().createXMLStreamReader(is,charset);
+            reader = marshaler.getInputFactory().createXMLStreamReader(is,charset.trim());
         }
         reader = new ExtendedXMLStreamReader(reader);
         reader.nextTag();

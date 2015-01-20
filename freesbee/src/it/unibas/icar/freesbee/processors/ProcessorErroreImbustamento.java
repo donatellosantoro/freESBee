@@ -15,6 +15,8 @@ public class ProcessorErroreImbustamento implements Processor {
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
     @Inject
     private ProcessorSbloccaPollingConsumerPortaDelegata processorSbloccaPollingConsumerPortaDelegata;
+    @Inject
+    private ProcessStampaEccezioniEGov processStampaEccezioniEGov;
 
     public ProcessorErroreImbustamento() {
     }
@@ -29,6 +31,7 @@ public class ProcessorErroreImbustamento implements Processor {
             return;
         }
         logger.error("E' stato generato un errore mentre si imbustava un messaggio");
+        processStampaEccezioniEGov.process(exchange);
         String sbusta = (String) exchange.getIn().getHeader(CostantiBusta.IMBUSTA_RICHIESTA_RISPOSTA);
         if (sbusta.equals(CostantiBusta.VALORE_IMBUSTA_RISPOSTA)) {
             logger.error("Si stava imbustando una risposta. Sblocco la porta applicativa");

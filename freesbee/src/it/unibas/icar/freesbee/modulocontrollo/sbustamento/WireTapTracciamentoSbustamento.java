@@ -45,11 +45,11 @@ public class WireTapTracciamentoSbustamento extends RouteBuilder {
 //                .threads(ConfigurazioneStatico.getInstance().getCamelThreadPool(),
 //                ConfigurazioneStatico.getInstance().getCamelThreadPoolMax())
                 //.process(new ProcessorLog(this.getClass()))
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
                 .process(new ProcessorStore())
                 .to(FreesbeeCamel.SEDA_CONTENT_BASED_ROUTER_SBUSTAMENTO)
-                .doCatch(Exception.class)
+            .doCatch(Exception.class)
                 .process(processorErroreSbustamento);
     }
 
@@ -78,19 +78,34 @@ public class WireTapTracciamentoSbustamento extends RouteBuilder {
 
                 sessionFactory.getCurrentSession().beginTransaction();
                 if (daoMessaggio.findByIdMessaggio(idMessaggio, Messaggio.TIPO_RICEVUTO) != null) {
-                    if (logger.isInfoEnabled()) logger.info("E' stato gia' ricevuto un messaggio con questo IDEGOV " + idMessaggio);
+//                    logger.error("E' stato gia' ricevuto un messaggio con ID-EGOV = " + idMessaggio);
                     messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_DUPLICATO);
-                    //throw new FreesbeeException("E' stato gia' ricevuto un messaggio con questo IDEGOV " + idMessaggio);
-                } else {
+                    throw new FreesbeeException("E' stato gia' ricevuto un messaggio con ID-EGOV = " + idMessaggio);
+//                    return;
+                }
 //                    if (idSil != null && daoMessaggio.findByIDSil(idSil, Messaggio.TIPO_RICEVUTO) != null) {
 //                        if (logger.isInfoEnabled()) logger.info("E' stato gia' ricevuto un messaggio con questo ID " + idSil);
 //                        //TODO: Se utilizziamo freESBee fruitore e erogatore sulla stessa macchina possono essere generati due volte gli stessi ID.
 //                        //throw new FreesbeeException("E' stato gia' ricevuto un messaggio con questo ID " + idSil, 104);
 //                    }
-                    if (logger.isInfoEnabled()) logger.info("Salvo il messaggio con ID-Sil: " + messaggio.getIdSil());
-                    daoMessaggio.makePersistent(messaggio);
-                    sessionFactory.getCurrentSession().getTransaction().commit();
+                
+                if ((!messaggio.getListaEccezioni().isEmpty()) && (idSil == null)) {
+//                    logger.error("E' stato ricevuto un messaggio con ID-SIL nullo.");
+                    messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_NON_VALORIZZATO);
+                    throw new FreesbeeException("E' stato ricevuto un messaggio con ID-SIL nullo.");
+//                    return;
                 }
+                
+                if (daoMessaggio.findByIDSil(idSil, Messaggio.TIPO_RICEVUTO) != null) {
+//                    logger.error("E' stato gia' ricevuto un messaggio con ID-SIL = " + idSil);
+                    messaggio.aggiungiEccezione(CostantiEccezioni.IDENTIFICATORE_DUPLICATO);
+                    throw new FreesbeeException("E' stato gia' ricevuto un messaggio con ID-SIL = " + idSil);
+//                    return;
+                }
+
+                if (logger.isInfoEnabled()) logger.info("Salvo il messaggio con ID-SIL: " + messaggio.getIdSil());
+                daoMessaggio.makePersistent(messaggio);
+                sessionFactory.getCurrentSession().getTransaction().commit();
             } catch (DAOException ex) {
                 if (logger.isDebugEnabled()) ex.printStackTrace();
                 throw new FreesbeeException("Errore nella lettura dal database " + ex);

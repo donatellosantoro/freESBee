@@ -26,11 +26,12 @@ public class WireTapCollaborazioneSbustamento extends RouteBuilder {
 //	    	.threads(ConfigurazioneStatico.getInstance().getCamelThreadPool(),
 //	  		         ConfigurazioneStatico.getInstance().getCamelThreadPoolMax())
                 //.process(new ProcessorLog(this.getClass()))
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
-                    .process(new ProcessorCorrelazioneMessaggi())
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
+                .process(new ProcessorCorrelazioneMessaggi())
                 .to(FreesbeeCamel.SEDA_WIRETAP_TRACCIAMENTO_SBUSTAMENTO)
-            .doCatch(Exception.class).process(processorErroreSbustamento);
+            .doCatch(Exception.class)
+                .process(processorErroreSbustamento);
     }
 
     private class ProcessorCorrelazioneMessaggi implements Processor {

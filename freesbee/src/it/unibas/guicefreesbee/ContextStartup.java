@@ -17,6 +17,7 @@ import it.unibas.icar.freesbee.portadelegata.EnricherAccordoServizio;
 import it.unibas.icar.freesbee.portadelegata.FiltroAutenticazione;
 import it.unibas.icar.freesbee.portadelegata.RichiestaAck;
 import it.unibas.icar.freesbee.processors.ProcessControllaEccezioniEGov;
+import it.unibas.icar.freesbee.processors.ProcessStampaEccezioniEGov;
 import it.unibas.icar.freesbee.processors.ProcessorEccezione;
 import it.unibas.icar.freesbee.processors.ProcessorEnricher;
 import it.unibas.icar.freesbee.processors.ProcessorEnricherRisposta;
@@ -198,6 +199,7 @@ public class ContextStartup implements ServletContextListener {
 
             // PROCESSORS
             bind(ProcessControllaEccezioniEGov.class);
+            bind(ProcessStampaEccezioniEGov.class);
             bind(ProcessorEccezione.class);
             bind(ProcessorEnricher.class);
             bind(ProcessorEnricherRisposta.class);

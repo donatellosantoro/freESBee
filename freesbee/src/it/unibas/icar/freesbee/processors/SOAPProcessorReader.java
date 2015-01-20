@@ -54,6 +54,7 @@ public class SOAPProcessorReader implements Processor {
         String charset = estraiCharset(contentType);
                 
         if (logger.isInfoEnabled()) logger.info("contentType: " + contentType);
+        if (logger.isInfoEnabled()) logger.info("charset estratto: |" + charset + "|");
         SoapMarshaler soapMarshaler = new SoapMarshaler(true);
 //        soapMarshaler.setSoap(true);
 //        soapMarshaler.setUseDom(true);
@@ -94,11 +95,12 @@ public class SOAPProcessorReader implements Processor {
         }
 
         if (logger.isDebugEnabled()) logger.debug("Il messaggio soap letto e': " + MessageUtil.getString(exchange.getIn()));
-            exchange.setProperty(CostantiBusta.FIGLI_MULTIPLI, "false");
-            InputStream messaggio = MessageUtil.getStream(exchange.getIn());
-            verificaFigliMultipli(messaggio, exchange.getIn());
-            messaggio.reset();
-        }
+        
+        exchange.setProperty(CostantiBusta.FIGLI_MULTIPLI, "false");
+        InputStream messaggio = MessageUtil.getStream(exchange.getIn());
+        verificaFigliMultipli(messaggio, exchange.getIn());
+        messaggio.reset();
+    }
 
     private void verificaFigliMultipli(InputStream messaggio, Message messaggioIn) {
         try {
@@ -151,7 +153,7 @@ public class SOAPProcessorReader implements Processor {
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             if (token.contains("charset=")) {
-                return token.replace("charset=", "");
+                return token.replace("charset=", "").trim();
             }
         }
         return null;

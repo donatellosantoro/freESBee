@@ -100,7 +100,9 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
 
                 if ((messaggio.isMutuaAutenticazione()) && (connettoreDestinatario.contains("https"))) {
-                    if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario);}
+                    
+                    if(logger.isInfoEnabled() && (!configurazione.isInviaANICA())) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + messaggio.getConnettoreErogatore());}
+                    
                     URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
                     String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
 

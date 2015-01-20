@@ -14,6 +14,8 @@ public class ProcessorErroreSbustamento implements Processor {
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
     @Inject
     private ProcessorSbloccaPollingConsumerPortaDelegata processorSbloccaPollingConsumerPortaDelegata;
+    @Inject
+    private ProcessStampaEccezioniEGov processStampaEccezioniEGov;
 
     public ProcessorErroreSbustamento() {
     }
@@ -21,7 +23,8 @@ public class ProcessorErroreSbustamento implements Processor {
     public void process(Exchange exchange) throws Exception {
         processorSbloccaPollingConsumerPortaApplicativa.setEccezione(true);
         processorSbloccaPollingConsumerPortaDelegata.setEccezione(true);
-        logger.error("E' stato generato un errore mentre si sbustava in messaggio");
+        logger.error("E' stato generato un errore mentre si sbustava un messaggio");
+        processStampaEccezioniEGov.process(exchange);
         String sbusta = (String) exchange.getIn().getHeader(CostantiBusta.SBUSTA_RICHIESTA_RISPOSTA);
         if (sbusta.equals(CostantiBusta.VALORE_SBUSTA_RISPOSTA)) {
             logger.error("Si stava sbustando una risposta. Sblocco la porta delegata");
