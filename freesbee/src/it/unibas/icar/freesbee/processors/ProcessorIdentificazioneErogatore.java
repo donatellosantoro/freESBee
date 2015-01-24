@@ -94,9 +94,12 @@ public class ProcessorIdentificazioneErogatore implements Processor {
             String connettore = servizioApplicativo.getConnettore();
 
             messaggio.setConnettoreServizioApplicativo(connettore);
-            if (logger.isDebugEnabled()) {
-                if (logger.isDebugEnabled()) logger.debug("Il connettore del servizio da invocare è " + connettore);
+            
+            if (servizioApplicativo.isMutuaAutenticazione()) {
+                messaggio.setMutuaAutenticazione(true);
             }
+            
+            if (logger.isDebugEnabled()) {if (logger.isDebugEnabled()) logger.debug("Il connettore del servizio da invocare è " + connettore);}
         }
     }
 

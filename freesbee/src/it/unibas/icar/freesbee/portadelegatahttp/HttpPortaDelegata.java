@@ -46,19 +46,30 @@ public class HttpPortaDelegata extends RouteBuilder {
             String indirizzoPortaDelegata = indirizzo + portaDelegataContattata + "/";
             // this.avviaPortaDelegata("jetty:" + indirizzoPortaDelegata + "?continuationTimeout=0");
             
-            if ((configurazione.isMutuaAutenticazionePortaDelegata()) && (indirizzo.contains("https"))) {
-                if(logger.isInfoEnabled()) {logger.info("Sto configurando la PD per richiedere l'autenticazione client sull'indirizzo " + indirizzo);}
+            int porta = FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo);
+            
+            if (indirizzoPortaDelegata.contains("https")) {
+                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PD per aprire un canale criptato HTTPS sull'indirizzo " + indirizzoPortaDelegata + " con porta " + porta + "\n");}
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
-                sslConnector.setPort(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo));
+                sslConnector.setPort(porta);
                 sslConnector.setKeystore(ConfigurazioneStatico.getInstance().getFileKeyStore());
                 sslConnector.setKeyPassword(ConfigurazioneStatico.getInstance().getPasswordKeyStore());
                 sslConnector.setTruststore(ConfigurazioneStatico.getInstance().getFileTrustStore());
                 sslConnector.setTrustPassword(ConfigurazioneStatico.getInstance().getPasswordTrustStore());
-                sslConnector.setNeedClientAuth(true);
+                
+                if (configurazione.isMutuaAutenticazionePortaDelegata()) {
+                    if(logger.isInfoEnabled()) {logger.info("\n\nSto configurando la PD per richiedere l'autenticazione client\n");}
+                    sslConnector.setNeedClientAuth(true);
+                } else {
+                    sslConnector.setNeedClientAuth(false);
+                }
+                
                 Map<Integer, SslSelectChannelConnector> connectors = new HashMap<Integer, SslSelectChannelConnector>();
-                connectors.put(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo), sslConnector);
+                connectors.put(porta, sslConnector);
                 jettyComponent.setSslSocketConnectors(connectors);
+            } else {
+                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PD per aprire un canale HTTP sull'indirizzo " + indirizzo + " con porta " + porta + "\n");}
             }
             
             this.avviaPortaDelegata("jetty:" + indirizzoPortaDelegata); //FIXME

@@ -2,12 +2,13 @@ package it.unibas.icar.freesbee.consegnabustesoap;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import it.unibas.guicefreesbee.ContextStartup;
+import it.unibas.icar.freesbee.contrib.AuthSSLProtocolSocketFactoryCustomized;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.exception.SOAPFaultException;
 import it.unibas.icar.freesbee.modello.AccordoServizio;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
+import it.unibas.icar.freesbee.persistenza.DBManager;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.processors.ProcessorSbloccaPollingConsumerPortaApplicativa;
 import it.unibas.icar.freesbee.processors.ProcessorTrace;
@@ -18,13 +19,17 @@ import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
-import java.util.Map;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
+import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -34,6 +39,8 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
     private static Log logger = LogFactory.getLog(HttpConsegnaBusteSOAP.class);
     @Inject
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
+    @Inject
+    private DBManager dbManager;
 
     @Override
     public void configure() throws Exception {
@@ -87,15 +94,30 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
             
             String connettoreServizioApplicativo = messaggio.getConnettoreServizioApplicativo();
             if (logger.isDebugEnabled()) logger.debug("Connettore servizio applicativo: " + connettoreServizioApplicativo);
+            
             if (connettoreServizioApplicativo == null) {
                 throw new FreesbeeException("Connettore del ServizioApplicativo non specificato");
             }
 //            FreesbeeUtil.aggiungiInstestazioniHttp(exchange.getIn(), "SOAPAction", "portaApplicativa");
+            int porta = FreesbeeUtil.impostaNumeroPortaDaIndirizzo(connettoreServizioApplicativo);
 
             FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
             aggiungiIntestazioniAS(messaggio, exchange); //QUESTE INTESTAZIONI INVIANO ALL'EROGATORE LE INFORMAZIONI SUL FRUITORE, EROGATORE, SERVIZIO
+            
             if (logger.isInfoEnabled()) logger.info(generaMessaggioLog(messaggio));
+            
             HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
+
+            if ((messaggio.isMutuaAutenticazione()) && (connettoreServizioApplicativo.contains("https"))) {
+                if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreServizioApplicativo + " sulla porta " + porta);}
+                impostaParametriMutuaAutenticazione(porta);
+            }
+
+            if ((!messaggio.isMutuaAutenticazione()) && (connettoreServizioApplicativo.contains("https"))) {
+                if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS all' URL " + connettoreServizioApplicativo + " sulla porta " + porta);}
+                impostaParametriSicurezza(porta);
+            }
+            
             httpComponent.createEndpoint(connettoreServizioApplicativo);
             Endpoint endpoint = getContext().getEndpoint(connettoreServizioApplicativo);
 
@@ -172,4 +194,21 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
                 .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione());
         return sb.toString();
     }
+
+    private void impostaParametriMutuaAutenticazione(int porta) throws MalformedURLException {            
+        URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
+        String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
+
+        URL truststoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileTrustStore());
+        String trustStorePassword = ConfigurazioneStatico.getInstance().getPasswordTrustStore();
+
+        ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, keyStorePassword, truststoreUrl, trustStorePassword);
+        Protocol.registerProtocol("https",new Protocol("https",factory,porta));
+    }
+
+    private void impostaParametriSicurezza(int porta) {
+        ProtocolSocketFactory factory = new EasySSLProtocolSocketFactory();
+        Protocol.registerProtocol("https",new Protocol("https",factory,porta));
+    }
+    
 }

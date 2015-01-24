@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.utilita;
 
+import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import java.util.Map;
 import java.util.Set;
@@ -227,24 +228,27 @@ public class FreesbeeUtil {
         }
     }
 
-    public static int impostaNumeroPortaDaIndirizzo(String indirizzoCompleto) {
-        if (!(indirizzoCompleto.contains("https"))) {
-            logger.error("Il protocollo utilizzato non e' HTTPS. L'indirizzo specificato e': " + indirizzoCompleto);
+    public static int impostaNumeroPortaDaIndirizzo(String indirizzoCompleto) throws FreesbeeException {
+        if ((!indirizzoCompleto.contains("//"))) {
+            throw new FreesbeeException("L'indirizzo specificato: " + indirizzoCompleto + " non definisce quale protocollo utilizzare.");
         }
         
+        String sottostringaIndirizzo = indirizzoCompleto.substring(indirizzoCompleto.indexOf("//") + 2);
+        
         try {
-            if ((indirizzoCompleto.contains(":"))) {
-                String sottostringaIndirizzo = indirizzoCompleto.substring(indirizzoCompleto.indexOf(":") + 3);
+            if (sottostringaIndirizzo.contains(":")) {
                 String stringaNumeroPorta = sottostringaIndirizzo.substring(sottostringaIndirizzo.indexOf(":") + 1, sottostringaIndirizzo.indexOf("/"));
                 return Integer.parseInt(stringaNumeroPorta);
-            } else {
+            }
+        
+            if (indirizzoCompleto.contains("https")) {
                 return Integer.parseInt("443");
             }
+            
+            return Integer.parseInt("80");
         } catch (NumberFormatException nfe) {
             logger.error("Numero porta errato. L'indirizzo specificato e': " + indirizzoCompleto);
-            logger.error("Eccezione: " + nfe.toString());
+            throw new FreesbeeException("Eccezione: " + nfe.toString());
         }
-
-        return 0;
     }
 }

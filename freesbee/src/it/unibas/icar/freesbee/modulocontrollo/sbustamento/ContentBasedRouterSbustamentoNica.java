@@ -94,7 +94,7 @@ public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
             if (soggettoErogatore == null) {
                 throw new FreesbeeException("Erogatore sconosciuto!");
             }
-
+            
             if ((servizioErogatore.getUrlServizio() == null) || (servizioErogatore.getUrlServizio().equals(""))) {
                 messaggio.setConnettoreErogatore(soggettoErogatore.getPortaDominio());
                 messaggio.setMutuaAutenticazione(soggettoErogatore.isMutuaAutenticazione());

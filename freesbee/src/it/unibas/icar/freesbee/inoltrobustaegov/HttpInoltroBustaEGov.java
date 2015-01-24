@@ -11,6 +11,7 @@ import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.modello.Soggetto;
 import it.unibas.icar.freesbee.persistenza.DBManager;
+import it.unibas.icar.freesbee.persistenza.IDAOSoggetto;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.processors.ProcessorSbloccaPollingConsumerPortaApplicativa;
 import it.unibas.icar.freesbee.processors.ProcessorSbloccaPollingConsumerPortaDelegata;
@@ -27,13 +28,12 @@ import it.unibas.icar.freesbee.ws.registroservizi.SoggettoRSRisposta;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.GetSoggettoSPCoop;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.IWSRegistroServizi;
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.WSRegistroServiziImplService;
-import java.io.InputStream;
 import java.net.ConnectException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -42,6 +42,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpComponent;
 import org.apache.camel.component.http.HttpOperationFailedException;
 import org.apache.commons.httpclient.ProtocolException;
+import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.logging.Log;
@@ -53,6 +54,8 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
     private static Log logger = LogFactory.getLog(HttpInoltroBustaEGov.class);
     @Inject
     private DBManager dbManager;
+    @Inject
+    private IDAOSoggetto daoSoggetto;
     @Inject
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
     @Inject
@@ -91,6 +94,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
             Configurazione configurazione = dbManager.getConfigurazione();
             String connettoreDestinatario = getConnettoreDestinatario(messaggio, configurazione);
+            int porta = FreesbeeUtil.impostaNumeroPortaDaIndirizzo(connettoreDestinatario);
 //            connettoreDestinatario += "?httpClientMinThreads=100&httpClientMaxThreads=100";
             try {
                 if (exchange.getIn().getHeader("SOAPAction") == null || ((String) exchange.getIn().getHeader("SOAPAction")).isEmpty()) {
@@ -98,22 +102,17 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 }
                 FreesbeeUtil.aggiungiIntestazioniInteroperabilita(exchange.getIn(), messaggio);
                 HttpComponent httpComponent = (HttpComponent) getContext().getComponent("http");
-
+                
                 if ((messaggio.isMutuaAutenticazione()) && (connettoreDestinatario.contains("https"))) {
-                    
-                    if(logger.isInfoEnabled() && (!configurazione.isInviaANICA())) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + messaggio.getConnettoreErogatore());}
-                    
-                    URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
-                    String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
-
-                    URL truststoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileTrustStore());
-                    String trustStorePassword = ConfigurazioneStatico.getInstance().getPasswordTrustStore();
-
-                    ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, keyStorePassword, truststoreUrl, trustStorePassword);
-
-                    Protocol.registerProtocol("https",new Protocol("https",factory,443)); //TODO [Michele]: verificare come impostare questa porta
+                    if(logger.isInfoEnabled() && (!configurazione.isInviaANICA())) {logger.info("Si sta effettuando una connessione HTTPS con autenticazione lato client all' URL " + connettoreDestinatario + " sulla porta " + porta);}
+                    impostaParametriMutuaAutenticazione(porta);
                 }
-
+                
+                if ((!messaggio.isMutuaAutenticazione()) && (connettoreDestinatario.contains("https"))) {
+                    if(logger.isInfoEnabled()) {logger.info("Si sta effettuando una connessione HTTPS all' URL " + connettoreDestinatario + " sulla porta " + porta);}
+                    impostaParametriSicurezza(porta);
+                }
+                
                 httpComponent.createEndpoint(connettoreDestinatario);
                 Endpoint endpoint = getContext().getEndpoint(connettoreDestinatario);
                 ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_PA_REQ").process(exchange);
@@ -250,6 +249,22 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             }
             if (logger.isInfoEnabled()) logger.info("E' presente un nica. Inoltro tutto all'indirizzo " + connettoreDestinatario);
             return connettoreDestinatario;
+        }
+
+        private void impostaParametriMutuaAutenticazione(int porta) throws MalformedURLException {            
+            URL keystoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileKeyStore());
+            String keyStorePassword = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
+
+            URL truststoreUrl = new URL("file:" + ConfigurazioneStatico.getInstance().getFileTrustStore());
+            String trustStorePassword = ConfigurazioneStatico.getInstance().getPasswordTrustStore();
+
+            ProtocolSocketFactory factory = new AuthSSLProtocolSocketFactoryCustomized(keystoreUrl, keyStorePassword, truststoreUrl, trustStorePassword);
+            Protocol.registerProtocol("https",new Protocol("https",factory,porta));
+        }
+
+        private void impostaParametriSicurezza(int porta) {
+            ProtocolSocketFactory factory = new EasySSLProtocolSocketFactory();
+            Protocol.registerProtocol("https",new Protocol("https",factory,porta));
         }
     }
 

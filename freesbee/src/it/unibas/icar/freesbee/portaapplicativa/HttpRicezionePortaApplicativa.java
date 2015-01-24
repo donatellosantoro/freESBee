@@ -41,25 +41,31 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
 
         List<String> indirizziPortaApplicativa = configurazione.getListaIndirizziPortaApplicativa();
         for (String indirizzo : indirizziPortaApplicativa) {
-      
-            //TODO [Michele]: Errore: ERROR [it.unibas.icar.freesbee.modello.ConfigurazioneStatico - caricaValidatore] - Il file IntestazioniEGov.xsd non è valido. src-resolve: impossibile risolvere il nome "SOAP_ENV:actor" in un componente attribute declaration. - ERROR [it.unibas.icar.freesbee.modello.ConfigurazioneStatico - <init>] - Impossibile caricare la configurazione statica it.unibas.icar.freesbee.xml.XmlException: Il file IntestazioniEGov.xsd non è valido.
+        
+            int porta = FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo);
             
-            //TODO [Michele]: Messaggio non visualizzato: quando si invia un msg alla PA e l'ID del messaggio è duplicato non viene mostrato questo errore
-            
-            if ((configurazione.isMutuaAutenticazionePortaApplicativa()) && (indirizzo.contains("https"))) {
-                if(logger.isInfoEnabled()) {logger.info("Sto configurando la PA per richiedere l'autenticazione client sull'indirizzo " + indirizzo);}
+            if (indirizzo.contains("https")) {
+                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PA per aprire un canale criptato HTTPS sull'indirizzo " + indirizzo + " con porta " + porta + "\n");}
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
-                sslConnector.setPort(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo));
+                sslConnector.setPort(porta);
                 sslConnector.setKeystore(ConfigurazioneStatico.getInstance().getFileKeyStore());
                 sslConnector.setKeyPassword(ConfigurazioneStatico.getInstance().getPasswordKeyStore());
                 sslConnector.setTruststore(ConfigurazioneStatico.getInstance().getFileTrustStore());
                 sslConnector.setTrustPassword(ConfigurazioneStatico.getInstance().getPasswordTrustStore());
-//                sslConnector.setPassword("password");
-                sslConnector.setNeedClientAuth(true);
+                
+                if (configurazione.isMutuaAutenticazionePortaApplicativa()) {
+                    if(logger.isInfoEnabled()) {logger.info("\n\nSto configurando la PA per richiedere l'autenticazione client\n");}
+                    sslConnector.setNeedClientAuth(true);
+                } else {
+                    sslConnector.setNeedClientAuth(false);
+                }
+                
                 Map<Integer, SslSelectChannelConnector> connectors = new HashMap<Integer, SslSelectChannelConnector>();
-                connectors.put(FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo), sslConnector);
+                connectors.put(porta, sslConnector);
                 jettyComponent.setSslSocketConnectors(connectors);
+            } else {
+                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PA per aprire un canale HTTP sull'indirizzo " + indirizzo + " con porta " + porta + "\n");}
             }
             
             this.avviaPortaApplicativa("jetty:" + indirizzo);
@@ -148,6 +154,7 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
                 logger.debug("@ Messaggio Ricevuto!");
         }
 
+        // TODO [Michele]: Non restituisce il msg di errore quando c'è un errore 500 ma segnala l'ID del messaggio come se avesse ricevuto qualcosa
         private String generaMessaggioLog(Messaggio messaggio) {
             StringBuilder sb = new StringBuilder();
             sb.append("Porta applicativa contattata. Ricevuto messaggio: ").append(messaggio.getIdMessaggio())

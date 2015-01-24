@@ -26,7 +26,6 @@ import org.apache.camel.util.jsse.KeyStoreParameters;
 import org.apache.camel.util.jsse.SSLContextParameters;
 import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
@@ -262,30 +261,27 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
     }
     
     private void impostaParametriSicurezza() throws IOException {
-        //Configurazione sui client: accettare anche connessioni non sicure (con certificati autofirmati)
-        ProtocolSocketFactory easy = new EasySSLProtocolSocketFactory();
-        Protocol protocol = new Protocol("https", easy, 8443); //TODO [Michele]: verificare come impostare questa porta
-        Protocol.registerProtocol("https", protocol);
-
-        //Configurazione sul server: parametri per l'acquisizione dei dati del certificato
-        
-        String fileKeyStore = ConfigurazioneStatico.getInstance().getFileKeyStore();
-        String password = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
-
-        File sorgente = new File(fileKeyStore);
-
-        KeyStoreParameters keyStoreParameters = new KeyStoreParameters();
-        keyStoreParameters.setResource(sorgente.getPath());
-        keyStoreParameters.setPassword(password);
-
-        KeyManagersParameters keyManagersParameters = new KeyManagersParameters();
-        keyManagersParameters.setKeyStore(keyStoreParameters);
-        keyManagersParameters.setKeyPassword(password);
-
-        SSLContextParameters sslContextParameters = new SSLContextParameters();
-        sslContextParameters.setKeyManagers(keyManagersParameters);
-
-        JettyHttpComponent componentJetty = (JettyHttpComponent) context.getComponent("jetty", JettyHttpComponent.class);
-        componentJetty.setSslContextParameters(sslContextParameters);
+//        ProtocolSocketFactory factory = new EasySSLProtocolSocketFactory(); // Permette di attivare la connessione HTTPS in ingresso ed accettare certificati autofirmati
+//        Protocol protocol = new Protocol("https", factory, 8443);
+//        Protocol.registerProtocol("https", protocol);
+//       
+//        String fileKeyStore = ConfigurazioneStatico.getInstance().getFileKeyStore();
+//        String password = ConfigurazioneStatico.getInstance().getPasswordKeyStore();
+//
+//        File sorgente = new File(fileKeyStore);
+//
+//        KeyStoreParameters keyStoreParameters = new KeyStoreParameters();
+//        keyStoreParameters.setResource(sorgente.getPath());
+//        keyStoreParameters.setPassword(password);
+//
+//        KeyManagersParameters keyManagersParameters = new KeyManagersParameters();
+//        keyManagersParameters.setKeyStore(keyStoreParameters);
+//        keyManagersParameters.setKeyPassword(password);
+//
+//        SSLContextParameters sslContextParameters = new SSLContextParameters();
+//        sslContextParameters.setKeyManagers(keyManagersParameters);
+//
+//        JettyHttpComponent componentJetty = (JettyHttpComponent) context.getComponent("jetty", JettyHttpComponent.class);
+//        componentJetty.setSslContextParameters(sslContextParameters);
     }
 }

@@ -49,6 +49,7 @@ public class ProcessorTrace implements Processor {
         if (!logger.isTraceEnabled()) {
             return;
         }
+        
         try {
             Message message;
             if (tipoMessaggio.equals(IN)) {
@@ -61,8 +62,8 @@ public class ProcessorTrace implements Processor {
             if (message.getBody() == null) {
                 return;
             }
-            logger.trace("Salvo il messaggio per " + tipoMessaggio + " - " + descrizione);
-            logger.trace("Tipo body: " + message.getBody().getClass());
+            if (logger.isTraceEnabled()) {logger.trace("Salvo il messaggio per " + tipoMessaggio + " - " + descrizione);}
+            if (logger.isTraceEnabled()) {logger.trace("Tipo body: " + message.getBody().getClass());}
             String stringaIntestazioni = estraiIntestazioniHTTP(message);
             InputStream intestazioniStream = new ByteArrayInputStream(stringaIntestazioni.getBytes());
             InputStream bodyStream = MessageUtil.getStream(message);
@@ -82,7 +83,7 @@ public class ProcessorTrace implements Processor {
                 fileName = df.format(date) + "-" + descrizione + suffix;
                 traceFile = new File(pathMessaggio + fileName + suffix);
             }
-            logger.trace("Messaggio salvato in " + traceFile.toString());
+            if (logger.isTraceEnabled()) {logger.trace("Messaggio salvato in " + traceFile.toString());}
             IOUtils.copy(stream, new FileOutputStream(traceFile));
             bodyStream.reset();
         } catch (Exception e) {
