@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class FactoryEccezioniEgov {
@@ -37,9 +36,10 @@ public class FactoryEccezioniEgov {
                 eccezione.setRilevanza(getTestoFiglio("rilevanza", nodeEccezione));
                 mappaEccezioni.put(codice, eccezione);
             }
-            if (logger.isInfoEnabled()) logger.info("Lista delle eccezioni caricata correttamente");
+            if (logger.isDebugEnabled()) logger.debug("Lista delle eccezioni caricata correttamente");
         } catch (Exception ex) {
-            logger.error("Impossibile leggere la lista delle eccezioni " + ex);
+            logger.error("Impossibile leggere la lista delle eccezioni.");
+            if (logger.isDebugEnabled()) logger.error(ex);
         }
     }
 

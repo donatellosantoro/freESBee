@@ -32,20 +32,19 @@ public class SOAPProcessorValidaXSD implements Processor {
 
         Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
 
-        if (logger.isDebugEnabled()) {
-            if (logger.isDebugEnabled()) logger.debug("Le intestazioni sono: " + mappaHeaders);
-        }
         if (mappaHeaders == null) {
-            logger.error("Non ho trovato intestazioni nel messaggio. Probabilmente il messaggio ricevuto non è una busta egov");
+            logger.error("Non sono state trovate intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS); //Il messaggio di errore da restituire dovrà contenere solo il body
-            throw new FreesbeeException("Non ho trovato intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta egov");
+            throw new FreesbeeException("Non sono state trovate intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
         }
+        
+        if (logger.isDebugEnabled()) logger.debug("Le intestazioni sono: " + mappaHeaders);
+        
         DocumentFragment nodoIntestazione = mappaHeaders.get(new QName(CostantiSOAP.NAMESPACE_EGOV, "Intestazione"));
         if (nodoIntestazione == null) {
-            logger.error("Non ho trovato intestazioni egov. Probabilmente il messaggio ricevuto non è una busta egov");
-            logger.error("Le intestazioni sono: " + mappaHeaders);
+            logger.error("Non sono state trovate intestazioni EGOV. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS);
-            throw new FreesbeeException("Non ho trovato intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta egov");
+            throw new FreesbeeException("Non sono state trovate intestazioni EGOV. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
         }
 
         try {
@@ -53,11 +52,12 @@ public class SOAPProcessorValidaXSD implements Processor {
             v.validate(new DOMSource(nodoIntestazione));
         } catch (SAXException e) {
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS);
-            throw new FreesbeeException("Le intestazioni ricevute non sono valide rispetto all'XSD delle intestazioni EGov. " + e.getLocalizedMessage());
+            if (logger.isDebugEnabled()) logger.error(e);
+            throw new FreesbeeException("Le intestazioni ricevute non sono valide rispetto all'XSD delle intestazioni EGOV.");
         } catch (XmlException e) {
-            if (logger.isDebugEnabled()) e.printStackTrace();
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS);
-            throw new FreesbeeException(e);
+            if (logger.isDebugEnabled()) logger.error(e);
+            throw new FreesbeeException("Si e' verificato un errore durante la validazione delle intestazioni EGOV.");
         }
     }
 }

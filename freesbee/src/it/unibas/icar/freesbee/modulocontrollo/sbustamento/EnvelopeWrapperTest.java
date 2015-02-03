@@ -44,8 +44,8 @@ public class EnvelopeWrapperTest extends RouteBuilder {
 
                 String nomeServizio = messaggio.getServizio();
                 String sbusta = (String) exchange.getIn().getHeader(CostantiBusta.SBUSTA_RICHIESTA_RISPOSTA);
-                if (logger.isInfoEnabled()) logger.info("Nome servizio " + nomeServizio);
-                if (logger.isInfoEnabled()) logger.info("Sbusta " + sbusta);
+                if (logger.isDebugEnabled()) logger.debug("Nome servizio " + nomeServizio);
+                if (logger.isDebugEnabled()) logger.debug("Sbusta " + sbusta);
                 if (nomeServizio.startsWith(CostantiBusta.SERVIZIO_TEST) && sbusta.equalsIgnoreCase(CostantiBusta.VALORE_SBUSTA_RICHIESTA)) {
                     if (logger.isInfoEnabled()) logger.info("Ricevuta busta di test.");
                     DocumentFragment df = mappaHeaders.get(new QName(CostantiSOAP.NAMESPACE_EGOV_TEST, "Header_EGov_Test_Richiesta"));
@@ -56,8 +56,8 @@ public class EnvelopeWrapperTest extends RouteBuilder {
                     }
                 }
             } catch (Exception e) {
-                if (logger.isDebugEnabled()) e.printStackTrace();
-                logger.error("Errore mentre si elaboravano le intestazioni di test " + e);
+                logger.error("Errore mentre si elaboravano le intestazioni di test.");
+                if (logger.isDebugEnabled()) logger.error(e);
             }
         }
     }

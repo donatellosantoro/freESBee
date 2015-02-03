@@ -35,7 +35,8 @@ public class WSMessaggioImpl implements IWSMessaggio {
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 
@@ -51,7 +52,8 @@ public class WSMessaggioImpl implements IWSMessaggio {
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
     public Messaggio getMessaggioRicevutoByIDSil(String id) throws SOAPFault {
@@ -66,7 +68,8 @@ public class WSMessaggioImpl implements IWSMessaggio {
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 
@@ -82,7 +85,8 @@ public class WSMessaggioImpl implements IWSMessaggio {
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 
@@ -96,8 +100,9 @@ public class WSMessaggioImpl implements IWSMessaggio {
             }            
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            logger.error("Impossibile svuotare la tabella." + ex);
-            throw new SOAPFault("Impossibile svuotare la tabella. " + ex.getMessage());
+            logger.error("Impossibile svuotare la tabella.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile svuotare la tabella.");
         }
     }
 }

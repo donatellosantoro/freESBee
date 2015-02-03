@@ -42,7 +42,7 @@ public class WSServizioImpl implements IWSServizio {
             sessionFactory.getCurrentSession().beginTransaction();
             if (servizio.getId() == 0) {
                 //E' UN SERVIZIO DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta del servizio " + servizio);
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta del servizio " + servizio);
                 riempiRiferimenti(servizio);
                 Servizio nuovoServizio = daoServizio.findByNome(servizio.getNome(), servizio.getTipo(), servizio.getErogatore());
                 if (nuovoServizio != null) {
@@ -56,7 +56,7 @@ public class WSServizioImpl implements IWSServizio {
                 daoServizio.makePersistent(servizio);
             } else {
                 //E' UN SERVIZIO DA MODIFICARE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica del servizio");
+                if (logger.isInfoEnabled()) logger.debug("Richiesta la modifica del servizio");
                 Servizio servizioModificare = daoServizio.findById(servizio.getId(), true);
                 if (servizioModificare == null) {
                     throw new SOAPFault("Impossibile modificare il servizio. Non esiste alcuna servizio con l'id specificato");
@@ -68,17 +68,17 @@ public class WSServizioImpl implements IWSServizio {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere il servizio " + ex);
-            throw new SOAPFault("Impossibile aggiungere il servizio " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'aggiunta del servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del servizio.");
         }
     }
 
     public void removeServizio(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la cancellazione del servizio " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la cancellazione del servizio " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             Servizio servizio = daoServizio.findById(id, false);
             riempiRiferimenti(servizio);
@@ -86,15 +86,16 @@ public class WSServizioImpl implements IWSServizio {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile eliminare il servizio " + ex);
-            throw new SOAPFault("Impossibile eliminare il servizio " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'eliminazione del servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'eliminazione del servizio.");
         }
     }
 
     public List<Servizio> getListaServizi() throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista dei servizi");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista dei servizi");
             sessionFactory.getCurrentSession().beginTransaction();
             List<Servizio> listaServizi = daoServizio.findAll();
             for (Servizio servizio : listaServizi) {
@@ -104,15 +105,16 @@ public class WSServizioImpl implements IWSServizio {
             return listaServizi;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere la lista dei servizi. " + ex);
-            throw new SOAPFault("Impossibile leggere la lista dei servizi. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura della lista dei servizi.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei servizi.");
         }
     }
 
     public Servizio getServizio(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesto il servizio " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesto il servizio " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             Servizio servizio = daoServizio.findById(id, false);
             Hibernate.initialize(servizio);
@@ -121,8 +123,9 @@ public class WSServizioImpl implements IWSServizio {
             return servizio;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere il servizio. " + ex);
-            throw new SOAPFault("Impossibile leggere il servizio. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura del servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura del servizio.");
         }
     }
 

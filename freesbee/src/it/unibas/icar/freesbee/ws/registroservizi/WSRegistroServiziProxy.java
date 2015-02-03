@@ -1,11 +1,9 @@
 package it.unibas.icar.freesbee.ws.registroservizi;
 
 import com.google.inject.Singleton;
-import it.unibas.guicefreesbee.ContextStartup;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.utilita.MessageUtil;
-import java.util.Map;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -85,7 +83,7 @@ public class WSRegistroServiziProxy extends RouteBuilder {
     private class NotSupportedProcessor implements Processor {
 
         public void process(Exchange exchange) throws Exception {
-            if (logger.isInfoEnabled()) logger.info("E' stato richiesto un'operazione non supportata");
+            logger.error("E' stata richiesta un'operazione non supportata");
             MessageUtil.setString(exchange.getOut(), "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"> <soapenv:Body> <soapenv:Fault> <faultcode>soapenv:Server.userException</faultcode> <faultstring>it.toscana.regione.icar.registro.sincronizzatore.ws.SincronizzatoreNotFoundException: Servizio [SPC/UNICAR_SPC/MonitoraggioSLA] non e' stato importato in precedenza</faultstring> <detail> <it.toscana.regione.icar.registro.sincronizzatore.ws.SincronizzatoreNotFoundException/> <ns1:hostname xmlns:ns1=\"http://xml.apache.org/axis/\">icars1</ns1:hostname> </detail> </soapenv:Fault> </soapenv:Body></soapenv:Envelope>");
         }
     }

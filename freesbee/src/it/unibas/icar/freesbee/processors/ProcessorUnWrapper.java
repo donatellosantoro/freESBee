@@ -34,20 +34,20 @@ public class ProcessorUnWrapper implements Processor {
         ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()).process(exchange);
         Map<QName, DocumentFragment> mappaHeaders = (Map<QName, DocumentFragment>) exchange.getProperty(CostantiSOAP.SOAP_HEADERS);
 
+        if (logger.isInfoEnabled()) logger.info("Si sta trasformando il messaggio EGOV in messaggio SOAP.");
         Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
 
-        if (logger.isDebugEnabled()) {
-            if (logger.isDebugEnabled()) logger.debug("Le intestazioni sono: " + mappaHeaders);
-        }
         if (mappaHeaders == null) {
-            logger.error("Non ho trovato intestazioni nel messaggio. Probabilmente il messaggio ricevuto non è una busta egov");
-            throw new FreesbeeException("Non ho trovato intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta egov");
+            logger.error("Non sono state trovate intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
+            throw new FreesbeeException("Non sono state trovate intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
         }
+        
+        if (logger.isDebugEnabled()) logger.debug("Le intestazioni sono: " + mappaHeaders);
+        
         DocumentFragment df = mappaHeaders.get(new QName(CostantiSOAP.NAMESPACE_EGOV, "Intestazione"));
         if (df == null) {
-            logger.error("Non ho trovato intestazioni egov. Probabilmente il messaggio ricevuto non è una busta egov");
-            logger.error("Le intestazioni sono: " + mappaHeaders);
-            throw new FreesbeeException("Non ho trovato intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta egov");
+            logger.error("Non sono state trovate intestazioni EGOV. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
+            throw new FreesbeeException("Non sono state trovate intestazioni nel messaggio. Probabilmente il messaggio ricevuto non e' una busta EGOV.");
         }
         try {
             mappaHeaders.remove(new QName(CostantiSOAP.NAMESPACE_EGOV, "Intestazione"));
@@ -230,8 +230,8 @@ public class ProcessorUnWrapper implements Processor {
             }
 
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) ex.printStackTrace();
-            throw new FreesbeeException("Errore nel processamento delle intestazioni egov " + ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore nel processamento delle intestazioni EGOV.");
         }
     }
 }

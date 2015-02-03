@@ -15,7 +15,7 @@ public class ProcessorErroreSbustamento implements Processor {
     @Inject
     private ProcessorSbloccaPollingConsumerPortaDelegata processorSbloccaPollingConsumerPortaDelegata;
     @Inject
-    private ProcessStampaEccezioniEGov processStampaEccezioniEGov;
+    private ProcessorStampaEccezioniEGov processStampaEccezioniEGov;
 
     public ProcessorErroreSbustamento() {
     }
@@ -23,17 +23,17 @@ public class ProcessorErroreSbustamento implements Processor {
     public void process(Exchange exchange) throws Exception {
         processorSbloccaPollingConsumerPortaApplicativa.setEccezione(true);
         processorSbloccaPollingConsumerPortaDelegata.setEccezione(true);
-        logger.error("E' stato generato un errore mentre si sbustava un messaggio");
+        logger.error("Si e' verificato un errore durante lo sbustamento del messaggio.");
         processStampaEccezioniEGov.process(exchange);
         String sbusta = (String) exchange.getIn().getHeader(CostantiBusta.SBUSTA_RICHIESTA_RISPOSTA);
         if (sbusta.equals(CostantiBusta.VALORE_SBUSTA_RISPOSTA)) {
-            logger.error("Si stava sbustando una risposta. Sblocco la porta delegata");
+            if (logger.isDebugEnabled()) logger.debug("Si stava sbustando la risposta. Sblocco la porta delegata.");
             processorSbloccaPollingConsumerPortaDelegata.process(exchange);
         } else if (sbusta.equals(CostantiBusta.VALORE_SBUSTA_RICHIESTA)) {
-            logger.error("Si stava sbustando una richiesta. Sblocco la porta applicativa");
+            if (logger.isDebugEnabled()) logger.debug("Si stava sbustando la richiesta. Sblocco la porta applicativa.");
             processorSbloccaPollingConsumerPortaApplicativa.process(exchange);
         } else {
-            logger.error("Errore GRAVE: Non è possibile stabilire se l'errore è stato generato da una richiesta o da una risposta");
+            logger.error("Si e' verificato un errore nel sistema. Non e' possibile stabilire se l'errore e' stato generato da una richiesta o da una risposta.");
         }
     }
 

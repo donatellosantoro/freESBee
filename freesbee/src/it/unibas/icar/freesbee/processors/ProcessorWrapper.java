@@ -10,7 +10,6 @@ import it.unibas.icar.freesbee.persistenza.DBManager;
 import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import it.unibas.icar.freesbee.utilita.BustaUtil;
-import it.unibas.icar.freesbee.utilita.MessageUtil;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.namespace.QName;
@@ -40,11 +39,12 @@ public class ProcessorWrapper implements Processor {
 //        }
         Configurazione configurazione = dbManager.getConfigurazione();
         try {
+            if (logger.isInfoEnabled()) logger.info("Si sta trasformando il messaggio SOAP in messaggio EGOV.");
             Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
             Messaggio messaggioRichiesta = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO_RICHIESTA);
 
             messaggio.setTempo(configurazione.getTempo());
-            if (logger.isInfoEnabled()) logger.info("@ Fruitore: " + messaggio.getFruitore());
+            if (logger.isDebugEnabled()) logger.debug("@ Fruitore: " + messaggio.getFruitore());
 
             Map<QName, DocumentFragment> mappaHeaders = (Map<QName, DocumentFragment>) exchange.getProperty(CostantiSOAP.SOAP_HEADERS);
             if (mappaHeaders == null) {

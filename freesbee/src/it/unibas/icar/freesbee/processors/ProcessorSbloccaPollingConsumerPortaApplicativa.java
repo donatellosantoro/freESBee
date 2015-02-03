@@ -38,8 +38,7 @@ public class ProcessorSbloccaPollingConsumerPortaApplicativa implements Processo
         String idPollingPortaApplicativa = messaggio.getPortaApplicativaChannel();
 //        String canale = FreesbeeCamel.SEDA_POLLING_CONSUMER_PORTA_APPLICATIVA_CHANNEL + idPollingPortaApplicativa + FreesbeeCamel.SEDA_ARGS;
         String canale = FreesbeeCamel.DIRECT_POLLING_CONSUMER_PORTA_APPLICATIVA_CHANNEL + idPollingPortaApplicativa;
-        if (logger.isInfoEnabled())
-            logger.info("Sblocco il canale " + canale);
+        if (logger.isDebugEnabled()) logger.debug("Sblocco il canale " + canale);
         
 //        SedaComponent sedaComponent = (SedaComponent) context.getComponent("seda");
 //        sedaComponent.createEndpoint(canale);
@@ -52,7 +51,7 @@ public class ProcessorSbloccaPollingConsumerPortaApplicativa implements Processo
         producer.process(exchange);
         producer.stop();
         
-        if (logger.isInfoEnabled()) logger.info("Canale sbloccato");
+        if (logger.isDebugEnabled()) logger.debug("Canale sbloccato");
     }
 
     public ProcessorEccezione getProcessorEccezione() {

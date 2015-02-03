@@ -38,17 +38,17 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             sessionFactory.getCurrentSession().beginTransaction();
             if (pa.getId() == null) {
                 //E' UNA PORTA APPLICATIVA DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta della porta applicativa " + pa);
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta della porta applicativa " + pa);
                 String nome = pa.getNome();
                 PortaApplicativa nuovaPortaApplicativa = daoPortaApplicativa.findByNome(nome);
                 if (nuovaPortaApplicativa != null) {
-                    throw new SOAPFault("Impossibile aggiungere la porta applicativa. Esiste già una porta applicativa con il nome specificato");
+                    throw new SOAPFault("Impossibile aggiungere la porta applicativa. Esiste gia' una porta applicativa con il nome specificato");
                 }
                 riempiRiferimenti(pa);
                 daoPortaApplicativa.makePersistent(pa);
             } else {
                 //E' UNA PORTA APPLICATIVA DA MODIFICARE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica della porta applicativa");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta la modifica della porta applicativa");
                 PortaApplicativa paModificare = daoPortaApplicativa.findById(pa.getId(), true);
                 if (paModificare == null) {
                     throw new SOAPFault("Impossibile modificare la porta applicativa. Non esiste alcuna porta applicativa con l'id specificato");
@@ -59,16 +59,17 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            throw new SOAPFault("Impossibile aggiungere la nuova porta applicativa " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'aggiunta di una nuova porta applicativa.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'aggiunta di una nuova porta applicativa.");
         }
     }
 
     public void removePortaApplicativa(PortaApplicativa pa) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la rimozione della porta applicativa " + pa.getId());
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la rimozione della porta applicativa " + pa.getId());
             sessionFactory.getCurrentSession().beginTransaction();
             PortaApplicativa portaApplicativaRimuovere = daoPortaApplicativa.findById(pa.getId(), true);
             Hibernate.initialize(portaApplicativaRimuovere);
@@ -77,15 +78,16 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            if (logger.isDebugEnabled()) ex.printStackTrace();
-            logger.error("Impossibile rimuovere la porta applicativa " + ex);
-            throw new SOAPFault("Impossibile rimuovere la porta applicativa " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la rimozione della porta applicativa.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la rimozione della porta applicativa.");
+            
         }
     }
 
     public List<PortaApplicativa> getListaPorteApplicative() throws SOAPFault {
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista delle porte applicative");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista delle porte applicative");
             SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             List<PortaApplicativa> listaPorteApplicative = daoPortaApplicativa.findAll();
@@ -95,14 +97,15 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             sessionFactory.getCurrentSession().getTransaction().commit();
             return listaPorteApplicative;
         } catch (Exception ex) {
-            logger.error("Impossibile leggere la lista delle porte applicative. " + ex);
-            throw new SOAPFault("Impossibile leggere la lista delle porte applicative. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura delle porte applicative.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura delle porte applicative.");
         }
     }
 
     public PortaApplicativa getPortaApplicativa(long id) throws SOAPFault {
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la porta applicativa " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la porta applicativa " + id);
             SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             PortaApplicativa portaApplicativa = daoPortaApplicativa.findById(id, false);
@@ -110,8 +113,9 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             sessionFactory.getCurrentSession().getTransaction().commit();
             return portaApplicativa;
         } catch (Exception ex) {
-            logger.error("Impossibile leggere la porta applicativa. " + ex);
-            throw new SOAPFault("Impossibile leggere la porta applicativa. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura della porta applicativa.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura della porta applicativa.");
         }
     }
 

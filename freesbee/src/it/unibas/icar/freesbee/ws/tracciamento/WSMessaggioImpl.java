@@ -27,12 +27,13 @@ public class WSMessaggioImpl implements IWSMessaggio {
             sessionFactory.getCurrentSession().beginTransaction();
             Messaggio messaggio = daoMessaggio.findByIDSil(id, Messaggio.TIPO_INVIATO);
             if (messaggio == null) {
-                throw new SOAPFault("Non esiste nessun messaggio con l'id specificato!");
+                throw new SOAPFault("Non esiste nessun messaggio con l'id specificato");
             }
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 
@@ -42,12 +43,13 @@ public class WSMessaggioImpl implements IWSMessaggio {
             sessionFactory.getCurrentSession().beginTransaction();
             Messaggio messaggio = daoMessaggio.findByIDSilRelatesTo(id, Messaggio.TIPO_INVIATO);
             if (messaggio == null) {
-                throw new SOAPFault("Non esiste nessun messaggio con l'id specificato!");
+                throw new SOAPFault("Non esiste nessun messaggio con l'id specificato");
             }
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 
@@ -62,7 +64,8 @@ public class WSMessaggioImpl implements IWSMessaggio {
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 
@@ -77,7 +80,8 @@ public class WSMessaggioImpl implements IWSMessaggio {
             return messaggio;
         } catch (Exception ex) {
             logger.error("Impossibile restituire il messaggio con l'id specificato");
-            throw new SOAPFault("Impossibile restituire il messaggio. " + ex.getMessage());
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile restituire il messaggio con l'id specificato");
         }
     }
 }

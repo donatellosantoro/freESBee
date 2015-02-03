@@ -75,17 +75,18 @@ public class WireTapCollaborazioneImbustamento extends RouteBuilder {
                 }
                 if (messaggio.isCorrelato() == false && messaggio.getSilRelatesTo() != null
                         && messaggio.getProfiloCollaborazione().equalsIgnoreCase(AccordoServizio.PROFILO_ASINCRONO_ASIMMETRICO)) {
-                    if (logger.isInfoEnabled()) logger.info("Abbiamo ricevuto una richiesta di stato per un servizio asincrono asimmetrico.");
+                    if (logger.isDebugEnabled()) logger.debug("E'stata ricevuta una richiesta di stato per un servizio asincrono asimmetrico.");
                     Messaggio messaggioCollegato = daoMessaggioCorr.findByIDSil(messaggio.getSilRelatesTo(), Messaggio.TIPO_INVIATO);
                     if (messaggioCollegato == null) {
-                        throw new FreesbeeException("Impossibile correlare il messaggio di stato. Non � stato inviato nessun messaggio con idSil " + messaggio.getSilRelatesTo());
+                        throw new FreesbeeException("Impossibile correlare il messaggio di stato. Non e' stato inviato nessun messaggio con idSil " + messaggio.getSilRelatesTo());
                     }
                     messaggio.setCollaborazione(messaggioCollegato.getIdMessaggio());
                 }
                 sessionFactory.getCurrentSession().getTransaction().commit();
             } catch (DAOException ex) {
-                logger.error("Errore nella lettura dal database " + ex);
-                throw new FreesbeeException("Errore nella lettura dal database " + ex);
+                logger.error("Errore nella lettura dal database ");
+                if (logger.isErrorEnabled()) logger.error(ex);
+                throw new FreesbeeException("Errore nella lettura dal database.");
             } finally {
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
@@ -105,7 +106,7 @@ public class WireTapCollaborazioneImbustamento extends RouteBuilder {
                 idSil = FreesbeeUtil.cercaIntestazioniIDHttpHeader(exchange.getIn());
             }
             if (idSil == null) {
-                if (logger.isInfoEnabled()) logger.info("Non ho trovato le intestazioni di correlazione. Utilizzo l'id SPCoop");
+                if (logger.isDebugEnabled()) logger.debug("Non ho trovato le intestazioni di correlazione. Utilizzo l'id SPCoop");
                 idSil = messaggio.getIdMessaggio();
 //                throw new FreesbeeException("ID Messaggio asincrono mancante", 104);
             }

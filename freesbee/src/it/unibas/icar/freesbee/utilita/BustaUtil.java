@@ -13,7 +13,6 @@ import org.apache.servicemix.jbi.jaxp.SourceTransformer;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -113,7 +112,8 @@ public class BustaUtil {
             df.appendChild(el);
             return df;
         } catch (ParserConfigurationException e) {
-            logger.error(e);
+            logger.error("Si e' verificato un errore nel sistema.");
+            if (logger.isDebugEnabled()) logger.error(e);
         }
         return null;
     }
@@ -137,7 +137,8 @@ public class BustaUtil {
             df.appendChild(el);
             return df;
         } catch (ParserConfigurationException e) {
-            logger.error(e);
+            logger.error("Si e' verificato un errore nel sistema.");
+            if (logger.isDebugEnabled()) logger.error(e);
         }
         return null;
     }
@@ -150,10 +151,11 @@ public class BustaUtil {
             el.appendChild(doc.createTextNode(valoreHeader));
             df.appendChild(el);
             NodeList nl = df.getChildNodes();
-            if (logger.isDebugEnabled()) logger.debug("createTextHeader - Nodi nella NodeList : " + nl.getLength());
+//            if (logger.isDebugEnabled()) logger.debug("createTextHeader - Nodi nella NodeList : " + nl.getLength());
             return df;
         } catch (ParserConfigurationException e) {
-            logger.error(e);
+            logger.error("Si e' verificato un errore nel sistema.");
+            if (logger.isDebugEnabled()) logger.error(e);
         }
         return null;
     }

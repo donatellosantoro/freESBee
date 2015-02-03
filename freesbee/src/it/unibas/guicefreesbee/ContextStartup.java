@@ -16,8 +16,8 @@ import it.unibas.icar.freesbee.portaapplicativa.RispostaAck;
 import it.unibas.icar.freesbee.portadelegata.EnricherAccordoServizio;
 import it.unibas.icar.freesbee.portadelegata.FiltroAutenticazione;
 import it.unibas.icar.freesbee.portadelegata.RichiestaAck;
-import it.unibas.icar.freesbee.processors.ProcessControllaEccezioniEGov;
-import it.unibas.icar.freesbee.processors.ProcessStampaEccezioniEGov;
+import it.unibas.icar.freesbee.processors.ProcessorControllaEccezioniEGov;
+import it.unibas.icar.freesbee.processors.ProcessorStampaEccezioniEGov;
 import it.unibas.icar.freesbee.processors.ProcessorEccezione;
 import it.unibas.icar.freesbee.processors.ProcessorEnricher;
 import it.unibas.icar.freesbee.processors.ProcessorEnricherRisposta;
@@ -74,11 +74,13 @@ public class ContextStartup implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent sce) {
         try {
+            if (logger.isInfoEnabled()) logger.info("Avvio di freESBee in corso...");
             camelContext = new GuiceCamelContext(Guice.createInjector(Stage.PRODUCTION, new FreesbeeModule()));
         } catch (Exception ex) {
-            logger.error(ex);
+            logger.error("Si e' verificato un errore durante l'avvio del sistema.");
+            if (logger.isDebugEnabled()) logger.error(ex);
         }
-        if (logger.isInfoEnabled()) logger.info("freESBee avviato");
+        if (logger.isInfoEnabled()) logger.info("Avvio completato con successo.");
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
@@ -86,10 +88,11 @@ public class ContextStartup implements ServletContextListener {
             arrestaServerJettyWS();
             camelContext.stop();
             DAOUtilHibernate.closeSessionFactory();
-            if (logger.isInfoEnabled()) logger.info("freESBee arrestato");
         } catch (Exception ex) {
-            logger.error(ex);
+            logger.error("Si e' verificato un errore durante l'arresto del sistema.");
+            if (logger.isDebugEnabled()) logger.error(ex);
         }
+        if (logger.isInfoEnabled()) logger.info("freESBee e' stato arrestato correttamente");
     }
 
     public static synchronized List<EndpointImpl> getEndpointAvviati() {
@@ -122,7 +125,7 @@ public class ContextStartup implements ServletContextListener {
         }
         Collection<JettyHTTPServerEngine> jettyServers = jettyServer.values();
         for (JettyHTTPServerEngine httpEngine : jettyServers) {
-            if (logger.isInfoEnabled()) logger.info("Arresto il jettyServer sulla porta " + httpEngine.getPort());
+            if (logger.isInfoEnabled()) logger.info("Si sta arrestando il server jetty sulla porta " + httpEngine.getPort());
             httpEngine.shutdown();
         }
 
@@ -198,8 +201,8 @@ public class ContextStartup implements ServletContextListener {
             bind(WSSoggetto.class);
 
             // PROCESSORS
-            bind(ProcessControllaEccezioniEGov.class);
-            bind(ProcessStampaEccezioniEGov.class);
+            bind(ProcessorControllaEccezioniEGov.class);
+            bind(ProcessorStampaEccezioniEGov.class);
             bind(ProcessorEccezione.class);
             bind(ProcessorEnricher.class);
             bind(ProcessorEnricherRisposta.class);

@@ -27,11 +27,11 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
 
             if (profiloEGov.getId() == 0) {
                 //E' UN PROFILO EGOV DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta di un profilo EGov");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta di un profilo EGov");
                 daoProfiloEgov.makePersistent(profiloEGov);
             } else {
                 //E' UN PROFILO EGOV DA MODIFICARTE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica di un profilo EGov");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta la modifica di un profilo EGov");
                 ProfiloEGov profiloEGovModificare = daoProfiloEgov.findById(profiloEGov.getId(), true);
                 if (profiloEGovModificare == null) {
                     throw new SOAPFault("Impossibile modificare il profilo EGov. Non esiste alcun profilo con l'id specificato");
@@ -43,37 +43,40 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
             return profiloEGov.getId();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere il profilo EGov " + ex);
-            throw new SOAPFault("Impossibile aggiungere il profilo EGov " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'aggiunta del profilo EGov.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del profilo EGov.");
         }
     }
 
     public void removeProfiloEGov(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la cancellazione di un profilo EGov");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la cancellazione di un profilo EGov");
             sessionFactory.getCurrentSession().beginTransaction();
             ProfiloEGov profiloEGovEliminare = daoProfiloEgov.findById(id, false);
             daoProfiloEgov.makeTransient(profiloEGovEliminare);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile eliminare il profilo EGov " + ex);
-            throw new SOAPFault("Impossibile eliminare il profilo EGov " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'eliminazione del profilo EGov.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'eliminazione del profilo EGov.");
         }
     }
 
     public List<ProfiloEGov> getListaProfiliEGov() throws SOAPFault {
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista dei profili EGov");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista dei profili EGov");
             SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             List<ProfiloEGov> listaProfiliEGov = daoProfiloEgov.findAll();
             sessionFactory.getCurrentSession().getTransaction().commit();
             return listaProfiliEGov;
         } catch (Exception ex) {
-            logger.error("Impossibile leggere la lista dei profili EGov." + ex);
-            throw new SOAPFault("Impossibile leggere la lista dei profili EGov. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura della lista dei profili EGov.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei profili EGov.");
         }
     }
 
@@ -86,8 +89,9 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
             sessionFactory.getCurrentSession().getTransaction().commit();
             return profiloEgov;
         } catch (Exception ex) {
-            logger.error("Impossibile leggere il profilo EGov." + ex);
-            throw new SOAPFault("Impossibile leggere il profilo EGov. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura del profilo EGov.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura del profilo EGov.");
         }
     }
 

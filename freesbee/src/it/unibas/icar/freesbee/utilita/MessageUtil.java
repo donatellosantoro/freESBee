@@ -7,8 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -44,10 +42,10 @@ public class MessageUtil {
             }
             return stream;
         } catch (IOException ex) {
-            Logger.getLogger(MessageUtil.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
         }
-        logger.error("Impossibile convertire il messaggio in InputStream. Il body e' in " + body.getClass());
-        throw new FreesbeeException("Errore interno. Impossibile convertire il messaggio in InputStream.");
     }
 
     public static String getString(Message message) throws FreesbeeException {
@@ -60,7 +58,9 @@ public class MessageUtil {
             stream.reset();
             return string;
         } catch (IOException ex) {
-            throw new FreesbeeException("Errore interno. Impossibile convertire il messaggio in String." + ex.getLocalizedMessage());
+            logger.error("Si e' verificato un errore durante la conversione del messaggio in String.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Si e' verificato un errore durante la conversione del messaggio in String.");
         }
     }
 
@@ -87,7 +87,9 @@ public class MessageUtil {
             transformer.transform(source, result);
             setStream(message, new ByteArrayInputStream(baos.toByteArray()));
         } catch (Exception ex) {
-            throw new FreesbeeException("Errore interno. Impossibile convertire il messaggio in InputStream. " + ex.getLocalizedMessage());
+            logger.error("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
         }
     }
 
@@ -106,8 +108,9 @@ public class MessageUtil {
             }
             return true;
         } catch (IOException ex) {
-            logger.error("Impossibile leggere il messaggio. " + ex.getLocalizedMessage());
-            throw new FreesbeeException("Errore interno. Impossibile leggere il messaggio. " + ex.getLocalizedMessage());
+            logger.error("Si e' verificato un errore durante la lettura del messaggio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Si e' verificato un errore durante la lettura del messaggio.");
         } finally {
             try {
                 if (stream != null) stream.reset();
@@ -125,7 +128,9 @@ public class MessageUtil {
             setStream(dest, new ByteArrayInputStream(outStream.toByteArray()));
 //            out.setBody(in.getBody());
         } catch (IOException ex) {
-            throw new FreesbeeException("Errore interno. Impossibile copiare il messaggio. " + ex.getLocalizedMessage());
+            logger.error("Si e' verificato un errore durante la copia del messaggio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Si e' verificato un errore durante la copia del messaggio.");
         }
     }
 //    public static void copyHeaders(Message src, Message dest) {

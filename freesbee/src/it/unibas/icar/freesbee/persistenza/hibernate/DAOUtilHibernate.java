@@ -12,7 +12,6 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
-import org.hibernate.stat.Statistics;
 
 public class DAOUtilHibernate {
 
@@ -32,8 +31,8 @@ public class DAOUtilHibernate {
             serviceRegistry = (ServiceRegistry) new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
-            logger.error("Building SessionFactory failed.", ex);
-            throw new ExceptionInInitializerError(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new ExceptionInInitializerError("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -41,19 +40,19 @@ public class DAOUtilHibernate {
         if (sessionFactory == null) {
             buildSessionFactory();
         }
-//        if (++counter % 1000 == 0) {
-//            System.out.println("---------------------");
-//            Statistics statistic = sessionFactory.getStatistics();
-//            statistic.logSummary();
-//            System.out.println("---------------------\n\n");
+////        if (++counter % 1000 == 0) {
+////            System.out.println("---------------------");
+////            Statistics statistic = sessionFactory.getStatistics();
+////            statistic.logSummary();
+////            System.out.println("---------------------\n\n");
+////        }
+//        if (logger.isDebugEnabled()) {
+//            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+//            logger.debug("Richiesta session factory da " + getUltimaChiamataSignificativa(stackTrace));
+////            for (StackTraceElement stackTraceElement : stackTrace) {
+////                if (logger.isDebugEnabled()) logger.debug("\t" + stackTraceElement);
+////            }
 //        }
-        if (logger.isDebugEnabled()) {
-            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-            logger.debug("Richiesta session factory da " + getUltimaChiamataSignificativa(stackTrace));
-//            for (StackTraceElement stackTraceElement : stackTrace) {
-//                if (logger.isDebugEnabled()) logger.debug("\t" + stackTraceElement);
-//            }
-        }
         return sessionFactory;
     }
 
@@ -72,25 +71,25 @@ public class DAOUtilHibernate {
         sessionFactory = null;
     }
 
-    private static String getUltimaChiamataSignificativa(StackTraceElement[] stackTrace) {
-        for (StackTraceElement stackTraceElement : stackTrace) {
-            String className = stackTraceElement.getClassName();
-            if (className.equals("it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate")) {
-                continue;
-            }
-            if (className.startsWith("it.unibas.icar.freesbee")) {
-                return className + "." + stackTraceElement.getMethodName() + "()";
-            }
-        }
-        return stackTrace[0].getClassName();
-    }
+//    private static String getUltimaChiamataSignificativa(StackTraceElement[] stackTrace) {
+//        for (StackTraceElement stackTraceElement : stackTrace) {
+//            String className = stackTraceElement.getClassName();
+//            if (className.equals("it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate")) {
+//                continue;
+//            }
+//            if (className.startsWith("it.unibas.icar.freesbee")) {
+//                return className + "." + stackTraceElement.getMethodName() + "()";
+//            }
+//        }
+//        return stackTrace[0].getClassName();
+//    }
 
     public static Session getCurrentSession() throws DAOException {
         try {
             return sessionFactory.getCurrentSession();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -98,8 +97,8 @@ public class DAOUtilHibernate {
         try {
             sessionFactory.getCurrentSession().beginTransaction();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -107,16 +106,17 @@ public class DAOUtilHibernate {
         try {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
-    public static void rollback() {
+    public static void rollback() throws DAOException {
         try {
             sessionFactory.getCurrentSession().getTransaction().rollback();
         } catch (HibernateException ex) {
-            logger.error(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 }

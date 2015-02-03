@@ -29,8 +29,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
         try {
             return DAOUtilHibernate.getCurrentSession();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -39,8 +39,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
         try {
             getSession().saveOrUpdate(entity);
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
         return entity;
     }
@@ -49,8 +49,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
         try {
             getSession().delete(entity);
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -59,8 +59,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
         try {
             getSession().buildLockRequest(LockOptions.UPGRADE).lock(entity);
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -79,8 +79,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
 //                entity = (T) getSession().load(getPersistentClass(), id);
 //            }
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
         return entity;
     }
@@ -104,8 +104,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
             }
             return crit.list();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -120,8 +120,8 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
             crit.setMaxResults(limite);
             return crit.list();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -129,11 +129,10 @@ public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
     public T reattach(T obj, Long id) throws DAOException {
         try {
             T persistentObject = (T) getSession().get(persistentClass, id);
-            if (logger.isDebugEnabled()) logger.debug("Get ha trovato l'oggetto con id " + id);
             return persistentObject;
         } catch (Exception ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 }

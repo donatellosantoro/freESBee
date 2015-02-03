@@ -40,9 +40,9 @@ public class ProcessorLogFactory {
 
         public void process(Exchange exchange) throws Exception {
             //ContextStartup.aggiungiThread(this.getClass().getName());
-            if (logger.isInfoEnabled()) logger.info(classe.getSimpleName() + ": processo la richiesta");
-            if (logger.isInfoEnabled()) logger.info("\tBody Class: " + exchange.getIn().getBody().getClass());
-            if (logger.isInfoEnabled()) logger.info("\tBody: \n" + MessageUtil.getString(exchange.getIn()) + "\n");
+            if (logger.isDebugEnabled()) logger.debug(classe.getSimpleName() + ": processo la richiesta");
+            if (logger.isDebugEnabled()) logger.debug("\tBody Class: " + exchange.getIn().getBody().getClass());
+            if (logger.isDebugEnabled()) logger.debug("\tBody: \n" + MessageUtil.getString(exchange.getIn()) + "\n");
             if (logger.isDebugEnabled()) logger.debug("La mappa delle proprietà vale: " + exchange.getProperties());
             if (logger.isDebugEnabled()) logger.debug("La mappa delle instestazioni del messaggio vale: " + exchange.getIn().getHeaders());
 //        String body = exchange.getIn().getBody(String.class);

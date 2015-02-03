@@ -30,7 +30,7 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
 
             if (accordoServizio.getId() == 0) {
                 //E' UN ACCORDO DI SERVIZIO DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta di un accordo di servizio");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta di un accordo di servizio");
                 AccordoServizio nuovoAccordoServizio = daoAccordoServizio.findByNome(accordoServizio.getNome());
                 if (nuovoAccordoServizio != null) {
                     throw new SOAPFault("Impossibile aggiungere l'accordo di servizio. Esiste già un accordo di servizio con il nome specificato");
@@ -41,7 +41,7 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
 
             } else {
                 //E' UN ACCORDO DI SERVIZIO DA MODIFICARE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica di un accordo di servizio");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta la modifica di un accordo di servizio");
                 AccordoServizio accordoServizioModificare = daoAccordoServizio.findById(accordoServizio.getId(), true);
                 if (accordoServizioModificare == null) {
                     throw new SOAPFault("Impossibile modificare l'accordo di servizio. Non esiste alcun accordo di servizio con l'id specificato");
@@ -55,8 +55,9 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
 
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere l'Accordo di Servizio " + ex);
-            throw new SOAPFault("Impossibile aggiungere l'Accordo di Servizio " + ex.getMessage());
+            logger.error("Impossibile aggiungere l'Accordo di Servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile aggiungere l'Accordo di Servizio.");
         }
     }
 
@@ -70,15 +71,16 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile eliminare l'Accordo di Servizio " + ex);
-            throw new SOAPFault("Impossibile eliminare l'Accordo di Servizio " + ex.getMessage());
+            logger.error("Impossibile eliminare l'Accordo di Servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile eliminare l'Accordo di Servizio.");
         }
     }
 
     public List<AccordoServizio> getListaAccordiServizio() throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista degli Accordi di Servizio");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista degli Accordi di Servizio");
             sessionFactory.getCurrentSession().beginTransaction();
             List<AccordoServizio> listaAccordiServizio = daoAccordoServizio.findAll();
             for (AccordoServizio accordoServizio : listaAccordiServizio) {
@@ -88,15 +90,16 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
             return listaAccordiServizio;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere la lista degli Accordi di Servizio." + ex);
-            throw new SOAPFault("Impossibile leggere la lista degli Accordi di Servizio. " + ex.getMessage());
+            logger.error("Impossibile leggere la lista degli Accordi di Servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile leggere la lista degli Accordi di Servizio.");
         }
     }
 
     public AccordoServizio getAccordoServizio(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta l'accordo di servizio " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesta l'accordo di servizio " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             AccordoServizio accordoServizio = daoAccordoServizio.findById(id, false);
             settaRiferimenti(accordoServizio);
@@ -104,8 +107,9 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
             return accordoServizio;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere l'Accordo di Servizio." + ex);
-            throw new SOAPFault("Impossibile leggere l'Accordo di Servizio. " + ex.getMessage());
+            logger.error("Impossibile leggere l'Accordo di Servizio.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Impossibile leggere l'Accordo di Servizio.");
         }
     }
 

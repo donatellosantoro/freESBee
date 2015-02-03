@@ -54,7 +54,7 @@ public class CostantiEccezioni {
     public static String[] TRASMISSIONE_ORIGINE_INDIRIZZO_TELEMATICO_PRESENTE = new String[]{"116", INFO, "ListaTrasmissioni/Trasmissione/Origine/IdentificativoParte/indirizzoTelematico"};
     public static String[] TRASMISSIONE_DESTINAZIONE_IDENTIFICATIVO_NON_AVVALORATO = new String[]{"116", GRAVE, "ListaTrasmissioni/Trasmissione/Destinazione/IdentificativoParte"};
     public static String[] TRASMISSIONE_DESTINAZIONE_TIPO_NON_VALIDO = new String[]{"116", GRAVE, "ListaTrasmissioni/Trasmissione/Destinazione/IdentificativoParte/tipo"};
-    public static String[] TRASMISSIONE_DESTINAZIONE_INDIRIZZO_TELEMATICO_PRESENTE = new String[]{"116", INFO, "ListaTrasmissioni/Trasmissione/Destinazione/IdentificativoParte/tipo"};
+    public static String[] TRASMISSIONE_DESTINAZIONE_INDIRIZZO_TELEMATICO_PRESENTE = new String[]{"116", INFO, "ListaTrasmissioni/Trasmissione/Destinazione/IdentificativoParte/indirizzoTelematico"};
     public static String[] TRASMISSIONE_ORA_REGISTRAZIONE_NON_VALIDO = new String[]{"116", GRAVE, "ListaTrasmissioni/Trasmissione/OraRegistrazione"};
     public static String[] TRASMISSIONE_TEMPO_NON_VALIDO = new String[]{"116", GRAVE, "ListaTrasmissioni/Trasmissione/OraRegistrazione/tempo"};
     //ProfiloTrasmissione

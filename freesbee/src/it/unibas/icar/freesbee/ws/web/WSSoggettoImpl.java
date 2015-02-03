@@ -40,7 +40,7 @@ public class WSSoggettoImpl implements IWSSoggetto {
 
             if (soggetto.getId() == 0) {
                 //E' UN SOGGETTO DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta di un soggetto");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta di un soggetto");
                 Soggetto nuovoSoggetto = daoSoggetto.findByNome(soggetto.getNome(), soggetto.getTipo());
                 if (nuovoSoggetto != null) {
                     throw new SOAPFault("Impossibile aggiungere il soggetto. Esiste già un soggetto con nome e tipo specificati");
@@ -49,7 +49,7 @@ public class WSSoggettoImpl implements IWSSoggetto {
                 daoSoggetto.makePersistent(soggetto);
             } else {
                 //E' UN SOGGETTO DA MODIFICARE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica di un soggetto");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta la modifica di un soggetto");
                 Soggetto soggettoModificare = daoSoggetto.findById(soggetto.getId(), true);
                 if (soggettoModificare == null) {
                     throw new SOAPFault("Impossibile modificare il soggetto. Non esiste alcun soggetto con l'id specificato");
@@ -61,15 +61,16 @@ public class WSSoggettoImpl implements IWSSoggetto {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere il soggetto " + ex);
-            throw new SOAPFault("Impossibile aggiungere il soggetto " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'aggiunta del soggetto.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del soggetto.");
         }
     }
 
     public void removeSoggetto(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la cancellazione di un soggetto");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la cancellazione di un soggetto");
             sessionFactory.getCurrentSession().beginTransaction();
             Soggetto soggettoEliminare = daoSoggetto.findById(id, false);
             for (Servizio serv : soggettoEliminare.getListaServiziFruitore()) {
@@ -83,32 +84,35 @@ public class WSSoggettoImpl implements IWSSoggetto {
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
-                logger.error("Could not rollback transaction after exception!", rbEx);
+                logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
+                if (logger.isDebugEnabled()) logger.error(ex);
             }
-            logger.error("Impossibile eliminare il soggetto " + ex);
-            throw new SOAPFault("Impossibile eliminare il soggetto " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'eliminazione del soggetto.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'eliminazione del soggetto.");
         }
     }
 
     public List<Soggetto> getListaSoggetti() throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista dei soggetti");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista dei soggetti");
             sessionFactory.getCurrentSession().beginTransaction();
             List<Soggetto> listaSoggetti = daoSoggetto.findAll();
             sessionFactory.getCurrentSession().getTransaction().commit();
             return listaSoggetti;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere la lista dei soggetti." + ex);
-            throw new SOAPFault("Impossibile leggere la lista dei soggetti. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura della lista dei soggetti.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei soggetti.");
         }
     }
 
     public Soggetto getSoggetto(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesto il soggetto " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesto il soggetto " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             Soggetto soggetto = daoSoggetto.findById(id, false);
             Hibernate.initialize(soggetto);
@@ -117,8 +121,9 @@ public class WSSoggettoImpl implements IWSSoggetto {
             return soggetto;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere il soggetto." + ex);
-            throw new SOAPFault("Impossibile leggere il soggetto. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura del soggetto.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura del soggetto.");
         }
     }
 

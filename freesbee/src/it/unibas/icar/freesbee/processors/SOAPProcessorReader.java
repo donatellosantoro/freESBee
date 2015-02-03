@@ -44,14 +44,14 @@ public class SOAPProcessorReader implements Processor {
         //ContextStartup.aggiungiThread(this.getClass().getName());
         ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()).process(exchange);
         if (MessageUtil.isEmpty(exchange.getIn())) {
-            if (logger.isInfoEnabled()) logger.info("Ricevuto un messaggio vuoto. Probabilemente è un ack di risposta");
+            if (logger.isInfoEnabled()) logger.info("Ricevuto un messaggio vuoto. Probabilemente e' un ack di risposta.");
             MessageUtil.setString(exchange.getIn(), "");
             return;
         }
         String contentType = (String) exchange.getIn().getHeader("Content-Type");
         String charset = estraiCharset(contentType);
-        if (logger.isInfoEnabled()) logger.info("contentType: " + contentType);
-        if (logger.isInfoEnabled()) logger.info("charset estratto: |" + charset + "|");
+        if (logger.isDebugEnabled()) logger.debug("Il content type del messaggio vale: " + contentType);
+        if (logger.isDebugEnabled()) logger.debug("Il charset estratto dal content type vale: |" + charset + "|");
         SoapMarshaler soapMarshaler = new SoapMarshaler(true);
 //        soapMarshaler.setSoap(true);
 //        soapMarshaler.setUseDom(true);
@@ -67,31 +67,32 @@ public class SOAPProcessorReader implements Processor {
                 String stringaIntestazioni = FreesbeeUtil.estraiIntestazioniHTTP(exchange.getIn());
                 InputStream intestazioniStream = new ByteArrayInputStream(stringaIntestazioni.getBytes());
                 InputStream messaggioStream = new SequenceInputStream(intestazioniStream, bodyStream);
-                if (logger.isDebugEnabled()) logger.debug("Ho ricevuto un messaggio soap con attachment");
+                if (logger.isDebugEnabled()) logger.debug("E' stato ricevuto un messaggio soap con attachment.");
                 Session session = Session.getDefaultInstance(new Properties());
                 MimeMessage mime = new MimeMessage(session, messaggioStream);
                 soapMessage = soapReader.read(mime);
                 //AGGIUNGO GLI ATTACHMENT ALLA MAPPA DELLE INTESTAZIONI
                 exchange.setProperty(CostantiSOAP.SOAP_ATTACHMENT, soapMessage.getAttachments());
             } else {
+                if (logger.isDebugEnabled()) logger.debug("E' stato ricevuto un messaggio soap senza attachment.");
                 InputStream bodyStream = MessageUtil.getStream(exchange.getIn());
                 soapMessage = soapReader.read(bodyStream, charset);
             }
-            if (logger.isDebugEnabled()) logger.debug("soapMessage.getBodyName()" + soapMessage.getBodyName());
-            if (logger.isDebugEnabled()) logger.debug("soapMessage.hasAttachments()" + soapMessage.hasAttachments());
+//            if (logger.isDebugEnabled()) logger.debug("soapMessage.getBodyName()" + soapMessage.getBodyName());
+//            if (logger.isDebugEnabled()) logger.debug("soapMessage.hasAttachments()" + soapMessage.hasAttachments());
             MessageUtil.setSource(exchange.getIn(), soapMessage.getSource());
             exchange.setProperty(CostantiSOAP.SOAP_HEADERS, soapMessage.getHeaders());
             if (soapMessage.getFault() != null) {
                 exchange.setProperty(CostantiSOAP.SOAP_FAULT, soapMessage.getFault());
             }
         } catch (Exception e) {
-            if (logger.isDebugEnabled()) e.printStackTrace();
-            logger.error("Errore generico nel parsing del messaggio SOAP. " + e.getMessage());
-            exchange.setException(new FreesbeeException(e.getMessage()));
+            logger.error("Errore nel parsing del messaggio SOAP.");
+            if (logger.isDebugEnabled()) logger.error(e);
+            exchange.setException(new FreesbeeException("Errore nel parsing del messaggio SOAP."));
             return;
         }
 
-        if (logger.isDebugEnabled()) logger.debug("Il messaggio soap letto e': " + MessageUtil.getString(exchange.getIn()));
+        if (logger.isDebugEnabled()) logger.debug("Il parsing del messaggio SOAP e' stato completato con successo. Il messaggio letto e': " + MessageUtil.getString(exchange.getIn()));
         
         exchange.setProperty(CostantiBusta.FIGLI_MULTIPLI, "false");
         InputStream messaggio = MessageUtil.getStream(exchange.getIn());
@@ -133,7 +134,8 @@ public class SOAPProcessorReader implements Processor {
             }
 
         } catch (Exception e) {
-            if (logger.isDebugEnabled()) logger.debug("Impossibile verificare se il body ha piu' figli " + e);
+            logger.error("Impossibile verificare se il body ha piu' figli.");
+            if (logger.isDebugEnabled()) logger.error(e);
         }
     }
 

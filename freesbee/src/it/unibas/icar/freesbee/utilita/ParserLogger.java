@@ -78,7 +78,8 @@ public class ParserLogger {
             this.patternFull = getPatternFull(this.conversionPattern);
             postInit();
         } catch (IOException ex) {
-//            logger.error("Impossibile caricare il file log4j.properties");
+            logger.error("Si e' verificato un errore durante il caricamento del file log4j.properties .");
+            if (logger.isDebugEnabled()) logger.error(ex);
         }
     }
 
@@ -240,10 +241,12 @@ public class ParserLogger {
             LogData[] logDatas = dataCollector.getLogData();
             return logDatas;
         } catch (IOException ioe) {
-            logger.error(ioe);
+            logger.error("Si e' verificato un errore durante il caricamento del file log4j.properties .");
+            if (logger.isDebugEnabled()) logger.error(ioe);
 //            logger.error("Errore nell'inzializzare la libreria OtrosLogViewer: " + initializationException);
         } catch (InitializationException ie) {
-            logger.error(ie);
+            logger.error("Si e' verificato un errore durante l'inizializzazione della libreria di log.");
+            if (logger.isDebugEnabled()) logger.error(ie);
         }
         return null;
     }

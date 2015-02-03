@@ -48,8 +48,7 @@ public class ConfigurazioneStatico {
 
     private ConfigurazioneStatico() {
         try {
-            if (logger.isInfoEnabled())
-                logger.info("Avvio la configurazione statica");
+            if (logger.isInfoEnabled()) logger.info("Caricamento della configurazione.");
             InputStream inStream = ConfigurazioneStatico.class.getResourceAsStream("/freesbee.properties");
             properties.load(inStream);
             this.webservicesPort = properties.getProperty("webservices.port");
@@ -276,7 +275,6 @@ public class ConfigurazioneStatico {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         InputStream streamXSD = ValidatoreXSDBustaEGov.class.getResourceAsStream("/IntestazioniEGov.xsd");
         if (streamXSD == null) {
-            logger.error("Impossibile caricare il file IntestazioniEGov.xsd");
             throw new XmlException("Impossibile caricare il file IntestazioniEGov.xsd");
         }
         StreamSource ss = new StreamSource(streamXSD);
@@ -284,9 +282,7 @@ public class ConfigurazioneStatico {
         try {
             xmlSchema = schemaFactory.newSchema(ss);
         } catch (SAXException ex) {
-            if (logger.isDebugEnabled())
-                ex.printStackTrace();
-            logger.error("Il file IntestazioniEGov.xsd non è valido. " + ex.getLocalizedMessage());
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new XmlException("Il file IntestazioniEGov.xsd non è valido.");
         }
         this.xmlSchema = xmlSchema;

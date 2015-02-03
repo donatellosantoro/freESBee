@@ -43,7 +43,7 @@ public class ProcessorIdentificaNica implements Processor {
 
         messaggio.setNica(isNica);
         messaggio.setNomeNica(configurazione.getSoggettoErogatoreNICA());
-        if (logger.isInfoEnabled()) logger.info("Processo il messaggio come un Nica? " + isNica);
+//        if (logger.isInfoEnabled()) logger.info("Processo il messaggio come un Nica? " + isNica);
         exchange.getIn().setHeader(CostantiBusta.RUOLO_NICA, isNica); //DEV'ESSERE NELL'HEADER
 
     }

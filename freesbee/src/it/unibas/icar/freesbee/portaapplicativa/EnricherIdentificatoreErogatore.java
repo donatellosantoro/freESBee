@@ -2,7 +2,7 @@ package it.unibas.icar.freesbee.portaapplicativa;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import it.unibas.icar.freesbee.processors.ProcessControllaEccezioniEGov;
+import it.unibas.icar.freesbee.processors.ProcessorControllaEccezioniEGov;
 import it.unibas.icar.freesbee.processors.ProcessorIdentificazioneErogatore;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.processors.ProcessorSbloccaPollingConsumerPortaApplicativa;
@@ -18,7 +18,7 @@ public class EnricherIdentificatoreErogatore extends RouteBuilder {
     @Inject
     private ProcessorIdentificazioneErogatore processorIdentificazioneErogatore;
     @Inject
-    private ProcessControllaEccezioniEGov processControllaEccezioniEGov;
+    private ProcessorControllaEccezioniEGov processorControllaEccezioniEGov;
     @Inject
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
 
@@ -31,7 +31,7 @@ public class EnricherIdentificatoreErogatore extends RouteBuilder {
             .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
             .doTry()
                 .process(processorIdentificazioneErogatore)
-                .process(processControllaEccezioniEGov) //Solo qui possiamo dire di aver verificato tutte le possibili eccezioni e inviarle
+                .process(processorControllaEccezioniEGov) //Solo qui possiamo dire di aver verificato tutte le possibili eccezioni e inviarle
                 .to(FreesbeeCamel.SEDA_HTTP_CONSEGNA_BUSTE_SOAP)
             .doCatch(Exception.class)
                 .process(getProcessorSbloccaPollingConsumerPortaApplicativa())
@@ -47,12 +47,12 @@ public class EnricherIdentificatoreErogatore extends RouteBuilder {
         this.processorIdentificazioneErogatore = processorIdentificazioneErogatore;
     }
     
-    public ProcessControllaEccezioniEGov getProcessControllaEccezioniEGov() {
-        return processControllaEccezioniEGov;
+    public ProcessorControllaEccezioniEGov getProcessControllaEccezioniEGov() {
+        return processorControllaEccezioniEGov;
     }
 
-    public void setProcessControllaEccezioniEGov(ProcessControllaEccezioniEGov processControllaEccezioniEGov) {
-        this.processControllaEccezioniEGov = processControllaEccezioniEGov;
+    public void setProcessControllaEccezioniEGov(ProcessorControllaEccezioniEGov processControllaEccezioniEGov) {
+        this.processorControllaEccezioniEGov = processControllaEccezioniEGov;
     }
 
     public ProcessorSbloccaPollingConsumerPortaApplicativa getProcessorSbloccaPollingConsumerPortaApplicativa() {

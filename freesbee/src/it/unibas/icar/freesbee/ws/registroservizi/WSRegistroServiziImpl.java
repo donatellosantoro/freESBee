@@ -202,7 +202,7 @@ public class WSRegistroServiziImpl implements IWSRegistroServizi {
         if (servizioRS == null || servizioRS.getSoggettoErogatore() == null || servizioRS.getSoggettoErogatore().getNome() == null) {
             listaServizi = daoServizio.findAllFilter(maxDate, minDate, null, null, null);
         } else {
-            if (logger.isInfoEnabled()) logger.info("Cerco l'erogatore " + servizioRS.getSoggettoErogatore());
+            if (logger.isDebugEnabled()) logger.debug("Cerco l'erogatore " + servizioRS.getSoggettoErogatore());
             Soggetto soggettoErogatore = daoSoggetto.findByNome(servizioRS.getSoggettoErogatore().getNome(), servizioRS.getSoggettoErogatore().getTipo());
             if (soggettoErogatore == null) {
                 throw new SOAPFault("Soggetto erogatore non trovato");

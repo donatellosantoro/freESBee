@@ -7,7 +7,6 @@ import it.unibas.icar.freesbee.modello.AccordoServizio;
 import it.unibas.icar.freesbee.modello.Azione;
 import it.unibas.icar.freesbee.modello.Configurazione;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
-import it.unibas.icar.freesbee.modello.CostantiEccezioni;
 import it.unibas.icar.freesbee.modello.PortaApplicativa;
 import it.unibas.icar.freesbee.modello.PortaDelegata;
 import it.unibas.icar.freesbee.modello.Servizio;
@@ -52,18 +51,20 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         PortaDelegata portaDelegata = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere la porta delegata");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni circa la porta delegata.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             portaDelegata = daoPortaDelegata.findByNome(nomePortaDelegata);
             sessionFactory.getCurrentSession().getTransaction().commit();
-        } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura delle porte delegate " + ex);
+        } catch (DAOException ex) {
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni circa la porta delegata.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
+        
         if (portaDelegata == null) {
-            throw new FreesbeeException("Non è stata trovata la porta delegata " + nomePortaDelegata + " nella base di dati delle porte");
+            throw new FreesbeeException("Impossibile trovare la porta delegata " + nomePortaDelegata + " nel DB.");
         }
         if (ConfigurazioneStatico.getInstance().isCacheDB()) {
             cachePortaDelegata.put(nomePortaDelegata, portaDelegata);
@@ -81,16 +82,18 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         Soggetto soggetto = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere il soggetto");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni sul soggetto.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             soggetto = daoSoggetto.findByNome(nomeSoggetto, tipoSoggetto);
             sessionFactory.getCurrentSession().getTransaction().commit();
-        } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura dei soggetti " + ex);
+        } catch (DAOException ex) {
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sul soggetto.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
+        
         if (ConfigurazioneStatico.getInstance().isCacheDB()) {
             cacheSoggetto.put(chiave, soggetto);
         }
@@ -107,16 +110,18 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         Servizio servizioCorrelato = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere il servizio correlato");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni sul servizio correlato.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             servizioCorrelato = daoServizio.findCorrelato(accordo, fruitore);
             sessionFactory.getCurrentSession().getTransaction().commit();
-        } catch (Exception ex) {
-            logger.warn("Errore nella lettura dei servizi correlati " + ex);
+        } catch (DAOException ex) {
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sul servizio correlato.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
+        
         if (ConfigurazioneStatico.getInstance().isCacheDB()) {
             cacheServizioCorrelato.put(chiave, servizioCorrelato);
         }
@@ -130,18 +135,20 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         Configurazione configurazione = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere la configurazione");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per caricare la configurazione.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             configurazione = daoConfigurazione.getConfigurazione();
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura della configurazione " + ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante il caricamento della configurazione dal DB.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
+        
         if (configurazione == null) {
-            throw new FreesbeeException("Impossibile caricare la configurazione");
+            throw new FreesbeeException("Impossibile caricare la configurazione dal DB.");
         }
         if (ConfigurazioneStatico.getInstance().isCacheDB()) {
             cacheConfigurazione = configurazione;
@@ -158,13 +165,14 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         PortaApplicativa portaApplicativa = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere la porta applicativa");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni circa la porta applicativa.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             portaApplicativa = daoPortaApplicativa.findByNomeServizio(nomeServizio, tipoServizio, nomeErogatore, tipoErogatore, azione);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura delle porte applicative " + ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni circa la porta applicativa.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
@@ -186,13 +194,14 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         PortaApplicativa portaApplicativa = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere la porta applicativa");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni circa la porta applicativa.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             portaApplicativa = daoPortaApplicativa.findByServizio(servizio, azione);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura delle porte applicative " + ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni circa la porta applicativa.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
@@ -214,7 +223,7 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         List<Servizio> servizi = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere i servizi");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni sui servizi.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             servizi = daoServizio.findByNome(nomeServizio, tipoServizio);
@@ -224,7 +233,8 @@ public class DBManager {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura dei servizi " + ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sui servizi.");
         } finally {
             rollbackTransaction(sessionFactory);
         }
@@ -246,7 +256,7 @@ public class DBManager {
         SessionFactory sessionFactory = null;
         Servizio servizio = null;
         try {
-            if (logger.isDebugEnabled()) logger.debug("Accedo al db per leggere i servizi");
+            if (logger.isDebugEnabled()) logger.debug("Si sta accedendo al DB per ottenere informazioni sui servizi.");
             sessionFactory = DAOUtilHibernate.getSessionFactory();
             sessionFactory.getCurrentSession().beginTransaction();
             servizio = daoServizio.findByNome(nomeServizio, tipoServizio, soggettoErogatore);
@@ -255,7 +265,8 @@ public class DBManager {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            throw new FreesbeeException("Errore nella lettura dei servizi " + ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sui servizi.");
         } finally {
             rollbackTransaction(sessionFactory);
         }

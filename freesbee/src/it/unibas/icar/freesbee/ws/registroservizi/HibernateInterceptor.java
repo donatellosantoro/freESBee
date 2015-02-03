@@ -15,11 +15,11 @@ public class HibernateInterceptor extends AbstractPhaseInterceptor {
 
     public HibernateInterceptor() {
         super(Phase.RECEIVE);
-        if(logger.isDebugEnabled()) logger.debug("Creo HibernateInterceptor");
+        if(logger.isDebugEnabled()) logger.debug("Creazione dell'HibernateInterceptor.");
     }
 
     public void handleMessage(Message message) throws Fault {
-        if(logger.isDebugEnabled()) logger.debug("HibernateInterceptor processa il messaggio");
+        if(logger.isDebugEnabled()) logger.debug("L'HibernateInterceptor sta processando il messaggio.");
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         message.getInterceptorChain().add(new HibernateInterceptorIn(sessionFactory));
         message.getInterceptorChain().add(new HibernateInterceptorOut(sessionFactory));
@@ -36,16 +36,19 @@ public class HibernateInterceptor extends AbstractPhaseInterceptor {
         }
 
         public void handleMessage(Message message) throws Fault {
-            if(logger.isDebugEnabled()) logger.debug("HibernateInterceptorIn processa il messaggio");
+            if(logger.isDebugEnabled()) logger.debug("L'HibernateInterceptor sta processando il messaggio.");
             try {
                 sessionFactory.getCurrentSession().beginTransaction();
             } catch (Exception ex) {
-                logger.error("Impossibile avviare la sessione di hibernate " + ex);
+                logger.error("Si e' verificato un errore, impossibile avviare la sessione di hibernate.");
+                if (logger.isDebugEnabled()) logger.error(ex);
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                         sessionFactory.getCurrentSession().getTransaction().rollback();
                     }
                 } catch (Throwable rbEx) {
+                    logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
+                    if (logger.isDebugEnabled()) logger.error(ex);
                 }
                 throw new Fault(ex);
             }
@@ -62,16 +65,19 @@ public class HibernateInterceptor extends AbstractPhaseInterceptor {
         }
 
         public void handleMessage(Message message) throws Fault {
-            if(logger.isDebugEnabled()) logger.debug("HibernateInterceptorOut processa il messaggio");
+            if(logger.isDebugEnabled()) logger.debug("L'HibernateInterceptorOut sta processando il messaggio.");
             try {
                 sessionFactory.getCurrentSession().getTransaction().commit();
             } catch (Exception ex) {
-                logger.error("Impossibile chiudere la sessione di hibernate " + ex);
+                logger.error("Si e' verificato un errore, impossibile chiudere la sessione di hibernate.");
+                if (logger.isDebugEnabled()) logger.error(ex);
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                         sessionFactory.getCurrentSession().getTransaction().rollback();
                     }
                 } catch (Throwable rbEx) {
+                    logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
+                    if (logger.isDebugEnabled()) logger.error(ex);
                 }
                 throw new Fault(ex);
             }

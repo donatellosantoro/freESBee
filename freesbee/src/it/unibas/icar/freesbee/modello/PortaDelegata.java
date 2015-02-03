@@ -206,7 +206,8 @@ public class PortaDelegata implements Serializable,Comparable,Cloneable{
         try {
             return (PortaDelegata) super.clone();
         } catch (CloneNotSupportedException ex) {
-            logger.error("Impossibile clonare la porta delegata. " + ex.getLocalizedMessage());
+            logger.error("Impossibile clonare la porta delegata.");
+            if (logger.isDebugEnabled()) logger.error(ex.getLocalizedMessage());
             return null;
         }
     }

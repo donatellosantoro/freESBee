@@ -46,14 +46,14 @@ public class ProcessorEnricherTestInteroperabilita implements Processor {
         }
 
         if (servizio.startsWith(CostantiBusta.SERVIZIO_TEST)) {
-            if (logger.isInfoEnabled()) logger.info("Ricevuto messaggio di test. Aggiungo le intestazioni");
+            if (logger.isInfoEnabled()) logger.info("E' stato ricevuto un messaggio di test.");
             // Creazione dell'header <frsb_Test>
 
 //            DocumentFragment dfTestRichiesta = FreesbeeUtil.createEmptyHeader(CostantiSOAP.NAMESPACE_EGOV_TEST, CostantiSOAP.PREFIX_EGOV_TEST, "TestRichiesta");
 
             // Creazione dell'header di test per la richiesta
             if (isNica) {
-                if (logger.isInfoEnabled()) logger.info("Aggiungo intestazioni test nica");
+                if (logger.isInfoEnabled()) logger.info("Si stanno aggiungendo le intestazioni supplementari per il test del NICA.");
                 DocumentFragment dfTest = BustaUtil.createEmptyHeader(CostantiSOAP.NAMESPACE_EGOV_TEST, CostantiSOAP.PREFIX_EGOV_TEST, "Header_EGov_Test_Nica");
                 mappaHeaders.put(new QName(CostantiSOAP.NAMESPACE_EGOV_TEST, "Header_EGov_Test_Nica"), dfTest);
                 Node nodoTestRichiesta = BustaUtil.cercaNodo(dfTest.getChildNodes(), "Header_EGov_Test_Nica");
@@ -62,6 +62,8 @@ public class ProcessorEnricherTestInteroperabilita implements Processor {
                     Element elementoIDMessaggioRichiesta = BustaUtil.appendValues(nodoTestRichiesta, CostantiSOAP.NAMESPACE_EGOV_TEST, CostantiSOAP.PREFIX_EGOV_TEST, "IDMessaggio", identificatoreMessaggio);
                     Element elementoFruitoreRichiesta = BustaUtil.appendValues(nodoTestRichiesta, CostantiSOAP.NAMESPACE_EGOV_TEST, CostantiSOAP.PREFIX_EGOV_TEST, "NICA", messaggio.getNomeNica().getNome());
                 }
+            } else {
+                if (logger.isInfoEnabled()) logger.info("Si stanno aggiungendo le intestazioni standard per il test della PDD.");
             }
             // Creazione dell'header di test per la richiesta
             String imbustaRichiesta = (String) exchange.getIn().getHeader(CostantiBusta.IMBUSTA_RICHIESTA_RISPOSTA);
@@ -85,7 +87,7 @@ public class ProcessorEnricherTestInteroperabilita implements Processor {
                 //Controllo se ci sono le intestazioni della richiesta e le inserisco
                 DocumentFragment dfTestRichiesta = (DocumentFragment) exchange.getProperty("IntestazioniTestRichiesta");
                 if (dfTestRichiesta != null) {
-                    if (logger.isInfoEnabled()) logger.info("Ho trovato le informazioni di test della richiesta. Le inserisco");
+                    if (logger.isInfoEnabled()) logger.info("Si stanno aggiungendo le informazioni di test contenute nella richiesta.");
                     mappaHeaders.put(new QName(CostantiSOAP.NAMESPACE_EGOV_TEST, "Header_EGov_Test_Richiesta"), dfTestRichiesta);
                 }
 
@@ -105,7 +107,7 @@ public class ProcessorEnricherTestInteroperabilita implements Processor {
                 }
             }
         } else {
-            if (logger.isInfoEnabled()) logger.info("Ricevuto messaggio non di test.");
+            if (logger.isDebugEnabled()) logger.debug("Il messaggio ricevuto non e' un messaggio di test.");
         }
     }
 }

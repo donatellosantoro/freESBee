@@ -19,33 +19,32 @@ public class WSAutenticazioneImpl implements IWSAutenticazione {
     }
 
     public void autentica(String nomeUtente) throws SOAPFault {
-        if (logger.isInfoEnabled()) logger.info("Richiesta l'autenticazione di un utente");
+        if (logger.isDebugEnabled()) logger.debug("Richiesta l'autenticazione di un utente");
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
             sessionFactory.getCurrentSession().beginTransaction();
-            if (logger.isDebugEnabled()) {
-                if (logger.isDebugEnabled()) logger.debug("Richiedo al dao " + daoUtente + " l'utente " + nomeUtente);
-            }
+            if (logger.isDebugEnabled()) logger.debug("Richiesto l'utente " + nomeUtente + " al DB.");
             Utente utente = daoUtente.findByNomeUtente(nomeUtente);
             sessionFactory.getCurrentSession().getTransaction().commit();
             if (utente == null) {
-                throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente. Utente inesistente: " + nomeUtente);
+                throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente. L'utente " + nomeUtente + " e' inesistente.");
             }
         } catch (DAOException ex) {
             try {
                 if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
-                    if (logger.isDebugEnabled()) logger.debug("C'è una transazione di hibernate attiva e faccio il rollback");
+                    if (logger.isDebugEnabled()) logger.debug("Si sta eseguendo il rollback della transazione sul DB.");
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
             }
-            logger.error("Si e' verificato un errore durante l'autenticazione dell'utente" + ex);
-            throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente" + ex);
+            logger.error("Si e' verificato un errore durante l'autenticazione dell'utente.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente.");
         }
     }
 
     public void cambiaPassword(String nuovaPassword, String nomeUtente) throws SOAPFault {
-        if (logger.isInfoEnabled())logger.info("Richiesta la modifica della password di un utente");
+        if (logger.isDebugEnabled())logger.debug("Richiesta la modifica della password di un utente");
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
             sessionFactory.getCurrentSession().beginTransaction();
@@ -59,41 +58,41 @@ public class WSAutenticazioneImpl implements IWSAutenticazione {
         } catch (DAOException ex) {
             try {
                 if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
-                    if (logger.isDebugEnabled()) logger.debug("C'è una transazione di hibernate attiva e faccio il rollback");
+                    if (logger.isDebugEnabled()) logger.debug("Si sta eseguendo il rollback della transazione sul DB.");
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
             }
-            logger.error("Si e' verificato un errore durante la modifica della password dell'utente" + ex);
-            throw new SOAPFault("Si e' verificato un errore durante la modifica della password dell'utente" + ex);
+            logger.error("Si e' verificato un errore durante la modifica della password dell'utente.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la modifica della password dell'utente.");
         }
     }
 
     public String getRuolo(String nomeUtente) throws SOAPFault {
-        if (logger.isInfoEnabled()) {
-            logger.info("Richiesto il ruolo di un utente");
-        }
+        if (logger.isDebugEnabled()) logger.debug("Richiesto il ruolo di un utente");
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
             sessionFactory.getCurrentSession().beginTransaction();
-            if (logger.isDebugEnabled()) if (logger.isDebugEnabled()) logger.debug("Richiedo al dao " + daoUtente + " l'utente " + nomeUtente);
+            if (logger.isDebugEnabled()) logger.debug("Richiedo al dao " + daoUtente + " l'utente " + nomeUtente);
             Utente utente = daoUtente.findByNomeUtente(nomeUtente);
             sessionFactory.getCurrentSession().getTransaction().commit();
             if (utente == null) {
-                throw new SOAPFault("Si e' verificato un errore durante l'individuazione del ruolo dell'utente. Utente inesistente: " + nomeUtente);
+                throw new SOAPFault("Si e' verificato un errore durante l'individuazione del ruolo dell'utente. L'utente " + nomeUtente + " e' inesistente.");
             } else {
                 return utente.getRuolo();
             }
         } catch (DAOException ex) {
             try {
                 if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
-                    if (logger.isDebugEnabled()) logger.debug("C'è una transazione di hibernate attiva e faccio il rollback");
+                    if (logger.isDebugEnabled()) logger.debug("Si sta eseguendo il rollback della transazione sul DB.");
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
             }
-            logger.error("Si e' verificato un errore durante l'autenticazione dell'utente" + ex);
-            throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente" + ex);
+            logger.error("Si e' verificato un errore durante l'autenticazione dell'utente.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente.");
         }
     }
 }

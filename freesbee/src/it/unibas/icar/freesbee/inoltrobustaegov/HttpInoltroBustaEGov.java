@@ -67,23 +67,23 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
         processorSbloccaPollingConsumerPortaApplicativa.setEccezione(true);
         processorSbloccaPollingConsumerPortaDelegata.setEccezione(true);
         this.from(FreesbeeCamel.SEDA_HTTP_INOLTRO_BUSTA_EGOV)
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
                 .process(SOAPProcessorWriterFactory.getInstance().getProcessorWriter())
                 .process(new ProcessorSend())
                 .to(FreesbeeCamel.SEDA_PROCESSA_RISPOSTA_PORTA_DOMINIO_EROGATORE)
-                .doCatch(Exception.class)
+            .doCatch(Exception.class)
                 .choice()
                 .when(header(CostantiBusta.RUOLO_NICA).isEqualTo(true))
-                .process(processorSbloccaPollingConsumerPortaApplicativa)
+                    .process(processorSbloccaPollingConsumerPortaApplicativa)
                 .otherwise()
-                .process(processorSbloccaPollingConsumerPortaDelegata);
+                    .process(processorSbloccaPollingConsumerPortaDelegata);
 
         this.from(FreesbeeCamel.SEDA_PROCESSA_RISPOSTA_PORTA_DOMINIO_EROGATORE)
-                .choice()
-                .when(header(CostantiBusta.RUOLO_NICA).isEqualTo(true))
+            .choice()
+            .when(header(CostantiBusta.RUOLO_NICA).isEqualTo(true))
                 .to(FreesbeeCamel.SEDA_PROCESSA_RISPOSTA_PORTA_DOMINIO_EROGATORE_NICA)
-                .otherwise()
+            .otherwise()
                 .to(FreesbeeCamel.SEDA_PROCESSA_RISPOSTA_PORTA_DOMINIO_EROGATORE_PDD);
     }
 
@@ -115,64 +115,92 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 
                 httpComponent.createEndpoint(connettoreDestinatario);
                 Endpoint endpoint = getContext().getEndpoint(connettoreDestinatario);
-                ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_PA_REQ").process(exchange);
+//                ProcessorTrace.getInstance(ProcessorTrace.IN, "SEND_TO_PA_REQ").process(exchange);
+                ProcessorTrace.getInstance(ProcessorTrace.IN, "Si sta inoltrando il messaggio EGOV alla PA all'indirizzo " + connettoreDestinatario).process(exchange);
                 Producer producer = endpoint.createProducer();
                 producer.start();
                 producer.process(exchange);
                 producer.stop();
-                ProcessorTrace.getInstance(ProcessorTrace.OUT, "SEND_TO_PA_RESP").process(exchange);
+//                ProcessorTrace.getInstance(ProcessorTrace.OUT, "SEND_TO_PA_RESP").process(exchange);
+                ProcessorTrace.getInstance(ProcessorTrace.OUT, "E' stato ricevuto un messaggio EGOV dall'indirizzo " + connettoreDestinatario).process(exchange);
                 //     producer.stop();
                 if (logger.isDebugEnabled()) {
                     StringBuilder log = new StringBuilder();
-                    log.append("\n\n\n");
-                    log.append("Ho inviato il messaggio all'indirizzo: ").append(connettoreDestinatario).append("\n\n");
-                    log.append("Richiesta\n");
-                    log.append(MessageUtil.getString(exchange.getIn())).append("\n\n");
-                    log.append("Risposta\n");
-                    log.append(MessageUtil.getString(exchange.getOut())).append("\n\n");
-                    log.append("Eccezione\n");
-                    log.append(exchange.getException());
-                    log.append("\n\n");
+                    log.append("Ho inviato il messaggio all'indirizzo: ")
+                       .append(connettoreDestinatario)
+                       .append("\n\n")
+                       .append("Richiesta\n")
+                       .append(MessageUtil.getString(exchange.getIn()))
+                       .append("\n\n")
+                       .append("Risposta\n")
+                       .append(MessageUtil.getString(exchange.getOut()))
+                       .append("\n\n")
+                       .append("Eccezione\n")
+                       .append(exchange.getException());
                     logger.debug(log);
-                } else {
-                    if (logger.isInfoEnabled()) logger.info("Ho inviato il messaggio all'indirizzo: " + connettoreDestinatario);
                 }
             } catch (ConnectException e) {
-                logger.error("Errore nell'inoltro della busta EGov. " + e);
-                String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario;
-                throw new FreesbeeException(errore + ". - " + e.getMessage());
+                logger.error("Si sono verificati dei problemi di connessione nell'inoltro della busta EGov.");
+                String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
+                if (logger.isDebugEnabled()) logger.error(e.getMessage());
+                throw new FreesbeeException(errore);
             } catch (ProtocolException ssle) {
-                logger.error("Errore nell'inoltro della busta EGov. Il messaggio non viaggia in una connessione SSL. " + ssle);
-                String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ". Il messaggio non viaggia in una connessione SSL.";
-                throw new FreesbeeException(errore + ". - " + ssle.getMessage());
+                logger.error("Si sono verificati dei problemi sul protocollo utilizzato nell'inoltro della busta EGov.");
+                String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
+                if (logger.isDebugEnabled()) logger.error(ssle.getMessage());
+                throw new FreesbeeException(errore);
             } catch (HttpOperationFailedException hofe) {
                 StringBuilder sb = new StringBuilder();
-                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
-                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
-                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
-                        .append("\nDescrizione errore: ").append(hofe.getMessage());
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :")
+                  .append(messaggio.getIdMessaggio())
+                  .append("\nFrom: ")
+                  .append(messaggio.getTipoFruitore())
+                  .append("/")
+                  .append(messaggio.getFruitore())
+                  .append(" -> ")
+                  .append(messaggio.getTipoErogatore())
+                  .append("/")
+                  .append(messaggio.getErogatore())
+                  .append("/")
+                  .append(messaggio.getServizio())
+                  .append("/")
+                  .append(messaggio.getAzione())
+                  .append("\nDescrizione errore: ")
+                  .append(hofe.getMessage());
                 //logger.error(sb.toString());
                 exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
                 throw new FreesbeeException(sb.toString());
             } catch (UnknownHostException uhe) {
                 StringBuilder sb = new StringBuilder();
-                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :").append(messaggio.getIdMessaggio())
-                        .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
-                        .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
-                        .append("\nDescrizione errore: ").append(uhe.getMessage());
+                sb.append("Riscontrato errore durante l'inoltro del Messaggio SPCoop con identificativo :")
+                  .append(messaggio.getIdMessaggio())
+                  .append("\nFrom: ")
+                  .append(messaggio.getTipoFruitore())
+                  .append("/")
+                  .append(messaggio.getFruitore())
+                  .append(" -> ").append(messaggio.getTipoErogatore())
+                  .append("/")
+                  .append(messaggio.getErogatore())
+                  .append("/")
+                  .append(messaggio.getServizio())
+                  .append("/")
+                  .append(messaggio.getAzione())
+                  .append("\nDescrizione errore: ")
+                  .append(uhe.getMessage());
                 //logger.error(sb.toString());
                 exchange.setProperty(CostantiSOAP.SOAP_HEADER_MESSAGE_EXCEPTION, sb.toString());
                 throw new FreesbeeException(sb.toString());
             } catch (Exception e) {
-                logger.error("Errore nell'inoltro della busta EGov. " + e);
-                String errore = "Si e' verificato un errore mentre si cercava di contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
-                e.printStackTrace();
-                throw new FreesbeeException(errore + ". -  " + e.getMessage());
+                logger.error("Errore nell'inoltro della busta EGov.");
+                String errore = "Si e' verificato un errore mentre si cercava di inoltrare la busta EGov all'indirizzo " + connettoreDestinatario + ".";
+                if (logger.isDebugEnabled()) logger.error(e.getMessage());
+                throw new FreesbeeException(errore);
             }
             try {
                 elaboraRisposta(exchange, messaggio);
             } catch (SOAPFaultException e) {
-                if (logger.isInfoEnabled()) logger.info("La porta di dominio mi ha risposto con un fault " + e);
+                logger.error("Si e' verificato un errore mentre si cercava di elaborare la risposta generata contattando l'indirizzo " + connettoreDestinatario + ".");
+                if (logger.isDebugEnabled()) logger.error(e.getMessage());
             }
         }
 
@@ -189,7 +217,9 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             soapReader.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());
             FreesbeeUtil.copiaIntestazioniMime(exchange.getIn(), exchange.getOut());
-            if (logger.isInfoEnabled()) logger.info("Risposta ricevuta dall'erogatore");
+            
+//            String messaggioRicevuto = MessageUtil.getString(exchange.getIn()); //TODO [Michele]: Verificare che prendendo il contenuto dell'exchange.getIn il messaggio non venga perso
+////            if (logger.isInfoEnabled()) logger.info("Risposta ricevuta dall'erogatore");
         }
 
         private String getConnettoreDestinatario(Messaggio messaggio, Configurazione configurazione) throws FreesbeeException {
@@ -201,7 +231,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 if (connettoreDestinatario == null || connettoreDestinatario.equals("")) {
                     throw new FreesbeeException("Impossibile inoltrare la busta EGov. Nessun connettore specificato per l'erogatore " + messaggio.getErogatore());
                 }
-                if (logger.isInfoEnabled()) logger.info("Invio la busta EGov direttamente all'erogatore all'indirizzo " + connettoreDestinatario);
+//                if (logger.isInfoEnabled()) logger.info("Si sta inoltrando la busta EGov all'indirizzo " + connettoreDestinatario);
             }
             return connettoreDestinatario;
         }
@@ -226,7 +256,9 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                     indirizzoWSDL = indirizzoWSDL + "?wsdl";
                 }
             }
-            if (logger.isInfoEnabled()) logger.info("Richiedo le informazioni al registro dei servizi " + indirizzoWSDL);
+            
+            if (logger.isInfoEnabled()) logger.info("Si stanno richiedendo le informazioni al registro dei servizi " + indirizzoWSDL);
+            
             try {
                 WSRegistroServiziImplService service = new WSRegistroServiziImplService(new URL(indirizzoWSDL));
                 IWSRegistroServizi port = service.getWSRegistroServiziImplPort();
@@ -238,16 +270,21 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 if (logger.isDebugEnabled()) logger.debug("Mutua Autenticazione " + risposta.isMutuaAutenticazione());
                 messaggio.setMutuaAutenticazione(risposta.isMutuaAutenticazione());
             } catch (Exception ex) {
-                logger.error("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". " + ex);
-                throw new FreesbeeException("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". " + ex);
+//                logger.error("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". ");
+                if (logger.isDebugEnabled()) logger.error(ex);
+                throw new FreesbeeException("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". ");
             }
+            
             if (connettoreDestinatario == null || connettoreDestinatario.equals("")) {
                 throw new FreesbeeException("Impossibile inoltrare la busta EGov. Nessun connettore specificato per il NICA");
             }
+            
             if (ConfigurazioneStatico.getInstance().isCacheWS()) {
                 cacheConnettoreNica.put(chiave, connettoreDestinatario);
             }
-            if (logger.isInfoEnabled()) logger.info("E' presente un nica. Inoltro tutto all'indirizzo " + connettoreDestinatario);
+            
+            if (logger.isInfoEnabled()) logger.info("E' presente un NICA. Si inoltra tutto all'indirizzo " + connettoreDestinatario);
+            
             return connettoreDestinatario;
         }
 

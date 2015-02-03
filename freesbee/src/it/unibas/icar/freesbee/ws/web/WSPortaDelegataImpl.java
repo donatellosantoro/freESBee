@@ -184,7 +184,7 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
         } else {
             tipo = portaDelegata.getStringaTipoServizio();
         }
-        if (logger.isInfoEnabled()) logger.info("E' stata aggiunta una nuova porta delegata: " + nome);
+//        if (logger.isInfoEnabled()) logger.info("E' stata aggiunta una nuova porta delegata: " + nome);
         RouteBuilder portaDelegataAggiunta = new HttpPortaDelegata(nome, tipo, dbManager);
         context.addRoutes(portaDelegataAggiunta);
         porteDelegateAvviate.put(portaDelegata.getNome(), portaDelegataAggiunta);
@@ -246,7 +246,7 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
 
     private void configuraJetty() throws IOException {
         impostaParametriPrestazioni();
-        impostaParametriSicurezza();
+//        impostaParametriSicurezza();
     }
 
     private void impostaParametriPrestazioni() {
@@ -257,10 +257,10 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
         threadPool.setMinThreads(jettyThreadQueueMinSize);
         threadPool.setMaxThreads(jettyThreadQueueMaxSize);
         componentJetty.setThreadPool(threadPool);
-        logger.info("Imposto il thread pool di Jetty con una QueueSize di min: " + jettyThreadQueueMinSize + ", max: " + jettyThreadQueueMaxSize);
+        if (logger.isDebugEnabled()) logger.debug("Imposto il thread pool di Jetty con una QueueSize di min: " + jettyThreadQueueMinSize + ", max: " + jettyThreadQueueMaxSize);
     }
     
-    private void impostaParametriSicurezza() throws IOException {
+//    private void impostaParametriSicurezza() throws IOException {
 //        ProtocolSocketFactory factory = new EasySSLProtocolSocketFactory(); // Permette di attivare la connessione HTTPS in ingresso ed accettare certificati autofirmati
 //        Protocol protocol = new Protocol("https", factory, 8443);
 //        Protocol.registerProtocol("https", protocol);
@@ -283,5 +283,5 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
 //
 //        JettyHttpComponent componentJetty = (JettyHttpComponent) context.getComponent("jetty", JettyHttpComponent.class);
 //        componentJetty.setSslContextParameters(sslContextParameters);
-    }
+//    }
 }

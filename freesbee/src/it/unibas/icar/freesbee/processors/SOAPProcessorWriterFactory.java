@@ -27,7 +27,6 @@ import org.apache.cxf.helpers.XMLUtils;
 import org.apache.servicemix.soap.SoapFault;
 import org.apache.servicemix.soap.marshalers.SoapMarshaler;
 import org.apache.servicemix.soap.marshalers.SoapMessage;
-import org.apache.servicemix.soap.marshalers.SoapWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -96,7 +95,7 @@ public class SOAPProcessorWriterFactory {
 //        if (exchange.isFailed()) {
                 //E' UN MESSAGGIO DI ERRORE. GENERIAMO UN SOAP FAULT
                 Throwable eccezione = e;
-                if (logger.isInfoEnabled()) logger.info("Ho ricevuto un messaggio di errore con la seguente eccezione " + eccezione);
+                if (logger.isInfoEnabled()) logger.info("E' stato ricevuto un messaggio di errore con la seguente eccezione " + eccezione);
                 String stringaEccezione = eccezione.toString();
                 if (eccezione instanceof FreesbeeException) {
                     stringaEccezione = "EGOV_IT_" + codiceErrore + " - Formato Busta non corretto";
@@ -106,12 +105,12 @@ public class SOAPProcessorWriterFactory {
                 SoapFault soapFault = new SoapFault(QName.valueOf(tipoErrore), stringaEccezione);
 
                 soapMessage.setFault(soapFault);
-                if (logger.isInfoEnabled()) logger.info("MappaHeaderSoapFault " + mappaHeaderSoapFault);
+                if (logger.isDebugEnabled()) logger.debug("MappaHeaderSoapFault " + mappaHeaderSoapFault);
                 soapMessage.setHeaders(mappaHeaderSoapFault);
             } else if (eccezioneRestituire != null) {
                 //LA PORTA DI DOMINIO HA RICEVUTO UNA RISPOSTA DI FAULT CHE DOBBIAMO INOLTRARE AL RICHIEDENTE
                 Map mappaHeaderSoap = (Map) exchange.getProperty(CostantiSOAP.SOAP_HEADERS);
-                if (logger.isInfoEnabled()) logger.info("Devo inoltrare l'eccezione " + eccezioneRestituire);
+                if (logger.isInfoEnabled()) logger.info("Si sta inoltrando l'eccezione " + eccezioneRestituire);
                 SoapFault soapFault = new SoapFault(QName.valueOf("env:Server"), eccezioneRestituire);
 
                 soapMessage.setFault(soapFault);
@@ -119,7 +118,7 @@ public class SOAPProcessorWriterFactory {
             } else if (faultApplicativo != null) {
                 //IL SERVIZIO APPLICATIVO MI HA RISPOSTO CON UN FAULT CHE DOBBIAMO INOLTRARE AL RICHIEDENTE
                 Map mappaHeaderSoap = (Map) exchange.getProperty(CostantiSOAP.SOAP_HEADERS);
-                if (logger.isInfoEnabled()) logger.info("Devo inoltrare l'eccezione " + faultApplicativo.getReason());
+                if (logger.isInfoEnabled()) logger.info("Si sta inoltrando l'eccezione " + faultApplicativo.getReason());
 
                 soapMessage.setFault(faultApplicativo);
                 soapMessage.setHeaders(mappaHeaderSoap);
@@ -129,16 +128,16 @@ public class SOAPProcessorWriterFactory {
                 if (mappaAttachment != null) {
                     //DEVO AGGIUNGERE L'ATTACHMENT
                     soapMessage.setAttachments(mappaAttachment);
-                    if (logger.isDebugEnabled()) logger.debug("Mappa degli attachment aggiunta " + mappaAttachment);
+                    if (logger.isDebugEnabled()) logger.debug("Mappa degli attachment " + mappaAttachment);
                     exchange.removeProperty(CostantiSOAP.SOAP_ATTACHMENT);
                 }
-                if (logger.isDebugEnabled()) logger.debug("Devo scrivere il messaggio con il seguente body\n" + MessageUtil.getString(exchange.getIn()));
+                if (logger.isDebugEnabled()) logger.debug("Si sta scrivendo il messaggio con il seguente body\n" + MessageUtil.getString(exchange.getIn()));
                 if (MessageUtil.isEmpty(exchange.getIn())) {
-                    if (logger.isInfoEnabled()) logger.info("Ricevuto un messaggio vuoto.");
+                    if (logger.isInfoEnabled()) logger.info("E' stato ricevuto un messaggio vuoto.");
                     return;
                 }
                 if (exchange.getProperty(CostantiBusta.FIGLI_MULTIPLI) != null && exchange.getProperty(CostantiBusta.FIGLI_MULTIPLI).equals("true")) {
-                    if (logger.isInfoEnabled()) logger.info("Il messaggio da scrivere ha più figli nel body");
+                    if (logger.isDebugEnabled()) logger.debug("Il messaggio da scrivere ha più figli nel body");
                 } else {
                     soapMessage.setSource(MessageUtil.getSource(exchange.getIn()));
                 }
@@ -178,11 +177,12 @@ public class SOAPProcessorWriterFactory {
             } else {
                 FreesbeeUtil.aggiungiInstestazioniHttp(messageIn, "Content-Type", "text/xml;");
             }
-            if (logger.isDebugEnabled()) logger.debug("Il messaggio soap generato e': " + MessageUtil.getString(exchange.getIn()));
+            
+            if (logger.isDebugEnabled()) logger.debug("La creazione del messaggio SOAP e' stata completata con successo. Il messaggio generato e': " + MessageUtil.getString(exchange.getIn()));
         }
 
         private String scriviBodyConPiuFigli(String stringaBody, String bodyMessaggio) {
-            if (logger.isDebugEnabled()) logger.debug("Devo aggiungere a \n" + stringaBody + "\n il body \n" + bodyMessaggio);
+            if (logger.isDebugEnabled()) logger.debug("Si sta aggiungendo a \n" + stringaBody + "\n il seguente body: \n" + bodyMessaggio);
             try {
                 Document docMessaggio = XMLUtils.parse(stringaBody);
                 bodyMessaggio = "<body>" + bodyMessaggio + "</body>";
@@ -206,15 +206,15 @@ public class SOAPProcessorWriterFactory {
                         NodeList elementiAggiungere = nodeBody.getChildNodes();
                         for (int i = 0; i < elementiAggiungere.getLength(); i++) {
                             Node nodoAggiungere = elementiAggiungere.item(i).cloneNode(true);
-                            if (logger.isDebugEnabled()) logger.debug("Aggiungo l'elemento " + nodoAggiungere);
+                            if (logger.isDebugEnabled()) logger.debug("Si sta aggiungendo l'elemento " + nodoAggiungere);
                             elementBody.appendChild(docMessaggio.importNode(nodoAggiungere, true));
                         }
                     }
                 }
                 return XmlUtil.stampaDocument(docMessaggio, true);
             } catch (Exception e) {
-                if (logger.isDebugEnabled()) e.printStackTrace();
-                logger.error("Impossibile aggiungere il body con più figli. " + e.getLocalizedMessage());
+                logger.error("Impossibile aggiungere il body con più figli.");
+                if (logger.isDebugEnabled()) logger.error(e);
             }
             return stringaBody;
         }

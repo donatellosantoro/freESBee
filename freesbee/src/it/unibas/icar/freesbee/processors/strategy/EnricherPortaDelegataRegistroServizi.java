@@ -82,10 +82,12 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         String indirizzoWSDL = connettoreRegistroServizi;
         String indirizzoRichiesta = null;
         if (interoperabilita) {
+            if (logger.isDebugEnabled()) logger.debug("Si sta operando in modalita' interoperabilita'");
             ConfigurazioneStatico conf = ConfigurazioneStatico.getInstance();
             indirizzoWSDL = conf.getInteroperabilitaRegistroFreesbee(); //DEVO RICHIEDERE AL MODULO DI INTEROPERABILITA'
             indirizzoRichiesta = connettoreRegistroServizi; //E GLI DEVO INVIARE L'INDIRIZZO DEL REGISTRO
         } else {
+            if (logger.isDebugEnabled()) logger.debug("Non si sta operando in modalita' interoperabilita'");
             if (!(indirizzoWSDL.toLowerCase()).endsWith("?wsdl")) {
                 indirizzoWSDL = indirizzoWSDL + "?wsdl";
             }
@@ -94,7 +96,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         try {
             ServizioRS servizioRS = new ServizioRS(tipoServizio, nomeServizio);
             servizioRS.setSoggettoErogatore(new SoggettoRS(tipoErogatore, erogatore));
-            if (logger.isInfoEnabled()) logger.info("Richiedo le informazioni al registro dei servizi " + indirizzoWSDL + " interoperabilita? " + interoperabilita);
+            if (logger.isInfoEnabled()) logger.info("Si stanno richiedendo le informazioni al registro dei servizi " + indirizzoWSDL);
             WSRegistroServiziImplService service = new WSRegistroServiziImplService(new URL(indirizzoWSDL));
             IWSRegistroServizi port = service.getWSRegistroServiziImplPort();
             ServizioRSRisposta servizio = cercaServizioSPCoop(port, indirizzoRichiesta, servizioRS);
@@ -123,8 +125,8 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
                     azioneRS = cercaAzione(listaAzioni, nomeServizio + ":" + azione);
                 }
                 if (azioneRS == null) {
-                    logger.error("Impossibile arricchire le informazioni del messaggio. Azione " + azione + " sconosciuta.");
-                    throw new FreesbeeException("Impossibile arricchire le informazioni del messaggio. Azione " + azione + " sconosciuta.");
+                    logger.error("Impossibile arricchire le informazioni del messaggio. L'azione " + azione + " e' sconosciuta.");
+                    throw new FreesbeeException("Impossibile arricchire le informazioni del messaggio. L'azione " + azione + " e' sconosciuta.");
                 }
 
                 String profiloCollaborazioneAzione = azioneRS.getProfiloCollaborazione();
@@ -140,9 +142,9 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
                 mutuaAutenticazione = servizio.isMutuaAutenticazione();
             }
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) ex.printStackTrace();
-            logger.error("Errore mentre si richiedevano informazioni al registro dei servizi " + ex);
-            throw new FreesbeeException(ex.getMessage());
+            logger.error("Errore mentre si richiedevano informazioni al registro dei servizi.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new FreesbeeException("Errore mentre si richiedevano informazioni al registro dei servizi.");
         }
 
         if (logger.isDebugEnabled()) logger.debug("profiloCollaborazione: " + profiloCollaborazione);
@@ -197,7 +199,8 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
             }
             return servizioCorrelato;
         } catch (Exception ex) {
-            if (logger.isInfoEnabled()) logger.info("Nessun servizio correlato trovato");
+            logger.error("Nessun servizio correlato trovato.");
+            if (logger.isDebugEnabled()) logger.error(ex);
             return null;
         }
     }
@@ -219,7 +222,8 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
             return servizio;
         } catch (SOAPFault_Exception ex) {
             String messaggioErrore = ex.getMessage();
-            logger.warn("Servizio non trovato " + messaggioErrore);
+            logger.error("Servizio non trovato.");
+            if (logger.isDebugEnabled()) logger.error(ex);
             if (messaggioErrore.contains(CostantiSOAP.SERVIZIO_NON_TROVATO)) {
                 return null;
             } else {
@@ -245,7 +249,8 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
             return soggetto;
         } catch (SOAPFault_Exception ex) {
             String messaggioErrore = ex.getMessage();
-            logger.warn("Soggetto non trovato " + messaggioErrore);
+            logger.error("Soggetto non trovato.");
+            if (logger.isDebugEnabled()) logger.error(ex);
             if (messaggioErrore.contains(CostantiSOAP.SOGGETTO_NON_TROVATO)) {
                 return null;
             } else {
@@ -271,7 +276,8 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
             return servizio;
         } catch (SOAPFault_Exception ex) {
             String messaggioErrore = ex.getMessage();
-            logger.warn("Servizio non trovato " + messaggioErrore);
+            logger.error("Servizio non trovato.");
+            if (logger.isDebugEnabled()) logger.error(ex);
             if (messaggioErrore.contains(CostantiSOAP.SERVIZIO_NON_TROVATO)) {
                 return null;
             } else {

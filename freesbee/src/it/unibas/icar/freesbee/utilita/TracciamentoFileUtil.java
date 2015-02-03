@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Attribute;
-import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -27,9 +26,9 @@ public class TracciamentoFileUtil {
     private static Log logger = LogFactory.getLog("TracciaFileUtil");
 
     public static void creaFile(Messaggio messaggioDaTracciare, String path) throws IOException {
+        String nomeFile = "";
         try {
             Document documento = new Document(creaStrutturaXML(messaggioDaTracciare));
-            String nomeFile;
             if (messaggioDaTracciare.getIdMessaggio() != null) {
                 String nome = messaggioDaTracciare.getIdMessaggio().replace(":", "_") + "_" + messaggioDaTracciare.getTipo();
                 nomeFile = File.separator + "Tracciamento-" + nome + ".xml";
@@ -39,7 +38,8 @@ public class TracciamentoFileUtil {
 //            File file = new File(path + nomeFile);
             XMLJDomUtil.salvaXML(path + nomeFile, documento);
         } catch (XmlException ex) {
-            logger.error("ECCEZIONE DURANTE IL SALVATAGGIO DEL FILE\n");
+            logger.error("Si e' verificato un errore durante la creazione del file di tracciamento " + nomeFile);
+            if (logger.isDebugEnabled()) logger.error(ex);
         }
 
     }

@@ -87,7 +87,7 @@ public class WireTapTracciamentoImbustamento extends RouteBuilder {
 //                    return;
                 }
                 
-                if (logger.isInfoEnabled()) logger.info("Salvo il messaggio con ID-SIL: " + messaggio.getIdSil());
+                if (logger.isDebugEnabled()) logger.debug("Salvo il messaggio con ID-SIL: " + messaggio.getIdSil());
                 daoMessaggio.makePersistent(messaggio);
                 sessionFactory.getCurrentSession().getTransaction().commit();
                 
@@ -97,17 +97,20 @@ public class WireTapTracciamentoImbustamento extends RouteBuilder {
                     TracciamentoFileUtil.creaFile(messaggio, configurazioneStatico.getPercorsoFile());
                 }
             } catch (DAOException ex) {
-                logger.error("Errore nella lettura dal database " + ex);
-                throw new FreesbeeException("Errore nella lettura dal database " + ex);
+                logger.error("Errore durante l'accesso al database.");
+                if (logger.isDebugEnabled()) logger.error(ex);
+                throw new FreesbeeException("Errore durante l'accesso al database.");
             } catch (IOException ioe) {
-                logger.error("ERRORE! Impossibile creare il file di tracciatura");
-                if (logger.isDebugEnabled()) ioe.printStackTrace();
+                logger.error("Errore durante l'accesso al file system.");
+                if (logger.isDebugEnabled()) logger.error(ioe);
             } finally {
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                         sessionFactory.getCurrentSession().getTransaction().rollback();
                     }
                 } catch (Throwable rbEx) {
+                    logger.error("Errore durante il rollback sul database.");
+                    if (logger.isDebugEnabled()) logger.error(rbEx);
                 }
             }
         }

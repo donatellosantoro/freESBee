@@ -49,7 +49,7 @@ public class HttpPortaDelegata extends RouteBuilder {
             int porta = FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo);
             
             if (indirizzoPortaDelegata.contains("https")) {
-                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PD per aprire un canale criptato HTTPS sull'indirizzo " + indirizzoPortaDelegata + " con porta " + porta + "\n");}
+                if(logger.isInfoEnabled()) {logger.info("Si sta predisponendo la PD per aprire un canale criptato HTTPS sull'indirizzo " + indirizzoPortaDelegata + " con porta " + porta);}
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
                 sslConnector.setPort(porta);
@@ -59,7 +59,7 @@ public class HttpPortaDelegata extends RouteBuilder {
                 sslConnector.setTrustPassword(ConfigurazioneStatico.getInstance().getPasswordTrustStore());
                 
                 if (configurazione.isMutuaAutenticazionePortaDelegata()) {
-                    if(logger.isInfoEnabled()) {logger.info("\n\nSto configurando la PD per richiedere l'autenticazione client\n");}
+                    if(logger.isInfoEnabled()) {logger.info("Si sta configurando la PD per richiedere l'autenticazione client\n");}
                     sslConnector.setNeedClientAuth(true);
                 } else {
                     sslConnector.setNeedClientAuth(false);
@@ -69,7 +69,7 @@ public class HttpPortaDelegata extends RouteBuilder {
                 connectors.put(porta, sslConnector);
                 jettyComponent.setSslSocketConnectors(connectors);
             } else {
-                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PD per aprire un canale HTTP sull'indirizzo " + indirizzo + " con porta " + porta + "\n");}
+                if(logger.isInfoEnabled()) {logger.info("Si sta predisponendo la PD per aprire un canale HTTP sull'indirizzo " + indirizzoPortaDelegata + " con porta " + porta);}
             }
             
             this.avviaPortaDelegata("jetty:" + indirizzoPortaDelegata); //FIXME
@@ -77,24 +77,25 @@ public class HttpPortaDelegata extends RouteBuilder {
     }
 
     private void avviaPortaDelegata(String indirizzo) {
-        if (logger.isInfoEnabled()) logger.info("Avvio la porta delegata all'indirizzo " + indirizzo);
+        if (logger.isInfoEnabled()) logger.info("Si sta avviando la porta delegata all'indirizzo " + indirizzo);
         this.from(indirizzo)
-                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PD_REQ"))
+//                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PD_REQ"))
+                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "E' stata contattata la PD all'indirizzo " + indirizzo))
 //                .choice().when(header("CamelHttpMethod").isEqualTo("POST"))
                 .choice()
                     .when(body().isNull())
                     .otherwise().when(header("CamelHttpMethod").isEqualTo("POST"))
                         .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
                         .doTry()
-                        //.process(new SOAPProcessorReader())
-                        .process(SOAPProcessorReader.getInstance())
-                        .process(new ProcessInitialize())
-                        .to(FreesbeeCamel.SEDA_FILTRO_AUTENTICAZIONE)
-                        .process(new ProcessorPolling())
+                            .process(SOAPProcessorReader.getInstance())
+                            .process(new ProcessInitialize())
+                            .to(FreesbeeCamel.SEDA_FILTRO_AUTENTICAZIONE)
+                            .process(new ProcessorPolling())
                         .doCatch(Exception.class)
-                        .process(new FaultProcessor())
+                            .process(new FaultProcessor())
                 .end()
-                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PD_RESP"));
+//                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PD_RESP"));
+                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "E' stata prodotta la seguente risposta SOAP"));
 
     }
 
@@ -119,7 +120,7 @@ public class HttpPortaDelegata extends RouteBuilder {
             String idPollingPortaDelegata = messaggio.getPortaDelegataChannel();
 //            String canale = FreesbeeCamel.SEDA_POLLING_CONSUMER_PORTA_DELEGATA_CHANNEL + idPollingPortaDelegata+"?waitForTaskToComplete=Never";
             String canale = FreesbeeCamel.DIRECT_POLLING_CONSUMER_PORTA_DELEGATA_CHANNEL + idPollingPortaDelegata;
-            if (logger.isInfoEnabled()) logger.info("Mi metto in attesa sul canale " + canale);
+            if (logger.isDebugEnabled()) logger.debug("Si rimane in attesa sul canale " + canale);
 
 //            SedaComponent sedaComponent = (SedaComponent) getContext().getComponent("seda");
 //            sedaComponent.createEndpoint(canale);
@@ -133,7 +134,7 @@ public class HttpPortaDelegata extends RouteBuilder {
             consumer.stop();
 
             if (exchange.getProperty("FREESBEE_ACK") != null && !newExchange.isFailed()) {
-                if (logger.isInfoEnabled()) logger.info("Ho ricevuto una risposta di ack. Probabilmente il profilo di collaborazione non e' sincrono");
+                if (logger.isDebugEnabled()) logger.debug("E' stata ricevuta una risposta di ack. Probabilmente il profilo di collaborazione non e' sincrono");
                 Messaggio messaggioRisposta = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO_RICHIESTA);
                 aggiungiIntestazioniAck(messaggioRisposta, exchange);
                 return;
@@ -144,11 +145,12 @@ public class HttpPortaDelegata extends RouteBuilder {
             FreesbeeUtil.copiaIntestazioniMime(newExchange.getIn(), exchange.getOut());
 
             if (logger.isDebugEnabled()) logger.debug("Intestazioni del messaggio: " + FreesbeeUtil.stampaIntestazioni(exchange));
-            if (logger.isInfoEnabled()) logger.info("@ Messaggio Ricevuto!");
+//            if (logger.isInfoEnabled()) logger.info("Messaggio Ricevuto!");
         }
 
         private void aggiungiIntestazioniAck(Messaggio messaggioRisposta, Exchange exchange) {
             if (messaggioRisposta == null) {
+                logger.error("Impossibile aggiungere le intestazioni di ack, il messaggio di risposta è nullo.");
                 return;
             }
             FreesbeeUtil.aggiungiInstestazioniHttp(exchange.getOut(), CostantiSOAP.INTEGRAZIONE_ID_MESSAGGIO, messaggioRisposta.getIdMessaggio());
@@ -166,7 +168,7 @@ public class HttpPortaDelegata extends RouteBuilder {
 
         public void process(Exchange exchange) throws Exception {
             //ContextStartup.aggiungiThread(this.getClass().getName());
-            logger.error("Ricevuto messaggio SOAP non valido");
+            logger.error("Ricevuto messaggio SOAP non valido.");
             Processor soapWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter("300", "SOAP_ENV:Server");
             soapWriter.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());

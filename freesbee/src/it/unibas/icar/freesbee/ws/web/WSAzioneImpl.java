@@ -31,19 +31,19 @@ public class WSAzioneImpl implements IWSAzione {
             sessionFactory.getCurrentSession().beginTransaction();
             if (azione.getId() == 0) {
                 //E' UN'AZIONE DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta dell'azione " + azione);
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta dell'azione " + azione);
                 Azione nuovaAzione = daoAzione.findByNome(azione.getNome(),azione.getIdAccordoServizio());
                 if (nuovaAzione != null) {
-                    throw new SOAPFault("Impossibile aggiungere l'azione. Esiste già un'azione con il nome specificato");
+                    throw new SOAPFault("Impossibile aggiungere l'azione. Esiste già un'azione con il nome specificato.");
                 }
                 riempiRiferimenti(azione);
                 daoAzione.makePersistent(azione);
             } else {
                 //E' UN'AZIONE DA MODIFICARE
-                if (logger.isInfoEnabled())logger.info("Richiesta la modifica dell'azione");
+                if (logger.isDebugEnabled())logger.debug("Richiesta la modifica dell'azione");
                 Azione azioneModificare = daoAzione.findById(azione.getId(), true);
                 if (azioneModificare == null) {
-                    throw new SOAPFault("Impossibile modificare l'azione. Non esiste alcuna azione con l'id specificato");
+                    throw new SOAPFault("Impossibile modificare l'azione. Non esiste alcuna azione con l'id specificato.");
                 }
                 riempiRiferimenti(azione);
                 copiaProprieta(azione, azioneModificare);
@@ -51,10 +51,10 @@ public class WSAzioneImpl implements IWSAzione {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere l'azione " + ex);
-            throw new SOAPFault("Impossibile aggiungere l'azione " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'aggiunta dell'utente.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'aggiunta dell'utente.");
         }
     }
 
@@ -66,19 +66,17 @@ public class WSAzioneImpl implements IWSAzione {
             daoAzione.makeTransient(azione);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile eliminare l'azione " + ex);
-            throw new SOAPFault("Impossibile eliminare l'azione " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la rimozione dell'azione.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la rimozione dell'azione.");
         }
     }
 
     public List<Azione> getListaAzioni() throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) {
-                logger.info("Richiesta la lista delle azioni");
-            }
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista delle azioni");
             sessionFactory.getCurrentSession().beginTransaction();
             List<Azione> listaAzioni = daoAzione.findAll();
             for (Azione azione : listaAzioni) {
@@ -87,29 +85,27 @@ public class WSAzioneImpl implements IWSAzione {
             sessionFactory.getCurrentSession().getTransaction().commit();
             return listaAzioni;
         } catch (Exception ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere la lista delle azioni. " + ex);
-            throw new SOAPFault("Impossibile leggere la lista delle azioni. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura della lista delle azioni.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura della lista delle azioni.");
         }
     }
 
     public Azione getAzione(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) {
-                logger.info("Richiesta l'azione " + id);
-            }
+            if (logger.isDebugEnabled()) logger.debug("Richiesta l'azione " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             Azione azione = daoAzione.findById(id, false);
             settaRiferimenti(azione);
             sessionFactory.getCurrentSession().getTransaction().commit();
             return azione;
         } catch (Exception ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere l'azione. " + ex);
-            throw new SOAPFault("Impossibile leggere l'azione. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura dell'azione.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura dell'azione.");
         }
     }
 

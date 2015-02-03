@@ -31,12 +31,12 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
             sessionFactory.getCurrentSession().beginTransaction();
             if (freesbeeConfig.getId() == 0) {
                 //E' UNA CONFIGURAZIONE DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta della configurazione " + freesbeeConfig);
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta della configurazione " + freesbeeConfig);
                 settaRiferimenti(freesbeeConfig);
                 daoConfigurazione.makePersistent(freesbeeConfig);
             } else {
                 //E' UNA CONFIGURAZIONE DA MODIFICARE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica della configurazione");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta la modifica della configurazione.");
 
                 List<Configurazione> listaConfigurazioni = daoConfigurazione.findAll();
                 Configurazione configurazioneModificare = null;
@@ -49,10 +49,10 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere la configurazione " + ex);
-            throw new SOAPFault("Impossibile aggiungere la configurazione " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la modifica della configurazione.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la modifica della configurazione.");
         }
     }
 
@@ -60,7 +60,7 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         Configurazione configurazione = null;
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la configurazione ");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la configurazione ");
             sessionFactory.getCurrentSession().beginTransaction();
             configurazione = (Configurazione) daoConfigurazione.getConfigurazione();
             sessionFactory.getCurrentSession().getTransaction().commit();
@@ -75,10 +75,10 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
 
             return configurazione;
         } catch (Exception ex) {
-            if(logger.isDebugEnabled()) ex.printStackTrace();
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere l'azione. " + ex);
-            throw new SOAPFault("Impossibile leggere l'azione. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura dell'azione.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura dell'azione.");
         }
     }
 

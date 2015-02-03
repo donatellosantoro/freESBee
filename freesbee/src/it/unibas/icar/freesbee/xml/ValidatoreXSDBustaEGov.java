@@ -1,10 +1,7 @@
 package it.unibas.icar.freesbee.xml;
 
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.XMLConstants;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -35,8 +32,8 @@ public class ValidatoreXSDBustaEGov {
         try {
             xmlSchema = schemaFactory.newSchema(ss);
         } catch (SAXException ex) {
-            if (logger.isDebugEnabled()) ex.printStackTrace();
-            logger.error("Il file IntestazioniEGov.xsd non è valido. " + ex.getLocalizedMessage());
+            logger.error("Il file IntestazioniEGov.xsd non è valido.");
+            if (logger.isDebugEnabled()) logger.error(ex);
             throw new XmlException("Il file IntestazioniEGov.xsd non è valido.");
         }
         validatore = xmlSchema.newValidator();

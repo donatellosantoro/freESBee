@@ -44,7 +44,7 @@ public class ProcessorEccezione implements Processor {
 //        Throwable eccezione = (Exception) exchange.getIn().getHeader("caught.exception");
 //        Throwable eccezione = exchange.getException();
         Exception eccezione = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
-        if (logger.isDebugEnabled()) eccezione.printStackTrace();
+        if (logger.isDebugEnabled()) logger.error(eccezione);
 
         String stringaEccezione = eccezione.getMessage();
         logger.error("E' stata lanciata una eccezione di FreESBee : \n\n'" + stringaEccezione + "'\n\n");
@@ -91,8 +91,7 @@ public class ProcessorEccezione implements Processor {
 
             SoapMessage soapMessage = new SoapMessage();
             soapMessage.setFault(soapFault);
-            if (logger.isInfoEnabled())
-                logger.info("MappaHeaderSoapFault " + mappaHeaderSoapFault);
+            if (logger.isDebugEnabled()) logger.debug("MappaHeaderSoapFault " + mappaHeaderSoapFault);
             soapMessage.setHeaders(mappaHeaderSoapFault);
         }
     }
@@ -101,7 +100,7 @@ public class ProcessorEccezione implements Processor {
         if (messaggio == null || messaggio.getId() <= 0) {
             return;
         }
-        if (logger.isInfoEnabled()) logger.info("Aggiorniamo lo stato del messaggio a seguito di un'eccezione");
+        if (logger.isDebugEnabled()) logger.debug("Si sta aggiornando lo stato del messaggio sul DB a seguito dell'eccezione che si e' verificata.");
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         IDAOMessaggio daoMessaggioCorrente = new DAOMessaggioHibernate();
         try {
@@ -109,13 +108,14 @@ public class ProcessorEccezione implements Processor {
             daoMessaggioCorrente.makePersistent(messaggio);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
-            logger.warn("Impossibile aggiornare il messaggio nella base di dati a seguito di un'eccezione");
+            logger.error("Si e' verificato un errore durante l'aggiornamento del messaggio sul DB a seguito dell'eccezione che si e' verificata.");
         } finally {
             try {
                 if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
+                logger.error("Si e' verificato un errore durante il rollback dell'aggiornamento del messaggio sul DB a seguito dell'eccezione che si e' verificata.");
             }
         }
     }

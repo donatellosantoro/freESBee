@@ -51,7 +51,7 @@ public class ContentBasedRouterRispostaEGov extends RouteBuilder {
             String profiloCollaborazione = (String) exchange.getProperty(CostantiBusta.VALOREPROFILOCOLLABORAZIONE);
             if (MessageUtil.isEmpty(exchange.getIn()) && !profiloCollaborazione.equals(AccordoServizio.PROFILO_SINCRONO)) {
                 exchange.setProperty("ACK", true);
-                if (logger.isInfoEnabled()) logger.info("Il messaggio e' vuoto e il profilo di collaborazione non e' sincrono (ma " + profiloCollaborazione + ")");
+                if (logger.isDebugEnabled()) logger.debug("Il messaggio e' vuoto e il profilo di collaborazione non e' sincrono (ma " + profiloCollaborazione + ")");
             }else {
                 if (!profiloCollaborazione.equals(AccordoServizio.PROFILO_SINCRONO)) {
                     messaggio.setTipo(Messaggio.TIPO_ACK_RICHIESTA);

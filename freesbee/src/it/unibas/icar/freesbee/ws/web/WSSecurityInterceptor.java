@@ -3,6 +3,7 @@ package it.unibas.icar.freesbee.ws.web;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import it.unibas.icar.freesbee.persistenza.IDAOUtente;
+import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtenteHibernate;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +48,8 @@ public class WSSecurityInterceptor extends AbstractPhaseInterceptor {
             message.getInterceptorChain().add(new SAAJInInterceptor());
 //            message.getInterceptorChain().add(userTokenInterceptor);
         } catch (Exception e) {
-            logger.error("Si e' verificato un errore di sicurezza nel sistema " + e.getMessage());
+            logger.error("Si e' verificato un errore di sicurezza nel sistema.");
+            if (logger.isDebugEnabled()) logger.error(e);
         }
     }
 

@@ -35,9 +35,7 @@ public class ProcessorEnricher implements Processor {
         //ContextStartup.aggiungiThread(this.getClass().getName());
         Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
         String nomePortaDelegata = messaggio.getPortaDelegata();
-        if (logger.isInfoEnabled()) {
-            logger.info("Arricchisco le informazioni per la richiesta arrivata alla porta delegata " + nomePortaDelegata);
-        }
+//        if (logger.isInfoEnabled()) logger.info("Si sta trasformando il messaggio SOAP ricevuto sulla PD " + nomePortaDelegata + " in messaggio EGOV.");
         Configurazione configurazione = dbManager.getConfigurazione();
         PortaDelegata portaDelegata = dbManager.getPortaDelegata(nomePortaDelegata);
         portaDelegata = portaDelegata.clone();
@@ -59,28 +57,37 @@ public class ProcessorEnricher implements Processor {
                 || messaggio.getProfiloCollaborazione().equalsIgnoreCase(AccordoServizio.PROFILO_ASINCRONO_ASIMMETRICO))
                 && !messaggio.isCorrelato()) {
             messaggio.setCollaborazione(messaggio.getIdMessaggio());
-            if (logger.isDebugEnabled()) {
-                logger.debug("Settiamo l'intestazione collaborazione a " + messaggio.getCollaborazione());
-            }
+            if (logger.isDebugEnabled()) logger.debug("Settiamo l'intestazione collaborazione a " + messaggio.getCollaborazione());
         }
-        logger.info(generaMessaggioLog(messaggio));
+        if (logger.isDebugEnabled()) logger.debug(generaMessaggioLog(messaggio));
         exchange.getIn().setHeader(CostantiBusta.VALOREPROFILOCOLLABORAZIONE, messaggio.getProfiloCollaborazione());
         exchange.setProperty(CostantiBusta.VALOREPROFILOCOLLABORAZIONE, messaggio.getProfiloCollaborazione());
     }
 
     private String generaMessaggioLog(Messaggio messaggio) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Porta delegata contattata: ").append(messaggio.getPortaDelegata()).append(" Ricevuto messaggio: ").append(messaggio.getIdMessaggio())
-                .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
-                .append(" --> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione());
-        sb.append("\nInoltro il messaggio");
+        sb.append("Porta delegata contattata: ")
+                .append(messaggio.getPortaDelegata())
+                .append(" Ricevuto messaggio: ")
+                .append(messaggio.getIdMessaggio())
+                .append("\nFrom: ")
+                .append(messaggio.getTipoFruitore())
+                .append("/")
+                .append(messaggio.getFruitore())
+                .append(" --> ")
+                .append(messaggio.getTipoErogatore())
+                .append("/")
+                .append(messaggio.getErogatore())
+                .append("/")
+                .append(messaggio.getServizio())
+                .append("/")
+                .append(messaggio.getAzione());
+//        sb.append("\nInoltro il messaggio");
         return sb.toString();
     }
 
     private void arricchistiPortaDelegataDinamica(Exchange exchange, PortaDelegata portaDelegata, IEnricherPortaDelegataStrategy enricherPortaDelegata) throws FreesbeeException {
-        if (logger.isInfoEnabled()) {
-            logger.info("E' stata contattata una porta delegata dinamica. Leggo le informazioni del fruitore dalla query string");
-        }
+        if (logger.isInfoEnabled()) logger.info("E' stata contattata una porta delegata dinamica. Le informazioni sul fruitore vengono prelevate dalla query string.");
         Message messageIn = exchange.getIn();
         String queryString = (String) exchange.getIn().getHeader(CostantiSOAP.JETTY_QUERY_STRING);
         String queryFruitore = FreesbeeUtil.leggiDettagliPDDinamica(messageIn, queryString, CostantiSOAP.FRUITORE_QUERY_STRING);

@@ -37,25 +37,24 @@ public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
     public void configure() throws Exception {
         processorSbloccaPollingConsumerPortaApplicativa.setEccezione(true);
         this.from(FreesbeeCamel.SEDA_CONTENT_BASED_ROUTER_NICA)
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .process(processorIdentificaNica)
-                .choice()
-                .when(header(CostantiBusta.RUOLO_NICA)
-                        .isEqualTo(true))
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .process(processorIdentificaNica)
+            .choice()
+            .when(header(CostantiBusta.RUOLO_NICA).isEqualTo(true))
                 .to(FreesbeeCamel.SEDA_ENRICHER_NICA)
-                .otherwise()
+            .otherwise()
                 .to(FreesbeeCamel.SEDA_ENRICHER_IDENTIFICATORE_EROGATORE);
 
         this.from(FreesbeeCamel.SEDA_ENRICHER_NICA)
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
-                .process(new ProcessorEnricherConnettore())
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
+            .process(new ProcessorEnricherConnettore())
                 .to(FreesbeeCamel.SEDA_PREIMBUSTAMENTO_RICHIESTA)
-                .doCatch(Exception.class)
+            .doCatch(Exception.class)
                 .process(processorSbloccaPollingConsumerPortaApplicativa);
     }
 
-    private class ProcessorEnricherConnettore implements Processor {
+     private class ProcessorEnricherConnettore implements Processor {
 
         public void process(Exchange exchange) throws Exception {
             Messaggio messaggio = (Messaggio) exchange.getProperty(CostantiBusta.MESSAGGIO);
@@ -88,7 +87,8 @@ public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
                         sessionFactory.getCurrentSession().getTransaction().rollback();
                     }
                 } catch (Throwable rbEx) {
-                    logger.error("Could not rollback transaction after exception!", rbEx);
+                    logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
+                    if (logger.isDebugEnabled()) logger.error(ex);
                 }
             }
             if (soggettoErogatore == null) {

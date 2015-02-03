@@ -70,7 +70,7 @@ public class ProcessorIdentificazioneErogatore implements Processor {
                     if (possServ.getFruitori().contains(soggettoFruitore)) {
                         Soggetto e = possServ.getErogatore();
                         messaggio.setErogatore(e.getNome());
-                        logger.error("L'erogatore non era corretto. Un possibile erogatore per il servizio " + nomeServizio + " è " + e);
+                        logger.error("L'erogatore non e' corretto. Un possibile erogatore per il servizio " + nomeServizio + " e' " + e);
                     }
                 }
             } else {
@@ -99,7 +99,7 @@ public class ProcessorIdentificazioneErogatore implements Processor {
                 messaggio.setMutuaAutenticazione(true);
             }
             
-            if (logger.isDebugEnabled()) {if (logger.isDebugEnabled()) logger.debug("Il connettore del servizio da invocare è " + connettore);}
+//            if (logger.isInfoEnabled()) logger.info("Il connettore del servizio da invocare è " + connettore);
         }
     }
 
@@ -118,9 +118,10 @@ public class ProcessorIdentificazioneErogatore implements Processor {
             return AccordoServizio.PROFILO_SINCRONO;
         }
         messaggio.aggiungiEccezione(CostantiEccezioni.PROFILO_COLLABORAZIONE_NON_VALIDO);
-        logger.error("Il profilo di collaborazione " + valoreProfiloCollaborazione + " non è valido");
+        
+        logger.error("Il profilo di collaborazione " + valoreProfiloCollaborazione + " non e' valido.");
         messaggio.setProfiloCollaborazione("");
-        throw new FreesbeeException("Il profilo di collaborazione " + valoreProfiloCollaborazione + " non è valido");
+        throw new FreesbeeException("Il profilo di collaborazione " + valoreProfiloCollaborazione + " non è valido.");
     }
 
     private Azione cercaAzione(Servizio servizio, String stringaAzione, Messaggio messaggio) throws FreesbeeException {

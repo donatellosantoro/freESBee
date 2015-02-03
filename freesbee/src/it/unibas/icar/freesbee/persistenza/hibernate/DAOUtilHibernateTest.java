@@ -1,7 +1,6 @@
 package it.unibas.icar.freesbee.persistenza.hibernate;
 
 import it.unibas.icar.freesbee.persistenza.DAOException;
-import java.net.URL;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,8 +24,8 @@ public class DAOUtilHibernateTest {
             configuration.setProperty("hibernate.connection.url", testDb);
             sessionFactory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
-            logger.error("Building SessionFactory failed.", ex);
-            throw new ExceptionInInitializerError(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new ExceptionInInitializerError("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -38,8 +37,8 @@ public class DAOUtilHibernateTest {
         try {
             return sessionFactory.getCurrentSession();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -47,8 +46,8 @@ public class DAOUtilHibernateTest {
         try {
             sessionFactory.getCurrentSession().beginTransaction();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
@@ -56,16 +55,17 @@ public class DAOUtilHibernateTest {
         try {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (HibernateException ex) {
-            logger.error(ex);
-            throw new DAOException(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 
-    public static void rollback(){
+    public static void rollback() throws DAOException{
         try {
             sessionFactory.getCurrentSession().getTransaction().rollback();
         } catch (HibernateException ex) {
-            logger.error(ex);
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
 }

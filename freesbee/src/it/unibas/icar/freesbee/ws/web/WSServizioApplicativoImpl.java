@@ -40,7 +40,7 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
             sessionFactory.getCurrentSession().beginTransaction();
             if (servizioApplicativo.getId() == 0) {
                 //E' UN SERVIZIO APPLICATIVO DA AGGIUNGERE
-                if (logger.isInfoEnabled()) logger.info("Richiesta l'aggiunta del servizio applicativo " + servizioApplicativo);
+                if (logger.isDebugEnabled()) logger.debug("Richiesta l'aggiunta del servizio applicativo " + servizioApplicativo);
                 ServizioApplicativo nuovoServizioApplicativo = daoServizioApplicativo.findByNome(servizioApplicativo.getNome());
                 if (nuovoServizioApplicativo != null) {
                     throw new SOAPFault("Impossibile aggiungere il servizio applicativo. Esiste già un servizio applicativo con il nome specificato");
@@ -48,7 +48,7 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
                 daoServizioApplicativo.makePersistent(servizioApplicativo);
             } else {
                 //E' UN SERVIZIO APPLICATIVO DA MODIFICARE
-                if (logger.isInfoEnabled()) logger.info("Richiesta la modifica del servizio");
+                if (logger.isDebugEnabled()) logger.debug("Richiesta la modifica del servizio");
                 ServizioApplicativo servizioApplicativoModificare = daoServizioApplicativo.findById(servizioApplicativo.getId(), true);
                 if (servizioApplicativoModificare == null) {
                     throw new SOAPFault("Impossibile modificare il servizio applicativo. Non esiste alcuna servizio applicativo con l'id specificato");
@@ -59,45 +59,48 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile aggiungere il servizio applicativo " + ex);
-            throw new SOAPFault("Impossibile aggiungere il servizio applicativo " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante l'aggiunta del servizio applicativo.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del servizio applicativo.");
         }
     }
 
     public void removeServizioApplicativo(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la rimozione del servizio applicativo " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la rimozione del servizio applicativo " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             ServizioApplicativo servizioApplicativo = daoServizioApplicativo.findById(id, false);
             daoServizioApplicativo.makeTransient(servizioApplicativo);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile eliminare il servizio applicativo " + ex);
-            throw new SOAPFault("Impossibile eliminare il servizio applicativo " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la rimozione del servizio applicativo.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la rimozione del servizio applicativo.");
         }
     }
 
     public List<ServizioApplicativo> getListaServiziApplicativi() throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista dei servizi applicativi");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista dei servizi applicativi");
             sessionFactory.getCurrentSession().beginTransaction();
             List<ServizioApplicativo> listaServiziApplicativi = daoServizioApplicativo.findAll();
             sessionFactory.getCurrentSession().getTransaction().commit();
             return listaServiziApplicativi;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere la lista dei servizi applicativi. " + ex);
-            throw new SOAPFault("Impossibile leggere la lista dei servizi applicativi. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura della lista dei servizi applicativi.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei servizi applicativi.");
         }
     }
 
     public ServizioApplicativo getServizioApplicativo(long id) throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesto il servizio applicativo " + id);
+            if (logger.isDebugEnabled()) logger.debug("Richiesto il servizio applicativo " + id);
             sessionFactory.getCurrentSession().beginTransaction();
             ServizioApplicativo servizioApplicativo = daoServizioApplicativo.findById(id, false);
             Hibernate.initialize(servizioApplicativo);
@@ -105,8 +108,9 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
             return servizioApplicativo;
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
-            logger.error("Impossibile leggere il servizio applicativo. " + ex);
-            throw new SOAPFault("Impossibile leggere il servizio applicativo. " + ex.getMessage());
+            logger.error("Si e' verificato un errore durante la lettura del servizio applicativo.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new SOAPFault("Si e' verificato un errore durante la lettura del servizio applicativo.");
         }
     }
 

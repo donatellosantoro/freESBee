@@ -64,15 +64,11 @@ public class FreesbeeUtil {
 
     public static void aggiungiInstestazioniHttp(Message messaggio, String chiave, String valore) {
         if (messaggio == null || chiave == null) {
-            if (logger.isInfoEnabled()) {
-                if (logger.isInfoEnabled())
-                    logger.info("Si vogliono aggiungere delle instestazioni http ad un messaggio nullo o con una chiave nulla");
-            }
+            logger.error("Si sta cercando di aggiungere delle instestazioni HTTP ad un messaggio nullo o con una chiave nulla.");
             return;
         }
         //AGGIUNGO LE INTESTAZIONI DIRETTAMENTE AL MESSAGGIO        
-        if (logger.isInfoEnabled())
-            logger.info("Aggiungo l'intestazioni HTTP " + chiave + ": " + valore);
+        if (logger.isDebugEnabled()) logger.debug("Aggiungo l'intestazioni HTTP " + chiave + ": " + valore);
         messaggio.setHeader(chiave, valore);
     }
 
@@ -126,7 +122,7 @@ public class FreesbeeUtil {
 
     public static String cercaIntestazioniIDHttpHeader(Message message) {
         if (message == null) {
-            throw new IllegalArgumentException("Camel Message null. Impossibile leggere intestazioni");
+            throw new IllegalArgumentException("Il Camel Message e' null. Impossibile leggere le intestazioni.");
         }
         String idSil = (String) message.getHeader(CostantiSOAP.INTEGRAZIONE_ID_MESSAGGIO);
         return idSil;
@@ -147,16 +143,15 @@ public class FreesbeeUtil {
 
     public static String cercaIntestazioniIDRelatesToWsa(Exchange exchange) {
         Map<QName, DocumentFragment> mappaHeaders = (Map<QName, DocumentFragment>) exchange.getProperty(CostantiSOAP.SOAP_HEADERS);
-        if (logger.isInfoEnabled())
-            logger.info("La mappa delle instestazioni del messaggio vale: " + mappaHeaders);
+        if (logger.isDebugEnabled()) logger.debug("La mappa delle instestazioni del messaggio vale: " + mappaHeaders);
         if (mappaHeaders == null) {
             return null;
         }
-        Set<QName> setQ = mappaHeaders.keySet();
-        for (QName qName : setQ) {
-            if (logger.isInfoEnabled())
-                logger.info("\t" + qName);
-        }
+//        Set<QName> setQ = mappaHeaders.keySet();
+//        for (QName qName : setQ) {
+//            if (logger.isInfoEnabled())
+//                logger.info("\t" + qName);
+//        }
         if (mappaHeaders == null) {
             return null;
         }
@@ -169,7 +164,7 @@ public class FreesbeeUtil {
 
     public static String cercaIntestazioniIDRelatesToHttpHeader(Message message) {
         if (message == null) {
-            throw new IllegalArgumentException("Camel Message null. Impossibile leggere intestazioni");
+            throw new IllegalArgumentException("Il Camel Message e' null. Impossibile leggere le intestazioni.");
         }
         String idSilRelatesTo = (String) message.getHeader(CostantiSOAP.INTEGRAZIONE_RIFERIMENTO_MESSAGGIO);
         return idSilRelatesTo;
@@ -177,8 +172,7 @@ public class FreesbeeUtil {
 
     public static void aggiungiIntestazioniInteroperabilita(Message message, Messaggio messaggio) {
         if (message == null || messaggio == null) {
-            if (logger.isInfoEnabled())
-                logger.info("Messaggio nullo da cui prendere le informazioni da aggiungere");
+            logger.error("Si sta cercando di aggiungere delle instestazioni di interoperabilita' ad un messaggio nullo.");
             return;
         }
         if (messaggio.getIdSil() != null) {
@@ -247,8 +241,9 @@ public class FreesbeeUtil {
             
             return Integer.parseInt("80");
         } catch (NumberFormatException nfe) {
-            logger.error("Numero porta errato. L'indirizzo specificato e': " + indirizzoCompleto);
-            throw new FreesbeeException("Eccezione: " + nfe.toString());
+            logger.error("Il numero di porta specificato e' errato. L'indirizzo completo e': " + indirizzoCompleto);
+            if (logger.isDebugEnabled()) logger.error(nfe);
+            throw new FreesbeeException("Il numero di porta specificato e' errato. L'indirizzo completo e': " + indirizzoCompleto);
         }
     }
 }

@@ -31,29 +31,28 @@ public class ServerPasswordCallback implements CallbackHandler {
                 String nomeUtente = pc.getIdentifier();
 
                 sessionFactory.getCurrentSession().beginTransaction();
-                if (logger.isDebugEnabled()) {
-                    if(logger.isDebugEnabled()) logger.debug("Richiedo al dao " + daoUtente + " l'utente " + nomeUtente);
-                }
+                if(logger.isDebugEnabled()) logger.debug("Caricamento dell'utente " + nomeUtente + " dal DB.");
                 Utente utente = daoUtente.findByNomeUtente(nomeUtente);
                 sessionFactory.getCurrentSession().getTransaction().commit();
                 if (utente != null) {
-                    if (logger.isInfoEnabled()) logger.info("E' stato trovato l'utente " + utente.getNomeUtente() + " nel DB");
+                    if (logger.isDebugEnabled()) logger.debug("E' stato trovato l'utente " + utente.getNomeUtente() + " nel DB");
                     pc.setPassword(utente.getPassword());
                 } else {
-                    logger.error("Si e' verificato un errore durante l'autenticazione dell'utente. Utente inesistente: " + nomeUtente);
-                    throw new UnsupportedCallbackException(pc, "Si e' verificato un errore durante l'autenticazione dell'utente. Utente inesistente: " + nomeUtente);
+                    logger.error("Si e' verificato un errore durante l'autenticazione dell'utente. L'utente " + nomeUtente + " e' inesistente.");
+                    throw new UnsupportedCallbackException(pc, "Si e' verificato un errore durante l'autenticazione dell'utente. L'utente " + nomeUtente + " e' inesistente.");
                 }
             }
         } catch (DAOException ex) {
             try {
                 if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
-                    if(logger.isDebugEnabled()) logger.debug("C'è una transazione di hibernate attiva e faccio il rollback");
+                    if(logger.isDebugEnabled()) logger.debug("Si sta effettuando il rollback della transazione eseguita sul DB.");
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
             }
-            logger.error("Si e' verificato un errore durante l'autenticazione dell'utente " + ex);
-            throw new UnsupportedCallbackException(pc, "Si e' verificato un errore durante l'autenticazione dell'utente " + ex);
+            logger.error("Si e' verificato un errore durante l'autenticazione dell'utente.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new UnsupportedCallbackException(pc, "Si e' verificato un errore durante l'autenticazione dell'utente.");
         }
     }
 }

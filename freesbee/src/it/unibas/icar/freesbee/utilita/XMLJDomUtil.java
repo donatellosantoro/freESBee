@@ -40,6 +40,7 @@ public class XMLJDomUtil {
 
     public static String stampaXML(Document document) {
         if (document == null) {
+            logger.error("Si sta cercando di trasformare in String un Document nullo.");
             return "";
         }
         try {
@@ -49,7 +50,8 @@ public class XMLJDomUtil {
             outputter.output(document, stream);
             return stream.toString();
         } catch (IOException ex) {
-            logger.error(ex.getMessage());
+            logger.error("Si e' verificato un errore durante la trasformazione del Document in String.");
+            if (logger.isDebugEnabled()) logger.error(ex);
             return null;
         }
     }
@@ -84,15 +86,17 @@ public class XMLJDomUtil {
             outputter.setFormat(Format.getPrettyFormat());
             outputter.output(document, fileOS);
             fileOS.close();
-            if (logger.isInfoEnabled()) logger.info("File configurazione salvato in " + pathConformato);
+            if (logger.isDebugEnabled()) logger.debug("Il file e' stato salvato in " + pathConformato);
         } catch (Exception ex) {
-            logger.error("Impossibile salvare il file xml " + ex);
-            throw new XmlException(ex);
+            logger.error("Si e' verificato un errore durante il salvataggio del file.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new XmlException("Si e' verificato un errore durante il salvataggio del file.");
         } finally {
             try {
                 fileOS.close();
             } catch (IOException ex) {
-                logger.error("ERRORE! Impossibile chiudere FileOS ");
+                logger.error("Si e' verificato un errore durante il salvataggio del file.");
+                if (logger.isDebugEnabled()) logger.error(ex);
             }
         }
     }
@@ -103,13 +107,16 @@ public class XMLJDomUtil {
         try {
             return caricaXML(new FileInputStream(file), validate, null);
         } catch (Exception ex) {
-            throw new XmlException(ex);
+            logger.error("Si e' verificato un errore durante il caricamento del file.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new XmlException("Si e' verificato un errore durante il caricamento del file.");
         }
     }
 
     public static Document caricaXML(String messaggio) throws XmlException {
         if(messaggio==null){
-            throw new IllegalArgumentException("Impossibile creare il document. Messaggio nullo");
+            logger.error("Impossibile creare il document. Si sta cercando di caricare un messaggio nullo.");
+            throw new IllegalArgumentException("Impossibile creare il document. Si sta cercando di caricare un messaggio nullo.");
         }
         return caricaXML(new ByteArrayInputStream(messaggio.getBytes()), false, null);
     }
@@ -129,7 +136,9 @@ public class XMLJDomUtil {
             org.w3c.dom.Document document = builder.parse(isFile);
             return dom.build(document);
         } catch (Exception ex) {
-            throw new XmlException(ex);
+            logger.error("Si e' verificato un errore durante il caricamento del file.");
+            if (logger.isDebugEnabled()) logger.error(ex);
+            throw new XmlException("Si e' verificato un errore durante il caricamento del file.");
         }
     }
 
@@ -144,7 +153,8 @@ public class XMLJDomUtil {
             outputter.output(document, fileOS);
             fileOS.close();
         } catch (IOException ex) {
-            logger.error(ex.getMessage());
+            logger.error("Si e' verificato un errore durante il salvataggio del file.");
+            if (logger.isDebugEnabled()) logger.error(ex);
         }
     }
 
@@ -167,10 +177,10 @@ public class XMLJDomUtil {
 
 
     public static Document transformToDocument(String fileXsl, Document documentXml) throws XSLTransformException, DAOException {
-        if (logger.isInfoEnabled()) logger.info("Eseguo la trasformazione XSLT del file " + fileXsl);
+        if (logger.isDebugEnabled()) logger.debug("Si sta eseguendo la trasformazione XSLT del file " + fileXsl);
         XSLTransformer transformer = new XSLTransformer(fileXsl);
         Document documentXmlTrasformato = transformer.transform(documentXml);
-        if (logger.isInfoEnabled()) logger.info("Trasformazione effettuata con successo");
+        if (logger.isDebugEnabled()) logger.debug("Trasformazione effettuata con successo.");
         return documentXmlTrasformato;
     }
 

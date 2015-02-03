@@ -41,11 +41,21 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
 
         List<String> indirizziPortaApplicativa = configurazione.getListaIndirizziPortaApplicativa();
         for (String indirizzo : indirizziPortaApplicativa) {
-        
+      
+            //TODO [Michele]: Errore: ERROR [it.unibas.icar.freesbee.modello.ConfigurazioneStatico - caricaValidatore] - Il file IntestazioniEGov.xsd non è valido. src-resolve: impossibile risolvere il nome "SOAP_ENV:actor" in un componente attribute declaration. - ERROR [it.unibas.icar.freesbee.modello.ConfigurazioneStatico - <init>] - Impossibile caricare la configurazione statica it.unibas.icar.freesbee.xml.XmlException: Il file IntestazioniEGov.xsd non è valido.
+            
+            //TODO [Michele]: Ridurre il timeout
+            
+            //TODO [Michele]: Verificare ritorno msg da errore 500
+            
+            //TODO [Michele]: Eliminare errore "si è restituito un messaggio con contenuto {null} ..."
+            
+            //TODO [Michele]: Log un po' più schematico con msg ricevuto su PD, msg EGOV inviato, EGOV ricevuto e msg inviato al SIL
+            
             int porta = FreesbeeUtil.impostaNumeroPortaDaIndirizzo(indirizzo);
             
             if (indirizzo.contains("https")) {
-                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PA per aprire un canale criptato HTTPS sull'indirizzo " + indirizzo + " con porta " + porta + "\n");}
+                if(logger.isInfoEnabled()) {logger.info("Si sta predisponendo la PA per aprire un canale criptato HTTPS sull'indirizzo " + indirizzo + " con porta " + porta);}
                 JettyHttpComponent jettyComponent = getContext().getComponent("jetty", JettyHttpComponent.class);
                 SslSelectChannelConnector sslConnector = new SslSelectChannelConnector();
                 sslConnector.setPort(porta);
@@ -55,7 +65,7 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
                 sslConnector.setTrustPassword(ConfigurazioneStatico.getInstance().getPasswordTrustStore());
                 
                 if (configurazione.isMutuaAutenticazionePortaApplicativa()) {
-                    if(logger.isInfoEnabled()) {logger.info("\n\nSto configurando la PA per richiedere l'autenticazione client\n");}
+                    if(logger.isInfoEnabled()) {logger.info("Si sta configurando la PA per richiedere l'autenticazione client\n");}
                     sslConnector.setNeedClientAuth(true);
                 } else {
                     sslConnector.setNeedClientAuth(false);
@@ -65,7 +75,7 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
                 connectors.put(porta, sslConnector);
                 jettyComponent.setSslSocketConnectors(connectors);
             } else {
-                if(logger.isInfoEnabled()) {logger.info("\n\nSto predisponendo la PA per aprire un canale HTTP sull'indirizzo " + indirizzo + " con porta " + porta + "\n");}
+                if(logger.isInfoEnabled()) {logger.info("Si sta predisponendo la PA per aprire un canale HTTP sull'indirizzo " + indirizzo + " con porta " + porta);}
             }
             
             this.avviaPortaApplicativa("jetty:" + indirizzo);
@@ -73,26 +83,26 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
     }
 
     private void avviaPortaApplicativa(String indirizzo) {
-        if (logger.isInfoEnabled())
-            logger.info("Avvio la porta applicativa all'indirizzo " + indirizzo);
+        if (logger.isInfoEnabled()) logger.info("Si sta avviando la porta applicativa all'indirizzo " + indirizzo);
         this.from(indirizzo)
-                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PA_REQ"))
-                //                .choice().when(header("CamelHttpMethod").isEqualTo("POST"))
-                .choice()
-                .when(body().isNull())
-                .otherwise().when(header("CamelHttpMethod").isEqualTo("POST"))
-                .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
-                .doTry()
-                //.process(new SOAPProcessorReader())
+//            .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PA_REQ"))
+            .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "E' stata contattata la PA all'indirizzo " + indirizzo))
+            //                .choice().when(header("CamelHttpMethod").isEqualTo("POST"))
+            .choice()
+            .when(body().isNull())
+            .otherwise().when(header("CamelHttpMethod").isEqualTo("POST"))
+            .process(ProcessorLogFactory.getInstance().getProcessorLog(this.getClass()))
+            .doTry()
                 .process(SOAPProcessorReader.getInstance())
                 .process(processorValidaXSD)
                 .process(new ProcessInitialize())
                 .to(FreesbeeCamel.SEDA_PRESBUSTAMENTO_RICHIESTA)
                 .process(new ProcessorPolling())
-                .doCatch(Exception.class)
+            .doCatch(Exception.class)
                 .process(new FaultProcessor())
-                .end()
-                .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PA_RESP"));
+            .end()
+//            .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "PA_RESP"));
+            .process(ProcessorTrace.getInstance(ProcessorTrace.IN, "E' stata prodotta la seguente risposta EGOV"));
     }
 
     private class ProcessInitialize implements Processor {
@@ -117,8 +127,7 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
             String idPortaApplicativaChannel = messaggio.getPortaApplicativaChannel();
 //            String canale = FreesbeeCamel.SEDA_POLLING_CONSUMER_PORTA_APPLICATIVA_CHANNEL + idPortaApplicativaChannel+FreesbeeCamel.SEDA_ARGS;
             String canale = FreesbeeCamel.DIRECT_POLLING_CONSUMER_PORTA_APPLICATIVA_CHANNEL + idPortaApplicativaChannel;
-            if (logger.isDebugEnabled())
-                logger.debug("Mi metto in attesa sul canale " + canale);
+            if (logger.isDebugEnabled()) logger.debug("Si rimane in attesa sul canale " + canale);
 
 //            SedaComponent sedaComponent = (SedaComponent) getContext().getComponent("seda");
 //            sedaComponent.createEndpoint(canale)
@@ -126,42 +135,49 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
             endpoint.setExchangePattern(ExchangePattern.InOnly);
 //            Endpoint endpoint = getContext().getEndpoint(canale);
 
-            if (logger.isDebugEnabled())
-                logger.debug("Endpoint: " + endpoint);
+            if (logger.isDebugEnabled()) logger.debug("Endpoint: " + endpoint);
             PollingConsumer consumer = endpoint.createPollingConsumer();
             consumer.start();
             Exchange newExchange = consumer.receive();
             consumer.stop();
 
             if (newExchange.getProperty("FREESBEE_ACK") != null && !newExchange.isFailed()) {
-                if (logger.isInfoEnabled())
-                    logger.info("Ho ricevuto una risposta di ack. Probabilmente il profilo di collaborazione non e' sincrono");
+                if (logger.isInfoEnabled()) logger.info("E' stata ricevuta una risposta di ack. Probabilmente il profilo di collaborazione non e' sincrono.");
                 MessageUtil.setString(exchange.getOut(), "");
                 return;
             }
-            if (logger.isInfoEnabled())
-                logger.info("Ricevuta risposta sincrona");
+//            if (logger.isInfoEnabled()) logger.info("Ricevuta risposta sincrona");
 
             Processor processorWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter();
             processorWriter.process(newExchange);
             MessageUtil.copyMessage(newExchange.getIn(), exchange.getOut());
             FreesbeeUtil.copiaIntestazioniMime(newExchange.getIn(), exchange.getOut());
-            if (logger.isInfoEnabled())
-                logger.info(generaMessaggioLog(messaggio));
-            if (logger.isDebugEnabled())
-                logger.debug("Intestazioni del messaggio: " + FreesbeeUtil.stampaIntestazioni(exchange));
-            if (logger.isDebugEnabled())
-                logger.debug("@ Messaggio Ricevuto!");
+            
+            if (logger.isDebugEnabled()) logger.debug(generaMessaggioLog(messaggio));
+            
+            if (logger.isDebugEnabled()) logger.debug("Intestazioni del messaggio: " + FreesbeeUtil.stampaIntestazioni(exchange));
         }
 
         // TODO [Michele]: Non restituisce il msg di errore quando c'è un errore 500 ma segnala l'ID del messaggio come se avesse ricevuto qualcosa
         private String generaMessaggioLog(Messaggio messaggio) {
             StringBuilder sb = new StringBuilder();
-            sb.append("Porta applicativa contattata. Ricevuto messaggio: ").append(messaggio.getIdMessaggio())
-                    .append("\nFrom: ").append(messaggio.getTipoFruitore()).append("/").append(messaggio.getFruitore())
-                    .append(" -> ").append(messaggio.getTipoErogatore()).append("/").append(messaggio.getErogatore()).append("/").append(messaggio.getServizio()).append("/").append(messaggio.getAzione())
-                    .append("\nConnettore servizio applicativo: ").append(messaggio.getConnettoreServizioApplicativo());
-            sb.append("\nInoltro il messaggio di risposta");
+            sb.append("Porta applicativa contattata. Ricevuto messaggio: ")
+              .append(messaggio.getIdMessaggio())
+              .append("\nFrom: ")
+              .append(messaggio.getTipoFruitore())
+              .append("/")
+              .append(messaggio.getFruitore())
+              .append(" -> ")
+              .append(messaggio.getTipoErogatore())
+              .append("/")
+              .append(messaggio.getErogatore())
+              .append("/")
+              .append(messaggio.getServizio())
+              .append("/")
+              .append(messaggio.getAzione())
+              .append("\nConnettore servizio applicativo: ")
+              .append(messaggio.getConnettoreServizioApplicativo());
+//            sb.append("\nInoltro il messaggio di risposta");
             return sb.toString();
         }
     }
@@ -172,8 +188,8 @@ public class HttpRicezionePortaApplicativa extends RouteBuilder {
             //ContextStartup.aggiungiThread(this.getClass().getName());
 //            Exception e = (Exception) exchange.getIn().getHeader("caught.exception");
             Exception e = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
-            if (logger.isDebugEnabled()) {e.printStackTrace();}
-            logger.error("Ricevuto messaggio SOAP non valido. " + e.getMessage());
+            logger.error("Ricevuto messaggio SOAP non valido.");
+            if (logger.isDebugEnabled()) {logger.error(e);}
             Processor soapWriter = SOAPProcessorWriterFactory.getInstance().getProcessorWriter("001", "SOAP_ENV:Client");
             soapWriter.process(exchange);
             MessageUtil.copyMessage(exchange.getIn(), exchange.getOut());

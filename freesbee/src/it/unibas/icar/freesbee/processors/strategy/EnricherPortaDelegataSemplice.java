@@ -36,14 +36,14 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
     private IDAOAccordoServizio daoAccordo;
 
     public void arricchisciMessaggio(PortaDelegata portaDelegata, Messaggio messaggio) throws FreesbeeException {
-        assert (portaDelegata != null) : "Impossibile arricchire le informazioni di una porta delegata nulla";
+        assert (portaDelegata != null) : "Impossibile arricchire le informazioni di una porta delegata nulla.";
         if (portaDelegata.getSoggettoFruitore() == null) {
             throw new FreesbeeException("Il soggetto fruitore è sconosciuto.");
         }
         if (portaDelegata.getServizio() == null) {
             String errore = "Impossibile arricchire le informazioni di una porta delegata. Servizio: "
                     + portaDelegata.getServizio() + " Soggetto Fruitore: " + portaDelegata.getSoggettoFruitore();
-            logger.warn(errore);
+            logger.error(errore);
             throw new FreesbeeException(errore);
         }
 
@@ -142,20 +142,25 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
             sessionFactory.getCurrentSession().beginTransaction();
             daoAccordo.makePersistent(accordoServizio);
         } catch (DAOException ex) {
-            logger.error("Impossibile accedere al database. " + ex.getLocalizedMessage());
             try {
+                logger.error("Si e' verificato un errore durante l'accesso al DB.");
+                if (logger.isDebugEnabled()) logger.debug(ex);
+                
                 if (sessionFactory != null && sessionFactory.getCurrentSession().getTransaction().isActive()) {
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
-                logger.error("Could not rollback transaction after exception!", rbEx);
+                logger.error("Impossibile effettuare il rollback della transazione sul DB.");
+                if (logger.isDebugEnabled()) logger.debug(rbEx);
             }
-            throw new FreesbeeException("IImpossibile accedere al database. " + ex.getLocalizedMessage());
+            
+            throw new FreesbeeException("Si e' verificato un errore durante l'accesso al DB.");
         }
+        
         if (nomeAzione != null && !nomeAzione.isEmpty()) {
             Azione azione = accordoServizio.cercaAzione(nomeAzione);
             if (azione == null) {
-                logger.warn("L'azione definita dinamicamente (nella SOAPAction) non è prevista nell'accordo di servizio");
+                logger.error("L'azione definita dinamicamente (nella SOAPAction) non e' prevista nell'accordo di servizio.");
 //                throw new FreesbeeException("L'azione " + nomeAzione + " non è prevista nell'accordo di servizio " + servizio.getAccordoServizio().getNome());
             } else {
                 portaDelegata.setAzione(azione);
@@ -202,9 +207,6 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
                 }
             }
 
-            logger.info("### portaDelegata.getAzione()=" + portaDelegata.getAzione());
-            logger.info("### queryAzione=" + queryAzione);
-
             if (portaDelegata.getAzione() == null && !StringUtil.isStringaVuota(queryAzione)) {
                 Azione azione = portaDelegata.getServizio().getAccordoServizio().cercaAzione(queryAzione);
                 if (azione == null) {
@@ -214,16 +216,18 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
             }
 
         } catch (DAOException ex) {
-            logger.error("Impossibile accedere al database. " + ex.getLocalizedMessage());
-            throw new FreesbeeException("Impossibile accedere al database. " + ex.getLocalizedMessage());
+            logger.error("Si e' verificato un errore durante l'accesso al DB.");
+            if (logger.isDebugEnabled()) logger.debug(ex);
         } finally {
             try {
                 if (sessionFactory != null && sessionFactory.getCurrentSession().getTransaction().isActive()) {
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
-                logger.error("Could not rollback transaction after exception!", rbEx);
+                logger.error("Impossibile effettuare il rollback della transazione sul DB.");
+                if (logger.isDebugEnabled()) logger.debug(rbEx);
             }
+            throw new FreesbeeException("Impossibile accedere al DB.");
         }
     }
 

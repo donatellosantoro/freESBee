@@ -18,14 +18,15 @@ public class HibernateInterceptorFault extends AbstractPhaseInterceptor {
     }
 
     public void handleMessage(Message message) throws Fault {
-        if (logger.isInfoEnabled()) logger.info("HibernateInterceptorFault processa il messaggio");
+        if (logger.isDebugEnabled()) logger.debug("L'HibernateInterceptorFault sta processando il messaggio.");
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
             if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
-                if(logger.isDebugEnabled()) logger.debug("C'è una transazione di hibernate attiva e faccio il rollback");
                 sessionFactory.getCurrentSession().getTransaction().rollback();
             }
         } catch (Throwable rbEx) {
+            logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
+            if (logger.isDebugEnabled()) logger.error(rbEx);
         }
     }
 }
