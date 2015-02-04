@@ -60,7 +60,7 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'aggiunta del servizio applicativo.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del servizio applicativo.");
         }
     }
@@ -76,7 +76,7 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la rimozione del servizio applicativo.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la rimozione del servizio applicativo.");
         }
     }
@@ -92,7 +92,7 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura della lista dei servizi applicativi.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei servizi applicativi.");
         }
     }
@@ -109,7 +109,7 @@ public class WSServizioApplicativoImpl implements IWSServizioApplicativo {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura del servizio applicativo.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura del servizio applicativo.");
         }
     }

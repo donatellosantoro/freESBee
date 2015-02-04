@@ -113,7 +113,7 @@ public class BustaUtil {
             return df;
         } catch (ParserConfigurationException e) {
             logger.error("Si e' verificato un errore nel sistema.");
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
         }
         return null;
     }
@@ -138,7 +138,7 @@ public class BustaUtil {
             return df;
         } catch (ParserConfigurationException e) {
             logger.error("Si e' verificato un errore nel sistema.");
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
         }
         return null;
     }
@@ -155,7 +155,7 @@ public class BustaUtil {
             return df;
         } catch (ParserConfigurationException e) {
             logger.error("Si e' verificato un errore nel sistema.");
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
         }
         return null;
     }

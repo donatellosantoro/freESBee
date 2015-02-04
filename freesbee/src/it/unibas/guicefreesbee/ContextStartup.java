@@ -78,7 +78,7 @@ public class ContextStartup implements ServletContextListener {
             camelContext = new GuiceCamelContext(Guice.createInjector(Stage.PRODUCTION, new FreesbeeModule()));
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante l'avvio del sistema.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
         }
         if (logger.isInfoEnabled()) logger.info("Avvio completato con successo.");
     }
@@ -90,7 +90,7 @@ public class ContextStartup implements ServletContextListener {
             DAOUtilHibernate.closeSessionFactory();
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante l'arresto del sistema.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
         }
         if (logger.isInfoEnabled()) logger.info("freESBee e' stato arrestato correttamente");
     }

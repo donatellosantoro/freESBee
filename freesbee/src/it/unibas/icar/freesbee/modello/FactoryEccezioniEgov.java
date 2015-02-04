@@ -39,7 +39,7 @@ public class FactoryEccezioniEgov {
             if (logger.isDebugEnabled()) logger.debug("Lista delle eccezioni caricata correttamente");
         } catch (Exception ex) {
             logger.error("Impossibile leggere la lista delle eccezioni.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
         }
     }
 

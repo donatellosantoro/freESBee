@@ -230,7 +230,7 @@ public class ProcessorUnWrapper implements Processor {
             }
 
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore nel processamento delle intestazioni EGOV.");
         }
     }

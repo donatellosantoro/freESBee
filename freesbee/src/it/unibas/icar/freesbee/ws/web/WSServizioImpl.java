@@ -70,7 +70,7 @@ public class WSServizioImpl implements IWSServizio {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'aggiunta del servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del servizio.");
         }
     }
@@ -87,7 +87,7 @@ public class WSServizioImpl implements IWSServizio {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'eliminazione del servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'eliminazione del servizio.");
         }
     }
@@ -106,7 +106,7 @@ public class WSServizioImpl implements IWSServizio {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura della lista dei servizi.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei servizi.");
         }
     }
@@ -124,7 +124,7 @@ public class WSServizioImpl implements IWSServizio {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura del servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura del servizio.");
         }
     }

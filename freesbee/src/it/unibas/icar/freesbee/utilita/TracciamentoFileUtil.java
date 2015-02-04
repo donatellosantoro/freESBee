@@ -39,7 +39,7 @@ public class TracciamentoFileUtil {
             XMLJDomUtil.salvaXML(path + nomeFile, documento);
         } catch (XmlException ex) {
             logger.error("Si e' verificato un errore durante la creazione del file di tracciamento " + nomeFile);
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
         }
 
     }

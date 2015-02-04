@@ -61,7 +61,7 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'aggiunta di una nuova porta applicativa.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'aggiunta di una nuova porta applicativa.");
         }
     }
@@ -79,7 +79,7 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la rimozione della porta applicativa.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la rimozione della porta applicativa.");
             
         }
@@ -98,7 +98,7 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             return listaPorteApplicative;
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante la lettura delle porte applicative.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura delle porte applicative.");
         }
     }
@@ -114,7 +114,7 @@ public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
             return portaApplicativa;
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante la lettura della porta applicativa.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura della porta applicativa.");
         }
     }

@@ -51,7 +51,7 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la modifica della configurazione.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la modifica della configurazione.");
         }
     }
@@ -77,7 +77,7 @@ public class WSConfigurazioneImpl implements IWSConfigurazione {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura dell'azione.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura dell'azione.");
         }
     }

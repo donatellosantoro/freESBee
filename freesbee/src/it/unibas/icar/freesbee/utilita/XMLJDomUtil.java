@@ -51,7 +51,7 @@ public class XMLJDomUtil {
             return stream.toString();
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante la trasformazione del Document in String.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             return null;
         }
     }
@@ -89,14 +89,14 @@ public class XMLJDomUtil {
             if (logger.isDebugEnabled()) logger.debug("Il file e' stato salvato in " + pathConformato);
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante il salvataggio del file.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new XmlException("Si e' verificato un errore durante il salvataggio del file.");
         } finally {
             try {
                 fileOS.close();
             } catch (IOException ex) {
                 logger.error("Si e' verificato un errore durante il salvataggio del file.");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
             }
         }
     }
@@ -108,7 +108,7 @@ public class XMLJDomUtil {
             return caricaXML(new FileInputStream(file), validate, null);
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante il caricamento del file.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new XmlException("Si e' verificato un errore durante il caricamento del file.");
         }
     }
@@ -137,7 +137,7 @@ public class XMLJDomUtil {
             return dom.build(document);
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante il caricamento del file.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new XmlException("Si e' verificato un errore durante il caricamento del file.");
         }
     }
@@ -154,7 +154,7 @@ public class XMLJDomUtil {
             fileOS.close();
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante il salvataggio del file.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
         }
     }
 

@@ -62,7 +62,7 @@ public class WSSoggettoImpl implements IWSSoggetto {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'aggiunta del soggetto.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del soggetto.");
         }
     }
@@ -85,10 +85,10 @@ public class WSSoggettoImpl implements IWSSoggetto {
                 }
             } catch (Throwable rbEx) {
                 logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
             }
             logger.error("Si e' verificato un errore durante l'eliminazione del soggetto.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'eliminazione del soggetto.");
         }
     }
@@ -104,7 +104,7 @@ public class WSSoggettoImpl implements IWSSoggetto {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura della lista dei soggetti.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei soggetti.");
         }
     }
@@ -122,7 +122,7 @@ public class WSSoggettoImpl implements IWSSoggetto {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante la lettura del soggetto.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura del soggetto.");
         }
     }

@@ -33,7 +33,7 @@ public class ValidatoreXSDBustaEGov {
             xmlSchema = schemaFactory.newSchema(ss);
         } catch (SAXException ex) {
             logger.error("Il file IntestazioniEGov.xsd non è valido.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new XmlException("Il file IntestazioniEGov.xsd non è valido.");
         }
         validatore = xmlSchema.newValidator();

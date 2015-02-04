@@ -143,7 +143,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
             }
         } catch (Exception ex) {
             logger.error("Errore mentre si richiedevano informazioni al registro dei servizi.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore mentre si richiedevano informazioni al registro dei servizi.");
         }
 
@@ -200,7 +200,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
             return servizioCorrelato;
         } catch (Exception ex) {
             logger.error("Nessun servizio correlato trovato.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             return null;
         }
     }
@@ -223,7 +223,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         } catch (SOAPFault_Exception ex) {
             String messaggioErrore = ex.getMessage();
             logger.error("Servizio non trovato.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             if (messaggioErrore.contains(CostantiSOAP.SERVIZIO_NON_TROVATO)) {
                 return null;
             } else {
@@ -250,7 +250,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         } catch (SOAPFault_Exception ex) {
             String messaggioErrore = ex.getMessage();
             logger.error("Soggetto non trovato.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             if (messaggioErrore.contains(CostantiSOAP.SOGGETTO_NON_TROVATO)) {
                 return null;
             } else {
@@ -277,7 +277,7 @@ public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDeleg
         } catch (SOAPFault_Exception ex) {
             String messaggioErrore = ex.getMessage();
             logger.error("Servizio non trovato.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             if (messaggioErrore.contains(CostantiSOAP.SERVIZIO_NON_TROVATO)) {
                 return null;
             } else {

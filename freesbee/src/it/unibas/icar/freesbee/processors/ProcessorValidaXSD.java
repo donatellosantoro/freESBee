@@ -50,7 +50,7 @@ public class ProcessorValidaXSD implements Processor {
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS);
             String stringaIntestazione = XmlUtil.stampaDocument(nodoIntestazione.getFirstChild());
             logger.error("Intestazione: " + stringaIntestazione);
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
             throw new FreesbeeException("Le intestazioni ricevute non sono valide rispetto all'XSD delle intestazioni EGOV.");
         }
     }

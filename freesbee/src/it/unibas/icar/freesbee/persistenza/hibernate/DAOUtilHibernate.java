@@ -31,7 +31,7 @@ public class DAOUtilHibernate {
             serviceRegistry = (ServiceRegistry) new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new ExceptionInInitializerError("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -88,7 +88,7 @@ public class DAOUtilHibernate {
         try {
             return sessionFactory.getCurrentSession();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -97,7 +97,7 @@ public class DAOUtilHibernate {
         try {
             sessionFactory.getCurrentSession().beginTransaction();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -106,7 +106,7 @@ public class DAOUtilHibernate {
         try {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -115,7 +115,7 @@ public class DAOUtilHibernate {
         try {
             sessionFactory.getCurrentSession().getTransaction().rollback();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }

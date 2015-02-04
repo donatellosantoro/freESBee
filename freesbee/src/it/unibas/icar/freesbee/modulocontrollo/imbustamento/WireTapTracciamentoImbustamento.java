@@ -98,11 +98,11 @@ public class WireTapTracciamentoImbustamento extends RouteBuilder {
                 }
             } catch (DAOException ex) {
                 logger.error("Errore durante l'accesso al database.");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
                 throw new FreesbeeException("Errore durante l'accesso al database.");
             } catch (IOException ioe) {
                 logger.error("Errore durante l'accesso al file system.");
-                if (logger.isDebugEnabled()) logger.error(ioe);
+                if (logger.isDebugEnabled()) ioe.printStackTrace();
             } finally {
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
@@ -110,7 +110,7 @@ public class WireTapTracciamentoImbustamento extends RouteBuilder {
                     }
                 } catch (Throwable rbEx) {
                     logger.error("Errore durante il rollback sul database.");
-                    if (logger.isDebugEnabled()) logger.error(rbEx);
+                    if (logger.isDebugEnabled()) rbEx.printStackTrace();
                 }
             }
         }

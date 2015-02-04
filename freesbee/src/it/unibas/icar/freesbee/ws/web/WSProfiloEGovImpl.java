@@ -44,7 +44,7 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'aggiunta del profilo EGov.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'aggiunta del profilo EGov.");
         }
     }
@@ -60,7 +60,7 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Si e' verificato un errore durante l'eliminazione del profilo EGov.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'eliminazione del profilo EGov.");
         }
     }
@@ -75,7 +75,7 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
             return listaProfiliEGov;
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante la lettura della lista dei profili EGov.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura della lista dei profili EGov.");
         }
     }
@@ -90,7 +90,7 @@ public class WSProfiloEGovImpl implements IWSProfiloEGov {
             return profiloEgov;
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante la lettura del profilo EGov.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la lettura del profilo EGov.");
         }
     }

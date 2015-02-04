@@ -87,7 +87,7 @@ public class SOAPProcessorReader implements Processor {
             }
         } catch (Exception e) {
             logger.error("Errore nel parsing del messaggio SOAP.");
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
             exchange.setException(new FreesbeeException("Errore nel parsing del messaggio SOAP."));
             return;
         }
@@ -135,7 +135,7 @@ public class SOAPProcessorReader implements Processor {
 
         } catch (Exception e) {
             logger.error("Impossibile verificare se il body ha piu' figli.");
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
         }
     }
 

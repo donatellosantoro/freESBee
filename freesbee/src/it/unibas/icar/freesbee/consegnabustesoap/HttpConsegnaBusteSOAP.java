@@ -142,8 +142,8 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
                     exchange.setProperty(Exchange.EXCEPTION_CAUGHT, new SOAPFaultException((String) objectEx));
                 }
             } catch (Exception e) {
-                logger.error("Il messaggio da inoltrare e':\n\n"+ MessageUtil.getString(exchange.getIn()) + "\n");
-                if (logger.isDebugEnabled()) logger.error(e);
+                logger.error("Si e' verificato un errore durante l'inoltro del messaggio SOAP al servizio applicativo.");
+                if (logger.isDebugEnabled()) e.printStackTrace();
                 throw new FreesbeeException("Impossibile inoltrare la busta soap al servizio applicativo " + connettoreServizioApplicativo);
             }
             
@@ -151,7 +151,7 @@ public class HttpConsegnaBusteSOAP extends RouteBuilder {
                 elaboraRisposta(exchange);
             } catch (SOAPFaultException e) {
                 logger.error("Si e' verificato un errore mentre si cercava di elaborare la risposta generata dal servizio applicativo.");
-                if (logger.isDebugEnabled()) logger.error(e);
+                if (logger.isDebugEnabled()) e.printStackTrace();
             }
 
             messaggio.setTipo(Messaggio.TIPO_INVIATO);

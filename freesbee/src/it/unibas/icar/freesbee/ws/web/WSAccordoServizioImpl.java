@@ -56,7 +56,7 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Impossibile aggiungere l'Accordo di Servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Impossibile aggiungere l'Accordo di Servizio.");
         }
     }
@@ -72,7 +72,7 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
         } catch (DAOException ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Impossibile eliminare l'Accordo di Servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Impossibile eliminare l'Accordo di Servizio.");
         }
     }
@@ -91,7 +91,7 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Impossibile leggere la lista degli Accordi di Servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Impossibile leggere la lista degli Accordi di Servizio.");
         }
     }
@@ -108,7 +108,7 @@ public class WSAccordoServizioImpl implements IWSAccordoServizio {
         } catch (Exception ex) {
             sessionFactory.getCurrentSession().getTransaction().rollback();
             logger.error("Impossibile leggere l'Accordo di Servizio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Impossibile leggere l'Accordo di Servizio.");
         }
     }

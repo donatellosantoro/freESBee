@@ -214,7 +214,7 @@ public class SOAPProcessorWriterFactory {
                 return XmlUtil.stampaDocument(docMessaggio, true);
             } catch (Exception e) {
                 logger.error("Impossibile aggiungere il body con più figli.");
-                if (logger.isDebugEnabled()) logger.error(e);
+                if (logger.isDebugEnabled()) e.printStackTrace();
             }
             return stringaBody;
         }

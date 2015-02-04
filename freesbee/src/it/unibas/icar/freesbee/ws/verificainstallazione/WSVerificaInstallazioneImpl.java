@@ -40,7 +40,7 @@ public class WSVerificaInstallazioneImpl implements IWSVerificaInstallazione {
         } catch (Exception ex) {
             //L'allegato non è in BASE64
             logger.info("Il messaggio non e' codificato in BASE64");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             return attachment;
         }
     }

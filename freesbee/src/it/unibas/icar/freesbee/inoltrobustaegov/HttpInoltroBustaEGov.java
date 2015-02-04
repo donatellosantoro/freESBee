@@ -142,12 +142,12 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             } catch (ConnectException e) {
                 logger.error("Si sono verificati dei problemi di connessione nell'inoltro della busta EGov.");
                 String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
-                if (logger.isDebugEnabled()) logger.error(e.getMessage());
+                if (logger.isDebugEnabled()) e.printStackTrace();
                 throw new FreesbeeException(errore);
             } catch (ProtocolException ssle) {
                 logger.error("Si sono verificati dei problemi sul protocollo utilizzato nell'inoltro della busta EGov.");
                 String errore = "Impossibile contattare la porta di dominio all'indirizzo " + connettoreDestinatario + ".";
-                if (logger.isDebugEnabled()) logger.error(ssle.getMessage());
+                if (logger.isDebugEnabled()) ssle.printStackTrace();
                 throw new FreesbeeException(errore);
             } catch (HttpOperationFailedException hofe) {
                 StringBuilder sb = new StringBuilder();
@@ -193,14 +193,14 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
             } catch (Exception e) {
                 logger.error("Errore nell'inoltro della busta EGov.");
                 String errore = "Si e' verificato un errore mentre si cercava di inoltrare la busta EGov all'indirizzo " + connettoreDestinatario + ".";
-                if (logger.isDebugEnabled()) logger.error(e.getMessage());
+                if (logger.isDebugEnabled()) e.printStackTrace();
                 throw new FreesbeeException(errore);
             }
             try {
                 elaboraRisposta(exchange, messaggio);
             } catch (SOAPFaultException e) {
                 logger.error("Si e' verificato un errore mentre si cercava di elaborare la risposta generata contattando l'indirizzo " + connettoreDestinatario + ".");
-                if (logger.isDebugEnabled()) logger.error(e.getMessage());
+                if (logger.isDebugEnabled()) e.printStackTrace();
             }
         }
 
@@ -271,7 +271,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 messaggio.setMutuaAutenticazione(risposta.isMutuaAutenticazione());
             } catch (Exception ex) {
 //                logger.error("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". ");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
                 throw new FreesbeeException("Impossibile richiedere l'indirizzo del nica " + soggettoNICA.getTipo() + " - " + soggettoNICA.getNome() + " al registro dei servizi " + connettoreRegistroServizi + ". ");
             }
             

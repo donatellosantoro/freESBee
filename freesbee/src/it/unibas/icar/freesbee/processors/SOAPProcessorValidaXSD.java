@@ -52,11 +52,11 @@ public class SOAPProcessorValidaXSD implements Processor {
             v.validate(new DOMSource(nodoIntestazione));
         } catch (SAXException e) {
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS);
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
             throw new FreesbeeException("Le intestazioni ricevute non sono valide rispetto all'XSD delle intestazioni EGOV.");
         } catch (XmlException e) {
             exchange.removeProperty(CostantiSOAP.SOAP_HEADERS);
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
             throw new FreesbeeException("Si e' verificato un errore durante la validazione delle intestazioni EGOV.");
         }
     }

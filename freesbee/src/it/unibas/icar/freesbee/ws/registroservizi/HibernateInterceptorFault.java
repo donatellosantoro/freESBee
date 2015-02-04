@@ -26,7 +26,7 @@ public class HibernateInterceptorFault extends AbstractPhaseInterceptor {
             }
         } catch (Throwable rbEx) {
             logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
-            if (logger.isDebugEnabled()) logger.error(rbEx);
+            if (logger.isDebugEnabled()) rbEx.printStackTrace();
         }
     }
 }

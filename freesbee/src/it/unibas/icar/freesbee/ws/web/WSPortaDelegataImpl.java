@@ -141,7 +141,7 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
     public List<PortaDelegata> getListaPorteDelegate() throws SOAPFault {
         SessionFactory sessionFactory = DAOUtilHibernate.getSessionFactory();
         try {
-            if (logger.isInfoEnabled()) logger.info("Richiesta la lista delle porte delegate");
+            if (logger.isDebugEnabled()) logger.debug("Richiesta la lista delle porte delegate");
             sessionFactory.getCurrentSession().beginTransaction();
             List<PortaDelegata> listaPorteDelegate = daoPortaDelegata.findAll();
             for (PortaDelegata portaDelegata : listaPorteDelegate) {

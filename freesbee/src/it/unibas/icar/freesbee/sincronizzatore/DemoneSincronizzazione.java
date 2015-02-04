@@ -78,11 +78,11 @@ public class DemoneSincronizzazione extends Thread {
                     sleep(config.getIntervalloSincronizzazione());
                 } catch (InterruptedException ine) {
                     logger.error("Si e' verificato un errore durante il processo di sincronizzazione.");
-                    if (logger.isDebugEnabled()) logger.error(ine);
+                    if (logger.isDebugEnabled()) ine.printStackTrace();
                 }
             } catch (DAOException ex) {
                 logger.error("Si e' verificato un errore durante il processo di sincronizzazione.");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
                 break;
             } finally {
                 try {
@@ -122,7 +122,7 @@ public class DemoneSincronizzazione extends Thread {
             if (logger.isDebugEnabled()) logger.debug("Sincronizzazione con " + sincronizzazione.getNome() + " terminata.");
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante la sincronizzazione con " + sincronizzazione.getNome() + "@" + sincronizzazione.getIndirizzo() + ".");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                 if (logger.isDebugEnabled()) logger.debug("Si sta eseguendo il rollback della transazione sul DB.");
                 sessionFactory.getCurrentSession().getTransaction().rollback();

@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.utilita;
 
+import it.unibas.icar.freesbee.exception.FreesbeeErrorListener;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -43,7 +44,7 @@ public class MessageUtil {
             return stream;
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
         }
     }
@@ -59,7 +60,7 @@ public class MessageUtil {
             return string;
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante la conversione del messaggio in String.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Si e' verificato un errore durante la conversione del messaggio in String.");
         }
     }
@@ -82,13 +83,14 @@ public class MessageUtil {
         try {
             TransformerFactory tFactory = TransformerFactory.newInstance();
             Transformer transformer = tFactory.newTransformer();
+            transformer.setErrorListener(new FreesbeeErrorListener());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             StreamResult result = new StreamResult(baos);
             transformer.transform(source, result);
             setStream(message, new ByteArrayInputStream(baos.toByteArray()));
         } catch (Exception ex) {
             logger.error("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Si e' verificato un errore durante la conversione del messaggio in InputStream.");
         }
     }
@@ -109,7 +111,7 @@ public class MessageUtil {
             return true;
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante la lettura del messaggio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Si e' verificato un errore durante la lettura del messaggio.");
         } finally {
             try {
@@ -129,7 +131,7 @@ public class MessageUtil {
 //            out.setBody(in.getBody());
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante la copia del messaggio.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Si e' verificato un errore durante la copia del messaggio.");
         }
     }

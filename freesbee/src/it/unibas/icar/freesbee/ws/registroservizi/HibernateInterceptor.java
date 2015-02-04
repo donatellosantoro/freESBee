@@ -41,14 +41,14 @@ public class HibernateInterceptor extends AbstractPhaseInterceptor {
                 sessionFactory.getCurrentSession().beginTransaction();
             } catch (Exception ex) {
                 logger.error("Si e' verificato un errore, impossibile avviare la sessione di hibernate.");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                         sessionFactory.getCurrentSession().getTransaction().rollback();
                     }
                 } catch (Throwable rbEx) {
                     logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
-                    if (logger.isDebugEnabled()) logger.error(ex);
+                    if (logger.isDebugEnabled()) ex.printStackTrace();
                 }
                 throw new Fault(ex);
             }
@@ -70,14 +70,14 @@ public class HibernateInterceptor extends AbstractPhaseInterceptor {
                 sessionFactory.getCurrentSession().getTransaction().commit();
             } catch (Exception ex) {
                 logger.error("Si e' verificato un errore, impossibile chiudere la sessione di hibernate.");
-                if (logger.isDebugEnabled()) logger.error(ex);
+                if (logger.isDebugEnabled()) ex.printStackTrace();
                 try {
                     if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                         sessionFactory.getCurrentSession().getTransaction().rollback();
                     }
                 } catch (Throwable rbEx) {
                     logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
-                    if (logger.isDebugEnabled()) logger.error(ex);
+                    if (logger.isDebugEnabled()) ex.printStackTrace();
                 }
                 throw new Fault(ex);
             }

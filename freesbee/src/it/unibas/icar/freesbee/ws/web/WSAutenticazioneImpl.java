@@ -38,7 +38,7 @@ public class WSAutenticazioneImpl implements IWSAutenticazione {
             } catch (Throwable rbEx) {
             }
             logger.error("Si e' verificato un errore durante l'autenticazione dell'utente.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente.");
         }
     }
@@ -64,7 +64,7 @@ public class WSAutenticazioneImpl implements IWSAutenticazione {
             } catch (Throwable rbEx) {
             }
             logger.error("Si e' verificato un errore durante la modifica della password dell'utente.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante la modifica della password dell'utente.");
         }
     }
@@ -91,7 +91,7 @@ public class WSAutenticazioneImpl implements IWSAutenticazione {
             } catch (Throwable rbEx) {
             }
             logger.error("Si e' verificato un errore durante l'autenticazione dell'utente.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new SOAPFault("Si e' verificato un errore durante l'autenticazione dell'utente.");
         }
     }

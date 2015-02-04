@@ -51,7 +51,7 @@ public class ServerPasswordCallback implements CallbackHandler {
             } catch (Throwable rbEx) {
             }
             logger.error("Si e' verificato un errore durante l'autenticazione dell'utente.");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new UnsupportedCallbackException(pc, "Si e' verificato un errore durante l'autenticazione dell'utente.");
         }
     }

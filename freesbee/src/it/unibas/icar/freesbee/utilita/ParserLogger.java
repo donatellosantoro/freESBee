@@ -79,7 +79,7 @@ public class ParserLogger {
             postInit();
         } catch (IOException ex) {
             logger.error("Si e' verificato un errore durante il caricamento del file log4j.properties .");
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
         }
     }
 
@@ -242,11 +242,11 @@ public class ParserLogger {
             return logDatas;
         } catch (IOException ioe) {
             logger.error("Si e' verificato un errore durante il caricamento del file log4j.properties .");
-            if (logger.isDebugEnabled()) logger.error(ioe);
+            if (logger.isDebugEnabled()) ioe.printStackTrace();
 //            logger.error("Errore nell'inzializzare la libreria OtrosLogViewer: " + initializationException);
         } catch (InitializationException ie) {
             logger.error("Si e' verificato un errore durante l'inizializzazione della libreria di log.");
-            if (logger.isDebugEnabled()) logger.error(ie);
+            if (logger.isDebugEnabled()) ie.printStackTrace();
         }
         return null;
     }

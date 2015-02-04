@@ -242,7 +242,7 @@ public class FreesbeeUtil {
             return Integer.parseInt("80");
         } catch (NumberFormatException nfe) {
             logger.error("Il numero di porta specificato e' errato. L'indirizzo completo e': " + indirizzoCompleto);
-            if (logger.isDebugEnabled()) logger.error(nfe);
+            if (logger.isDebugEnabled()) nfe.printStackTrace();
             throw new FreesbeeException("Il numero di porta specificato e' errato. L'indirizzo completo e': " + indirizzoCompleto);
         }
     }

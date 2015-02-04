@@ -49,7 +49,7 @@ public class WSSecurityInterceptor extends AbstractPhaseInterceptor {
 //            message.getInterceptorChain().add(userTokenInterceptor);
         } catch (Exception e) {
             logger.error("Si e' verificato un errore di sicurezza nel sistema.");
-            if (logger.isDebugEnabled()) logger.error(e);
+            if (logger.isDebugEnabled()) e.printStackTrace();
         }
     }
 

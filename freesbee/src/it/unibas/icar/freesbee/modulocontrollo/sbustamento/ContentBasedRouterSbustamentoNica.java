@@ -88,7 +88,7 @@ public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
                     }
                 } catch (Throwable rbEx) {
                     logger.error("Si e' verificato un errore durante il rollback della transazione sul DB.");
-                    if (logger.isDebugEnabled()) logger.error(ex);
+                    if (logger.isDebugEnabled()) rbEx.printStackTrace();
                 }
             }
             if (soggettoErogatore == null) {

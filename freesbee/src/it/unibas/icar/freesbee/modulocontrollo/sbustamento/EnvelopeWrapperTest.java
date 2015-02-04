@@ -57,7 +57,7 @@ public class EnvelopeWrapperTest extends RouteBuilder {
                 }
             } catch (Exception e) {
                 logger.error("Errore mentre si elaboravano le intestazioni di test.");
-                if (logger.isDebugEnabled()) logger.error(e);
+                if (logger.isDebugEnabled()) e.printStackTrace();
             }
         }
     }

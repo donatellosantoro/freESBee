@@ -57,7 +57,7 @@ public class DBManager {
             portaDelegata = daoPortaDelegata.findByNome(nomePortaDelegata);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni circa la porta delegata.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -88,7 +88,7 @@ public class DBManager {
             soggetto = daoSoggetto.findByNome(nomeSoggetto, tipoSoggetto);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sul soggetto.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -116,7 +116,7 @@ public class DBManager {
             servizioCorrelato = daoServizio.findCorrelato(accordo, fruitore);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (DAOException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sul servizio correlato.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -141,7 +141,7 @@ public class DBManager {
             configurazione = daoConfigurazione.getConfigurazione();
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante il caricamento della configurazione dal DB.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -171,7 +171,7 @@ public class DBManager {
             portaApplicativa = daoPortaApplicativa.findByNomeServizio(nomeServizio, tipoServizio, nomeErogatore, tipoErogatore, azione);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni circa la porta applicativa.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -200,7 +200,7 @@ public class DBManager {
             portaApplicativa = daoPortaApplicativa.findByServizio(servizio, azione);
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni circa la porta applicativa.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -233,7 +233,7 @@ public class DBManager {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sui servizi.");
         } finally {
             rollbackTransaction(sessionFactory);
@@ -265,7 +265,7 @@ public class DBManager {
             }
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (Exception ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new FreesbeeException("Errore durante l'accesso al DB per ottenere informazioni sui servizi.");
         } finally {
             rollbackTransaction(sessionFactory);

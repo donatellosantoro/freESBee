@@ -24,7 +24,7 @@ public class DAOUtilHibernateTest {
             configuration.setProperty("hibernate.connection.url", testDb);
             sessionFactory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new ExceptionInInitializerError("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -37,7 +37,7 @@ public class DAOUtilHibernateTest {
         try {
             return sessionFactory.getCurrentSession();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -46,7 +46,7 @@ public class DAOUtilHibernateTest {
         try {
             sessionFactory.getCurrentSession().beginTransaction();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -55,7 +55,7 @@ public class DAOUtilHibernateTest {
         try {
             sessionFactory.getCurrentSession().getTransaction().commit();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
@@ -64,7 +64,7 @@ public class DAOUtilHibernateTest {
         try {
             sessionFactory.getCurrentSession().getTransaction().rollback();
         } catch (HibernateException ex) {
-            if (logger.isDebugEnabled()) logger.error(ex);
+            if (logger.isDebugEnabled()) ex.printStackTrace();
             throw new DAOException("Si e' verificato un errore durante l'accesso al DB.");
         }
     }
