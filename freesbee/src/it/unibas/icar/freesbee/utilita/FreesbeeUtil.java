@@ -68,7 +68,7 @@ public class FreesbeeUtil {
             return;
         }
         //AGGIUNGO LE INTESTAZIONI DIRETTAMENTE AL MESSAGGIO        
-        if (logger.isDebugEnabled()) logger.debug("Aggiungo l'intestazioni HTTP " + chiave + ": " + valore);
+        if (logger.isDebugEnabled()) logger.debug("Si aggiungono le intestazioni HTTP " + chiave + ": " + valore);
         messaggio.setHeader(chiave, valore);
     }
 

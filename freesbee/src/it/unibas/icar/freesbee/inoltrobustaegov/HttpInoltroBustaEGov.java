@@ -126,7 +126,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                 //     producer.stop();
                 if (logger.isDebugEnabled()) {
                     StringBuilder log = new StringBuilder();
-                    log.append("Ho inviato il messaggio all'indirizzo: ")
+                    log.append("E' stato inviato il messaggio all'indirizzo: ")
                        .append(connettoreDestinatario)
                        .append("\n\n")
                        .append("Richiesta\n")

@@ -257,7 +257,7 @@ public class WSPortaDelegataImpl implements IWSPortaDelegata {
         threadPool.setMinThreads(jettyThreadQueueMinSize);
         threadPool.setMaxThreads(jettyThreadQueueMaxSize);
         componentJetty.setThreadPool(threadPool);
-        if (logger.isDebugEnabled()) logger.debug("Imposto il thread pool di Jetty con una QueueSize di min: " + jettyThreadQueueMinSize + ", max: " + jettyThreadQueueMaxSize);
+        if (logger.isDebugEnabled()) logger.debug("Si sta impostando il thread pool di Jetty con una QueueSize di min: " + jettyThreadQueueMinSize + ", max: " + jettyThreadQueueMaxSize);
     }
     
 //    private void impostaParametriSicurezza() throws IOException {

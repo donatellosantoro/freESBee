@@ -227,7 +227,6 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
                 logger.error("Impossibile effettuare il rollback della transazione sul DB.");
                 if (logger.isDebugEnabled()) logger.debug(rbEx);
             }
-            throw new FreesbeeException("Impossibile accedere al DB.");
         }
     }
 

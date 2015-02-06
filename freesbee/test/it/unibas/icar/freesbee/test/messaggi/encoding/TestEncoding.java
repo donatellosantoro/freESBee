@@ -2,7 +2,7 @@ package it.unibas.icar.freesbee.test.messaggi.encoding;
 
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import it.unibas.icar.freesbee.test.qualificazione.fruitore.AbstractPATest;
-import it.unibas.icar.freesbee.test.qualificazione.fruitore.TestQualificazione01Start;
+import it.unibas.icar.freesbee.test.qualificazione.fruitore.TestQualificazione03Sincrono;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
@@ -17,15 +17,21 @@ public class TestEncoding extends TestCase {
     private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
 
     public void testQualificazione01() {
-        AbstractPATest paTest = new TestEncoding.TestPA("/messaggi/13. testEncoding.xml");
+        AbstractPATest paTest = new TestEncoding.TestPA("/messaggi/reali/01. testEncodingRichiestaRisposta.xml");
+        
+//        AbstractPATest paTest = new TestEncoding.TestPA("/messaggiFruitore/3.testSincronoRisposta.xml");
+        
         try {
             String indirizzoPD = "http://localhost:8192/PD/PD_QualificazionePDD/?FRUITORE=PAGenerica&TIPO_FRUITORE=SPC" +
                                 "&EROGATORE=CNIPA&TIPO_EROGATORE=SPC" +
                                 "&SERVIZIO=QualificazionePDD&TIPO_SERVIZIO=SPC" +
                                 "&AZIONE=start";
             
-            String richiesta = UtilTest.leggiMessaggio("/messaggi/13. testEncoding.xml");
+            // Per la richiesta usiamo lo stesso messaggio che ci aspettiamo come risposta cosi' da testare sia la parte di
+            // imbustamento che quella di sbustamento
+            String richiesta = UtilTest.leggiMessaggio("/messaggi/reali/01. testEncodingRichiestaRisposta.xml");
             logger.info("RICHIESTA:\n" + richiesta);
+            
             paTest.startServlet();
             Document soapRichiesta = UtilTest.leggiSOAP(richiesta);
             Element soapElement = soapRichiesta.getDocumentElement();
@@ -35,17 +41,12 @@ public class TestEncoding extends TestCase {
                 soapElement.removeChild(headerEl);
             }
             String stringaRichiesta = XMLUtils.toString(soapRichiesta);
-//            String tokenSessione = UtilTest.trovaNodoString("/soapenv:Envelope/soapenv:Body/p891:richiesta_RichiestaRispostaSincrona_start/p891:TokenSessione", soapRichiesta);
-//            logger.info("TokenSessione: " + tokenSessione);
             String risposta = UtilTest.invia(indirizzoPD, stringaRichiesta);
             logger.info("RISPOSTA:\n" + risposta);
-//            Document soapRisposta = UtilTest.leggiSOAP(risposta);
-//
-//            String rispostaOK = UtilTest.trovaNodoString("/soapenv:Envelope/soapenv:Body/p891:risposta_RichiestaRispostaSincrona_start/p891:Esito", soapRisposta);
-//            Assert.assertEquals("RISPOSTA_OK", rispostaOK);
-//
-//            String token = UtilTest.trovaNodoString("/soapenv:Envelope/soapenv:Body/p891:risposta_RichiestaRispostaSincrona_start/p891:TokenSessione", soapRisposta);
-//            Assert.assertEquals(tokenSessione, token);
+            Document soapRisposta = UtilTest.leggiSOAP(risposta);
+
+            String rispostaOK = UtilTest.trovaNodoString("/SOAP_ENV:Envelope/SOAP_ENV:Body/p891:statisticheScartiAsAttachmentResponse/p891:statisticheScartiAsAttachmentReturn/p891:esitoOperazione/p891:codiceEsito", soapRisposta);
+            Assert.assertEquals("0", rispostaOK);
         } catch (Exception ex) {
             logger.info("ERRORE: " + ex);
             Assert.fail(ex.getLocalizedMessage());
@@ -63,37 +64,6 @@ public class TestEncoding extends TestCase {
 
         @Override
         public void verificaRichiesta(String stringaRichiesta) throws AssertionFailedError {
-            Document soapRichiesta = UtilTest.leggiSOAP(stringaRichiesta);
-
-            String expIntestazione = "/SOAP_ENV:Envelope/SOAP_ENV:Header/eGov_IT:Intestazione/eGov_IT:IntestazioneMessaggio";
-
-            String mittente = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Mittente/eGov_IT:IdentificativoParte", soapRichiesta);
-            TestQualificazione01Start.assertEquals("PAGenerica", mittente);
-
-            String tipoMittente = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Mittente/eGov_IT:IdentificativoParte/@tipo", soapRichiesta);
-            TestQualificazione01Start.assertEquals("SPC", tipoMittente);
-
-            String destinatario = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Destinatario/eGov_IT:IdentificativoParte", soapRichiesta);
-            TestQualificazione01Start.assertEquals("CNIPA", destinatario);
-
-            String tipoDestinatario = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Destinatario/eGov_IT:IdentificativoParte/@tipo", soapRichiesta);
-            TestQualificazione01Start.assertEquals("SPC", tipoDestinatario);
-
-            String servizio = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Servizio ", soapRichiesta);
-            TestQualificazione01Start.assertEquals("QualificazionePDD", servizio);
-
-            String azione = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Azione ", soapRichiesta);
-            TestQualificazione01Start.assertEquals("start", azione);
-
-            String identificatore = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:Messaggio/eGov_IT:Identificatore", soapRichiesta);
-            TestQualificazione01Start.assertTrue(identificatore.startsWith("PAGenerica_PAGenericaSPCoopIT_"));
-
-            String profiloCollaborazione = UtilTest.trovaNodoString(expIntestazione + "/eGov_IT:ProfiloCollaborazione", soapRichiesta);
-            TestQualificazione01Start.assertEquals("EGOV_IT_ServizioSincrono", profiloCollaborazione);
-
-//            String token = UtilTest.trovaNodoString("/soapenv:Envelope/soapenv:Body/p891:richiesta_RichiestaRispostaSincrona_start/p891:TokenSessione", soapRichiesta);
-//            TestQualificazione01Start.assertEquals("1ab955960a3281e965c0393ad0071f1e", token);
-
         }
     }
     
