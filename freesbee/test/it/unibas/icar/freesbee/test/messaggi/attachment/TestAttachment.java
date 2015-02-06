@@ -36,7 +36,7 @@ public class TestAttachment extends TestCase {
 
     private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
 
-    // Eseguire prima ant db-insert-test
+    // Eseguire prima ant db-insert-test 
     private String indirizzoWS = "http://localhost:18191/ws/verificaInstallazione";
     private String indirizzoPD = "http://localhost:18192/PD/AttachmentTest/";
     private String fileZip = TestAttachment.class.getResource("/dati/testEncoding.zip").getFile();
