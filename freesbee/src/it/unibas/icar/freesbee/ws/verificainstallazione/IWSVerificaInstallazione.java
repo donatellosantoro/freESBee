@@ -13,5 +13,10 @@ public interface IWSVerificaInstallazione {
 
     @WebMethod(operationName="testAttachment")
     DataHandler testAttachment(DataHandler attachment) throws SOAPFault;
-
+    
+    @WebMethod(operationName="testAttachmentEcho")
+    DataHandler testAttachmentEcho(DataHandler attachment) throws SOAPFault;
+    
+    @WebMethod(operationName="testAttachmentEchoMessage")
+    MessaggioInstallazione testAttachmentEchoMessage(DataHandler attachment, String message) throws SOAPFault;
 }

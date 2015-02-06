@@ -7,6 +7,8 @@ import it.unibas.icar.freesbee.persistenza.hibernate.DAOMessaggioHibernate;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,6 +22,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import javax.activation.DataHandler;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPMessage;
@@ -30,8 +33,10 @@ import javax.xml.soap.SOAPEnvelope;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.servicemix.util.jaf.ByteArrayDataSource;
 import org.hibernate.SessionFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -84,7 +89,7 @@ public class UtilTest {
     public static String leggiMessaggio(String nomeFile, boolean lanciaEccezione) {
         try {
             InputStream in = UtilTest.class.getResourceAsStream("/dati" + nomeFile);
-            if(in == null && !lanciaEccezione){
+            if (in == null && !lanciaEccezione) {
                 return null;
             }
             Assert.assertNotNull("Impossibile trovare il file " + nomeFile, in);
@@ -160,6 +165,53 @@ public class UtilTest {
             Assert.fail("Impossibile inviare il messaggio. " + ex);
             return null;
         }
+    }
+
+    public static final SOAPMessage inviaAttachment(String indirizzo, String messaggio) {
+        return inviaAttachment(indirizzo, messaggio, new HashMap<String, String>());
+    }
+
+    public static final SOAPMessage inviaAttachment(String indirizzo, String messaggio, Map<String, String> mappaIntestazioni) {
+        SOAPMessage result = null;
+        try {
+            URL url = new URL(indirizzo);
+            logger.debug("URL: " + url);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setUseCaches(false);
+            conn.setDefaultUseCaches(false);
+            conn.setRequestProperty("Content-Type", "application/soap+xml;charset=UTF-8");
+            conn.setRequestProperty("Content-Length", messaggio.getBytes().length + "");
+            conn.setRequestProperty("Accept-Encoding", "gzip,deflate");
+            for (String chiave : mappaIntestazioni.keySet()) {
+                String valore = mappaIntestazioni.get(chiave);
+                conn.setRequestProperty(chiave, valore);
+            }
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write(messaggio);
+            wr.flush();
+            wr.close();
+
+            InputStream inputStream = conn.getInputStream();
+            String toString = IOUtils.toString(inputStream);
+            System.out.println(toString);
+            result = MessageFactory.newInstance().createMessage(null, inputStream);
+
+//            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//            String line;
+//            String stringaRisposta = "";
+//            while ((line = in.readLine()) != null) {
+//                stringaRisposta += line;
+//            }
+//            in.close();
+            wr.close();
+            conn.disconnect();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Assert.fail("Impossibile inviare il messaggio. " + ex);
+            return null;
+        }
+        return result;
     }
 
     public static Document leggiSOAP(String messaggioSOAP) {

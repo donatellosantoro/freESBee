@@ -98,10 +98,10 @@
             <fileset refid="driver.jars"/>
         </path>
         <path id="test.classpath">
-            <path refid="compile.classpath" />
-            <pathelement location="${test.build.dir}" />
             <fileset refid="test.jars" />
             <fileset refid="other.jars" />
+            <path refid="compile.classpath" />
+            <pathelement location="${test.build.dir}" />
         </path>
     </target>    
     

@@ -57,6 +57,19 @@
             <transaction src="${misc.dir}/insert-qualificazione.sql" />
         </sql>
     </target>
+    
+    <target name="db-insert-test" depends="init" description="Effettua eventuali inserimenti aggiuntivi nella base di dati per eseguire i test">
+        <sql   driver="org.postgresql.Driver"  
+               onerror="continue"
+               url="jdbc:postgresql:${db.name}"
+               userid="${db.username}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>             
+            <transaction src="${misc.dir}/insert-test.sql" />
+        </sql>
+    </target>
 
     <target name="db-drop" depends="init" description="Elimina la base di dati">
         <sql   driver="org.postgresql.Driver"  
