@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.Writer;
 import java.net.URL;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,6 +15,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.io.output.NullWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -45,6 +48,11 @@ public class HttpUtil {
     public static Document parseHttp(InputStream reponse) {
         OutputStream os = new ByteArrayOutputStream();
         Tidy tidy = new Tidy();
+        tidy.setQuiet(true);
+        
+        Writer out = new NullWriter();
+        tidy.setErrout(new PrintWriter(out));
+        
         tidy.setXHTML(true);
         tidy.setIndentContent(true);
         Document docResponse = tidy.parseDOM(reponse, os);
