@@ -4,6 +4,7 @@ import it.unibas.icar.freesbee.modello.Configurazione;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DBManager;
+import it.unibas.icar.freesbee.portadelegata.RichiestaAck;
 import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.processors.ProcessorTrace;
 import it.unibas.icar.freesbee.processors.SOAPProcessorReader;
@@ -20,13 +21,15 @@ import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.direct.DirectEndpoint;
 import org.apache.camel.component.jetty.JettyHttpComponent;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
+import org.slf4j.LoggerFactory;
 
 public class HttpPortaDelegata extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(HttpPortaDelegata.class);
+//    private static Log logger = LogFactory.getLog(HttpPortaDelegata.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(HttpPortaDelegata.class.getName());
     private DBManager dbManager;
     private String portaDelegataContattata;
     private String tipo;

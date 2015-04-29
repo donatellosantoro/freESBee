@@ -63,12 +63,20 @@
 	<fileset id="driver.jars" dir="${lib.dir}">
 		<include name="${driver.name}" />
 	</fileset>    
-	<fileset id="commons-logging.jars" dir="${lib.dir}/commons">
+	<!--<fileset id="commons-logging.jars" dir="${lib.dir}/commons">
+		<include name="commons-*.jar" />
+	</fileset>-->
+	<fileset id="commons.jars" dir="${lib.dir}/commons">
 		<include name="commons-*.jar" />
 	</fileset>    
-	<fileset id="logging.jars" dir="${lib.dir}">
+	<fileset id="logback.jars" dir="${lib.dir}/logback-${logback.ver}">
+		<include name="logback-*.jar" />
+		<include name="slf4j-*.jar" />
+		<include name="jcl-*.jar" />
+	</fileset>   
+	<!--<fileset id="logging.jars" dir="${lib.dir}">
 		<include name="log4j-*.jar" />
-	</fileset>
+	</fileset>-->
 	<fileset id="test.jars" dir="${lib.dir}">
 		<include name="junit.jar" />
 	</fileset>

@@ -5,6 +5,7 @@ import it.unibas.icar.freesbee.modello.BustaEGov;
 import it.unibas.icar.freesbee.modello.ConfigurazioneStatico;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.modello.PortaDelegata;
+import it.unibas.icar.freesbee.processors.SOAPProcessorWriterFactory;
 import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import it.unibas.icar.freesbee.utilita.StringUtil;
 import it.unibas.icar.freesbee.utilita.UtilitaDate;
@@ -27,12 +28,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class EnricherPortaDelegataRegistroServizi implements IEnricherPortaDelegataStrategy {
 
-    private static Log logger = LogFactory.getLog(EnricherPortaDelegataRegistroServizi.class);
+//    private static Log logger = LogFactory.getLog(EnricherPortaDelegataRegistroServizi.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(EnricherPortaDelegataRegistroServizi.class.getName());
     private String connettoreRegistroServizi;
     private boolean interoperabilita;
     private boolean useCache = ConfigurazioneStatico.getInstance().isCacheWS();

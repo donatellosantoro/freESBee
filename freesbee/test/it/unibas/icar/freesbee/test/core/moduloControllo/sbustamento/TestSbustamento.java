@@ -5,6 +5,7 @@ import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.modello.ProfiloEGov;
 import it.unibas.icar.freesbee.processors.ProcessorUnWrapper;
 import it.unibas.icar.freesbee.processors.SOAPProcessorReader;
+import it.unibas.icar.freesbee.test.core.moduloControllo.imbustamento.TestImbustamento;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import junit.framework.Assert;
 import org.apache.camel.Exchange;
@@ -12,12 +13,15 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.CamelTestSupport;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class TestSbustamento extends CamelTestSupport {
 
-    protected Log logger = LogFactory.getLog(this.getClass());
+//    protected Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestSbustamento.class.getName());
     protected MockEndpoint resultEndpoint;
 
     public void testBustaUno() throws Exception {

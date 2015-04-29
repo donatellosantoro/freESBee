@@ -5,14 +5,16 @@ import it.unibas.icar.freesbee.modello.Azione;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOAzione;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOAzioneHibernate extends DAOGenericoHibernate<Azione> implements IDAOAzione {
     
-    private static Log logger = LogFactory.getLog(DAOAzioneHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOAzioneHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOAzioneHibernate.class.getName());
     
     public DAOAzioneHibernate() {
         super(Azione.class);

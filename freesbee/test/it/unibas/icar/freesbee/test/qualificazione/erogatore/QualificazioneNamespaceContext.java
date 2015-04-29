@@ -1,16 +1,20 @@
 package it.unibas.icar.freesbee.test.qualificazione.erogatore;
 
+import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class QualificazioneNamespaceContext implements NamespaceContext {
 
-    private Log logger = LogFactory.getLog(this.getClass());
+//    private Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(QualificazioneNamespaceContext.class.getName());
     private Map<String, String> namespaces = new HashMap<String, String>();
 
     public QualificazioneNamespaceContext() {

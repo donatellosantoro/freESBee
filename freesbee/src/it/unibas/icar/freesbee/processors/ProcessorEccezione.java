@@ -13,17 +13,19 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.servicemix.soap.SoapFault;
 import org.apache.servicemix.soap.marshalers.SoapMessage;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DocumentFragment;
 
 public class ProcessorEccezione implements Processor {
 
     private String tipoErrore = "SOAP_ENV:Client";
-    private static Log logger = LogFactory.getLog(ProcessorEccezione.class);
+//    private static Log logger = LogFactory.getLog(ProcessorEccezione.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorEccezione.class.getName());
     private boolean generaIntestazioniEGov;
     @Inject
     private ProcessorWrapper processorWrapper;
@@ -44,7 +46,7 @@ public class ProcessorEccezione implements Processor {
 //        Throwable eccezione = (Exception) exchange.getIn().getHeader("caught.exception");
 //        Throwable eccezione = exchange.getException();
         Exception eccezione = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
-        if (logger.isDebugEnabled()) logger.error(eccezione);
+        if (logger.isDebugEnabled()) logger.error(eccezione.toString());
 
         String stringaEccezione = eccezione.getMessage();
         logger.error("E' stata lanciata una eccezione di FreESBee : \n\n'" + stringaEccezione + "'\n\n");

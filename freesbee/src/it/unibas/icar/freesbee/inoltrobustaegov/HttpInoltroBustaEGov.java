@@ -45,13 +45,16 @@ import org.apache.commons.httpclient.ProtocolException;
 import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Singleton
 public class HttpInoltroBustaEGov extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(HttpInoltroBustaEGov.class);
+//    private static Log logger = LogFactory.getLog(HttpInoltroBustaEGov.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpInoltroBustaEGov.class.getName());
     @Inject
     private DBManager dbManager;
     @Inject
@@ -137,7 +140,7 @@ public class HttpInoltroBustaEGov extends RouteBuilder {
                        .append("\n\n")
                        .append("Eccezione\n")
                        .append(exchange.getException());
-                    logger.debug(log);
+                       logger.debug(log.toString());
                 }
             } catch (ConnectException e) {
                 logger.error("Si sono verificati dei problemi di connessione nell'inoltro della busta EGov.");

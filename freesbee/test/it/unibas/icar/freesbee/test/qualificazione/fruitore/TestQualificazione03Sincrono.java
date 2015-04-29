@@ -1,10 +1,13 @@
 package it.unibas.icar.freesbee.test.qualificazione.fruitore;
 
+import it.unibas.icar.freesbee.test.messaggi.encoding.TestEncoding;
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.apache.cxf.helpers.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -12,7 +15,8 @@ import org.w3c.dom.NodeList;
 
 public class TestQualificazione03Sincrono extends TestCase {
 
-    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestQualificazione03Sincrono.class.getName());
 
     public void testQualificazione03() {
         AbstractPATest paTest = new TestPA("/messaggiFruitore/3.testSincronoRisposta.xml");

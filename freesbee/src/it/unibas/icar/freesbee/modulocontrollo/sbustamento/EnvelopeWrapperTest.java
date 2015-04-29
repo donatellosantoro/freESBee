@@ -13,14 +13,16 @@ import javax.xml.namespace.QName;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.DocumentFragment;
 
 @Singleton
 public class EnvelopeWrapperTest extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(EnvelopeWrapperTest.class);
+//    private static Log logger = LogFactory.getLog(EnvelopeWrapperTest.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(EnvelopeWrapperTest.class.getName());
 
     public void configure() throws Exception {
         this.from(FreesbeeCamel.SEDA_ENVELOPE_WRAPPER_TEST)

@@ -12,14 +12,16 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Validator;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.DocumentFragment;
 import org.xml.sax.SAXException;
 
 public class SOAPProcessorValidaXSD implements Processor {
 
-    private static Log logger = LogFactory.getLog(SOAPProcessorValidaXSD.class);
+//    private static Log logger = LogFactory.getLog(SOAPProcessorValidaXSD.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SOAPProcessorValidaXSD.class.getName());
 
     public SOAPProcessorValidaXSD() {
     }

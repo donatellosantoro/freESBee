@@ -15,10 +15,11 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.slf4j.LoggerFactory;
 
 @Entity
 //@Cacheable
@@ -26,7 +27,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class PortaDelegata implements Serializable,Comparable,Cloneable{
     
-    private static Log logger = LogFactory.getLog(PortaDelegata.class.getName());
+//    private static Log logger = LogFactory.getLog(PortaDelegata.class.getName());
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PortaDelegata.class.getName());
     
     private long id;
     private String nome;

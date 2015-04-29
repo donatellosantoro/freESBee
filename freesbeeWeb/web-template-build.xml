@@ -295,7 +295,7 @@
         </javadoc>
     </target>
     
-    <target name="war" depends="rebuild, -init-version" description="crea il jar">
+    <target name="war" depends="rebuild" description="crea il jar">
         <war destfile="${dist.dir}/${ant.project.name}.war" 
              webxml="${build.webapp.meta.dir}/web.xml">
             <fileset dir="${build.webapp.dir}" includes="**/*.*" />

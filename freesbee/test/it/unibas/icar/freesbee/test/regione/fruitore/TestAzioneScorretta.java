@@ -4,6 +4,7 @@ import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import it.unibas.icar.freesbee.test.qualificazione.fruitore.AbstractPATest;
+import it.unibas.icar.freesbee.test.qualificazione.fruitore.TestQualificazione08;
 import it.unibas.icar.freesbee.utilita.CostantiSOAP;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.apache.cxf.helpers.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,7 +22,8 @@ import org.w3c.dom.NodeList;
 
 public class TestAzioneScorretta extends TestCase {
 
-    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestAzioneScorretta.class.getName());
 
     @Override
     public void tearDown() {

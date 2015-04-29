@@ -9,15 +9,17 @@ import it.unibas.icar.freesbee.persistenza.IDAOServizio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOServizioHibernate extends DAOGenericoHibernate<Servizio> implements IDAOServizio {
 
-    private static Log logger = LogFactory.getLog(DAOServizioHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOServizioHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOServizioHibernate.class.getName());
 
     public DAOServizioHibernate() {
         super(Servizio.class);

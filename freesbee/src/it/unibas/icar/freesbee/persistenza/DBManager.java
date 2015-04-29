@@ -11,19 +11,22 @@ import it.unibas.icar.freesbee.modello.PortaApplicativa;
 import it.unibas.icar.freesbee.modello.PortaDelegata;
 import it.unibas.icar.freesbee.modello.Servizio;
 import it.unibas.icar.freesbee.modello.Soggetto;
+import it.unibas.icar.freesbee.modulocontrollo.sbustamento.WireTapTracciamentoSbustamento;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DBManager {
 
-    private static Log logger = LogFactory.getLog(DBManager.class.getName());
+//    private static Log logger = LogFactory.getLog(DBManager.class.getName());
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DBManager.class.getName());
     @Inject
     private IDAOPortaDelegata daoPortaDelegata;
     @Inject

@@ -6,14 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 public class TestBusteErrate001 extends TestCase {
 
-    protected Log logger = LogFactory.getLog(this.getClass());
+//    protected Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestBusteErrate001.class.getName());
 
     public void testBusta() {
         int testCorrente = 32;

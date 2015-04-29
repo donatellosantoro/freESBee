@@ -3,10 +3,13 @@ package it.unibas.icar.freesbee.test.messaggi.encoding;
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import it.unibas.icar.freesbee.test.qualificazione.fruitore.AbstractPATest;
 import it.unibas.icar.freesbee.test.qualificazione.fruitore.TestQualificazione03Sincrono;
+import it.unibas.icar.freesbee.test.regione.erogatore.TestBusteErrate;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.apache.cxf.helpers.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,7 +17,8 @@ import org.w3c.dom.NodeList;
 
 public class TestEncoding extends TestCase {
 
-    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestEncoding.class.getName());
 
     public void testQualificazione01() {
         AbstractPATest paTest = new TestEncoding.TestPA("/messaggi/reali/01. testEncodingRichiestaRisposta.xml");

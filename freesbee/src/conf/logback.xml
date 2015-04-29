@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>-->
+    <encoder>
+      <!--<pattern>%d %-5p %c %n%m%n</pattern>-->
+      <pattern>\n[freESBee] [%p] %m%n \n</pattern>
+    </encoder>
+  </appender>
+  <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${user.home}/Temp/freesbee/log/freESBee.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${user.home}/Temp/freesbee/freESBee-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+    <Append>false</Append>
+    <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>-->
+    <encoder>
+      <pattern>\n%d %p [%c] - %m%n\n</pattern>
+    </encoder>
+  </appender>
+  <logger name="org.hibernate" level="error"/>  
+  <logger name="org.apache.cxf" level="error"/>  
+  <logger name="org.springframework" level="error"/>
+  <logger name="org.eclipse.jetty" level="error"/>
+  <logger name="com.mchange.v2" level="error"/>
+  <logger name="org.apache.camel" level="error"/>
+  <!--<logger name="org.apache.commons" level="error"/>-->
+  <logger name="it.unibas.icar.freesbee.processors.ProcessorTrace" level="TRACE"/>
+  <root level="INFO">
+    <appender-ref ref="stdout"/>
+    <appender-ref ref="file"/>
+  </root>
+</configuration>

@@ -2,6 +2,7 @@ package it.unibas.icar.freesbee.consegnabustesoap;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import it.unibas.guicefreesbee.ContextStartup;
 import it.unibas.icar.freesbee.contrib.AuthSSLProtocolSocketFactoryCustomized;
 import it.unibas.icar.freesbee.exception.FreesbeeException;
 import it.unibas.icar.freesbee.exception.SOAPFaultException;
@@ -30,13 +31,16 @@ import org.apache.camel.component.http.HttpComponent;
 import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Singleton
 public class HttpConsegnaBusteSOAP extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(HttpConsegnaBusteSOAP.class);
+//    private static Log logger = LogFactory.getLog(HttpConsegnaBusteSOAP.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpConsegnaBusteSOAP.class.getName());
     @Inject
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
     @Inject

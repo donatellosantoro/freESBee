@@ -84,7 +84,9 @@
         <path id="compile.classpath">
             <path refid="servlet.classpath" />
             <pathelement location="${build.webapp.classes.dir}" />
-            <fileset refid="commons-logging.jars" />
+            <!--<fileset refid="commons-logging.jars" />-->
+            <fileset refid="commons.jars" />
+            <fileset refid="logback.jars" />
             <fileset refid="camel.jars" />
             <fileset refid="hibernate.jars" />
             <fileset refid="interoperabilita.jars" />        
@@ -93,7 +95,7 @@
             <fileset refid="jetty.jars" />
             <fileset refid="guice.jars" />    
             <fileset refid="otroslogviewer.jars" />
-            <fileset refid="logging.jars" />
+            <!--<fileset refid="logging.jars" />-->
             <fileset refid="other.jars"/>
             <fileset refid="driver.jars"/>
         </path>
@@ -479,15 +481,17 @@
             <fileset dir="${web.dir}" />
         </copy>
         <copy todir="${build.webapp.lib.dir}">
-            <fileset refid="logging.jars" />
+            <!--<fileset refid="logging.jars" />-->
             <fileset refid="driver.jars" />
             <fileset refid="camel.jars" />
             <fileset refid="guice.jars" />
             <fileset refid="hibernate.jars" />
             <fileset refid="interoperabilita.jars" />      
             <fileset refid="servicemix.jars" />     
-            <fileset refid="cxf.jars"/>      
-            <fileset refid="commons-logging.jars" />
+            <fileset refid="cxf.jars"/>
+            <!--<fileset refid="commons-logging.jars" />-->
+            <fileset refid="commons.jars" />
+            <fileset refid="logback.jars" />
             <fileset refid="cxf.jars" />
             <fileset refid="jetty.jars" />
             <fileset refid="other.jars"/>
@@ -518,7 +522,7 @@
         </javadoc>
     </target>
     
-    <target name="war" depends="-init-version,rebuild" description="crea il jar">
+    <target name="war" depends="rebuild" description="crea il jar">
         <war destfile="${dist.dir}/${ant.project.name}.war" 
              webxml="${build.webapp.meta.dir}/web.xml">
             <fileset dir="${build.webapp.dir}" includes="**/*.*"/>

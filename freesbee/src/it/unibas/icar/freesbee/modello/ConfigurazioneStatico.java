@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.modello;
 
+import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.xml.ValidatoreXSDBustaEGov;
 import it.unibas.icar.freesbee.xml.XmlException;
 import java.io.InputStream;
@@ -9,13 +10,16 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.xml.sax.SAXException;
 
 public class ConfigurazioneStatico {
 
-    private static Log logger = LogFactory.getLog(ConfigurazioneStatico.class);
+//    private static Log logger = LogFactory.getLog(ConfigurazioneStatico.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConfigurazioneStatico.class.getName());
     private static ConfigurazioneStatico singleton = new ConfigurazioneStatico();
     private Properties properties = new Properties();
     private String webservicesPort;

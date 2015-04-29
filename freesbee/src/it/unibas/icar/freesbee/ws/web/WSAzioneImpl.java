@@ -8,13 +8,15 @@ import it.unibas.icar.freesbee.persistenza.IDAOProfiloEGov;
 import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class WSAzioneImpl implements IWSAzione {
 
-    private static Log logger = LogFactory.getLog(WSAzioneImpl.class);
+//    private static Log logger = LogFactory.getLog(WSAzioneImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSAzioneImpl.class.getName());
     private IDAOAzione daoAzione;
     private IDAOAccordoServizio daoAccordoServizio;
     private IDAOProfiloEGov daoProfiloEGov;

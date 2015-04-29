@@ -53,17 +53,20 @@ import javax.servlet.ServletContextListener;
 import org.apache.camel.CamelContext;
 import org.apache.camel.guice.CamelModuleWithMatchingRoutes;
 import org.apache.camel.guice.GuiceCamelContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.endpoint.ServerImpl;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.http_jetty.JettyHTTPDestination;
 import org.apache.cxf.transport.http_jetty.JettyHTTPServerEngine;
 import org.eclipse.jetty.server.Connector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ContextStartup implements ServletContextListener {
 
-    private static Log logger = LogFactory.getLog(ContextStartup.class);
+//    private static Log logger = LogFactory.getLog(ContextStartup.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContextStartup.class.getName());
     private CamelContext camelContext;
     private static List<EndpointImpl> endpointAvviati = new ArrayList<EndpointImpl>();
 //    private static Map<String, Integer> threadPerClasse = new HashMap<String, Integer>();

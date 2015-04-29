@@ -21,12 +21,13 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
 import org.apache.servicemix.soap.SoapFault;
 import org.apache.servicemix.soap.marshalers.SoapMarshaler;
 import org.apache.servicemix.soap.marshalers.SoapMessage;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,7 +35,8 @@ import org.w3c.dom.NodeList;
 
 public class SOAPProcessorWriterFactory {
 
-    private static Log logger = LogFactory.getLog(SOAPProcessorWriterFactory.class);
+//    private static Log logger = LogFactory.getLog(SOAPProcessorWriterFactory.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SOAPProcessorWriterFactory.class.getName());
     private static SOAPProcessorWriterFactory singleton = new SOAPProcessorWriterFactory();
     private Map<String, SOAPProcessorWriter> cache = new HashMap<String, SOAPProcessorWriter>();
 

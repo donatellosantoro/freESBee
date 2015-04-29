@@ -15,12 +15,14 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.camel.Message;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class MessageUtil {
 
-    private static Log logger = LogFactory.getLog(MessageUtil.class.getName());
+//    private static Log logger = LogFactory.getLog(MessageUtil.class.getName());
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MessageUtil.class.getName());
 
     public static InputStream getStream(Message message) throws FreesbeeException {
         Object body = message.getBody();

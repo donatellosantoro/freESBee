@@ -5,15 +5,17 @@ import it.unibas.icar.freesbee.modello.Utente;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOUtente;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOUtenteHibernate extends DAOGenericoHibernate<Utente> implements IDAOUtente {
 
-    private static Log logger = LogFactory.getLog(DAOUtenteHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOUtenteHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOUtenteHibernate.class.getName());
 
     public DAOUtenteHibernate() {
         super(Utente.class);

@@ -3,21 +3,24 @@ package it.unibas.icar.freesbee.ws.verificainstallazione;
 import com.google.inject.Singleton;
 import com.sun.mail.util.BASE64DecoderStream;
 import it.unibas.icar.freesbee.persistenza.SOAPFault;
+import it.unibas.icar.freesbee.ws.tracciamentoTest.WSMessaggioImpl;
 import java.io.ByteArrayOutputStream;
 import javax.activation.DataHandler;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.bind.JAXB;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.servicemix.util.jaf.ByteArrayDataSource;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 @WebService(targetNamespace = "http://icar.unibas.it/freesbee/")
 public class WSVerificaInstallazioneImpl implements IWSVerificaInstallazione {
 
-    private static Log logger = LogFactory.getLog(WSVerificaInstallazioneImpl.class);
+//    private static Log logger = LogFactory.getLog(WSVerificaInstallazioneImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSVerificaInstallazioneImpl.class.getName());
 
     @WebMethod(operationName = "verificaInstallazione")
     public String verificaInstallazione() throws SOAPFault {
@@ -56,7 +59,7 @@ public class WSVerificaInstallazioneImpl implements IWSVerificaInstallazione {
             return dh;
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.error(e.toString());
         }
         return null;
     }
@@ -77,7 +80,7 @@ public class WSVerificaInstallazioneImpl implements IWSVerificaInstallazione {
             return vi;
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.error(e.toString());
         }
         return null;
     }

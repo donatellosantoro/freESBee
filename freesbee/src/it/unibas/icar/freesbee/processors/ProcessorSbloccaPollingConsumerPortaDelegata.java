@@ -6,13 +6,15 @@ import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import org.apache.camel.*;
 import org.apache.camel.component.direct.DirectEndpoint;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class ProcessorSbloccaPollingConsumerPortaDelegata implements Processor {
 
     private boolean eccezione;
-    private static Log logger = LogFactory.getLog(ProcessorSbloccaPollingConsumerPortaDelegata.class);
+//    private static Log logger = LogFactory.getLog(ProcessorSbloccaPollingConsumerPortaDelegata.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorSbloccaPollingConsumerPortaDelegata.class.getName());
     @Inject
     private ProcessorEccezione processorEccezione;
 

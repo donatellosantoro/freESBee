@@ -39,8 +39,10 @@ import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
-import org.apache.commons.logging.Log; 
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log; 
+//import org.apache.commons.logging.LogFactory;
 
 /**
  * <p>
@@ -62,7 +64,8 @@ public class AuthSSLX509TrustManagerCustomized implements X509TrustManager
     private X509TrustManager defaultTrustManager = null;
 
     /** Log object for this class. */
-    private static final Log LOG = LogFactory.getLog(AuthSSLX509TrustManagerCustomized.class);
+//    private static final Log LOG = LogFactory.getLog(AuthSSLX509TrustManagerCustomized.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthSSLX509TrustManagerCustomized.class.getName());
 
     /**
      * Constructor for AuthSSLX509TrustManager.
@@ -79,15 +82,15 @@ public class AuthSSLX509TrustManagerCustomized implements X509TrustManager
      * @see javax.net.ssl.X509TrustManager#checkClientTrusted(X509Certificate[],String authType)
      */
     public void checkClientTrusted(X509Certificate[] certificates,String authType) throws CertificateException {
-        if (LOG.isInfoEnabled() && certificates != null) {
+        if (logger.isInfoEnabled() && certificates != null) {
             for (int c = 0; c < certificates.length; c++) {
                 X509Certificate cert = certificates[c];
-                LOG.info(" Client certificate " + (c + 1) + ":");
-                LOG.info("  Subject DN: " + cert.getSubjectDN());
-                LOG.info("  Signature Algorithm: " + cert.getSigAlgName());
-                LOG.info("  Valid from: " + cert.getNotBefore() );
-                LOG.info("  Valid until: " + cert.getNotAfter());
-                LOG.info("  Issuer: " + cert.getIssuerDN());
+                logger.info(" Client certificate " + (c + 1) + ":");
+                logger.info("  Subject DN: " + cert.getSubjectDN());
+                logger.info("  Signature Algorithm: " + cert.getSigAlgName());
+                logger.info("  Valid from: " + cert.getNotBefore() );
+                logger.info("  Valid until: " + cert.getNotAfter());
+                logger.info("  Issuer: " + cert.getIssuerDN());
             }
         }
         defaultTrustManager.checkClientTrusted(certificates,authType);
@@ -111,10 +114,10 @@ public class AuthSSLX509TrustManagerCustomized implements X509TrustManager
 //        defaultTrustManager.checkServerTrusted(certificates,authType);
 //    }
     public void checkServerTrusted(X509Certificate[] certificates,String authType) throws CertificateException {
-        if ((certificates != null) && LOG.isDebugEnabled()) {
-            LOG.debug("Server certificate chain:");
+        if ((certificates != null) && logger.isDebugEnabled()) {
+            logger.debug("Server certificate chain:");
             for (int i = 0; i < certificates.length; i++) {
-                LOG.debug("X509Certificate[" + i + "]=" + certificates[i]);
+                logger.debug("X509Certificate[" + i + "]=" + certificates[i]);
             }
         }
         if ((certificates != null) && (certificates.length == 1)) {

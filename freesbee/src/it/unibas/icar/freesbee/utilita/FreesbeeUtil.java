@@ -7,15 +7,17 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.NodeList;
 
 @SuppressWarnings("unchecked")
 public class FreesbeeUtil {
 
-    private static Log logger = LogFactory.getLog(FreesbeeUtil.class);
+//    private static Log logger = LogFactory.getLog(FreesbeeUtil.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(FreesbeeUtil.class.getName());
     public static final String PATTERN_INONLY = "http://www.w3.org/2004/08/wsdl/in-only";
     public static final String PATTERN_INOUT = "http://www.w3.org/2004/08/wsdl/in-out";
     public static final QName defaultQName = new QName("http://icar.unibas.it/FreESBee", "frsb");

@@ -1,16 +1,20 @@
 package it.unibas.icar.freesbee.modello;
 
+import it.unibas.icar.freesbee.inoltrobustaegov.HttpInoltroBustaEGov;
 import it.unibas.icar.freesbee.utilita.UtilitaDate;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class BustaEGov {
 
-    private static Log logger = LogFactory.getLog(BustaEGov.class);
+//    private static Log logger = LogFactory.getLog(BustaEGov.class);
+    private static final Logger logger = LoggerFactory.getLogger(BustaEGov.class.getName());
     private static BustaEGov singleton = new BustaEGov();
     private static int idProgressivo = 0;
     private String stringaUltimoRilascio = "";

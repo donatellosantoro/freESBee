@@ -19,13 +19,15 @@ import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import it.unibas.icar.freesbee.utilita.StringUtil;
 import it.unibas.icar.freesbee.utilita.UtilitaDate;
 import java.util.Date;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStrategy {
 
-    private static Log logger = LogFactory.getLog(EnricherPortaDelegataSemplice.class);
+//    private static Log logger = LogFactory.getLog(EnricherPortaDelegataSemplice.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(EnricherPortaDelegataSemplice.class.getName());
     @Inject
     private DBManager dbManager;
     @Inject
@@ -144,14 +146,14 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
         } catch (DAOException ex) {
             try {
                 logger.error("Si e' verificato un errore durante l'accesso al DB.");
-                if (logger.isDebugEnabled()) logger.debug(ex);
+                if (logger.isDebugEnabled()) logger.debug(ex.toString());
                 
                 if (sessionFactory != null && sessionFactory.getCurrentSession().getTransaction().isActive()) {
                     sessionFactory.getCurrentSession().getTransaction().rollback();
                 }
             } catch (Throwable rbEx) {
                 logger.error("Impossibile effettuare il rollback della transazione sul DB.");
-                if (logger.isDebugEnabled()) logger.debug(rbEx);
+                if (logger.isDebugEnabled()) logger.debug(rbEx.toString());
             }
             
             throw new FreesbeeException("Si e' verificato un errore durante l'accesso al DB.");
@@ -217,7 +219,7 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
 
         } catch (DAOException ex) {
             logger.error("Si e' verificato un errore durante l'accesso al DB.");
-            if (logger.isDebugEnabled()) logger.debug(ex);
+            if (logger.isDebugEnabled()) logger.debug(ex.toString());
         } finally {
             try {
                 if (sessionFactory != null && sessionFactory.getCurrentSession().getTransaction().isActive()) {
@@ -225,7 +227,7 @@ public class EnricherPortaDelegataSemplice implements IEnricherPortaDelegataStra
                 }
             } catch (Throwable rbEx) {
                 logger.error("Impossibile effettuare il rollback della transazione sul DB.");
-                if (logger.isDebugEnabled()) logger.debug(rbEx);
+                if (logger.isDebugEnabled()) logger.debug(rbEx.toString());
             }
         }
     }

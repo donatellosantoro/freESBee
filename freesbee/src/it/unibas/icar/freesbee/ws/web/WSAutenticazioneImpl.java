@@ -5,13 +5,15 @@ import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOUtente;
 import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class WSAutenticazioneImpl implements IWSAutenticazione {
 
-    private static Log logger = LogFactory.getLog(WSAutenticazioneImpl.class);
+//    private static Log logger = LogFactory.getLog(WSAutenticazioneImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSAutenticazioneImpl.class.getName());
     private IDAOUtente daoUtente;
 
     public WSAutenticazioneImpl(IDAOUtente daoUtente) {

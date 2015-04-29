@@ -7,8 +7,8 @@ import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtenteHibernate;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.binding.soap.saaj.SAAJInInterceptor;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
@@ -17,11 +17,13 @@ import org.apache.cxf.phase.Phase;
 import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.handler.WSHandlerConstants;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class WSSecurityInterceptor extends AbstractPhaseInterceptor {
 
-    private static Log logger = LogFactory.getLog(WSSecurityInterceptor.class);
+//    private static Log logger = LogFactory.getLog(WSSecurityInterceptor.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSSecurityInterceptor.class.getName());
     @Inject
     private IDAOUtente daoUtente;
 

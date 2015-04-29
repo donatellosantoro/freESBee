@@ -16,14 +16,16 @@ import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class WireTapCollaborazioneImbustamento extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(WireTapCollaborazioneImbustamento.class);
+//    private static Log logger = LogFactory.getLog(WireTapCollaborazioneImbustamento.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WireTapCollaborazioneImbustamento.class.getName());
     @Inject
     private IDAOMessaggio daoMessaggio;
     @Inject
@@ -85,7 +87,7 @@ public class WireTapCollaborazioneImbustamento extends RouteBuilder {
                 sessionFactory.getCurrentSession().getTransaction().commit();
             } catch (DAOException ex) {
                 logger.error("Errore nella lettura dal database ");
-                if (logger.isErrorEnabled()) logger.error(ex);
+                if (logger.isErrorEnabled()) logger.error(ex.toString());
                 throw new FreesbeeException("Errore nella lettura dal database.");
             } finally {
                 try {

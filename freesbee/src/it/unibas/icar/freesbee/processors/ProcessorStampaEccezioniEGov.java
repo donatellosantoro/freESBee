@@ -6,13 +6,15 @@ import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import java.util.List;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 // Come ProcessControllaEccezioniEGov ma non solleva l'eccezione !
 public class ProcessorStampaEccezioniEGov implements Processor {
 
-    private static Log logger = LogFactory.getLog(ProcessorStampaEccezioniEGov.class);
+//    private static Log logger = LogFactory.getLog(ProcessorStampaEccezioniEGov.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorStampaEccezioniEGov.class.getName());
 
     public ProcessorStampaEccezioniEGov() {
     }

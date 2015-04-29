@@ -37,6 +37,7 @@
 
 package it.unibas.icar.freesbee.contrib;
 
+import it.unibas.icar.freesbee.consegnabustesoap.HttpConsegnaBusteSOAP;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -58,8 +59,8 @@ import java.util.Enumeration;
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
-import org.apache.commons.logging.Log; 
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log; 
+//import org.apache.commons.logging.LogFactory;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.KeyManager;
@@ -68,6 +69,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -184,7 +187,8 @@ import javax.net.ssl.X509TrustManager;
 public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSocketFactory {
 
     /** Log object for this class. */
-    private static final Log LOG = LogFactory.getLog(AuthSSLProtocolSocketFactoryCustomized.class);
+//    private static final Log LOG = LogFactory.getLog(AuthSSLProtocolSocketFactoryCustomized.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthSSLProtocolSocketFactoryCustomized.class.getName());
 
     private URL keystoreUrl = null;
 //    private KeyStore keystoreUrl = null;
@@ -225,7 +229,7 @@ public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSoc
         if (url == null) {
             throw new IllegalArgumentException("Keystore url may not be null");
         }
-        LOG.debug("Initializing key store");
+        logger.debug("Initializing key store");
         KeyStore keystore  = KeyStore.getInstance("jks");
         InputStream is = null;
         try {
@@ -243,7 +247,7 @@ public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSoc
         if (keystore == null) {
             throw new IllegalArgumentException("Keystore may not be null");
         }
-        LOG.debug("Initializing key manager");
+        logger.debug("Initializing key manager");
         KeyManagerFactory kmfactory = KeyManagerFactory.getInstance(
             KeyManagerFactory.getDefaultAlgorithm());
         kmfactory.init(keystore, password != null ? password.toCharArray(): null);
@@ -256,7 +260,7 @@ public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSoc
         if (keystore == null) {
             throw new IllegalArgumentException("Keystore may not be null");
         }
-        LOG.debug("Initializing trust manager");
+        logger.debug("Initializing trust manager");
         TrustManagerFactory tmfactory = TrustManagerFactory.getInstance(
             TrustManagerFactory.getDefaultAlgorithm());
         tmfactory.init(keystore);
@@ -277,22 +281,22 @@ public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSoc
             if (this.keystoreUrl != null) {
                 KeyStore keystore = createKeyStore(this.keystoreUrl, this.keystorePassword);
 //                KeyStore keystore = this.keystoreUrl;
-                if (LOG.isDebugEnabled()) {
+                if (logger.isDebugEnabled()) {
                     Enumeration aliases = keystore.aliases();
                     while (aliases.hasMoreElements()) {
                         String alias = (String)aliases.nextElement();                        
                         Certificate[] certs = keystore.getCertificateChain(alias);
                         if (certs != null) {
-                            LOG.debug("Certificate chain '" + alias + "':");
+                            logger.debug("Certificate chain '" + alias + "':");
                             for (int c = 0; c < certs.length; c++) {
                                 if (certs[c] instanceof X509Certificate) {
                                     X509Certificate cert = (X509Certificate)certs[c];
-                                    LOG.debug(" Certificate " + (c + 1) + ":");
-                                    LOG.debug("  Subject DN: " + cert.getSubjectDN());
-                                    LOG.debug("  Signature Algorithm: " + cert.getSigAlgName());
-                                    LOG.debug("  Valid from: " + cert.getNotBefore() );
-                                    LOG.debug("  Valid until: " + cert.getNotAfter());
-                                    LOG.debug("  Issuer: " + cert.getIssuerDN());
+                                    logger.debug(" Certificate " + (c + 1) + ":");
+                                    logger.debug("  Subject DN: " + cert.getSubjectDN());
+                                    logger.debug("  Signature Algorithm: " + cert.getSigAlgName());
+                                    logger.debug("  Valid from: " + cert.getNotBefore() );
+                                    logger.debug("  Valid until: " + cert.getNotAfter());
+                                    logger.debug("  Issuer: " + cert.getIssuerDN());
                                 }
                             }
                         }
@@ -303,19 +307,19 @@ public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSoc
             if (this.truststoreUrl != null) {
                 KeyStore keystore = createKeyStore(this.truststoreUrl, this.truststorePassword);
 //                KeyStore keystore = this.truststoreUrl;
-                if (LOG.isDebugEnabled()) {
+                if (logger.isDebugEnabled()) {
                     Enumeration aliases = keystore.aliases();
                     while (aliases.hasMoreElements()) {
                         String alias = (String)aliases.nextElement();
-                        LOG.debug("Trusted certificate '" + alias + "':");
+                        logger.debug("Trusted certificate '" + alias + "':");
                         Certificate trustedcert = keystore.getCertificate(alias);
                         if (trustedcert != null && trustedcert instanceof X509Certificate) {
                             X509Certificate cert = (X509Certificate)trustedcert;
-                            LOG.debug("  Subject DN: " + cert.getSubjectDN());
-                            LOG.debug("  Signature Algorithm: " + cert.getSigAlgName());
-                            LOG.debug("  Valid from: " + cert.getNotBefore() );
-                            LOG.debug("  Valid until: " + cert.getNotAfter());
-                            LOG.debug("  Issuer: " + cert.getIssuerDN());
+                            logger.debug("  Subject DN: " + cert.getSubjectDN());
+                            logger.debug("  Signature Algorithm: " + cert.getSigAlgName());
+                            logger.debug("  Valid from: " + cert.getNotBefore() );
+                            logger.debug("  Valid until: " + cert.getNotAfter());
+                            logger.debug("  Issuer: " + cert.getIssuerDN());
                         }
                     }
                 }
@@ -325,16 +329,16 @@ public class AuthSSLProtocolSocketFactoryCustomized implements SecureProtocolSoc
             sslcontext.init(keymanagers, trustmanagers, null);
             return sslcontext;
         } catch (NoSuchAlgorithmException e) {
-            LOG.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             throw new AuthSSLInitializationError("Unsupported algorithm exception: " + e.getMessage());
         } catch (KeyStoreException e) {
-            LOG.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             throw new AuthSSLInitializationError("Keystore exception: " + e.getMessage());
         } catch (GeneralSecurityException e) {
-            LOG.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             throw new AuthSSLInitializationError("Key management exception: " + e.getMessage());
         } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             throw new AuthSSLInitializationError("I/O error reading keystore/truststore file: " + e.getMessage());
         }
     }

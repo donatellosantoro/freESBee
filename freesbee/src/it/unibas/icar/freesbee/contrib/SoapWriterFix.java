@@ -52,8 +52,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 import org.apache.servicemix.jbi.jaxp.SourceTransformer;
 import org.apache.servicemix.jbi.jaxp.W3CDOMStreamReader;
@@ -61,6 +61,8 @@ import org.apache.servicemix.jbi.jaxp.XMLStreamHelper;
 import org.apache.servicemix.util.jaf.ByteArrayDataSource;
 import org.apache.servicemix.soap.SoapFault;
 import org.codehaus.stax2.XMLStreamWriter2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -81,7 +83,8 @@ public class SoapWriterFix {
     private SoapMarshaler marshaler;
     private MimeMultipart parts;
 
-    private static Log logger = LogFactory.getLog(SoapWriterFix.class);
+//    private static Log logger = LogFactory.getLog(SoapWriterFix.class);
+    private static final Logger logger = LoggerFactory.getLogger(SoapWriterFix.class.getName());
 
     public SoapWriterFix(SoapMarshaler marshaler, SoapMessage message) {
         this.marshaler = marshaler;

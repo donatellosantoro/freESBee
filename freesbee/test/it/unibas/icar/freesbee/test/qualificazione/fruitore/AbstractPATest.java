@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.test.qualificazione.fruitore;
 
+import it.unibas.icar.freesbee.test.messaggi.encoding.TestEncoding;
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,11 +16,14 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 public abstract class AbstractPATest extends HttpServlet {
 
-    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(AbstractPATest.class.getName());
 //    private int port = 28196; //Utile per mettere TCPMon sulla 18196
     private int port = 18196;
     private Server server = new Server();

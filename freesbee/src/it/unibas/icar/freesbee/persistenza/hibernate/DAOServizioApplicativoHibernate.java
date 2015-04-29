@@ -5,15 +5,17 @@ import it.unibas.icar.freesbee.modello.ServizioApplicativo;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOServizioApplicativo;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOServizioApplicativoHibernate extends DAOGenericoHibernate<ServizioApplicativo> implements IDAOServizioApplicativo {
 
-    private static Log logger = LogFactory.getLog(DAOServizioApplicativoHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOServizioApplicativoHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOServizioApplicativoHibernate.class.getName());
 
     public DAOServizioApplicativoHibernate() {
         super(ServizioApplicativo.class);

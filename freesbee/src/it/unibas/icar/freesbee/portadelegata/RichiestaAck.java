@@ -8,13 +8,15 @@ import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Singleton
 public class RichiestaAck extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(RichiestaAck.class);
+//    private static Log logger = LogFactory.getLog(RichiestaAck.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RichiestaAck.class.getName());
     @Inject
     private ProcessorSbloccaPollingConsumerPortaDelegata processorSbloccaPollingConsumerPortaDelegata;
 

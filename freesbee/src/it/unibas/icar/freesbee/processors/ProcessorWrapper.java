@@ -15,8 +15,9 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,7 +25,8 @@ import org.w3c.dom.Node;
 @Singleton
 public class ProcessorWrapper implements Processor {
 
-    private static Log logger = LogFactory.getLog(ProcessorWrapper.class);
+//    private static Log logger = LogFactory.getLog(ProcessorWrapper.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorWrapper.class.getName());
     @Inject
     private DBManager dbManager;
 

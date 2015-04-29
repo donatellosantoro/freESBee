@@ -5,13 +5,16 @@ import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
 import java.util.Date;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 
 public class TestQualificazione02AzioneErrata extends TestCase {
 
-    protected Log logger = LogFactory.getLog(this.getClass());
+//    protected Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestQualificazione02AzioneErrata.class.getName());
 
     @Override
     public void tearDown() {

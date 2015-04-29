@@ -1,19 +1,22 @@
 package it.unibas.icar.freesbee.ws.registroservizi;
 
 import it.unibas.icar.freesbee.modello.*;
+import it.unibas.icar.freesbee.ws.echoservice.WSEchoServiceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class AccordoServizioRSRisposta {
 
-    private static Log logger = LogFactory.getLog(AccordoServizioRSRisposta.class);
+//    private static Log logger = LogFactory.getLog(AccordoServizioRSRisposta.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AccordoServizioRSRisposta.class.getName());
     private String nome;
     private String descrizione;
     private String profiloCollaborazione;

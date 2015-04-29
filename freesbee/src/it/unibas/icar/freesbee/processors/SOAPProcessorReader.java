@@ -22,15 +22,17 @@ import org.w3c.dom.NodeList;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
 import org.apache.servicemix.soap.marshalers.SoapMarshaler;
 import org.apache.servicemix.soap.marshalers.SoapMessage;
+import org.slf4j.LoggerFactory;
 
 public class SOAPProcessorReader implements Processor {
 
-    private static Log logger = LogFactory.getLog(SOAPProcessorReader.class);
+//    private static Log logger = LogFactory.getLog(SOAPProcessorReader.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SOAPProcessorReader.class.getName());
     private static SOAPProcessorReader singleton = new SOAPProcessorReader();
 
     private SOAPProcessorReader() {

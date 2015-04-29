@@ -7,15 +7,17 @@ import it.unibas.icar.freesbee.modello.Soggetto;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOPortaDelegata;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOPortaDelegataHibernate extends DAOGenericoHibernate<PortaDelegata> implements IDAOPortaDelegata {
 
-    private static Log logger = LogFactory.getLog(DAOPortaDelegataHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOPortaDelegataHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOPortaDelegataHibernate.class.getName());
 
     public DAOPortaDelegataHibernate() {
         super(PortaDelegata.class);

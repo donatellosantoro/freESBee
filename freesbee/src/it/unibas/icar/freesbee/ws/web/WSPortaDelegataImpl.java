@@ -26,15 +26,17 @@ import org.apache.camel.util.jsse.KeyStoreParameters;
 import org.apache.camel.util.jsse.SSLContextParameters;
 import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class WSPortaDelegataImpl implements IWSPortaDelegata {
 
-    private static Log logger = LogFactory.getLog(WSPortaApplicativaImpl.class);
+//    private static Log logger = LogFactory.getLog(WSPortaApplicativaImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSPortaApplicativaImpl.class.getName());
     private CamelContext context;
     private IDAOPortaDelegata daoPortaDelegata;
     private IDAOServizio daoServizio;

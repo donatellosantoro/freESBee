@@ -2,19 +2,23 @@ package it.unibas.icar.freesbee.test.regione.erogatore;
 
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
+import it.unibas.icar.freesbee.test.qualificazione.erogatore.TestQualificazione12End;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 public class TestBusteErrate extends TestCase {
 
-    protected Log logger = LogFactory.getLog(this.getClass());
+//    protected Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestBusteErrate.class.getName());
 
     @Override
     public void tearDown() {

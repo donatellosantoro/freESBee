@@ -1,5 +1,6 @@
 package it.unibas.icar.freesbee.test.core.moduloControllo.imbustamento;
 
+import it.unibas.icar.freesbee.inoltrobustaegov.HttpInoltroBustaEGov;
 import it.unibas.icar.freesbee.modello.Configurazione;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DBManager;
@@ -26,15 +27,18 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.CamelTestSupport;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.servicemix.common.JbiConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Node;
 
 public class TestEnricherTestInteroperabilitaRichiesta extends CamelTestSupport{
 
-    protected Log logger = LogFactory.getLog(this.getClass());
+//    protected Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestEnricherTestInteroperabilitaRichiesta.class.getName());
     protected MockEndpoint resultEndpoint;
 
     public void testInteroperabilita() throws Exception {

@@ -10,13 +10,15 @@ import java.util.Map;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Singleton
 public class PreSbustamentoRisposta extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(PreSbustamentoRisposta.class);
+//    private static Log logger = LogFactory.getLog(PreSbustamentoRisposta.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PreSbustamentoRisposta.class.getName());
 
     public void configure() throws Exception {
         this.from(FreesbeeCamel.SEDA_PRESBUSTAMENTO_RISPOSTA)

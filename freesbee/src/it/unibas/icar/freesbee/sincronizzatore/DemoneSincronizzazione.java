@@ -13,6 +13,7 @@ import it.unibas.icar.freesbee.persistenza.IDAOServizio;
 import it.unibas.icar.freesbee.persistenza.IDAOSincronizzazione;
 import it.unibas.icar.freesbee.persistenza.IDAOSoggetto;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
+import it.unibas.icar.freesbee.processors.strategy.EnricherPortaDelegataSemplice;
 import it.unibas.icar.freesbee.ws.registroservizi.AccordoServizioRSRisposta;
 import it.unibas.icar.freesbee.ws.registroservizi.ServizioRS;
 import it.unibas.icar.freesbee.ws.registroservizi.ServizioRSRisposta;
@@ -30,14 +31,16 @@ import it.unibas.icar.freesbee.ws.registroservizi.client.stub.IWSRegistroServizi
 import it.unibas.icar.freesbee.ws.registroservizi.client.stub.WSRegistroServiziImplService;
 import java.net.URL;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 //@Singleton
 public class DemoneSincronizzazione extends Thread {
 
-    private static Log logger = LogFactory.getLog(DemoneSincronizzazione.class);
+//    private static Log logger = LogFactory.getLog(DemoneSincronizzazione.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DemoneSincronizzazione.class.getName());
     private IDAOSincronizzazione daoSincronizzazione;
     private IDAOAzione daoAzione;
     private IDAOServizio daoServizio;

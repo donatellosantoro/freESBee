@@ -6,14 +6,17 @@ import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.IDAOMessaggio;
 import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import it.unibas.icar.freesbee.ws.registroservizi.WSRegistroServiziProxy;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class WSMessaggioImpl implements IWSMessaggio {
 
-    private static Log logger = LogFactory.getLog(WSMessaggioImpl.class);
+//    private static Log logger = LogFactory.getLog(WSMessaggioImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSMessaggioImpl.class.getName());
     private IDAOMessaggio daoMessaggio;
 
     @Inject()

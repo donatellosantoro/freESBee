@@ -17,27 +17,28 @@ import java.util.StringTokenizer;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.helpers.OptionConverter;
-import org.apache.log4j.pattern.ClassNamePatternConverter;
-import org.apache.log4j.pattern.DatePatternConverter;
-import org.apache.log4j.pattern.FileLocationPatternConverter;
-import org.apache.log4j.pattern.FullLocationPatternConverter;
-import org.apache.log4j.pattern.LevelPatternConverter;
-import org.apache.log4j.pattern.LineLocationPatternConverter;
-import org.apache.log4j.pattern.LineSeparatorPatternConverter;
-import org.apache.log4j.pattern.LiteralPatternConverter;
-import org.apache.log4j.pattern.LoggerPatternConverter;
-import org.apache.log4j.pattern.LoggingEventPatternConverter;
-import org.apache.log4j.pattern.MessagePatternConverter;
-import org.apache.log4j.pattern.MethodLocationPatternConverter;
-import org.apache.log4j.pattern.NDCPatternConverter;
-import org.apache.log4j.pattern.PatternParser;
-import org.apache.log4j.pattern.PropertiesPatternConverter;
-import org.apache.log4j.pattern.RelativeTimePatternConverter;
-import org.apache.log4j.pattern.SequenceNumberPatternConverter;
-import org.apache.log4j.pattern.ThreadPatternConverter;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
+//import org.apache.log4j.helpers.OptionConverter;
+//import org.apache.log4j.pattern.ClassNamePatternConverter;
+//import org.apache.log4j.pattern.DatePatternConverter;
+//import org.apache.log4j.pattern.FileLocationPatternConverter;
+//import org.apache.log4j.pattern.FullLocationPatternConverter;
+//import org.apache.log4j.pattern.LevelPatternConverter;
+//import org.apache.log4j.pattern.LineLocationPatternConverter;
+//import org.apache.log4j.pattern.LineSeparatorPatternConverter;
+//import org.apache.log4j.pattern.LiteralPatternConverter;
+//import org.apache.log4j.pattern.LoggerPatternConverter;
+//import org.apache.log4j.pattern.LoggingEventPatternConverter;
+//import org.apache.log4j.pattern.MessagePatternConverter;
+//import org.apache.log4j.pattern.MethodLocationPatternConverter;
+//import org.apache.log4j.pattern.NDCPatternConverter;
+//import org.apache.log4j.pattern.PatternParser;
+//import org.apache.log4j.pattern.PropertiesPatternConverter;
+//import org.apache.log4j.pattern.RelativeTimePatternConverter;
+//import org.apache.log4j.pattern.SequenceNumberPatternConverter;
+//import org.apache.log4j.pattern.ThreadPatternConverter;
+import org.slf4j.LoggerFactory;
 import pl.otros.logview.LogData;
 import pl.otros.logview.importer.InitializationException;
 import pl.otros.logview.importer.LogImporterUsingParser;
@@ -63,7 +64,8 @@ public class ParserLogger {
     private String patternFull = "";
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
     
-    private static Log logger = LogFactory.getLog(ParserLogger.class);
+//    private static Log logger = LogFactory.getLog(ParserLogger.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ParserLogger.class.getName());
 
     public static ParserLogger getInstance() {
         return singleton;
@@ -94,45 +96,48 @@ public class ParserLogger {
     }
 
     public String getLog(Date inizio, Date fine, String livello) {
-        LogData[] logDatas = extractLogDatas();
-        if (logDatas != null) {
-            StringBuilder builder = new StringBuilder();
-            for (LogData logData : logDatas) {
-                if (logData.getDate().after(inizio) && logData.getDate().before(fine) && livello.equalsIgnoreCase(logData.getLevel().toString())) {
-                    builder.append(getStringFromLogData(logData)).append("\n");
-                }
-            }
-            return builder.toString().trim();
-        }
-        return ERROR_PARSER + logFilePath;
+        return "Dummy getLog method !";
+//        LogData[] logDatas = extractLogDatas();
+//        if (logDatas != null) {
+//            StringBuilder builder = new StringBuilder();
+//            for (LogData logData : logDatas) {
+//                if (logData.getDate().after(inizio) && logData.getDate().before(fine) && livello.equalsIgnoreCase(logData.getLevel().toString())) {
+//                    builder.append(getStringFromLogData(logData)).append("\n");
+//                }
+//            }
+//            return builder.toString().trim();
+//        }
+//        return ERROR_PARSER + logFilePath;
     }
 
     public String getLog(String livello) {
-        LogData[] logDatas = extractLogDatas();
-        if (logDatas != null) {
-            StringBuilder builder = new StringBuilder();
-            for (LogData logData : logDatas) {
-                if (livello.equalsIgnoreCase(logData.getLevel().toString())) {
-                    builder.append(getStringFromLogData(logData)).append("\n");
-                }
-            }
-            return builder.toString().trim();
-        }
-        return ERROR_PARSER + logFilePath;
+        return "Dummy getLog method !";
+//        LogData[] logDatas = extractLogDatas();
+//        if (logDatas != null) {
+//            StringBuilder builder = new StringBuilder();
+//            for (LogData logData : logDatas) {
+//                if (livello.equalsIgnoreCase(logData.getLevel().toString())) {
+//                    builder.append(getStringFromLogData(logData)).append("\n");
+//                }
+//            }
+//            return builder.toString().trim();
+//        }
+//        return ERROR_PARSER + logFilePath;
     }
 
     public String getLog(Date inizio, Date fine) {
-        LogData[] logDatas = extractLogDatas();
-        if (logDatas != null) {
-            StringBuilder builder = new StringBuilder();
-            for (LogData logData : logDatas) {
-                if (logData.getDate().after(inizio) && logData.getDate().before(fine)) {
-                    builder.append(getStringFromLogData(logData)).append("\n");
-                }
-            }
-            return builder.toString().trim();
-        }
-        return ERROR_PARSER + logFilePath;
+        return "Dummy getLog method !";
+//        LogData[] logDatas = extractLogDatas();
+//        if (logDatas != null) {
+//            StringBuilder builder = new StringBuilder();
+//            for (LogData logData : logDatas) {
+//                if (logData.getDate().after(inizio) && logData.getDate().before(fine)) {
+//                    builder.append(getStringFromLogData(logData)).append("\n");
+//                }
+//            }
+//            return builder.toString().trim();
+//        }
+//        return ERROR_PARSER + logFilePath;
     }
 
     public DataHandler getLog() {
@@ -161,65 +166,68 @@ public class ParserLogger {
     }
 
     private String getPatternFull(String patternFromProperties) {
-        String input = OptionConverter.convertSpecialChars(patternFromProperties);
-        List converters = new ArrayList();
-        List fields = new ArrayList();
-        Map converterRegistry = null;
-
-        PatternParser.parse(input, converters, fields, converterRegistry, PatternParser.getPatternLayoutRules());
-        String formatFromConverters = getFormatFromConverters(converters);
-
-        return formatFromConverters;
+        return "Dummy getPatternFull method !";
+//        String input = OptionConverter.convertSpecialChars(patternFromProperties);
+//        List converters = new ArrayList();
+//        List fields = new ArrayList();
+//        Map converterRegistry = null;
+//
+//        PatternParser.parse(input, converters, fields, converterRegistry, PatternParser.getPatternLayoutRules());
+//        String formatFromConverters = getFormatFromConverters(converters);
+//
+//        return formatFromConverters;
     }
 
     private String getStringFromLogData(LogData data) {
-        StringBuilder builder = new StringBuilder();
-        List<String> patterns = extractPatternList();
-        for (String pattern : patterns) {
-            builder.append(extractValue(data, pattern));
-        }
-        return builder.toString().trim();
+        return "Dummy getStringFromLogData method !";
+//        StringBuilder builder = new StringBuilder();
+//        List<String> patterns = extractPatternList();
+//        for (String pattern : patterns) {
+//            builder.append(extractValue(data, pattern));
+//        }
+//        return builder.toString().trim();
     }
 
     private String getFormatFromConverters(List converters) {
-        StringBuffer buffer = new StringBuffer();
-        for (Iterator iter = converters.iterator(); iter.hasNext();) {
-            LoggingEventPatternConverter converter = (LoggingEventPatternConverter) iter.next();
-            if (converter instanceof DatePatternConverter) {
-                buffer.append("TIMESTAMP");
-            } else if (converter instanceof MessagePatternConverter) {
-                buffer.append("MESSAGE");
-            } else if (converter instanceof LoggerPatternConverter) {
-                buffer.append("LOGGER");
-            } else if (converter instanceof ClassNamePatternConverter) {
-                buffer.append("CLASS");
-            } else if (converter instanceof RelativeTimePatternConverter) {
-                buffer.append("PROP(RELATIVETIME)");
-            } else if (converter instanceof ThreadPatternConverter) {
-                buffer.append("THREAD");
-            } else if (converter instanceof NDCPatternConverter) {
-                buffer.append("NDC");
-            } else if (converter instanceof LiteralPatternConverter) {
-                LiteralPatternConverter literal = (LiteralPatternConverter) converter;
-                literal.format(null, buffer);
-            } else if (converter instanceof SequenceNumberPatternConverter) {
-                buffer.append("PROP(log4jid)");
-            } else if (converter instanceof LevelPatternConverter) {
-                buffer.append("LEVEL");
-            } else if (converter instanceof MethodLocationPatternConverter) {
-                buffer.append("METHOD");
-            } else if (converter instanceof FullLocationPatternConverter) {
-                buffer.append("PROP(locationInfo)");
-            } else if (converter instanceof LineLocationPatternConverter) {
-                buffer.append("LINE");
-            } else if (converter instanceof FileLocationPatternConverter) {
-                buffer.append("FILE");
-            } else if (converter instanceof PropertiesPatternConverter) {
-                buffer.append("PROP(PROPERTIES)");
-            } else if (converter instanceof LineSeparatorPatternConverter) {
-            }
-        }
-        return buffer.toString();
+        return "Dummy getFormatFromConverters method !";
+//        StringBuffer buffer = new StringBuffer();
+//        for (Iterator iter = converters.iterator(); iter.hasNext();) {
+//            LoggingEventPatternConverter converter = (LoggingEventPatternConverter) iter.next();
+//            if (converter instanceof DatePatternConverter) {
+//                buffer.append("TIMESTAMP");
+//            } else if (converter instanceof MessagePatternConverter) {
+//                buffer.append("MESSAGE");
+//            } else if (converter instanceof LoggerPatternConverter) {
+//                buffer.append("LOGGER");
+//            } else if (converter instanceof ClassNamePatternConverter) {
+//                buffer.append("CLASS");
+//            } else if (converter instanceof RelativeTimePatternConverter) {
+//                buffer.append("PROP(RELATIVETIME)");
+//            } else if (converter instanceof ThreadPatternConverter) {
+//                buffer.append("THREAD");
+//            } else if (converter instanceof NDCPatternConverter) {
+//                buffer.append("NDC");
+//            } else if (converter instanceof LiteralPatternConverter) {
+//                LiteralPatternConverter literal = (LiteralPatternConverter) converter;
+//                literal.format(null, buffer);
+//            } else if (converter instanceof SequenceNumberPatternConverter) {
+//                buffer.append("PROP(log4jid)");
+//            } else if (converter instanceof LevelPatternConverter) {
+//                buffer.append("LEVEL");
+//            } else if (converter instanceof MethodLocationPatternConverter) {
+//                buffer.append("METHOD");
+//            } else if (converter instanceof FullLocationPatternConverter) {
+//                buffer.append("PROP(locationInfo)");
+//            } else if (converter instanceof LineLocationPatternConverter) {
+//                buffer.append("LINE");
+//            } else if (converter instanceof FileLocationPatternConverter) {
+//                buffer.append("FILE");
+//            } else if (converter instanceof PropertiesPatternConverter) {
+//                buffer.append("PROP(PROPERTIES)");
+//            } else if (converter instanceof LineSeparatorPatternConverter) {
+//            }
+//        }
+//        return buffer.toString();
     }
 
     private LogData[] extractLogDatas() {

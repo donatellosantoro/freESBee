@@ -3,16 +3,19 @@ package it.unibas.icar.freesbee.modello;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class FactoryEccezioniEgov {
 
-    private static Log logger = LogFactory.getLog(FactoryEccezioniEgov.class);
+//    private static Log logger = LogFactory.getLog(FactoryEccezioniEgov.class);
+    private static final Logger logger = LoggerFactory.getLogger(FactoryEccezioniEgov.class.getName());
     private static FactoryEccezioniEgov singleton = new FactoryEccezioniEgov();
     private Map<String, Eccezione> mappaEccezioni = new HashMap<String, Eccezione>();
 

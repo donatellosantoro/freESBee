@@ -5,12 +5,14 @@ import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class ProcessorErroreImbustamento implements Processor {
 
-    private static Log logger = LogFactory.getLog(ProcessorErroreImbustamento.class);
+//    private static Log logger = LogFactory.getLog(ProcessorErroreImbustamento.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorErroreImbustamento.class.getName());
     @Inject
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
     @Inject

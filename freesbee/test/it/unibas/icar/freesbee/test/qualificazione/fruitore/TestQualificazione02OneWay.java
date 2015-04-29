@@ -5,6 +5,8 @@ import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.apache.cxf.helpers.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -12,7 +14,8 @@ import org.w3c.dom.NodeList;
 
 public class TestQualificazione02OneWay extends TestCase {
 
-    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestQualificazione02OneWay.class.getName());
 
     public void testQualificazione02() {
         AbstractPATest paTest = new TestPA("");

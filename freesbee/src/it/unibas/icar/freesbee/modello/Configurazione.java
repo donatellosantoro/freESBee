@@ -11,13 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Entity
 public class Configurazione {
 
-    private static Log logger = LogFactory.getLog(FreesbeeUtil.class);
+//    private static Log logger = LogFactory.getLog(FreesbeeUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(FreesbeeUtil.class.getName());
     public static String TEMPO_LOCALE = "EGOV_IT_Locale";
     public static String TEMPO_SINCRONIZZATO = "EGOV_IT_SPC";
     private long id;

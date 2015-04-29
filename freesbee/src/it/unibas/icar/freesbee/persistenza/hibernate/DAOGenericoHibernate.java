@@ -3,17 +3,19 @@ package it.unibas.icar.freesbee.persistenza.hibernate;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOGenerico;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
+import org.slf4j.LoggerFactory;
 
 public class DAOGenericoHibernate<T> implements IDAOGenerico<T> {
 
-    private static Log logger = LogFactory.getLog(DAOGenericoHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOGenericoHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOGenericoHibernate.class.getName());
     private Class<T> persistentClass;
 
     @SuppressWarnings("unchecked")

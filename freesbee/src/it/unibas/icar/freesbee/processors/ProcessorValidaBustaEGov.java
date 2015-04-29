@@ -11,12 +11,14 @@ import java.text.ParseException;
 import java.util.Date;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class ProcessorValidaBustaEGov implements Processor {
 
-    private static Log logger = LogFactory.getLog(ProcessorValidaBustaEGov.class);
+//    private static Log logger = LogFactory.getLog(ProcessorValidaBustaEGov.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorValidaBustaEGov.class.getName());
 
     public ProcessorValidaBustaEGov() {
     }
@@ -145,7 +147,7 @@ public class ProcessorValidaBustaEGov implements Processor {
         }
 
         for (Trasmissione trasmissione : messaggio.getListaTrasmissioni()) {
-            if (logger.isDebugEnabled()) logger.debug(trasmissione);
+            if (logger.isDebugEnabled()) logger.debug(trasmissione.toString());
             if (trasmissione.getOrigineNome() == null || trasmissione.getOrigineNome().isEmpty()) {
                 messaggio.aggiungiEccezione(CostantiEccezioni.TRASMISSIONE_ORIGINE_IDENTIFICATIVO_NON_AVVALORATO);
                 logger.error("Elemento Origine/IdentificativoParte non presente.");
@@ -191,7 +193,7 @@ public class ProcessorValidaBustaEGov implements Processor {
         }
 
         for (Riscontro riscontro : messaggio.getListaRiscontri()) {
-            if (logger.isDebugEnabled()) logger.debug(riscontro);
+            if (logger.isDebugEnabled()) logger.debug(riscontro.toString());
             if (!validaIdentificatore(riscontro.getIdentificatore())) {
                 messaggio.aggiungiEccezione(CostantiEccezioni.RISCONTRO_IDENTIFICATORE_NON_VALIDO);
                 logger.error("Elemento Riscontro/Identificatore non valido.");

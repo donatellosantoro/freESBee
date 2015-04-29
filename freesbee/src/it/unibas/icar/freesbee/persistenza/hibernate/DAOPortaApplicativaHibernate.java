@@ -8,14 +8,16 @@ import it.unibas.icar.freesbee.modello.ServizioApplicativo;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOPortaApplicativa;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOPortaApplicativaHibernate extends DAOGenericoHibernate<PortaApplicativa> implements IDAOPortaApplicativa {
 
-    private static Log logger = LogFactory.getLog(DAOPortaApplicativaHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOPortaApplicativaHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOPortaApplicativaHibernate.class.getName());
 
     public DAOPortaApplicativaHibernate() {
         super(PortaApplicativa.class);

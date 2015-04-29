@@ -8,14 +8,16 @@ import it.unibas.icar.freesbee.persistenza.IDAOSoggetto;
 import it.unibas.guicefreesbee.ContextStartup;
 import javax.xml.ws.Endpoint;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.jaxws.EndpointImpl;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class WSConfigurazione extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(WSConfigurazione.class);
+//    private static Log logger = LogFactory.getLog(WSConfigurazione.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSConfigurazione.class.getName());
     @Inject
     private IDAOConfigurazione daoConfigurazione;
     @Inject

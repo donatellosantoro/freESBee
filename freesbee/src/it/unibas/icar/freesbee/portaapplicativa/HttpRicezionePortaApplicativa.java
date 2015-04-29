@@ -22,14 +22,16 @@ import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.direct.DirectEndpoint;
 import org.apache.camel.component.jetty.JettyHttpComponent;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class HttpRicezionePortaApplicativa extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(HttpRicezionePortaApplicativa.class);
+//    private static Log logger = LogFactory.getLog(HttpRicezionePortaApplicativa.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(HttpRicezionePortaApplicativa.class.getName());
     @Inject
     private ProcessorValidaXSD processorValidaXSD;
     @Inject

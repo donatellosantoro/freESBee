@@ -7,12 +7,14 @@ import it.unibas.icar.freesbee.processors.ProcessorLogFactory;
 import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Singleton
 public class DetourCollaborazioneImbustamento extends RouteBuilder {
-    private static Log logger = LogFactory.getLog(DetourCollaborazioneImbustamento.class);
+//    private static Log logger = LogFactory.getLog(DetourCollaborazioneImbustamento.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DetourCollaborazioneImbustamento.class.getName());
     
     public void configure() throws Exception {
         this.from(FreesbeeCamel.SEDA_DETOUR_COLLABORAZIONE_IMBUSTAMENTO)

@@ -1,13 +1,17 @@
 package it.unibas.icar.freesbee.exception;
 
+import it.unibas.icar.freesbee.contrib.XMLStreamHelperFix;
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.TransformerException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class FreesbeeErrorListener implements ErrorListener {
 
-    private static Log logger = LogFactory.getLog(FreesbeeErrorListener.class.getName());
+//    private static Log logger = LogFactory.getLog(FreesbeeErrorListener.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(FreesbeeErrorListener.class.getName());
     
     public void warning(TransformerException exception) throws TransformerException {
         logger.warn("Attenzione, e' stata rilevata un'anomalia nel sistema.");

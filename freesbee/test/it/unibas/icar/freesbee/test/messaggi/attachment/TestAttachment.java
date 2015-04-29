@@ -1,6 +1,7 @@
 package it.unibas.icar.freesbee.test.messaggi.attachment;
 
 import com.sun.mail.util.BASE64DecoderStream;
+import it.unibas.icar.freesbee.test.interoperabilita.TestEnricher;
 import it.unibas.icar.freesbee.test.messaggi.attachment.client.IWSVerificaInstallazione;
 import it.unibas.icar.freesbee.test.messaggi.attachment.client.WSVerificaInstallazioneImplService;
 import java.io.ByteArrayInputStream;
@@ -31,14 +32,17 @@ import junit.framework.TestCase;
 import org.apache.axis.utils.XMLUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.servicemix.util.jaf.ByteArrayDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestAttachment extends TestCase {
 
-    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    private org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestAttachment.class.getName());
 
     // Eseguire prima ant db-insert-test 
-    private String indirizzoWS = "http://localhost:18191/ws/verificaInstallazione";
-    private String indirizzoPD = "http://localhost:18192/PD/AttachmentTest/";
+    private String indirizzoWS = "http://localhost:8191/ws/verificaInstallazione";
+    private String indirizzoPD = "http://localhost:8192/PD/AttachmentTest/";
     private String fileZip = TestAttachment.class.getResource("/dati/testEncoding.zip").getFile();
     private static final QName SERVICE_NAME = new QName("http://icar.unibas.it/freesbee/", "WSVerificaInstallazioneImplService");
 

@@ -14,14 +14,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class WSServizioImpl implements IWSServizio {
 
-    private static Log logger = LogFactory.getLog(WSServizioImpl.class);
+//    private static Log logger = LogFactory.getLog(WSServizioImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSServizioImpl.class.getName());
     private IDAOServizio daoServizio;
     private IDAOPortaApplicativa daoPortaApplicativa;
     private IDAOPortaDelegata daoPortaDelegata;

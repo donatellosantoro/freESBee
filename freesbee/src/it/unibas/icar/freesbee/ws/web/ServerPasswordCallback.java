@@ -4,18 +4,21 @@ import it.unibas.icar.freesbee.modello.Utente;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOUtente;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
+import it.unibas.icar.freesbee.ws.verificainstallazione.WSVerificaInstallazioneImpl;
 import java.io.IOException;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.ws.security.WSPasswordCallback;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class ServerPasswordCallback implements CallbackHandler {
 
-    private static Log logger = LogFactory.getLog(ServerPasswordCallback.class);
+//    private static Log logger = LogFactory.getLog(ServerPasswordCallback.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ServerPasswordCallback.class.getName());
     private IDAOUtente daoUtente;
 
     public ServerPasswordCallback(IDAOUtente daoUtente) {

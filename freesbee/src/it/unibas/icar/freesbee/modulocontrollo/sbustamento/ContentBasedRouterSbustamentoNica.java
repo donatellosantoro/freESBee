@@ -17,14 +17,16 @@ import it.unibas.icar.freesbee.utilita.FreesbeeCamel;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class ContentBasedRouterSbustamentoNica extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(ContentBasedRouterSbustamentoNica.class);
+//    private static Log logger = LogFactory.getLog(ContentBasedRouterSbustamentoNica.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ContentBasedRouterSbustamentoNica.class.getName());
     @Inject
     private ProcessorIdentificaNica processorIdentificaNica;
     @Inject

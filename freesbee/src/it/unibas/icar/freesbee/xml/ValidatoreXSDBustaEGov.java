@@ -1,16 +1,19 @@
 package it.unibas.icar.freesbee.xml;
 
+import it.unibas.icar.freesbee.ws.web.WSSoggettoImpl;
 import java.io.InputStream;
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 public class ValidatoreXSDBustaEGov {
 
-    private static org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(ValidatoreXSDBustaEGov.class);
+//    private static Log logger = LogFactory.getLog(ValidatoreXSDBustaEGov.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ValidatoreXSDBustaEGov.class.getName());
     private static Validator validatore;
 
     public static Validator getValidatore() throws XmlException {

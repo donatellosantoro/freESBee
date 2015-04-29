@@ -16,8 +16,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
 import org.jdom.Document;
 import org.jdom.input.DOMBuilder;
@@ -30,10 +30,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import it.unibas.icar.freesbee.exception.XmlException;
 import it.unibas.icar.freesbee.persistenza.DAOException;
+import org.slf4j.LoggerFactory;
 
 public class XMLJDomUtil {
 
-    private static Log logger = LogFactory.getLog(XMLJDomUtil.class);
+//    private static Log logger = LogFactory.getLog(XMLJDomUtil.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(XMLJDomUtil.class.getName());
     private static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
     private static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
     private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";

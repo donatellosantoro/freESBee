@@ -5,6 +5,7 @@ import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOMessaggioHibernate;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
+import it.unibas.icar.freesbee.test.messaggi.attachment.TestAttachment;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,10 +35,12 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.servicemix.util.jaf.ByteArrayDataSource;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -46,7 +49,8 @@ public class UtilTest {
 
     public static final String INDIRIZZO_PA = "http://localhost:8196/PA/";
 //    public static final String INDIRIZZO_PA = "http://localhost:18196/PA/";
-    private static Log logger = LogFactory.getLog(UtilTest.class);
+//    private static Log logger = LogFactory.getLog(UtilTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(UtilTest.class.getName());
 
     public static String trovaNodoString(String exp, Document soapRisposta) {
         try {

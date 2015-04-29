@@ -9,13 +9,15 @@ import it.unibas.icar.freesbee.utilita.CostantiBusta;
 import java.util.Date;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class ProcessorMessaggioDiagnostico implements Processor {
 
-    private static Log logger = LogFactory.getLog(ProcessorMessaggioDiagnostico.class);
+//    private static Log logger = LogFactory.getLog(ProcessorMessaggioDiagnostico.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorMessaggioDiagnostico.class.getName());
     private String identificativoPorta;
     private String identificativoFunzione;
     private int severita;

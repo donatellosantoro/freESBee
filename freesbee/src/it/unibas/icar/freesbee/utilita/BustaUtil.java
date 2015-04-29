@@ -1,15 +1,17 @@
 package it.unibas.icar.freesbee.utilita;
 
+import it.unibas.icar.freesbee.sincronizzatore.DemoneSincronizzazione;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.helpers.XMLUtils;
 import org.apache.servicemix.jbi.jaxp.SourceTransformer;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -18,7 +20,8 @@ import org.w3c.dom.NodeList;
 
 public class BustaUtil {
 
-    private static Log logger = LogFactory.getLog(BustaUtil.class);
+//    private static Log logger = LogFactory.getLog(BustaUtil.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BustaUtil.class.getName());
 
     public static void stampaSOAPHeader(Map<QName, DocumentFragment> map) {
         Set<QName> keys = map.keySet();

@@ -4,13 +4,15 @@ import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.persistenza.DAOException;
 import it.unibas.icar.freesbee.persistenza.IDAOMessaggio;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 public class DAOMessaggioTestHibernate extends DAOGenericoTestHibernate<Messaggio> implements IDAOMessaggio {
 
-    private static Log logger = LogFactory.getLog(DAOMessaggioTestHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOMessaggioTestHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOMessaggioTestHibernate.class.getName());
 
     public DAOMessaggioTestHibernate() {
         super(Messaggio.class);

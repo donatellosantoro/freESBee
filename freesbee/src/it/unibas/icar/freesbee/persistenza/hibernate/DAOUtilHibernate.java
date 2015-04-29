@@ -1,8 +1,8 @@
 package it.unibas.icar.freesbee.persistenza.hibernate;
 
 import it.unibas.icar.freesbee.persistenza.DAOException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,10 +12,12 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
+import org.slf4j.LoggerFactory;
 
 public class DAOUtilHibernate {
 
-    private static Log logger = LogFactory.getLog(DAOUtilHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOUtilHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOUtilHibernate.class.getName());
     private static SessionFactory sessionFactory;
     private static ServiceRegistry serviceRegistry;
     private static int counter = 0;

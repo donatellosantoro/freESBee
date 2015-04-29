@@ -9,14 +9,16 @@ import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import java.util.List;
 import javax.jws.WebService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 @WebService(endpointInterface = "it.unibas.icar.freesbee.ws.web.IWSConfigurazione",serviceName = "Configurazione")
 public class WSConfigurazioneImpl implements IWSConfigurazione {
 
-    private static Log logger = LogFactory.getLog(WSConfigurazioneImpl.class);
+//    private static Log logger = LogFactory.getLog(WSConfigurazioneImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSConfigurazioneImpl.class.getName());
     private IDAOConfigurazione daoConfigurazione;
     private IDAOSoggetto daoSoggetto;
 

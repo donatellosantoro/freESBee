@@ -7,15 +7,17 @@ import it.unibas.icar.freesbee.persistenza.IDAOSoggetto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class DAOSoggettoHibernate extends DAOGenericoHibernate<Soggetto> implements IDAOSoggetto {
 
-    private static Log logger = LogFactory.getLog(DAOSoggettoHibernate.class);
+//    private static Log logger = LogFactory.getLog(DAOSoggettoHibernate.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DAOSoggettoHibernate.class.getName());
 
     public DAOSoggettoHibernate() {
         super(Soggetto.class);

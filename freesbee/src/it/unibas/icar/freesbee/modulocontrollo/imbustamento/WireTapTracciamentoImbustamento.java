@@ -20,14 +20,16 @@ import java.io.IOException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class WireTapTracciamentoImbustamento extends RouteBuilder {
 
-    private static Log logger = LogFactory.getLog(WireTapTracciamentoImbustamento.class);
+//    private static Log logger = LogFactory.getLog(WireTapTracciamentoImbustamento.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WireTapTracciamentoImbustamento.class.getName());
     @Inject
     private IDAOMessaggio daoMessaggio;
     @Inject

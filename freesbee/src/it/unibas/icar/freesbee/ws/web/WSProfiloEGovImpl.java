@@ -6,14 +6,16 @@ import it.unibas.icar.freesbee.persistenza.IDAOProfiloEGov;
 import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class WSProfiloEGovImpl implements IWSProfiloEGov {
 
-    private static Log logger = LogFactory.getLog(WSProfiloEGovImpl.class);
+//    private static Log logger = LogFactory.getLog(WSProfiloEGovImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSProfiloEGovImpl.class.getName());
     private IDAOProfiloEGov daoProfiloEgov;
 
     public WSProfiloEGovImpl(IDAOProfiloEGov daoProfiloEgov) {

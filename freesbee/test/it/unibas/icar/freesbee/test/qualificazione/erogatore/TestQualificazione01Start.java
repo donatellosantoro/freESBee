@@ -2,13 +2,17 @@ package it.unibas.icar.freesbee.test.qualificazione.erogatore;
 
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import it.unibas.icar.freesbee.test.qualificazione.UtilTest;
+import it.unibas.icar.freesbee.test.qualificazione.fruitore.AbstractPATest;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 public class TestQualificazione01Start extends TestCase {
 
-    protected org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+//    protected org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(TestQualificazione01Start.class.getName());
 
     @Override
     public void tearDown() {

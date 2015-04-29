@@ -16,12 +16,14 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class ProcessorTrace implements Processor {
 
-    private static Log logger = LogFactory.getLog(ProcessorTrace.class.getName());
+//    private static Log logger = LogFactory.getLog(ProcessorTrace.class.getName());
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProcessorTrace.class.getName());
     public static final String IN = "IN";
     public static final String OUT = "OUT";
     private String tipoMessaggio;
@@ -50,14 +52,14 @@ public class ProcessorTrace implements Processor {
         if (!logger.isTraceEnabled()) return;
         
         try {
-if (logger.isInfoEnabled()) logger.info(this.descrizione);
+            if (logger.isTraceEnabled()) logger.trace(this.descrizione);
             Message message;
             if (tipoMessaggio.equals(IN)) {
                 message = exchange.getIn();
-if (logger.isInfoEnabled()) logger.info("RAW messaggio HTTP:" + estraiIntestazioniHTTP(message) + MessageUtil.getString(message));
+                if (logger.isTraceEnabled()) logger.trace("RAW messaggio HTTP:" + estraiIntestazioniHTTP(message) + MessageUtil.getString(message));
             } else if (tipoMessaggio.equals(OUT)) {
                 message = exchange.getOut();
-if (logger.isInfoEnabled()) logger.info("RAW messaggio HTTP:" + estraiIntestazioniHTTP(message) + MessageUtil.getString(message));
+                if (logger.isTraceEnabled()) logger.trace("RAW messaggio HTTP:" + estraiIntestazioniHTTP(message) + MessageUtil.getString(message));
             } else {
                 throw new IllegalArgumentException("Messaggio " + tipoMessaggio + " sconosciuto");
             }
@@ -91,7 +93,7 @@ if (logger.isInfoEnabled()) logger.info("RAW messaggio HTTP:" + estraiIntestazio
 //            IOUtils.copy(stream, new FileOutputStream(traceFile));
 //            bodyStream.reset();
         } catch (Exception e) {
-            logger.error(e);
+            logger.error(e.toString());
         }
     }
 

@@ -2,6 +2,7 @@ package it.unibas.icar.freesbee.inoltrobustaegov;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import it.unibas.icar.freesbee.exception.FreesbeeErrorListener;
 import it.unibas.icar.freesbee.modello.AccordoServizio;
 import it.unibas.icar.freesbee.modello.Messaggio;
 import it.unibas.icar.freesbee.processors.ProcessorSbloccaPollingConsumerPortaApplicativa;
@@ -11,13 +12,16 @@ import it.unibas.icar.freesbee.utilita.MessageUtil;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 @Singleton
 public class ContentBasedRouterRispostaEGov extends RouteBuilder {
     
-    private static Log logger = LogFactory.getLog(ContentBasedRouterRispostaEGov.class);
+//    private static Log logger = LogFactory.getLog(ContentBasedRouterRispostaEGov.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContentBasedRouterRispostaEGov.class.getName());
     @Inject
     private ProcessorSbloccaPollingConsumerPortaApplicativa processorSbloccaPollingConsumerPortaApplicativa;
 

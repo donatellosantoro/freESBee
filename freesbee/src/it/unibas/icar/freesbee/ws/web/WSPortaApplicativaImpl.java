@@ -12,14 +12,16 @@ import it.unibas.icar.freesbee.persistenza.IDAOServizioApplicativo;
 import it.unibas.icar.freesbee.persistenza.SOAPFault;
 import it.unibas.icar.freesbee.persistenza.hibernate.DAOUtilHibernate;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.slf4j.LoggerFactory;
 
 public class WSPortaApplicativaImpl implements IWSPortaApplicativa {
 
-    private static Log logger = LogFactory.getLog(WSPortaApplicativaImpl.class);
+//    private static Log logger = LogFactory.getLog(WSPortaApplicativaImpl.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WSPortaApplicativaImpl.class.getName());
     private IDAOPortaApplicativa daoPortaApplicativa;
     private IDAOAzione daoAzione;
     private IDAOServizio daoServizio;

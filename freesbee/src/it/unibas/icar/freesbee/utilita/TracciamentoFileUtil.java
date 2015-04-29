@@ -8,12 +8,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
+import org.slf4j.LoggerFactory;
 
 public class TracciamentoFileUtil {
 
@@ -23,7 +24,8 @@ public class TracciamentoFileUtil {
     public static final String EGOV_IT = "http://www.cnipa.it/schemas/2003/eGovIT/Busta1_0/";
     public static final String XSI = "http://www.w3.org/2001/XMLSchema-instance";
     public static final String NS_EGOV = "http://www.cnipa.it/eGov_it/portadominio";
-    private static Log logger = LogFactory.getLog("TracciaFileUtil");
+//    private static Log logger = LogFactory.getLog("TracciaFileUtil");
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TracciamentoFileUtil.class.getName());
 
     public static void creaFile(Messaggio messaggioDaTracciare, String path) throws IOException {
         String nomeFile = "";

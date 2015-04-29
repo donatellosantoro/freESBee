@@ -6,12 +6,15 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 
 public class XMLStreamHelperFix implements XMLStreamConstants {
 
-    private static Log logger = LogFactory.getLog(XMLStreamHelperFix.class);
+//    private static Log logger = LogFactory.getLog(XMLStreamHelperFix.class);
+    private static final Logger logger = LoggerFactory.getLogger(XMLStreamHelperFix.class.getName());
 
     private XMLStreamHelperFix() {
     }
