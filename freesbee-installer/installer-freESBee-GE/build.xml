@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="thc" name="freesbeeGE">
+  	<!--CREATORE INSTALLER freESBeeGE-->
+	<property name="home.dir" location=""  />  
+	<property name="installer.dir" location="./installer"  />
+	<property name="installer.dist.dir" location="${home.dir}/dist"  />
+	
+	<property name="freesbeeGE.dir" location="../../codice/freesbeeGE"  />
+	<property name="freesbeeGE.dist.dir" location="${freesbeeGE.dir}/dist" />
+	<property name="freesbeeGE.misc.dir" location="${freesbeeGE.dir}/varie" />
+	<property name="freesbeewebGE.dir" location="../../codice/freesbeeWebGE"  />
+	<property name="freesbeewebGE.dist.dir" location="${freesbeewebGE.dir}/dist" />
+	<property name="freesbeewebGE.misc.dir" location="${freesbeewebGE.dir}/dist" />	
+
+	<target name="thc" depends="installer">
+	</target>
+	
+	<target name="installer" depends="-init-version" description="create installer freESBee">  
+		<ant antfile="${freesbeeGE.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freesbeeGE.dir}/build.xml" target="schemaexport" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freesbeeGE.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>	
+		
+		<ant antfile="${freesbeewebGE.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>		
+		<ant antfile="${freesbeewebGE.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>		
+		<delete dir="${installer.dist.dir}" failonerror="false" />
+		<mkdir dir="${installer.dist.dir}" />
+
+		<copy todir="${installer.dir}/template/db" overwrite="true" >
+			<fileset dir="${freesbeeGE.misc.dir}" includes="freesbeegenuovo.sql" />
+			<fileset dir="${freesbeeGE.misc.dir}" includes="insert.sql" />
+		</copy>  		
+
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbeeGE.dist.dir}" includes="freesbee-ge.war" />
+		</copy>  
+
+		<zip destfile="${installer.dir}/template/freesbee-ge.war" >
+		  <zipfileset src="${home.dir}/freesbee-ge.war" excludes="WEB-INF/classes/hibernate.properties, WEB-INF/classes/freesbee.properties, WEB-INF/classes/log4j.properties" >
+		  </zipfileset>
+		</zip>
+
+		<delete file="${home.dir}/freesbee-ge.war" failonerror="false" />
+		
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbeewebGE.dist.dir}" includes="freesbeeWeb-GE.war" />
+		</copy>  
+		
+		<zip destfile="${installer.dir}/template/freesbeeWeb-GE.war" >
+		  <zipfileset src="${home.dir}/freesbeeWeb-GE.war" excludes="WEB-INF/classes/log4j.properties" >
+		  </zipfileset>
+		</zip>
+
+		<delete file="${home.dir}/freesbeeWeb-GE.war" failonerror="false" />
+
+		<!--copy todir="${testfreesbee.build.dir}" overwrite="true" >
+			<fileset dir="${freesbeeTest.build.dir}" includes="**/*.*" />
+		</copy>  
+		<copy todir="${testfreesbee.lib.dir}" overwrite="true" >
+			<fileset dir="${freesbeeTest.lib.dir}" includes="**/*.*" />
+		</copy--> 	
+		<echo message="zip installer" />
+		<zip destfile="${installer.dist.dir}/installer-freESBeeGE${major.version}.${minor.version}-build${build.number}.zip" update="true" >
+			<fileset dir="${installer.dir}" includes="**/*.*" />
+		</zip>			
+	</target>
+
+	<target name="-init-version" depends="">
+		<buildnumber file="build.properties" />
+		<property file="build.properties" />    
+	</target>
+
+</project>

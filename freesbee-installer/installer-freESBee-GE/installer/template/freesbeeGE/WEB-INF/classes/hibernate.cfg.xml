@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="current_session_context_class">thread
+        </property>
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider
+        </property>
+        
+        <!--
+        <property name="hibernate.c3p0.min_size">1</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.timeout">1800</property>
+        <property name="hibernate.c3p0.min_statements">150</property>
+        -->
+        <property name="dialect">it.unibas.freesbee.ge.persistenza.hibernate.CustomPostgresqlDialect
+        </property>
+        
+         <!--
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
+        -->
+        <property name="show_sql">false
+        </property>
+        <property name="format_sql">false
+        </property>
+        
+        <!-- <property name="hbm2ddl.auto">create</property> -->
+
+        <!-- annotazioni -->
+        <mapping class="it.unibas.freesbee.ge.modello.Utente" />
+        <mapping class="it.unibas.freesbee.ge.modello.CategoriaEventiInterna" />
+        <mapping class="it.unibas.freesbee.ge.modello.CategoriaEventiEsterna" />
+        <mapping class="it.unibas.freesbee.ge.modello.PubblicatoreInterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.PubblicatoreEsterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.Sottoscrittore" />
+        <mapping class="it.unibas.freesbee.ge.modello.GestoreEventi" />
+        <mapping class="it.unibas.freesbee.ge.modello.FiltroContenuto" />
+        <mapping class="it.unibas.freesbee.ge.modello.FiltroData" />
+        <mapping class="it.unibas.freesbee.ge.modello.FiltroPubblicatoreInterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.FiltroPubblicatoreEsterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.SottoscrizioneInterna" />
+        <mapping class="it.unibas.freesbee.ge.modello.SottoscrizioneEsterna" />
+        <mapping class="it.unibas.freesbee.ge.modello.EventoPubblicatoInterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.EventoPubblicatoEsterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.StatoMessaggioInterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.StatoMessaggioEsterno" />
+        <mapping class="it.unibas.freesbee.ge.modello.Configurazione" />
+        <mapping class="it.unibas.freesbee.ge.modello.ConfigurazioneSP" />
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- freESBee installer -->
+<project name="freESBee installer"  default="install"  basedir="">
+    
+    <property file="${basedir}/ant.install.properties"/>
+    <property name="dir.webapps" location ="${dir.webapps}" />    
+
+	<property name="moduloInteroperabilita.webservices.indirizzo" value ="localhost" />
+	<property name="moduloInteroperabilita.webservices.port" value ="8195" />
+	<property name="uri.interoperabilita.registro.freesbee" value ="http://localhost:8195/ws/registroServizi?wsdl" />
+	<property name="uri.interoperabilita.registro.nica" value ="http://localhost:8195/nica/registroServizi" />
+	<property name="keystore.file" value ="freesbee.keystore" />
+	<property name="keystore.password" value ="freesbee" />
+
+    <target name="init" depends="">
+        <path id="driver.classpath">
+            <pathelement location="${basedir}/template/db/${db.driver.jar.name}"/>
+        </path> 
+    </target>
+	
+   <!-- WAR FREESBEE -->  
+    <target name="war" depends="" description="war freESBeeSP">
+        
+        <echo message="prepare folder" />
+        <mkdir dir="${basedir}/temp" />
+
+		<mkdir dir="${basedir}/temp/freesbeesp" />
+
+        <copy todir="${basedir}/temp/freesbeesp" overwrite="true" >   
+            <fileset dir="${basedir}/template/freesbeesp" includes="**/*.*" />
+        </copy>
+		
+		<echo message="Configurazione freESBeeSP PROPERTIES" />
+        <replace dir="${basedir}/temp/freesbeesp/WEB-INF/classes">
+			<replacefilter token="@FREESBEESP.DIR.CONFIG@"       value="${configdir}"/>
+            <replacefilter token="@CERTIFICATO.SP.FILE@"       value="${sp.keystore.file.path}"/>
+            <replacefilter token="@CERTIFICATO.SP.NOME@"       value="${sp.keystore.name}"/>
+            <replacefilter token="@CERTIFICATO.SP.PASSWORD@"      value="${sp.keystore.password}"/>
+			<replacefilter token="@CERTIFICATO.IDP.FILE@"       value="${idp.keystore.file.path}"/>
+            <replacefilter token="@CERTIFICATO.IDP.NOME@"       value="${idp.keystore.name}"/>
+            <replacefilter token="@CERTIFICATO.IDP.PASSWORD@"      value="${idp.keystore.password}"/>				
+			<replacefilter token="@INDIRIZZO.ENDPOINT.EROGATORE@"          value="${freesbee.webservices.indirizzo}"/>		
+			<replacefilter token="\"          value="/" />				
+        </replace>
+		
+		<echo message="Configurazione di log4j per freESBee" />
+        <replace dir="${basedir}/temp/freesbeesp/WEB-INF/classes">
+            <replacefilter token="@LOG4J.APPENDER.LOGFILE.DIR@"       value="${log4j.appender.logfile.dir}"/>	
+			<replacefilter token="\"          value="/" />					
+        </replace>	
+		
+		<copy todir="${basedir}" overwrite="true" >
+			<fileset dir="${basedir}/template" includes="freesbeesp.war" />
+		</copy>
+        <echo message="war freESBee-SP" />		
+		<war destfile="${basedir}/freesbeesp.war" update="true" duplicate="add" >
+			<fileset dir="${basedir}/temp/freesbeesp" includes="WEB-INF/classes/freesbeesp.properties" />
+			<fileset dir="${basedir}/temp/freesbeesp" includes="WEB-INF/classes/log4j.properties" />
+		</war>
+
+    </target>
+    	
+     <!-- CONFIG FREESBEESP --> 
+    <target name="copy-install" depends="war" description="install">
+        <copy todir="${dir.webapps}" overwrite="true" >
+            <fileset dir="${basedir}" includes="freesbeesp.war" />
+        </copy>  
+		
+        <copy todir="${configdir}" overwrite="true" >
+            <fileset dir="${basedir}/template/configurazione" includes="configurazione.xml" />
+        </copy>  
+
+<!--
+        <copy todir="${keystore.dir.path}" overwrite="true" >
+            <fileset dir="${basedir}/template/certificati" includes="**/*.*" />
+        </copy>  
+        -->
+		
+        <delete dir="${basedir}/temp" />
+    </target>   
+        
+     <target name="install" depends="copy-install" description="crea e riempie la base di dati">
+	</target>
+
+</project>
+

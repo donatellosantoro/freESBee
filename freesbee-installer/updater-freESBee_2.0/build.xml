@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="updatefreesbee">
+ 
+ <!-- ***************************************************
+            Importazione del template
+      *************************************************** -->
+
+    <import file="./swing-template-build.xml" />
+
+    <target name="-init-folders" depends="build-freesbee">
+        <!-- Cartelle -->
+        <property name="src.dir" location="./src" />
+        <property name="test.src.dir" location="./test" />
+        <property name="build.dir" location="./build/classes" />
+        <property name="test.dir" location="./build/test" />
+        <property name="test.build.dir" location="${test.dir}/classes" />
+        <property name="test.report.dir" location="${test.dir}/report" />
+        <property name="test.data.dir" location="${test.src.dir}/dati" />
+        <property name="dist.dir" location="./dist" />
+        <property name="utilita.src.dir" location="../utilita/src" />
+        <property name="utilita.build.dir" location="../utilita/build/classes" />
+        <property name="javadoc.dir" location="./dist/javadoc" />
+        <property name="utilita.javadoc.dir" location="../utilita/dist/javadoc" />    
+        <property name="misc.dir" location="./varie" />
+        <property name="resources.dir" location="${misc.dir}/risorse" />
+        <property name="conf.dir" location="${src.dir}/conf" />
+        <condition property="test.data.dir.present">
+            <available file="${test.data.dir}" type="dir" />    
+        </condition>
+        <condition property="resources.dir.present">
+            <available file="${resources.dir}" type="dir" />    
+        </condition>
+        <condition property="conf.dir.present">
+            <available file="${conf.dir}" type="dir" />    
+        </condition>
+        <delete dir="${resources.dir}/templateFolder"/>
+        <copy todir="${resources.dir}/templateFolder">
+            <fileset dir="../freesbee/build/freesbee" />
+        </copy>
+    </target>
+    
+    <target name="-init-build-files" depends="init">
+        <fileset id="build.file.templates" dir="..">
+            <include name="console-template-build.xml" />
+            <include name="console-logging-template-build.xml" />
+        </fileset>
+    </target>
+
+    <target name="build-freesbee" depends="" description="ricrea freesbee">
+        <ant dir="../freesbee/" inheritAll="false" target="clean-all" />
+        <ant dir="../freesbee/" inheritAll="false" target="build" />
+    </target>
+
+</project>

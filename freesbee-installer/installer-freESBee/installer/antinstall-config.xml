@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+	ui="swing,text"
+	verbose="true"
+	debug="false"
+	lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+	antialiased="true"
+	name="freESBee installer"
+	windowIcon="/resources/antbar.png"
+	wide="600:500"
+	defaultImageResource="/resources/antbar.png"
+	minJavaVersion="1.4"
+	finishButtonText="Install"
+	version="1.0">
+<!--
+	<page
+		type="splash"
+		name="splash"
+		displayText="freESBee Installer version "
+		splashResource="/resources/freesbeeinstaller-splash.png"
+		altText="Benvenuto nell'installazione di freESBee"/>
+
+	<page
+		type="license"
+		name="license"
+		displayText="License conditions"
+		resource="/resources/LICENSE-ant-install.txt"
+		usePaging="true">
+	</page>
+ -->
+	<page
+		type="input"
+		name="intro"
+		displayText="Benvenuti nell'ambiente di installazione di freESBee!">
+		<comment
+			explanatoryText="Questa distribuzione include software prodotto dal gruppo freESBee UNIBAS." />
+		<comment
+			explanatoryText="Il software e' distribuito senza alcuna garanzia, per quanto consentito dalle vigenti normative." />
+		<comment
+			explanatoryText=" Il seguente prodotto viene distribuito secondo la licenza GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html) " />  
+		<comment
+			explanatoryText="Per maggiori informazioni sul prodotto:" />
+		<comment
+			explanatoryText="       http://freesbee.unibas.it" bold="true"/>
+	</page>
+
+	<page
+		type="input"
+		name="istruzioni"
+		displayText="Note sull'installazione di freESBee!">
+		<comment
+			explanatoryText="Prima di procedere con l'installazione bisogna:" />
+		<comment
+			explanatoryText=" - creare un utente sul proprio DBMS" />
+		<comment
+			explanatoryText="  es: CREATE ROLE freesbee LOGIN ENCRYPTED PASSWORD ' ';" />
+
+		<comment
+			explanatoryText=" - creare una base di dati con l'utente creato in precedenza(es: freesbee)" />
+		<comment
+			explanatoryText=" (es: CREATE DATABASE freesbee;)" />
+	</page>
+
+   	<page 
+	type="input" 
+	name="properties"
+	displayText="Configurazione freESBee DBMS ">	
+		<text 
+			defaultValue="freesbee" 
+			property="db.freesbee" 
+			displayText="Nome database freesbee:" />
+		<text 
+			defaultValue="localhost" 
+			property="db.freesbee.uri" 
+			displayText="URI del server DBMS per il database freesbee:" />	
+		<text 
+			defaultValue="5432" 
+			property="db.freesbee.porta" 
+			displayText="Porta di ascolto del DBMS per il database freesbee:" />	
+	<!--				
+		<text 
+			defaultValue="nica_dbwsa" 
+			property="db.inf2" 
+			displayText="Nome database per gli SLA:" />
+		<text 
+			defaultValue="localhost" 
+			property="db.inf2.uri" 
+			displayText="URI del server DBMS per il database per gli SLA: (es. 127.0.0.1)" />	
+		<text 
+			defaultValue="5432" 
+			property="db.inf2.porta" 
+			displayText="Porta di ascolto del DBMS per il database per gli SLA: (es. per postgresql 5432)" />
+	-->
+	<!--
+		<text 
+			defaultValue="org.postgresql.Driver" 
+			property="driver.db" 
+			displayText="Driver database:" />
+	-->
+		<text 
+			defaultValue="" 
+			property="db.user" 
+			displayText="User utente db:" />
+		<text 
+			defaultValue="" 
+			property="db.password" 
+			displayText="Password utente db:" />
+	<!--
+		<select
+			defaultValue="postgresql" property="db.tipo" displayText="Selezionare il DBMS">
+			<option value="postgresql" text="Database PostgreSQL" />
+			<option value="mysql" text="Database MySQL" />
+		</select>
+	-->
+	</page>
+	 
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBee SSL">
+
+	<directory 
+		property="keystore.dir.path"
+		displayText="Cartella di installazione del certificato SSL:" 
+		defaultValueWin="C:\certificato"
+		create="true" defaultValue="/home/certificato"/>			
+	<comment
+		explanatoryText="E' la cartella per l'installazione del certificato" />
+   	</page>
+
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBee">
+		<!--<text defaultValue="localhost" property="freesbee.webservices.indirizzo" displayText="indirizzo freesbee:" />-->
+		<comment 
+			explanatoryText="Configurazione dell'URL per accedere da freesbeeWeb:" />
+		<text 
+			defaultValue="localhost" 
+			property="freesbee.webservices.indirizzo" 
+			displayText="Indirizzo del WS di freesbee:" />
+			
+		<text 
+			defaultValue="8191" 
+			property="freesbee.webservices.port" 
+			displayText="Porta dei WS di freesbee:" />
+			
+		<!-- <comment 
+			explanatoryText="" /> -->
+		<text 
+			defaultValue="8192" 
+			property="freesbee.pd.port" 
+			displayText="Porta di ascolto della PortaDelegata:" />
+			
+		<text 
+			defaultValue="8196" 
+			property="freesbee.pa.port" 
+			displayText="Porta di ascolto della PortaApplicativa:" />
+			
+		<text 
+			defaultValue="0" 
+			property="moduloInteroperabilita.webservices.port" 
+			displayText="Porta del modulo d'interoperabilità (0 disabilitato):" />
+
+	<!--	<text 
+			defaultValue="localhost" 
+			property="inf2.tracciatura.webservices.indirizzo" 
+			displayText="indirizzo inf2:" />
+		<text 
+			defaultValue="8190" 
+			property="inf2.tracciatura.webservices.port" 
+			displayText="Porta di ascolto dei web services per gli SLA:" />
+	-->
+	</page>
+	
+	
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione Application Server">
+		
+		<text 
+			defaultValue="freesbee.war" 
+			property="freesbee.war.name" 
+			displayText="Nome del war:" />
+			
+		<directory 
+			property="dir.webapps"
+			displayText="Cartella di deploy (ex. webapps in tomcat):" 
+			defaultValueWin="C:\apache tomcat\webapps"
+			create="true" defaultValue="/home/"/> 
+			
+		<!--<directory 
+			property="log4j.appender.logfile.dir"
+			displayText="Cartella salvataggio log:" 
+			defaultValueWin="C:\tmp\log"
+			create="true" 
+			defaultValue="/home/log" />-->			
+		<directory 
+			property="logback.appender.logfile.dir"
+			displayText="Cartella salvataggio log:" 
+			defaultValueWin="C:\tmp\log"
+			create="true" 
+			defaultValue="/home/log" />
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i file di log" />
+			
+		<checkbox defaultValue="true" property="tracciamento.abilitato"
+    		displayText="Abilita tracciamento messaggi" />
+			
+		<directory 
+			property="tracciamento.cartella.dir"
+			displayText="Cartella salvataggio messaggi:" 
+			defaultValueWin="C:\tmp\tracciamento\"
+			create="true" 
+			defaultValue="/home/tracciamento/" /> 
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i messaggi in formato XML" />
+   	</page>
+	 
+   	<page
+		type="progress"
+		name="progress"
+		showTargets="true"
+		displayText="Installation progress"/>
+</installer>

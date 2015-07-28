@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="" name="freESBee-SLA">
+  	<!--CREATORE INSTALLER freESBee SLA-->
+	<property name="home.dir" location=""  />  
+	<property name="installer.dir" location="./installer"  />
+	<property name="installer.dist.dir" location="${home.dir}/dist"  />
+  	<!--nome della cartella di progetto di freESBee-Sla in codice svn-->	
+	<property name="freESBeeSLA.project.name" value="freesbeeSLA" />
+	<property name="freESBeeSLA.dir" location="../../codice/${freESBeeSLA.project.name}"  />
+	<property name="freESBeeSLA.dist.dir" location="${freESBeeSLA.dir}/dist" />
+	<property name="freESBeeSLA.misc.dir" location="${freESBeeSLA.dir}/varie" />	
+	<property name="freESBeeSLA.war.name" value="freesbee-Sla.war" />
+	
+  	<!--nome della cartella di progetto freESBeeWeb-Sla in codice svn -->	
+	<property name="freESBeeWebSLA.project.name" value="freesbeeWebSla" />
+	<property name="freESBeeWebSLA.dir" location="../../codice/${freESBeeWebSLA.project.name}"  />	
+	<property name="freESBeeWebSLA.dist.dir" location="${freESBeeWebSLA.dir}/dist" />
+	<property name="freESBeeWebSLA.misc.dir" location="${freESBeeWebSLA.dir}/varie" />
+	<property name="freESBeeWebSLA.war.name" value="freesbeeWeb-Sla.war" />
+	
+	<property name="freesbee.dir" location="../../codice/freesbee"  />
+	<property name="freesbee.dist.dir" location="${freesbee.dir}/dist" />
+	<property name="freesbee.misc.dir" location="${freesbee.dir}/varie" />
+	<property name="freesbee.certificato.dir" location="${freesbee.misc.dir}/certificato" />
+
+	<target name="installer" depends="-init-version" description="create installer freESBee-Sla">  
+
+		<ant antfile="${freESBeeSLA.dir}/build.xml" target="torque-clean" inheritAll="false" inheritRefs="false"/>		
+		<ant antfile="${freESBeeSLA.dir}/build.xml" target="torque-all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freESBeeSLA.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freESBeeSLA.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>	
+		
+		<ant antfile="${freESBeeWebSLA.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>		
+		<ant antfile="${freESBeeWebSLA.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>
+
+		<delete dir="${installer.dist.dir}" failonerror="false" />
+		<mkdir dir="${installer.dist.dir}" />
+		
+		<copy todir="${installer.dir}/template/certificato" overwrite="true" >
+			<fileset dir="${freesbee.certificato.dir}" includes="**/*.*" />
+		</copy> 
+		
+		<copy todir="${installer.dir}/template/db" overwrite="true" >
+			<fileset dir="${freesbee.misc.dir}" includes="insert.sql" />
+		</copy>
+		
+		<copy todir="${installer.dir}/template/db/freesbeeSla" overwrite="true" >
+			<fileset dir="${freESBeeSLA.misc.dir}" includes="freesbeeSla-schema_no_drop.sql" />
+			<fileset dir="${freESBeeSLA.misc.dir}" includes="insert.sql" />
+		</copy>  
+
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freESBeeSLA.dist.dir}" includes="${freESBeeSLA.war.name}" />
+		</copy>  
+		
+		<zip destfile="${installer.dir}/template/${freESBeeSLA.war.name}" >
+		  <zipfileset src="${home.dir}/${freESBeeSLA.war.name}" excludes="WEB-INF/classes/torque-runtime.properties, WEB-INF/classes/freesbeesla.properties, WEB-INF/classes/log4j.properties, WEB-INF/beansCXF.xml" >
+		  </zipfileset>
+		</zip>
+		<delete file="${home.dir}/${freESBeeSLA.war.name}" failonerror="false" />
+		
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freESBeeWebSLA.dist.dir}" includes="${freESBeeWebSLA.war.name}" />
+		</copy>  
+		
+		<zip destfile="${installer.dir}/template/${freESBeeWebSLA.war.name}" >
+		  <zipfileset src="${home.dir}/${freESBeeWebSLA.war.name}" excludes="WEB-INF/classes/log4j.properties" >
+		  </zipfileset>
+		</zip>
+		<delete file="${home.dir}/${freESBeeWebSLA.war.name}" failonerror="false" />
+
+		<echo message="zip installer di freESBee-SLA" />
+		<zip destfile="${installer.dist.dir}/installer-freESBee-SLA-${major.version}.${minor.version}-build${build.number}.zip" update="true" >
+			<fileset dir="${installer.dir}" includes="**/*.*" />
+		</zip>
+	</target>
+	
+	<target name="-init-version" depends="">
+		<buildnumber file="build.properties" />
+		<property file="build.properties" />    
+	</target>
+</project>

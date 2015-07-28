@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:soap="http://cxf.apache.org/bindings/soap"
+    xmlns:cxf="http://cxf.apache.org/core"
+    xmlns:wsx="http://www.webserviceX.NET"
+    xsi:schemaLocation=
+       "http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws
+        http://cxf.apache.org/schemas/jaxws.xsd
+        http://cxf.apache.org/simple
+        http://cxf.apache.org/schemas/simple.xsd
+        http://cxf.apache.org/core 
+        http://cxf.apache.org/schemas/core.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-*.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+  
+  <!-- WS EFFETTIVI -->
+    <!-- DA NON MODIFICARE -->
+    <!-- WS effettivo per il monitoraggio dello stato dei servizi -->
+    <jaxws:endpoint id="publishedEndpointServiceTermStateFreESBee" name="ServiceTermStateFreESBee"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/termstate/ServiceTermStateFreESBee"
+                    implementor="it.unibas.freesbeesla.monitoraggio.servicetermstate.ws.server.ServiceTermStateImpl" 
+                    address="/ws/monitoraggio/termstate/ServiceTermStateFreESBee" >
+    </jaxws:endpoint>
+    
+    <!-- DA NON MODIFICARE -->
+    <!-- WS effettivo per il monitoraggio dello stato dei servizi invocato da altri nica -->
+    <!-- L'implementazione e' la stessa ma qui viene aggiunto un intercettore all'uscita -->
+    <!-- I messaggi prima di arrivare qui vengo rilaborati -->
+    <jaxws:endpoint id="publishedEndpointServiceTermStateNica" name="ServiceTermStateNica"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/termstate/ServiceTermStateNica"
+                    implementor="it.unibas.freesbeesla.monitoraggio.servicetermstate.ws.server.ServiceTermStateImpl" 
+                    address="/ws/monitoraggio/termstate/ServiceTermStateNica" >
+        <jaxws:outInterceptors>
+            <bean id="mediatorOutState" class="it.unibas.freesbeesla.interoperabilita.MediatorOutInterceptorServiceTermState"/>
+        </jaxws:outInterceptors>
+    </jaxws:endpoint>
+    
+    <!-- DA NON MODIFICARE -->
+    <!-- WS effettivo per il monitoraggio degli sla dei servizi -->
+    <jaxws:endpoint id="publishedEndpointServiceGuaranteeTermStateFreESBee"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/guaranteetermstate/ServiceGuaranteeTermStateFreESBee"
+                    implementor="it.unibas.freesbeesla.monitoraggio.serviceguaranteetermstate.ws.server.ServiceGuaranteeTermStateImpl"     
+                    address="/ws/monitoraggio/guaranteetermstate/ServiceGuaranteeTermStateFreESBee">
+    </jaxws:endpoint> 
+    
+    <!-- DA NON MODIFICARE -->
+    <!-- WS effettivo per il monitoraggio degli sla dei servizi invocato da altri nica -->
+    <!-- L'implementazione è la stessa ma qui viene aggiunto un intercettore all'uscita -->
+    <!-- I messaggi prima di arrivare qui vengo rilaborati -->
+    <jaxws:endpoint id="publishedEndpointServiceGuaranteeTermStateNica"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/guaranteetermstate/ServiceGuaranteeTermStateNica"
+                    implementor="it.unibas.freesbeesla.monitoraggio.serviceguaranteetermstate.ws.server.ServiceGuaranteeTermStateImpl"     
+                    address="/ws/monitoraggio/guaranteetermstate/ServiceGuaranteeTermStateNica">
+        <jaxws:outInterceptors>
+            <bean id="mediatorOutSla" class="it.unibas.freesbeesla.interoperabilita.MediatorOutInterceptorServiceGuaranteeTermState"/>
+        </jaxws:outInterceptors>
+    </jaxws:endpoint> 
+	<!-- ******************* -->
+
+    <!-- WEB SERVICES PER LE STATITSTICHE SUL MONITORAGGIO  -->
+    <!--http://localhost:8080/freesbeesla/ws/monitoraggio/ServiceMonitoraggioStatistiche?wsdl-->
+    <jaxws:endpoint id="publishedEndpointServiceWSMonitoraggioStatistiche"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/ServiceMonitoraggioStatistiche"
+                    implementor="it.unibas.freesbeesla.ws.web.WSMonitoraggioStatisticheImpl"   
+                    address="/ws/monitoraggio/ServiceMonitoraggioStatistiche">
+    </jaxws:endpoint> 
+    
+    <!--http://localhost:8080/freesbeesla/ws/autenticazione?wsdl-->
+    <jaxws:endpoint id="publishedEndpointAutenticazione"
+                   publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/autenticazione"
+                   implementor="it.unibas.freesbeesla.ws.web.WSAutenticazioneImpl"
+                    address="/ws/autenticazione">
+    </jaxws:endpoint> 
+    
+    <!--http://localhost:8080/freesbeesla/ws/configurazione/ServiceConfigura?wsdl-->
+    <jaxws:endpoint id="publishedEndpointServiceConfigura"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/configurazione/ServiceConfigura"
+                    implementor="it.unibas.freesbeesla.ws.web.WSConfiguraImpl"     
+                    address="/ws/configurazione/ServiceConfigura">
+    </jaxws:endpoint> 
+    
+    <!--http://localhost:8080/freesbeesla/ws/soggetto/ServiceSoggetto?wsdl-->
+    <jaxws:endpoint id="publishedEndpointServiceSoggetto"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/soggetto/ServiceSoggetto"
+                    implementor="it.unibas.freesbeesla.ws.web.WSSoggettoImpl"     
+                    address="/ws/soggetto/ServiceSoggetto">
+    </jaxws:endpoint> 
+    <!--http://localhost:8080/freesbeesla/ws/servizio/ServiceServizio?wsdl-->
+    <jaxws:endpoint id="publishedEndpointServiceServizio"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/servizio/ServiceServizio"
+                    implementor="it.unibas.freesbeesla.ws.web.WSServizioImpl"   
+                    address="/ws/servizio/ServiceServizio">
+    </jaxws:endpoint> 
+    
+    <!-- WEB SERVICES TRACCIATURA -->
+    <!--http://localhost:8080/freesbeesla/ws/sistematracciatura/TraceSystem?wsdl-->
+    <jaxws:endpoint id="publishedEndpointServiceTraceSystemPortType"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/sistematracciatura/TraceSystem"
+                    implementor="it.unibas.freesbeesla.tracciatura.ws.server.TraceSystemPortTypeImpl" 
+                    address="/ws/sistematracciatura/TraceSystem">
+    </jaxws:endpoint> 
+    
+    <!-- MODULO DI INTEROPERABILITA' -->
+    <!--http://192.168.1.9:8080/freesbeesla/ws/registroServizi?wsdl-->
+    <jaxws:endpoint id="publishedEndpointServiceWSRegistroServiziFreesbee"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/registroServizi"
+                    implementor="it.unibas.icar.interfreesbee.freesbee.registroservizi.WSRegistroServiziImpl"   
+                    address="/ws/registroServizi">
+    </jaxws:endpoint> 
+    
+    
+    <!-- WEB SERVICES MONITORAGGIO INVOCABILI DA PD -->
+    <!-- WS invocabile dall'esterno  che si occupa di smistare i messaggi ricevuti ai due WS effettivi per il monitoraggio dello stato -->
+    <jaxws:endpoint id="publishedEndpointServiceTermState"  name="ServiceTermState"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/termstate/ServiceTermState"
+                    implementor="it.unibas.freesbeesla.monitoraggio.servicetermstate.ws.server.ServiceTermStateImpl" 
+                    address="/ws/monitoraggio/termstate/ServiceTermState">
+        <jaxws:inInterceptors>
+            <bean id="mediatorInState" class="it.unibas.freesbeesla.interoperabilita.MediatorInInterceptorServiceTermState"/>
+        </jaxws:inInterceptors>
+    </jaxws:endpoint>
+    
+    <!-- WS invocabile dall'esterno  che si occupa di smistare i messaggi ricevuti ai due WS effettivi per il monitoraggio degli sla -->
+    <jaxws:endpoint id="publishedEndpointServiceGuaranteeTermState"
+                    publishedEndpointUrl="http://@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@:8080/@FREESBEESLA.NAME@/ws/monitoraggio/guaranteetermstate/ServiceGuaranteeTermState"
+                    implementor="it.unibas.freesbeesla.monitoraggio.serviceguaranteetermstate.ws.server.ServiceGuaranteeTermStateImpl"     
+                    address="/ws/monitoraggio/guaranteetermstate/ServiceGuaranteeTermState">
+        <jaxws:inInterceptors>
+            <bean id="mediatorInSla" class="it.unibas.freesbeesla.interoperabilita.MediatorInInterceptorServiceGuaranteeTermState"/>
+        </jaxws:inInterceptors>
+    </jaxws:endpoint> 
+    <!-- ******************* -->
+</beans>

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!-- freESBee SLA installer-->
+<project name="freESBee SLA installer"  default="install"  basedir="">
+    <property file="${basedir}/ant.install.properties"/>
+    <property name="dir.webapps" location ="${dir.webapps}" />    
+    <property name="db.driver.name" value ="postgresql-8.1-409.jdbc3.jar" />
+    <property name="db.driver" value ="org.postgresql.Driver" />
+	
+	<property name="dbms.name" value ="postgresql" />
+
+	<property name="freESBeeSLA.war.name" value="freesbee-Sla.war" />
+	<property name="freESBeeSLA.name" value="freesbee-Sla" />
+	<property name="freESBeeWebSLA.war.name" value="freesbeeWeb-Sla.war" />
+	<property name="indirizzo.freesbeesla.endpoint.webservices.cxf" value="${freesbeesla.webservices.indirizzo}" />
+	
+	<property name="namespace.freesbee" value="http://registroservizi.ws.freesbee.icar.unibas.it/" />
+	
+	<property name="db.freesbeesla" value="freesbee_sla" />
+	<property name="url.postgresql.freesbeesla" value ="jdbc:${dbms.name}://${db.freesbeesla.uri}:${db.freesbeesla.porta}/${db.freesbeesla}" />
+	<!-- 	
+	<property name="keystore.file" value ="freesbee.keystore" />
+	<property name="keystore.password" value ="freesbee" />
+	--> 
+    <target name="init" depends="">
+        <path id="driver.classpath">
+            <pathelement location="${basedir}/template/db/freesbeeSla/${db.driver.name}"/>
+        </path> 
+    </target>   
+
+      <target name="install" depends="copy-install, db" description="install">
+	</target>  
+
+	 <!-- CONFIG freESBee-SLA --> 
+    <target name="copy-install" depends="war" description="install">
+        <copy todir="${dir.webapps}" overwrite="true" >
+            <fileset dir="${basedir}" includes="${freESBeeSLA.war.name}" />
+        </copy>  
+		
+        <copy todir="${dir.webapps}" overwrite="true" >
+            <fileset dir="${basedir}/template" includes="${freESBeeWebSLA.war.name}" />
+        </copy>  
+		<!-- 
+		<if>
+			<equals arg1="${installaCertificato}" arg2="true" />
+				<then>
+					<copy todir="${keystore.dir.path}" overwrite="true" >
+						<fileset dir="${basedir}/template/certificato" includes="**/*.*" />
+					</copy>  
+					
+				</then>
+		</if>
+		--> 
+		<delete dir="${basedir}/temp" />	
+    </target>
+
+	<!-- WAR freESBeeSLA -->  
+    <target name="war" depends="" description="WAR freESBeeSLA">
+        <echo message="prepare folder" />
+        <mkdir dir="${basedir}/temp" />
+		<mkdir dir="${basedir}/temp/freesbeeSla" />
+		<mkdir dir="${basedir}/temp/freesbeeWebSla" />
+
+		<copy todir="${basedir}/temp/freesbeeSla" overwrite="true" >   
+			<fileset dir="${basedir}/template/freesbeeSla" includes="**/*.*" />
+        </copy>    
+		
+        <copy todir="${basedir}/temp/freesbeeWebSla" overwrite="true" >   
+            <fileset dir="${basedir}/template/freesbeeWebSla" includes="**/*.*" />
+        </copy>
+  	
+        <echo message="Configurazione freESBee-SLA torque" />
+        <replace dir="${basedir}/temp/freesbeeSla/WEB-INF/classes">
+            <replacefilter token="@DATABASE.FREESBEESLA.DBMS.DRIVER@"       value="${db.driver}"/>
+            <replacefilter token="@DATABASE.FREESBEESLA.DBMS.URL.DATABASE@"      value="${url.postgresql.freesbeesla}"/>
+			<replacefilter token="@DATABASE.FREESBEESLA.DBMS.NAME@"          value="${dbms.name}"/>	
+			<replacefilter token="@DATABASE.FREESBEESLA.NAME@"          value="${db.freesbeesla}"/>
+            <replacefilter token="@DATABASE.FREESBEESLA.DBMS.USER.NAME@"          value="${db.user}"/>
+            <replacefilter token="@DATABASE.FREESBEESLA.DBMS.USER.PASSWORD@"          value="${db.password}"/>	
+        </replace>
+		
+		<echo message="Configurazione freESBee-SLA PROPERTIES" />
+        <replace dir="${basedir}/temp/freesbeeSla/WEB-INF/classes">
+            <replacefilter token="@FREESBEESLA.WEB.SERVICES.INDIRIZZO@"       value="${freesbeesla.webservices.indirizzo}"/>
+			<!--costanti eliminate -->
+			<!--
+			<replacefilter token="@WEBSERVICES.FREESBEESLA.INTEROPERABILITA.PORT@"      value="${freesbeesla.webservices.interoperabilita.port}"/>
+			<replacefilter token="@NOME.SOGGETTO.EROGATORE.MONITORAGGIO@"      value="${nome.soggetto.erogatore.monitoraggio}"/>
+			<replacefilter token="@NOME.SERVIZIOMONITORAGGIO.STATO@"    	value="${nome.serviziomonitoraggio.stato}"/>
+			<replacefilter token="@NOME.SERVIZIOMONITORAGGIO.SLA@"      	value="${nome.serviziomonitoraggio.sla}"/>
+			<replacefilter token="@KEYSTORE.DIR.PATH@"          			value="${keystore.dir.path}"/>
+			<replacefilter token="@KEYSTORE.FILE@"          				value="${keystore.file}"/>
+			<replacefilter token="@KEYSTORE.PASSWORD@"          			value="${keystore.password}"/>		
+			-->
+			<!--<replacefilter token="@FREESBEESLA.WEB.SERVICES.PORT@"      value="${freesbeesla.webservices.port}"/> -->
+			<replacefilter token="@NAMESPACE.FREESBEE@"      value="${namespace.freesbee}"/>
+			<replacefilter token="@INDIRIZZO.REGISTRO.SERVIZI@"      value="${indirizzo.registro.servizi}"/>
+
+			<replacefilter token="@URL.PORTEDELEGATA.MONITORAGGIO.STATO@"   value="${url.portadelegata.monitoraggio.stato}"/>
+			<replacefilter token="@URL.PORTEDELEGATA.MONITORAGGIO.SLA@"     value="${url.portadelegata.monitoraggio.sla}"/>	
+			<replacefilter token="\"          								value="/" />		
+        </replace>
+				
+		<echo message="Configurazione freESBee-SLA BEAN-CXF.xml" />
+        <replace dir="${basedir}/temp/freesbeeSla/WEB-INF">
+            <replacefilter token="@INDIRIZZO.FREESBEESLA.ENDPOINT.WEBSERVICES.CXF@"       value="${indirizzo.freesbeesla.endpoint.webservices.cxf}"/>		
+            <replacefilter token="@FREESBEESLA.NAME@"       value="${freESBeeSLA.name}"/>		
+			</replace>
+		
+		<echo message="Configurazione di log4j per freESBee-SLA" />
+        <replace dir="${basedir}/temp/freesbeeSla/WEB-INF/classes">
+            <replacefilter token="@LOG4J.APPENDER.LOGFILE.DIR@"       value="${log4j.appender.logfile.dir}"/>	
+			<replacefilter token="\"          value="/" />	
+        </replace>	
+		
+ 		<echo message="Configurazione di log4j per freESBeeWeb-SLA" />
+        <replace dir="${basedir}/temp/freesbeeWebSla/WEB-INF/classes">
+            <replacefilter token="@LOG4J.APPENDER.LOGFILE.DIR@"       value="${log4j.appender.logfile.dir}"/>
+			<replacefilter token="\"          value="/" />	
+        </replace>	
+		
+		<copy todir="${basedir}" overwrite="true" >
+			<fileset dir="${basedir}/template" includes="${freESBeeSLA.war.name}" />
+		</copy>
+		
+		<echo message="war freesbee-SLA" />		
+		<war destfile="${basedir}/${freESBeeSLA.war.name}" update="true" duplicate="add" >
+			<fileset dir="${basedir}/temp/freesbeeSla" includes="WEB-INF/classes/freesbeesla.properties" />
+			<fileset dir="${basedir}/temp/freesbeeSla" includes="WEB-INF/classes/torque-runtime.properties" />
+			<fileset dir="${basedir}/temp/freesbeeSla" includes="WEB-INF/classes/log4j.properties" />
+			<fileset dir="${basedir}/temp/freesbeeSla" includes="WEB-INF/beansCXF.xml" />
+		</war>
+		
+		<copy todir="${basedir}" overwrite="true" >
+			<fileset dir="${basedir}/template" includes="${freESBeeWebSLA.war.name}" />
+		</copy>
+		
+        <echo message="war freesbeeWeb SLA" />		
+		<war destfile="${basedir}/${freESBeeWebSLA.war.name}" update="true" duplicate="add" >
+			<fileset dir="${basedir}/temp/freesbeeWebSla" includes="WEB-INF/classes/log4j.properties" />
+		</war>    
+    </target>
+
+   <!-- ********************Gestione della base di dati*******************************-->   
+    <target name="db" depends="db-create-tables-freesbeesla, db-insert-freesbeesla" description="crea e riempie la base di dati">
+    </target>
+
+	<target name="db-create-tables-freesbeesla" depends="" description="Crea le tabelle nella base di dati">
+        <sql   driver="${db.driver}"  
+               onerror="continue"
+               url="${url.postgresql.freesbeesla}"
+               userid="${db.user}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>   
+            <transaction src="${basedir}/template/db/freesbeeSla/freesbeeSla-schema_no_drop.sql" />
+        </sql>
+    </target>
+
+	<target name="db-insert-freesbeesla" depends="" description="Effettua gli inserimenti nella base di dati">
+        <sql   driver="${db.driver}"  
+               onerror="continue"
+               url="${url.postgresql.freesbeesla}"
+               userid="${db.user}"
+               password="${db.password}">
+            
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath> 
+            
+            <transaction src="${basedir}/template/db/freesbeeSla/insert.sql" />
+        </sql>  
+    </target>
+	
+	
+</project>
+

@@ -1,0 +1,333 @@
+<?xml version="1.0"?>
+<!--
+sil-vio installer
+-->
+<project name="sil-vio installer"  default="install"  basedir="">
+    
+	<property name="silvio.name.war" value ="sil-vio.war" />
+
+	<property name="silvio.web.services.indirizzo" value ="localhost" />
+	<property name="silvio.web.services.port" value ="9191" />
+	<property name="silvio.servizio.asincrono.port" value ="9193" />
+	
+    <property file="${basedir}/ant.install.properties"/>
+    <property name="dir.webapps" location ="${dir.webapps}" />    
+    <property name="db.driver.jar.name" value ="postgresql-8.1-409.jdbc3.jar" />
+    <property name="db.driver" value ="org.postgresql.Driver" />
+	
+	<property name="dbms.name" value ="postgresql" />
+	
+    <property name="url.postgresql.silvio" value ="jdbc:${dbms.name}://${db.silvio.uri}:${db.silvio.porta}/${db.silvio}" />
+	
+	<property name="db.ap1fruitore.uri" value ="${db.silvio.uri}" />
+	<property name="db.ap1fruitore.porta" value ="${db.silvio.porta}" />
+    <property name="url.postgresql.ap1fruitore" value ="jdbc:${dbms.name}://${db.ap1fruitore.uri}:${db.ap1fruitore.porta}/${db.ap1fruitore}" />
+ 
+	<property name="db.ap1erogatore.uri" value ="${db.silvio.uri}" />
+	<property name="db.ap1erogatore.porta" value ="${db.silvio.porta}" /> 
+	<property name="url.postgresql.ap1erogatore" value ="jdbc:${dbms.name}://${db.ap1erogatore.uri}:${db.ap1erogatore.porta}/${db.ap1erogatore}" />
+	
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+          <classpath>
+              <pathelement location="lib/ant-contrib-1.0b3.jar"/>
+          </classpath>
+    </taskdef>
+	
+    <target name="init" depends="">
+        <path id="driver.classpath">
+            <pathelement location="${basedir}/template/db/${db.driver.jar.name}"/>
+        </path> 
+    </target>   
+    <!--     *************************      Gestione della base di dati ******************** -->  
+	
+    <target name="db-insert" depends="" description="Effettua gli inserimenti nella base di dati">
+        <sql   driver="${db.driver}"  
+               onerror="continue"
+               url="${url.postgresql.silvio}"
+               userid="${db.user}"
+               password="${db.password}">    
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>
+            <transaction src="${basedir}/temp/db/insert.sql" />
+        </sql>
+    </target>
+        
+    <target name="db-create-tables" depends="" description="Crea le tabelle nella base di dati">
+        <sql   driver="${db.driver}"  
+               onerror="continue"
+               url="${url.postgresql.silvio}"
+               userid="${db.user}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>  
+            <transaction src="${basedir}/template/db/silvio.sql" />
+        </sql>
+    </target>
+
+    <target name="prepare-dbms-silvio" depends="" description="prepare DBMS  sil-vio">
+        
+        <echo message="prepare folder" />
+		<mkdir dir="${basedir}/temp/db" />
+		
+        <copy todir="${basedir}/temp/db" overwrite="true" >   
+            <fileset dir="${basedir}/template/db" includes="**/*.*" />
+        </copy>
+
+		<echo message="Configurazione sil-vio insert" />
+        <replace dir="${basedir}/temp/db">
+            <replacefilter token="@SILVIO.DIR.CONFIG@"       value="${silvio.dir.config}"/>
+            <replacefilter token="@SILVIO.PORT@"       value="${silvio.port}"/>
+
+			<replacefilter token="\"          value="\\" />			
+        </replace>
+
+		<echo message="Configurazione ap1 insert" />
+        <replace dir="${basedir}/template/esempi/db/task/ap1/">
+            <replacefilter token="@SILVIO.DIR.CONFIG@"       value="${silvio.dir.config}"/>
+
+			<replacefilter token="\"          value="\\" />			
+        </replace>
+
+    </target>
+  	
+ <target name="db" depends="prepare-dbms-silvio, db-create-tables, db-insert" description="crea e riemplie la base di dati">
+    </target> 
+	
+    <!-- prepare DBMS  esempi 
+
+	<target name="esempio">
+			<if>
+				<equals arg1="${caricaesempi}" arg2="true" />
+					<then>
+						<echo message="sono nell'if" />
+					</then>
+				<else>
+					<echo message="sono nell'else" />
+				</else>
+			</if>
+        </target>
+			-->  
+		
+    <target name="db-insert-ap1-silvio" depends="" description="Effettua gli inserimenti nella base di dati di sil-vio per AP1">
+			<if>
+			<equals arg1="${caricaesempi}" arg2="true" />
+			<then>
+				<sql   driver="${db.driver}"  
+				onerror="continue"
+				url="${url.postgresql.silvio}"
+				userid="${db.user}"
+				password="${db.password}">    
+					<classpath>
+					<path refid="driver.classpath" />
+					</classpath>
+					<transaction src="${basedir}/template/esempi/db/task/ap1/silvio-insert-ap1.sql" />
+				</sql>
+			</then>
+		</if>		
+    </target>
+ 
+    <target name="db-insert-ap1fruitore" depends="" description="Effettua gli inserimenti nella base di dati di AP1">
+			<if>
+			<equals arg1="${caricaesempi}" arg2="true" />
+			<then>
+				<sql   driver="${db.driver}"  
+				onerror="continue"
+				url="${url.postgresql.ap1fruitore}"
+				userid="${db.user}"
+				password="${db.password}">    
+					<classpath>
+					<path refid="driver.classpath" />
+					</classpath>
+					<transaction src="${basedir}/template/esempi/db/task/ap1/ap1-insert-fruitore.sql" />
+				</sql>
+			</then>
+		</if>	
+    </target>
+
+    <target name="db-create-tables-ap1fruitore" depends="" description="Crea le tabelle nella base di dati di Ap1">
+			<if>
+			<equals arg1="${caricaesempi}" arg2="true" />
+			<then>
+				<sql   driver="${db.driver}"  
+				onerror="continue"
+				url="${url.postgresql.ap1fruitore}"
+				userid="${db.user}"
+				password="${db.password}">
+					<classpath>
+					<path refid="driver.classpath" />
+					</classpath>  
+					<transaction src="${basedir}/template/esempi/db/task/ap1/ap1.sql" />
+				</sql>
+			</then>
+		</if>	
+    </target>
+
+    <target name="db-insert-ap1erogatore" depends="" description="Effettua gli inserimenti nella base di dati di AP1">
+			<if>
+			<equals arg1="${caricaesempi}" arg2="true" />
+			<then>
+				<sql   driver="${db.driver}"  
+				onerror="continue"
+				url="${url.postgresql.ap1erogatore}"
+				userid="${db.user}"
+				password="${db.password}">    
+					<classpath>
+					<path refid="driver.classpath" />
+					</classpath>
+					<transaction src="${basedir}/template/esempi/db/task/ap1/ap1-insert-erogatore.sql" />
+				</sql>
+			</then>
+		</if>	
+    </target>
+
+    <target name="db-create-tables-ap1erogatore" depends="" description="Crea le tabelle nella base di dati di Ap1">
+			<if>
+			<equals arg1="${caricaesempi}" arg2="true" />
+			<then>
+				<sql   driver="${db.driver}"  
+				onerror="continue"
+				url="${url.postgresql.ap1erogatore}"
+				userid="${db.user}"
+				password="${db.password}">
+					<classpath>
+					<path refid="driver.classpath" />
+					</classpath>  
+					<transaction src="${basedir}/template/esempi/db/task/ap1/ap1.sql" />
+				</sql>
+			</then>
+		</if>	
+    </target>
+       
+	<target name="db-ap1" depends="db-create-tables-ap1fruitore, db-insert-ap1fruitore, db-create-tables-ap1erogatore, db-insert-ap1erogatore, db-insert-ap1-silvio" description="crea e riemplie la base di dati di Ap1 e sil-vio">
+    </target> 
+
+	
+    <!-- WAR sil-vio -->  
+    <target name="war" depends="" description="war sil-vio">
+        
+        <echo message="prepare folder" />
+        <mkdir dir="${basedir}/temp" />
+
+		<mkdir dir="${basedir}/temp/silvio" />
+
+        <copy todir="${basedir}/temp/silvio" overwrite="true" >   
+            <fileset dir="${basedir}/template/silvio" includes="**/*.*" />
+        </copy>
+
+        <echo message="Configurazione sil-vio hibernate" />
+        <replace dir="${basedir}/temp/silvio/WEB-INF/classes">
+            <replacefilter token="@HIBERNATE.CONNECTION.DRIVERCLASS@"       value="${db.driver}"/>
+            <replacefilter token="@HIBERNATE.CONNECTION.URL.SILVIO@"      value="${url.postgresql.silvio}"/>
+            <replacefilter token="@HIBERNATE.CONNECTION.USERNAME@"          value="${db.user}"/>
+            <replacefilter token="@HIBERNATE.CONNECTION.PASSWORD@"          value="${db.password}"/>							
+        </replace>
+		
+		<echo message="Configurazione sil-vio PROPERTIES" />
+        <replace dir="${basedir}/temp/silvio/WEB-INF/classes">
+            <replacefilter token="@SILVIO.WEB.SERVICES.INDIRIZZO@"       value="${silvio.web.services.indirizzo}"/>
+            <replacefilter token="@SILVIO.WEB.SERVICES.PORT@"       value="${silvio.web.services.port}"/>
+            <replacefilter token="@SILVIO.SERVIZIO.ASINCRONO.PORT@"      value="${silvio.servizio.asincrono.port}"/>
+            <replacefilter token="@MAIL.MITTENTE@"      value="${mail.mittente}"/>
+            <replacefilter token="@MAIL.INDIRIZZOSERVER@"      value="${mail.indirizzoserver}"/>
+            <replacefilter token="@FREESBEESP.URL@"      value="${freesbeesp.url}"/>	
+	
+			<replacefilter token="\"          value="/" />				
+        </replace>
+		
+		<echo message="Configurazione di log4j per sil-vio" />
+        <replace dir="${basedir}/temp/silvio/WEB-INF/classes">
+            <replacefilter token="@LOG4J.APPENDER.LOGFILE.DIR@"       value="${log4j.appender.logfile.dir}"/>	
+			<replacefilter token="\"          value="/" />					
+        </replace>	
+	
+		<copy todir="${basedir}" overwrite="true" >
+			<fileset dir="${basedir}/template" includes="${silvio.name.war}" />
+		</copy>
+		
+        <echo message="war sil-vio" />		
+		<war destfile="${basedir}/${silvio.name.war}" update="true" duplicate="add" >
+			<fileset dir="${basedir}/temp/silvio" includes="WEB-INF/classes/hibernate.cfg.xml" />
+			<fileset dir="${basedir}/temp/silvio" includes="WEB-INF/classes/silvio.properties" />
+			<fileset dir="${basedir}/temp/silvio" includes="WEB-INF/classes/log4j.properties" />
+		</war>
+	
+    </target>
+    	
+     <!-- CONFIG sil-vio --> 
+    <target name="copy-install" depends="war" description="install">
+        <copy todir="${dir.webapps}" overwrite="true" >
+            <fileset dir="${basedir}" includes="${silvio.name.war}" />
+        </copy>
+		
+        <copy todir="${silvio.dir.config}" overwrite="true" >
+            <fileset dir="${basedir}/template/config/silvio" includes="**/*.*" />
+        </copy>
+  
+    </target>   
+    
+     <target name="install" depends="copy-install, db, db-ap1" description="crea e riempie la base di dati">
+
+	 <delete dir="${basedir}/temp" />
+
+	</target>
+	
+    <!--  
+
+    <target name="Icons-linux" depends="" if="env.KDEDIR">
+        <echo message="Installing Kde Icons"/>
+        <taskdef name="kdeicons" classname="org.tp23.antinstaller.taskdefs.KdeIconTask"/>
+        <kdeicons 
+            desktop="/kde-icons/antinstaller-demo.desktop" 
+            icon="/kde-icons/AntInstaller.png"
+            installDir="${installDirAnt}"/>
+        <kdeicons 
+            desktop="/kde-icons/antinstaller-docs.desktop" 
+            icon="/kde-icons/AntInstaller.png"
+            installDir="${installDirAnt}"/>
+        <kdeicons 
+            desktop="/kde-icons/antinstaller-wizard.desktop" 
+            icon="/kde-icons/AntInstaller.png"
+            installDir="${installDirAnt}"/>
+    </target>
+    
+    <target name="Icons-win" depends="">
+        <echo message="Creating icons"/>
+        <move 
+            file="${basedir}/windows-icons/AntInstaller.ico" 
+            todir="${installDir}"/>
+        <replace file="${basedir}/windows-icons/installIcons-docs.inf">
+            <replacefilter token="@installDirAnt@"  value="${installDir}"/>
+        </replace>
+        <replace file="${basedir}/windows-icons/installIcons-docs.cmd">
+            <replacefilter token="@installDirAnt@"  value="${basedir}"/>
+        </replace>
+        <exec 
+            command="cmd.exe /c ${basedir}/windows-icons/installIcons-docs.cmd"/>
+    </target>
+
+-->
+
+
+    <!--
+	<target name="Demo" depends="">
+		<echo message="Installing Demonstration app files"/>
+		<unzip src="${basedir}/demo.zip" dest="${installDir}" overwrite="true"/>
+		<chmod perm="774" file="${installDir}/demo/install.sh"/>
+		<chmod perm="774" file="${installDir}/demo/checkConfig.sh"/>
+	</target>
+	
+	
+	<target name="Examples" depends="">
+		<echo message="Installing Examples files"/>
+		<unzip src="${basedir}/examples.zip" dest="${installDir}"/>
+		<chmod perm="774">
+			<fileset dir="${installDir}/examples/buildtypes">
+				<include name="**/*.sh"/>
+			</fileset>
+		</chmod>
+	</target>
+        -->
+</project>
+

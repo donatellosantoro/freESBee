@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://activemq.apache.org/camel/schema/cxfEndpoint"
+       xmlns:simple="http://cxf.apache.org/simple"
+         xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="
+         http://cxf.apache.org/jaxws
+        http://cxf.apache.org/schemas/jaxws.xsd
+       http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://activemq.apache.org/camel/schema/cxfEndpoint 
+       http://activemq.apache.org/camel/schema/cxf/cxfEndpoint.xsd
+       http://activemq.apache.org/camel/schema/spring 
+       http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
+    <camelContext id="camel-freesbeege" xmlns="http://activemq.apache.org/camel/schema/spring">
+        <package>it.unibas.freesbee.ge.ws.web</package>
+        <package>it.unibas.freesbee.ge.code</package>
+    </camelContext>
+
+     
+    <bean id="wsSecurityInterceptor" class="it.unibas.freesbee.ge.ws.web.WSSecurityInterceptor">
+        <property name="daoUtente" ref="daoUtente"/>
+    </bean>
+    
+
+                                <!-- ROUT BUILDER TEST -->
+    <bean id="WSPubblica" class="it.unibas.freesbee.ge.ws.test.WSPubblica" />
+    <bean id="WSConsegna" class="it.unibas.freesbee.ge.ws.test.WSConsegna" />
+    <bean id="WSNotifica" class="it.unibas.freesbee.ge.ws.test.WSNotifica" />
+ 
+   <!-- DAO -->
+    <bean id="daoUtente" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOUtenteHibernate "/>
+    <bean id="daoPubblicatoreInterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOPubblicatoreInternoHibernate"/>
+    <bean id="daoPubblicatoreEsterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOPubblicatoreEsternoHibernate"/>
+    <bean id="daoCategoriaEventiInterna" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOCategoriaEventiInternaHibernate"/>
+    <bean id="daoCategoriaEventiEsterna" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOCategoriaEventiEsternaHibernate" />
+    <bean id="daoEventoPubblicatoInterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOEventoPubblicatoInternoHibernate"/>
+    <bean id="daoEventoPubblicatoEsterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOEventoPubblicatoEsternoHibernate"/>
+    <bean id="daoSottoscrizioneInterna" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOSottoscrizioneInternaHibernate"/>
+    <bean id="daoSottoscrizioneEsterna" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOSottoscrizioneEsternaHibernate"/>
+    <bean id="daoFiltroPubblicatoreInterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOFiltroPubblicatoreInternoHibernate"/>
+    <bean id="daoFiltroPubblicatoreEsterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOFiltroPubblicatoreEsternoHibernate"/>
+    <bean id="daoSottoscrittore" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOSottoscrittoreHibernate"/>
+    <bean id="daoStatoMessaggioInterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOStatoMessaggioInternoHibernate"/>
+    <bean id="daoStatoMessaggioEsterno" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOStatoMessaggioEsternoHibernate"/>
+    <bean id="daoConfigurazione" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOConfigurazioneHibernate"/>
+    <bean id="daoConfigurazioneSP" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOConfigurazioneSPHibernate"/>
+    <bean id="daoGestoreEventi" class="it.unibas.freesbee.ge.persistenza.hibernate.DAOGestoreEventiHibernate"/>
+
+
+                                    <!-- ROUT BUILDER GE -->
+    <bean id="WSGestionePubblicatori" class="it.unibas.freesbee.ge.ws.gestoreeventi.WSGestionePubblicatori">
+        <property name="daoPubblicatoreInterno" ref="daoPubblicatoreInterno"/>
+        <property name="daoCategoriaEventiInterna" ref="daoCategoriaEventiInterna"/>
+        <property name="daoSottoscrizioneInterna" ref="daoSottoscrizioneInterna"/>
+        <property name="daoEventoPubblicatoInterno" ref="daoEventoPubblicatoInterno"/>
+    </bean>
+
+
+    <bean id="WSGestioneSottoscrizioni" class="it.unibas.freesbee.ge.ws.gestoreeventi.WSGestioneSottoscrizioni">
+        <property name="daoCategoriaEventiInterna" ref="daoCategoriaEventiInterna"/>
+        <property name="daoCategoriaEventiEsterna" ref="daoCategoriaEventiEsterna"/>
+        <property name="daoSottoscrittore" ref="daoSottoscrittore"/>
+        <property name="daoPubblicatoreInterno" ref="daoPubblicatoreInterno"/>
+        <property name="daoPubblicatoreEsterno" ref="daoPubblicatoreEsterno"/>
+        <property name="daoGestoreEventi" ref="daoGestoreEventi"/>
+    </bean>
+
+    <bean id="WSGestoreEventi" class="it.unibas.freesbee.ge.ws.gestoreeventi.WSGestoreEventi">
+        <property name="daoEventoPubblicatoInterno" ref="daoEventoPubblicatoInterno"/>
+        <property name="daoEventoPubblicatoEsterno" ref="daoEventoPubblicatoEsterno"/>
+        <property name="daoStatoMessaggioInterno" ref="daoStatoMessaggioInterno"/>
+        <property name="daoStatoMessaggioEsterno" ref="daoStatoMessaggioEsterno"/>
+        <property name="daoPubblicatoreInterno" ref="daoPubblicatoreInterno"/>
+        <property name="daoPubblicatoreEsterno" ref="daoPubblicatoreEsterno"/>
+        <property name="daoSottoscrittore" ref="daoSottoscrittore"/>
+        <property name="daoCategoriaEventiInterna" ref="daoCategoriaEventiInterna"/>
+        <property name="daoCategoriaEventiEsterna" ref="daoCategoriaEventiEsterna"/>
+    </bean>
+
+    <bean id="WSConsegnaMessaggio" class="it.unibas.freesbee.ge.ws.sil.WSConsegnaMessaggio">
+        <property name="daoPubblicatoreInterno" ref="daoPubblicatoreInterno"/>
+        <property name="daoPubblicatoreEsterno" ref="daoPubblicatoreEsterno"/>
+        <property name="daoSottoscrittore" ref="daoSottoscrittore"/>
+        <property name="daoCategoriaEventiInterna" ref="daoCategoriaEventiInterna"/>
+        <property name="daoCategoriaEventiEsterna" ref="daoCategoriaEventiEsterna"/>
+        <property name="daoGestoreEventi" ref="daoGestoreEventi"/>
+        <property name="daoSottoscrizioneEsterna" ref="daoSottoscrizioneEsterna"/>
+    </bean>
+
+                    <!-- DEMONE -->
+
+    <!--bean id="demoneRipulituraInAttesa" class="it.unibas.freesbee.ge.utilita.DemoneRipulituraInAttesa" >
+        <constructor-arg>
+            <ref bean="daoSottoscrizioneEsterna"/>
+        </constructor-arg>
+    </bean-->
+
+     <!--bean id="demoneRipulitura" class="it.unibas.freesbee.ge.utilita.DemoneRipulitura">
+        <constructor-arg>
+            <ref bean="daoEventoPubblicatoEsterno"/>
+            <ref bean="daoEventoPubblicatoInterno"/>
+            <ref bean="daoStatoMessaggioInterno"/>
+            <ref bean="daoStatoMessaggioEsterno"/>
+        </constructor-arg>
+    </bean-->
+
+
+                                <!-- ROUT BUILDER WEB -->
+
+    <bean id="WSAutenticazione" class="it.unibas.freesbee.ge.ws.web.WSAutenticazione">
+        <property name="daoUtente" ref="daoUtente"/>
+    </bean>
+
+    <bean id="WSConfigura" class="it.unibas.freesbee.ge.ws.web.WSConfigura" >
+        <property name="daoConfigurazione" ref="daoConfigurazione"/>
+        <property name="daoConfigurazioneSP" ref="daoConfigurazioneSP"/>
+        <property name="daoPubblicatoreInterno" ref="daoPubblicatoreInterno"/>
+        <property name="daoSottoscrittore" ref="daoSottoscrittore"/>
+        <property name="daoGestoreEventi" ref="daoGestoreEventi"/>
+    </bean>
+
+    <bean id="WSCategoriaEventiInterna" class="it.unibas.freesbee.ge.ws.web.WSCategoriaEventiInterna" >
+        <property name="daoPubblicatoreInterno" ref="daoPubblicatoreInterno"/>
+        <property name="daoCategoriaEventiInterna" ref="daoCategoriaEventiInterna"/>
+    </bean>
+
+    <bean id="WSCategoriaEventiEsterna" class="it.unibas.freesbee.ge.ws.web.WSCategoriaEventiEsterna" >
+        <property name="daoCategoriaEventiEsterna" ref="daoCategoriaEventiEsterna"/>
+    </bean>
+
+   <bean id="WSGestioneGestoreEventi" class="it.unibas.freesbee.ge.ws.web.WSGestioneGestoreEventi" >
+        <property name="daoCategoriaEventiEsterna" ref="daoCategoriaEventiEsterna"/>
+        <property name="daoSottoscrittore" ref="daoSottoscrittore"/>
+        <property name="daoGestoreEventi" ref="daoGestoreEventi"/>
+        <property name="daoPubblicatoreEsterno" ref="daoPubblicatoreEsterno"/>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    
+    <session-factory>
+        
+        <property name="hibernate.connection.driver_class">@HIBERNATE.CONNECTION.DRIVERCLASS@</property>
+        <property name="hibernate.connection.url">@HIBERNATE.CONNECTION.URL.SILVIO@</property>
+        <property name="hibernate.connection.username">@HIBERNATE.CONNECTION.USERNAME@</property>
+        <property name="hibernate.connection.password">@HIBERNATE.CONNECTION.PASSWORD@</property>
+        
+        <property name="current_session_context_class">thread</property>
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        
+        <!--
+        <property name="hibernate.c3p0.min_size">1</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.timeout">1800</property>
+        <property name="hibernate.c3p0.min_statements">150</property>
+        -->
+        
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="show_sql">false</property>
+        <property name="format_sql">false</property>
+        
+        <!-- <property name="hbm2ddl.auto">create</property> -->
+
+        <!-- annotazioni -->
+        <mapping class="it.unibas.silvio.modello.Query" />
+        <mapping class="it.unibas.silvio.modello.AccordoDiCollaborazione" />
+        <mapping class="it.unibas.silvio.modello.Configurazione" />
+        <mapping class="it.unibas.silvio.modello.Dati" />  
+        <mapping class="it.unibas.silvio.modello.DatiCostanti" />
+        <mapping class="it.unibas.silvio.modello.DatiInterattivi" />
+        <mapping class="it.unibas.silvio.modello.DatoPrimitivo" />
+        <mapping class="it.unibas.silvio.modello.DatiSQL" />
+        <mapping class="it.unibas.silvio.modello.IstanzaOperation" />
+        <mapping class="it.unibas.silvio.modello.IstanzaAccordoDiCollaborazione" />
+        <mapping class="it.unibas.silvio.modello.IstanzaPortType" />
+        <mapping class="it.unibas.silvio.modello.Message" />
+        <mapping class="it.unibas.silvio.modello.Operation" />
+        <mapping class="it.unibas.silvio.modello.PortType" />
+        <mapping class="it.unibas.silvio.modello.Utente" />
+        <mapping class="it.unibas.silvio.modello.Messaggio" />
+        <mapping class="it.unibas.silvio.modello.MessaggioSbloccoManuale" />
+        <mapping class="it.unibas.silvio.modello.ParametriSLA" />
+
+    </session-factory>
+    
+</hibernate-configuration>

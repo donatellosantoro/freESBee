@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!--
+freESBeeGE installer
+-->
+<project name="freESBeeGE installer"  default="install"  basedir="">
+    
+    <property file="${basedir}/ant.install.properties"/>
+    <property name="dir.webapps" location ="${dir.webapps}" />    
+    <property name="db.driver.jar.name" value ="postgresql-8.1-409.jdbc3.jar" />
+    <property name="db.driver" value ="org.postgresql.Driver" />
+	
+	<property name="dbms.name" value ="postgresql" />
+	
+    <property name="url.postgresql.freesbee" value ="jdbc:${dbms.name}://${db.freesbeege.uri}:${db.freesbeege.porta}/${db.freesbeege}" />
+	
+    <target name="init" depends="">
+        <path id="driver.classpath">
+            <pathelement location="${basedir}/template/db/${db.driver.jar.name}"/>
+        </path> 
+    </target>   
+    <!-- ***************************************************
+               Gestione della base di dati
+      *************************************************** -->  
+    <target name="db-insert" depends="" description="Effettua gli inserimenti nella base di dati">
+        <sql   driver="${db.driver}"  
+               onerror="continue"
+               url="${url.postgresql.freesbee}"
+               userid="${db.user}"
+               password="${db.password}">    
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>
+            <transaction src="${basedir}/template/db/insert.sql" />
+        </sql>
+    </target>
+        
+    <target name="db-create-tables" depends="" description="Crea le tabelle nella base di dati">
+        <sql   driver="${db.driver}"  
+               onerror="continue"
+               url="${url.postgresql.freesbee}"
+               userid="${db.user}"
+               password="${db.password}">
+            <classpath>
+                <path refid="driver.classpath" />
+            </classpath>  
+            <transaction src="${basedir}/template/db/freesbeegenuovo.sql" />
+        </sql>
+      
+    </target>
+ 
+ <target name="db" depends="db-create-tables, db-insert" description="crea e riemplie la base di dati">
+    </target> 
+
+    <!-- WAR FREESBEE GE-->  
+    <target name="war" depends="" description="war freESBeeGE">
+        
+        <echo message="prepare folder" />
+        <mkdir dir="${basedir}/temp" />
+
+		<mkdir dir="${basedir}/temp/freesbeeGE" />
+		<mkdir dir="${basedir}/temp/freesbeeWebGE" />
+
+        <copy todir="${basedir}/temp/freesbeeGE" overwrite="true" >   
+            <fileset dir="${basedir}/template" includes="**/*.*" />
+        </copy>
+		
+        <copy todir="${basedir}/temp/freesbeeWebGE" overwrite="true" >   
+            <fileset dir="${basedir}/template" includes="**/*.*" />
+        </copy>
+
+        <echo message="Configurazione freESBeeGE hibernate" />
+        <replace dir="${basedir}/template/freesbeeGE/WEB-INF/classes">
+            <replacefilter token="@HIBERNATE.CONNECTION.DRIVERCLASS@"       value="${db.driver}"/>
+            <replacefilter token="@HIBERNATE.CONNECTION.URL.FREESBEE@"      value="${url.postgresql.freesbee}"/>
+            <!--replacefilter token="@HIBERNATE.CONNECTION.URL.FREESBEETEST@"  value="${url.postgresql.freesbeetest}"/-->
+            <replacefilter token="@HIBERNATE.CONNECTION.USERNAME@"          value="${db.user}"/>
+            <replacefilter token="@HIBERNATE.CONNECTION.PASSWORD@"          value="${db.password}"/>							
+        </replace>
+		
+		<echo message="Configurazione freESBeeGE PROPERTIES" />
+        <replace dir="${basedir}/template/freesbeeGE/WEB-INF/classes">
+		<replacefilter token="@FREESBEE.WEB.SERVICES.INDIRIZZO@"      value="${freesbeege.webservices.indirizzo}"/>
+            <replacefilter token="@FREESBEEGE.WEBSERVICES.PORT@"       value="${freesbeege.webservices.port}"/>
+            <replacefilter token="@GESTORI.WEBSERVICES.PORT@"       value="${gestori.webservices.port}"/>
+			<replacefilter token="@PROTEZIONE.SERVICE.PROVIDER@"       value="${protezione.service.provider}"/>
+			<!--replacefilter token="@DIR.TEST@"       value="${test.log.dir}"/-->
+            <replacefilter token="\"          value="/" />				
+        </replace>
+		
+		<echo message="Configurazione di log4j per freESBeeGE" />
+        <replace dir="${basedir}/template/freesbeeGE/WEB-INF/classes">
+            <replacefilter token="@LOG4J.APPENDER.LOGFILE.DIR@"       value="${log4j.appender.logfile.dir}"/>	
+			<replacefilter token="\"          value="/" />					
+        </replace>	
+		
+		<echo message="Configurazione di log4j per freESBeeWebGE" />
+        <replace dir="${basedir}/template/freesbeeWebGE/WEB-INF/classes">
+            <replacefilter token="@LOG4J.APPENDER.LOGFILE.DIR@"       value="${log4j.appender.logfile.dir}"/>	
+			<replacefilter token="\"          value="/" />					
+        </replace>	
+		
+		<copy todir="${basedir}" overwrite="true" >
+			<fileset dir="${basedir}/template" includes="freesbee-ge.war" />
+		</copy>
+        <echo message="war freESBeeGE" />		
+		<war destfile="${basedir}/freesbee-ge.war" update="true" duplicate="add">
+			<fileset dir="${basedir}/template/freesbeeGE" includes="WEB-INF/classes/hibernate.properties" />
+			<fileset dir="${basedir}/template/freesbeeGE" includes="WEB-INF/classes/freesbeege.properties" />
+			<fileset dir="${basedir}/template/freesbeeGE" includes="WEB-INF/classes/log4j.properties" />
+		</war>
+		
+        <echo message="war freESBeeWebGE" />	
+		
+		<copy todir="${basedir}" overwrite="true" >
+			<fileset dir="${basedir}/template" includes="freesbeeWeb-GE.war" />
+		</copy>
+		
+		<war destfile="${basedir}/freesbeeWeb-GE.war" update="true" duplicate="add" >
+			<fileset dir="${basedir}/template/freesbeeWebGE" includes="WEB-INF/classes/log4j.properties" />
+		</war>	
+    </target>
+    	
+     <!-- CONFIG FREESBEEGE --> 
+    <target name="copy-install" depends="war" description="install">
+        <copy todir="${dir.webapps}" overwrite="true" >
+            <fileset dir="${basedir}" includes="freesbee-ge.war" />
+        </copy>  
+		
+        <copy todir="${dir.webapps}" overwrite="true" >
+            <fileset dir="${basedir}/template" includes="freesbeeWeb-GE.war" />
+        </copy>  
+
+        <delete dir="${basedir}/temp" />
+    </target>   
+        
+     <target name="install" depends="copy-install, db" description="crea e riempie la base di dati">
+	</target>
+	
+    <!--  
+
+    <target name="Icons-linux" depends="" if="env.KDEDIR">
+        <echo message="Installing Kde Icons"/>
+        <taskdef name="kdeicons" classname="org.tp23.antinstaller.taskdefs.KdeIconTask"/>
+        <kdeicons 
+            desktop="/kde-icons/antinstaller-demo.desktop" 
+            icon="/kde-icons/AntInstaller.png"
+            installDir="${installDirAnt}"/>
+        <kdeicons 
+            desktop="/kde-icons/antinstaller-docs.desktop" 
+            icon="/kde-icons/AntInstaller.png"
+            installDir="${installDirAnt}"/>
+        <kdeicons 
+            desktop="/kde-icons/antinstaller-wizard.desktop" 
+            icon="/kde-icons/AntInstaller.png"
+            installDir="${installDirAnt}"/>
+    </target>
+    
+    <target name="Icons-win" depends="">
+        <echo message="Creating icons"/>
+        <move 
+            file="${basedir}/windows-icons/AntInstaller.ico" 
+            todir="${installDir}"/>
+        <replace file="${basedir}/windows-icons/installIcons-docs.inf">
+            <replacefilter token="@installDirAnt@"  value="${installDir}"/>
+        </replace>
+        <replace file="${basedir}/windows-icons/installIcons-docs.cmd">
+            <replacefilter token="@installDirAnt@"  value="${basedir}"/>
+        </replace>
+        <exec 
+            command="cmd.exe /c ${basedir}/windows-icons/installIcons-docs.cmd"/>
+    </target>
+    
+    <target name="Icons-mac" depends="">
+        <echo message="No icons on mac"/>
+    </target>
+    <target name="Icons-sun" depends="">
+        <echo message="No icons on SunOs"/>
+    </target>
+    <target name="Icons-other" depends="">
+        <echo message="No icons, handled OS"/>
+    </target>
+-->
+    <!--
+
+	<target name="Core Components" depends="">
+		<echo message="Installation Directory [${installDir}]"/>
+		<unzip src="${basedir}/antlib.zip" dest="${installDir}" overwrite="true"/>
+		<unzip src="${basedir}/lib.zip" dest="${installDir}" overwrite="true"/>
+-->
+
+    <!-- xerces is only included once to save space then copied here -->
+    <!--
+		<copy file="${installDir}/lib/xercesImpl.jar" todir="${installDir}/antlib" overwrite="true"/>
+		<copy file="${installDir}/lib/xml-apis.jar" todir="${installDir}/antlib" overwrite="true"/>
+		<unzip src="${basedir}/resources.zip" dest="${installDir}" overwrite="true"/>
+		<echo message="chmodding ${installDir}/templates/defaultproject/runtemplate.sh"/>
+		<chmod perm="774" file="${installDir}/templates/defaultproject/runtemplate.sh"/>
+		<echo message="chmodding ${installDir}/wizard.sh"/>
+		<chmod perm="774" file="${installDir}/wizard.sh"/>
+		<replace file="${installDir}/.directory">
+			<replacefilter token="@installDir@"  value="${installDir}"/>
+		</replace>
+	</target>
+    -->
+
+    <!--
+	<target name="Demo" depends="">
+		<echo message="Installing Demonstration app files"/>
+		<unzip src="${basedir}/demo.zip" dest="${installDir}" overwrite="true"/>
+		<chmod perm="774" file="${installDir}/demo/install.sh"/>
+		<chmod perm="774" file="${installDir}/demo/checkConfig.sh"/>
+	</target>
+	
+	
+	<target name="Examples" depends="">
+		<echo message="Installing Examples files"/>
+		<unzip src="${basedir}/examples.zip" dest="${installDir}"/>
+		<chmod perm="774">
+			<fileset dir="${installDir}/examples/buildtypes">
+				<include name="**/*.sh"/>
+			</fileset>
+		</chmod>
+	</target>
+        -->
+</project>
+

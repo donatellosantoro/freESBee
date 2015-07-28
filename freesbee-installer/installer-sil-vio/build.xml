@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="" name="sil-vio">
+  	<!--CREATORE INSTALLER sil-vio -->
+	<property name="home.dir" location=""  />  
+	<property name="installer.dir" location="./installer"  />
+	<property name="installer.dist.dir" location="${home.dir}/dist"  />
+	
+	<property name="silvio.dir" location="../../codice/silvio"  />
+	<property name="silvio.dist.dir" location="${silvio.dir}/dist" />
+	<property name="silvio.misc.dir" location="${silvio.dir}/varie" />	
+	
+	<property name="silvio.config.dir" location="${silvio.misc.dir}/AP1/config" />	
+	
+	<property name="silvio.db.ap1.config.dir" location="${silvio.misc.dir}/AP1/db" />	
+	
+	<property name="silvio.name.war" value ="sil-vio.war" />
+	
+	<!--property name="silvioTest.dir" location="../../codice/freESBeeTest"  />
+	<property name="silvioTest.build.dir" location="${freesbeeTest.dir}/build/test/classes" />
+	<property name="silvioTest.lib.dir" location="${freesbeeTest.dir}/lib" />
+	
+	<property name="testfreesbee.lib.dir" location="${installer.dir}/testfreesbee/lib"  />
+	<property name="testfreesbee.build.dir" location="${installer.dir}/testfreesbee/build/test/classes" /-->
+	
+	<target name="thc" depends="installer" description="THC">
+	</target>
+
+	<target name="installer" depends="-init-version" description="create installer sil-vio">  
+		<ant antfile="${silvio.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${silvio.dir}/build.xml" target="schemaexport" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${silvio.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>	
+
+		<delete dir="${installer.dist.dir}" failonerror="false" />
+		<mkdir dir="${installer.dist.dir}" />
+
+		<copy todir="${installer.dir}/template/db" overwrite="true" >
+			<fileset dir="${silvio.misc.dir}" includes="silvio.sql" />
+			<!--<fileset dir="${silvio.misc.dir}" includes="insert.sql" />-->
+		</copy>  		
+
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${silvio.dist.dir}" includes="${silvio.name.war}" />
+		</copy>  
+		
+		<copy todir="${installer.dir}/template/config" overwrite="true" >
+			<fileset dir="${silvio.config.dir}" includes="**/*.*" />
+		</copy>  	 
+		
+		<copy todir="${installer.dir}/template/esempi/db/task/ap1" overwrite="true" >
+			<fileset dir="${silvio.db.ap1.config.dir}" includes="**/*.*" />
+		</copy>  	
+		
+		<zip destfile="${installer.dir}/template/${silvio.name.war}" >
+		  <zipfileset src="${home.dir}/${silvio.name.war}" excludes="WEB-INF/classes/hibernate.cfg.xml, WEB-INF/classes/silvio.properties, WEB-INF/classes/log4j.properties" >
+		  </zipfileset>
+		</zip>
+
+		<delete file="${home.dir}/${silvio.name.war}" failonerror="false" />
+		
+		<echo message="zip installer sil-vio" />
+		<zip destfile="${installer.dist.dir}/installer-sil-vio${major.version}.${minor.version}-build${build.number}.zip" update="true" >
+			<fileset dir="${installer.dir}" includes="**/*.*" />
+		</zip>			
+	</target>
+
+	<target name="-init-version" depends="">
+		<buildnumber file="build.properties" />
+		<property file="build.properties" />    
+	</target>
+
+</project>

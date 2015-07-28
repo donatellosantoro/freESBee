@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+	ui="swing,text"
+	verbose="true"
+	debug="false"
+	lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+	antialiased="true"
+	name="freESBeeGE installer"
+	windowIcon="/resources/antbar.png"
+	wide="600:500"
+	defaultImageResource="/resources/antbar.png"
+	minJavaVersion="1.4"
+	finishButtonText="Install"
+	version="1.0">
+<!--
+	<page
+		type="splash"
+		name="splash"
+		displayText="freESBee Installer version "
+		splashResource="/resources/freesbeeinstaller-splash.png"
+		altText="Benvenuto nell'installazione di freESBee"/>
+
+	<page
+		type="license"
+		name="license"
+		displayText="License conditions"
+		resource="/resources/LICENSE-ant-install.txt"
+		usePaging="true">
+	</page>
+ -->
+ <!---PAGINA 1 - Licenza-->
+	<page
+		type="input"
+		name="intro"
+		displayText="Benvenuti nell'ambiente di installazione di freESBeeGE!">
+		<comment
+			explanatoryText="Questa distribuzione include software prodotto dal gruppo freESBee UNIBAS." />
+		<comment
+			explanatoryText="Il software e' distribuito senza alcuna garanzia, per quanto consentito dalle vigenti normative." />
+		<comment
+			explanatoryText=" Il seguente prodotto viene distribuito secondo la licenza GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html) " />  
+		<comment
+			explanatoryText="Per maggiori informazioni sul prodotto:" />
+		<comment
+			explanatoryText="       http://freesbee.unibas.it" bold="true"/>
+	</page>
+<!---PAGINA 2 - Intro -->
+	<page
+		type="input"
+		name="istruzioni"
+		displayText="Note sull'installazione di freESBeeGE">
+		<comment
+			explanatoryText="Prima di procedere con l'installazione bisogna:" />
+		<comment
+			explanatoryText=" - creare un utente sul proprio DBMS" />
+		<comment
+			explanatoryText="  es: CREATE ROLE freesbee LOGIN ENCRYPTED PASSWORD ' ';" />
+
+		<comment
+			explanatoryText=" - creare una base di dati con l'utente creato in precedenza(es: freesbeege)" />
+		<comment
+			explanatoryText="(es: CREATE DATABASE freesbeege;)" />
+	</page>
+<!---PAGINA 3 - DBMS -->
+   	<page 
+	type="input" 
+	name="properties"
+	displayText="Configurazione freESBeeGE DBMS ">	
+		<text 
+			defaultValue="freesbeege" 
+			property="db.freesbeege" 
+			displayText="Nome del database di freESBeeGE:" />
+		<text 
+			defaultValue="localhost" 
+			property="db.freesbeege.uri" 
+			displayText="URI del server DBMS per il database freESBeeGE: (es. 127.0.0.1)" />	
+		<text 
+			defaultValue="5432" 
+			property="db.freesbeege.porta" 
+			displayText="Porta di ascolto del DBMS per il database freESBeeGE: (es. per postgresql 5432)" />	
+
+		<!-- <comment 
+			explanatoryText="" /> -->
+
+		<text 
+			defaultValue="" 
+			property="db.user" 
+			displayText="User utente db:" />
+		<text 
+			defaultValue="" 
+			property="db.password" 
+			displayText="Password utente db:" />
+
+	</page>
+
+<!---PAGINA 4 - Configurazione GE-->
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBeeGE 1/2">
+		<!--<text defaultValue="localhost" property="freesbee.webservices.indirizzo" displayText="indirizzo freesbee:" />-->
+		<comment 
+			explanatoryText="Configurazione dei web services di freESBeeGE:" />
+		<text 
+			defaultValue="localhost" 
+			property="freesbeege.webservices.indirizzo" 
+			displayText="Host:" />
+		<!--comment 
+			explanatoryText="Porta di ascolto dei web services di freESBeeGE:" /-->
+		<text 
+			defaultValue="8198" 
+			property="freesbeege.webservices.port" 
+			displayText="Porta dei WS del Gestore Eventi:" />
+		<!--comment 
+			explanatoryText="Porta di ascolto dei web services per la gestione dei pubblicatori e delle sottoscrizioni:" /-->
+		<text 
+			defaultValue="8193" 
+			property="gestori.webservices.port" 
+			displayText="Porta dei WS per la gestione dei Pubblicatori e delle Sottoscrizioni:" />
+		<checkbox 
+			displayText="Protezione SP"
+			target="default"
+			defaultValue="false"
+			property="protezione.service.provider" />
+		</page>
+		
+		<!---PAGINA 5 - Configurazione GE-->
+		<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBeeGE 2/2">
+		<directory 
+			property="dir.webapps"
+			displayText="Cartella di deploy:" 
+			defaultValueWin="C:\apache tomcat\webapps"
+			create="true" defaultValue="/home/"/> 
+		<comment
+			explanatoryText="E' la cartella per il deployment delle applicazioni web sul server applicativo" />
+		<comment
+			explanatoryText="(es: C:\tomcat\webapps o /usr/tomcat/webapps)" />
+		<directory 
+			property="log4j.appender.logfile.dir"
+			displayText="Cartella salvataggio log:" 
+			defaultValueWin="C:\tmp\log"
+			create="true" 
+			defaultValue="/home/log" /> 
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i file di log" />
+		<comment
+			explanatoryText="(es: C:\tmp\log o /var/log/freesbee)" />
+		<!--directory 
+			property="dir.test"
+			displayText="Cartella salvataggio test:" 
+			defaultValueWin="C:\tmp\test"
+			create="true" 
+			defaultValue="/home/test" /> 
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i file di test" />
+		<comment
+			explanatoryText="(es: C:\tmp\test o /var/freesbee/test)" /-->
+   	</page>
+	 
+   	<page
+		type="progress"
+		name="progress"
+		showTargets="true"
+		displayText="Installation progress"/>
+</installer>

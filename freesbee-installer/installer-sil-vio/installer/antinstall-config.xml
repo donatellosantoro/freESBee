@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+	ui="swing,text"
+	verbose="true"
+	debug="false"
+	lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+	antialiased="true"
+	name="sil-vio installer"
+	windowIcon="/resources/antbar.png"
+	wide="600:500"
+	defaultImageResource="/resources/antbar.png"
+	minJavaVersion="1.4"
+	finishButtonText="Install"
+	version="1.0">
+<!--
+	<page
+		type="splash"
+		name="splash"
+		displayText="sil-vio Installer version "
+		splashResource="/resources/freesbeeinstaller-splash.png"
+		altText="Benvenuto nell'installazione di freESBee"/>
+
+	<page
+		type="license"
+		name="license"
+		displayText="License conditions"
+		resource="/resources/LICENSE-ant-install.txt"
+		usePaging="true">
+	</page>
+-->
+	<page
+		type="input"
+		name="intro"
+		displayText="Benvenuti nell'ambiente di installazione di sil-vio!">
+		<comment
+			explanatoryText="Questa distribuzione include software prodotto dal gruppo freESBee UNIBAS." />
+		<comment
+			explanatoryText="Il software e' distribuito senza alcuna garanzia, per quanto consentito dalle vigenti normative." />
+		<comment
+			explanatoryText=" Il seguente prodotto viene distribuito secondo la licenza GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html) " />
+		<comment
+			explanatoryText="Per maggiori informazioni sul prodotto:" />
+		<comment
+			explanatoryText="       http://freesbee.unibas.it" bold="true"/>
+	</page>
+
+	<page
+		type="input"
+		name="istruzioni"
+		displayText="Note sull'installazione di sil-vio!">
+		<comment
+			explanatoryText="Prima di procedere con l'installazione bisogna:" />
+		<comment
+			explanatoryText=" - creare un utente sul proprio DBMS" />
+		<comment
+			explanatoryText="  es: CREATE ROLE silvio LOGIN ENCRYPTED PASSWORD ' ';" />
+
+		<comment
+			explanatoryText=" - creare la base di dati con l'utente creato in precedenza(es: silvio)" />
+		<comment
+			explanatoryText=" (es: CREATE DATABASE silvio;)" />
+		<!-- <comment
+			explanatoryText="" /> -->
+		<comment
+			explanatoryText="sil-vio utilizza le seguenti porte: 9191 e 9193." />				
+
+	</page>
+
+   	<page 
+		type="input" 
+		name="properties"
+		displayText="Passo 1 di 4 - Configurazione sil-vio DBMS ">
+		<text 
+			defaultValue="silvio" 
+			property="db.silvio" 
+			displayText="Nome database sil-vio:" />
+		<text 
+			defaultValue="localhost" 
+			property="db.silvio.uri" 
+			displayText="URI del server DBMS per il database sil-vio: (es. 127.0.0.1)" />	
+		<text 
+			defaultValue="5432" 
+			property="db.silvio.porta" 
+			displayText="Porta di ascolto del DBMS per il database sil-vio: (es. per postgresql 5432)" />	
+
+		<text 
+			defaultValue="" 
+			property="db.user" 
+			displayText="User utente db:" />
+		<text 
+			defaultValue="" 
+			property="db.password" 
+			displayText="Password utente db:" />
+	<!--
+		<select
+			defaultValue="postgresql" property="db.tipo" displayText="Selezionare il DBMS">
+			<option value="postgresql" text="Database PostgreSQL" />
+			<option value="mysql" text="Database MySQL" />
+		</select>
+	-->
+   	</page>
+
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Passo 2 di 4 - Configurazione di sil-vio">
+		
+		<!--<text defaultValue="localhost" property="freesbee.webservices.indirizzo" displayText="indirizzo sil-vio:" />-->
+		<comment 
+			explanatoryText="Passo 2 di 4 Configurazione di sil-vio:" />
+		<comment 
+			explanatoryText="Porta di ascolto di sil-vio" />
+		<comment 
+			explanatoryText="(si ricorda che sil-vio utilizza anche le porte 9191 e 9193):" />
+		<text 
+			defaultValue="9192" 
+			property="silvio.port" displayText="Porta di ascolto di sil-vio:" />
+		<directory 
+			property="silvio.dir.config"
+			displayText="Cartella di configurazione di sil-vio:" 
+			defaultValueWin="C:\config\silvio"
+			create="true" defaultValue="/home/"/> 
+		<comment
+			explanatoryText="E' la cartella in cui sil-vio carica le configurazioni." />
+		<comment
+			explanatoryText="(es: C:\config\silvio o /usr/config/silvio)" />
+   	</page>	
+   	
+   	<page 
+		type="input" 
+		name="properties"
+		displayText="Passo 3 di 4 - Configurazione di sil-vio">
+		
+		<!--<text defaultValue="localhost" property="freesbee.webservices.indirizzo" displayText="indirizzo sil-vio:" />-->
+		<comment 
+			explanatoryText="Passo 3 di 4 Configurazione di sil-vio:" />
+			
+		<text 
+			defaultValue="notifica@silvio.unibas.it" 
+			property="mail.mittente" displayText="Indirizzo email mittente" />
+			
+		<text 
+			defaultValue="smtp.unibas.it" 
+			property="mail.indirizzoserver" displayText="Indirizzo del server smtp" />
+			
+		<comment 
+			explanatoryText="Integrazione con freESBeeSP:" />
+		
+		<text 
+			defaultValue="http://localhost:8080/freesbeesp/" 
+			property="freesbeesp.url" displayText="Indirizzo di freESBeeSP" />
+   	</page>	 
+	 
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Passo 4 di 4 - Configurazione di sil-vio">
+	<!--	<text 
+			defaultValue="localhost" 
+			property="freesbee.webservices.indirizzo" 
+			displayText="indirizzo sil-vio:" />
+	-->
+		<comment 
+		explanatoryText="Configurazione di sil-vio 2:" />
+		<directory 
+			property="dir.webapps"
+			displayText="Cartella di deploy:" 
+			defaultValueWin="C:\apache tomcat\webapps"
+			create="true" 
+			defaultValue="/home/"/> 
+		<comment
+			explanatoryText="E' la cartella per il deployment delle applicazioni web sul server applicativo" />
+		<comment
+			explanatoryText="(es: C:\tomcat\webapps o /usr/tomcat/webapps)" />
+		<directory 
+			property="log4j.appender.logfile.dir"
+			displayText="Cartella salvataggio log:" 
+			defaultValueWin="C:\tmp\log"
+			create="true" 
+			defaultValue="/home/log" /> 
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i file di log" />
+		<comment
+			explanatoryText="(es: C:\tmp\log o /var/log/silvio)" />
+   	</page>
+	 
+    <page 
+		type="input" 
+		name="properties" 
+		displayText="Configurazione esempi in sil-vio">
+    	<comment 
+			displayText="Caricare degli esempi preconfigurati in sil-vio" />
+		<checkbox 
+			defaultValue="true" 
+			property="caricaesempi"
+    		displayText="" />	
+    </page>	 
+
+	<page
+		type="input"
+		name="istruzioni e configurazione Task AP-1"
+		target="" 
+		ifProperty="${caricaesempi}=true">			
+		<comment
+			explanatoryText="Prima di procedere con l'installazione bisogna:" />
+
+		<comment
+			explanatoryText=" - creare due base di dati di ese	mpio del Task Ap-1 una per l'erogatore e una per il fruitore" />
+		<comment
+			explanatoryText=" - utilizzando le indicazioni precedenti (es: ap1fruitore, ap1erogatore)" />
+		<comment
+			explanatoryText=" (es: CREATE DATABASE ap1fruitore;)" />
+		<comment
+			explanatoryText=" (es: CREATE DATABASE ap1erogatore;)" />
+		<!-- <comment
+			explanatoryText="" /> -->
+		<comment 
+			displayText="Inserire il nome della base di dati creata " />
+		<text 
+			defaultValue="ap1fruitore" 
+			property="db.ap1fruitore" 
+			displayText="Nome database Task AP-1 fruitore:" />
+		<text 
+			defaultValue="ap1erogatore" 
+			property="db.ap1erogatore" 
+			displayText="Nome database Task AP-1 erogatore:" />					
+	</page>
+
+   	 <page
+		type="progress"
+		name="progress"
+		displayText="Installation progress"/>
+</installer>

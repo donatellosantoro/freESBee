@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+	ui="swing,text"
+	verbose="true"
+	debug="false"
+	lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+	antialiased="true"
+	name="freESBee-SLA installer"
+	windowIcon="/resources/antbar.png"
+	wide="600:500"
+	defaultImageResource="/resources/antbar.png"
+	minJavaVersion="1.4"
+	finishButtonText="Install"
+	version="1.0">
+			
+<!--
+	<page
+			type="splash"
+			name="splash"
+			displayText="freESBee Installer version "
+			splashResource="/resources/freesbeeinstaller-splash.png"
+			altText="Benvenuto nell'installazione di freESBee"/>
+
+	<page
+			type="license"
+			name="license"
+			displayText="License conditions"
+			resource="/resources/LICENSE-ant-install.txt"
+			usePaging="true">
+	</page>
+ -->
+	<page
+		type="input"
+		name="intro"
+		displayText="Benvenuti nell'ambiente di installazione di freESBee-SLA!">
+		<comment
+			explanatoryText="Questa distribuzione include software prodotto dal gruppo freESBee UNIBAS." />
+		<comment
+			explanatoryText="Il software e' distribuito senza alcuna garanzia, per quanto consentito dalle vigenti normative." />
+		<comment
+			explanatoryText="Il seguente prodotto viene distribuito secondo la licenza GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html) " />
+		<comment
+			explanatoryText="Per maggiori informazioni sul prodotto:" />
+		<comment
+			explanatoryText="       http://freesbee.unibas.it" bold="true" />
+	</page>
+
+	<page
+		type="input"
+		name="istruzioni"
+		displayText="Note sull'installazione di freESBee-SLA!">
+		<comment
+			explanatoryText="Prima di procedere con l'installazione bisogna:" />
+		<comment
+			explanatoryText=" - creare un utente sul proprio DBMS" />
+		<comment
+			explanatoryText="  (es: CREATE ROLE freesbeesla LOGIN ENCRYPTED PASSWORD) ' ';" />
+		<comment
+			explanatoryText=" - creare la base di dati freesbee_sla con il precedente utente" />
+		<comment
+			explanatoryText=" (con il seguente comando CREATE DATABASE freesbee_sla;)" />
+		<comment
+			explanatoryText="In questa versione il nome del database per gli SLA non si puo' modificare." />
+	</page>
+
+	 <page 
+		type="input" 
+		name="configdbms"
+		displayText="Configurazione freESBee-SLA DBMS">
+
+		<text 
+			defaultValue="localhost" 
+			property="db.freesbeesla.uri" 
+			displayText="URI del server DBMS per il database per gli SLA: (es. 127.0.0.1)" />	
+		<text 
+			defaultValue="5432" 
+			property="db.freesbeesla.porta" 
+			displayText="Porta di ascolto del DBMS per il database per gli SLA: (es. per postgresql 5432)" />	
+
+		<text 
+			defaultValue="freesbeesla" 
+			property="db.user" 
+			displayText="User utente db:" />
+		<text 
+			defaultValue="" 
+			property="db.password" 
+			displayText="Password utente db:" />
+	<!--
+		<select
+			defaultValue="postgresql" property="db.tipo" displayText="Selezionare il DBMS">
+			<option value="postgresql" text="Database PostgreSQL" />
+			<option value="mysql" text="Database MySQL" />
+		</select>
+	-->
+	 </page>
+
+	<!--
+	 <page 
+		type="input" 
+		name="configSSL"
+		displayText="Configurazione freESBee-SLA SSL">
+		<directory 
+			property="keystore.dir.path"
+			displayText="Specificare la cartella in cui si trova il certificato SSL di freESBee:" 
+			defaultValueWin="C:\certificato"
+			create="true" defaultValue="/home/certificato"/>	
+		<comment 
+			explanatoryText="Selezionare la seguente checkbox se si opta per caricare" />			
+		<checkbox 
+			defaultValue="false" 
+			property="installaCertificato"
+			displayText=" nella precedente cartella i certificati di default." />
+   	 </page>
+	-->
+	 <page 
+		type="input" 
+		name="configws"
+		displayText="Configurazione freESBee-SLA">
+		<comment 
+			explanatoryText="Configurazione dei web services di freESBeeSLA:" />
+		<text 
+			defaultValue="127.0.0.1" 
+			property="freesbeesla.webservices.indirizzo" 
+			displayText="Indirizzo del WS di freesbeeSLA:" />
+		<!--
+		<text 
+			defaultValue="127.0.0.1" 
+			property="indirizzo.freesbeesla.endpoint.webservices.cxf" 
+			displayText="Indirizzo su cui vengono creati i servizi freESBeeSLA:" />		-->
+			
+		<!-- <comment 
+			explanatoryText=" " /> -->
+			
+		<text 
+			defaultValue="http://INDIRIZZO_NICA:8191/ws/registroServizi" 
+			property="indirizzo.registro.servizi" 
+			displayText="Specificare l'indirizzo del Registro Servizi del proprio NICA:" />
+		<comment
+			explanatoryText="(es: http://localhost:8191/ws/registroServizi)" />	
+	 </page>	
+
+	<page 
+		type="input" 
+		name="configws1"
+		displayText="Configurazione freESBee-SLA 1">
+		
+		<comment
+			explanatoryText="Creare le seguenti Porte Delegate all'interno del soggetto" />
+		<comment
+			explanatoryText="NICA tramite l'applicazione freESBeeWeb" />
+
+		<text 
+			defaultValue="http://localhost:8192/PD/MONITORAGGIO_STATO/" 
+			property="url.portadelegata.monitoraggio.stato" 
+			displayText="URL della porta delegata del monitoraggio Stato:" />
+
+		<text 
+			defaultValue="http://localhost:8192/PD/MONITORAGGIO_SLA/" 
+			property="url.portadelegata.monitoraggio.sla" 
+			displayText="URL della porta delegata del monitoraggio SLA:" />	
+	 </page>
+
+	<page 
+		type="input" 
+		name="configdir"
+		displayText="Configurazione freESBee-SLA directory installazione">
+		<directory 
+			property="dir.webapps"
+			displayText="Cartella di deploy:" 
+			defaultValueWin="C:\apache tomcat\webapps"
+			create="true" 
+			defaultValue="/home/"/> 
+		<comment
+			explanatoryText="E' la cartella per il deployment delle applicazioni web sul server applicativo" />
+		<comment
+			explanatoryText="(es: C:\tomcat\webapps o /usr/tomcat/webapps)" />
+		
+		<directory 
+			property="log4j.appender.logfile.dir"
+			displayText="Cartella salvataggio log:" 
+			defaultValueWin="C:\log"
+			create="true" 
+			defaultValue="/home/" /> 
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i file di log" />
+		<comment
+			explanatoryText="(es: C:\tmp\log o /var/log/freesbeesla)" />
+   	</page>
+	 
+   	 <page
+		type="progress"
+		name="progress"
+		showTargets="true"
+		displayText="Installation progress"/>
+</installer>

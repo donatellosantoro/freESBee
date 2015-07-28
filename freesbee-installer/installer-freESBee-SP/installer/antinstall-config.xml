@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.8.dtd">
+<installer
+	ui="swing,text"
+	verbose="true"
+	debug="false"
+	lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
+	antialiased="true"
+	name="freESBeeSP installer"
+	windowIcon="/resources/antbar.png"
+	wide="600:500"
+	defaultImageResource="/resources/antbar.png"
+	minJavaVersion="1.4"
+	finishButtonText="Install"
+	version="1.0">
+<!--
+	<page
+		type="splash"
+		name="splash"
+		displayText="freESBeeSP Installer version "
+		splashResource="/resources/freesbeeinstaller-splash.png"
+		altText="Benvenuto nell'installazione di freESBee"/>
+
+	<page
+		type="license"
+		name="license"
+		displayText="License conditions"
+		resource="/resources/LICENSE-ant-install.txt"
+		usePaging="true">
+	</page>
+ -->
+ <!--PAGINA 1-->
+	<page
+		type="input"
+		name="intro"
+		displayText="Benvenuti nell'ambiente di installazione di freESBeeSP!">
+		<comment
+			explanatoryText="Questa distribuzione include software prodotto dal gruppo freESBee UNIBAS." />
+		<comment
+			explanatoryText="Il software e' distribuito senza alcuna garanzia, per quanto consentito dalle vigenti normative." />
+		<comment
+			explanatoryText=" Il seguente prodotto viene distribuito secondo la licenza GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html) " />  
+		<comment
+			explanatoryText="Per maggiori informazioni sul prodotto:" />
+		<comment
+			explanatoryText="       http://freesbee.unibas.it" bold="true"/>
+	</page>
+ <!--PAGINA 2-->
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBeeSP SSL - Impostazioni Service Provider">
+
+	<file 
+		property="sp.keystore.file.path"
+		displayText="Certificato per la connessione SSL - Service Provider:" 
+		defaultValueWin=""
+		create="true" defaultValue=""/>		
+	<text 
+			defaultValue="sp2" 
+			property="sp.keystore.name" 
+			displayText="Nome del certificato" />		
+	<text 
+			defaultValue="icar" 
+			property="sp.keystore.password" 
+			displayText="Password del certificato " />	
+	
+	</page>
+<!--PAGINA 3-->
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBeeSP SSL - Impostazioni Identtity Provider">
+
+	<file 
+		property="idp.keystore.file.path"
+		displayText="Certificato per la connessione SSL:" 
+		defaultValueWin=""
+		create="true" defaultValue=""/>		
+	<text 
+			defaultValue="sp.example.unibas.org" 
+			property="idp.keystore.name" 
+			displayText="Nome del certificato" />		
+	<text 
+			defaultValue="icarlab" 
+			property="idp.keystore.password" 
+			displayText="Password del certificato" />	
+	</page>
+ <!--PAGINA 4-->
+	<page 
+		type="input" 
+		name="properties"
+		displayText="Configurazione freESBeeSP">
+		<!--<text defaultValue="localhost" property="freesbee.webservices.indirizzo" displayText="indirizzo freesbee:" />-->
+		<comment 
+			explanatoryText="Configurazione dei web services di freESBee:" />
+		<text 
+			defaultValue="http://localhost:8765/PEP/" 
+			property="freesbee.webservices.indirizzo" 
+			displayText="Indirizzo del WS di freesbee:" />
+		
+
+		<directory 
+			property="dir.webapps"
+			displayText="Cartella di deploy:" 
+			defaultValueWin="C:\apache tomcat\webapps"
+			create="true" defaultValue="/home/"/> 
+		<comment
+			explanatoryText="E' la cartella per il deployment delle applicazioni web sul server applicativo" />
+		<comment
+			explanatoryText="(es: C:\tomcat\webapps o /usr/tomcat/webapps)" />
+		
+		
+		<directory 
+			property="configdir"
+			displayText="Cartella di configurazione:" 
+			defaultValueWin="C:\config\freesbeesp"
+			create="true" defaultValue="/home/"/> 
+		<comment
+			explanatoryText="E' la cartella di configurazione di frESBeeSP" />
+		<directory 
+			property="log4j.appender.logfile.dir"
+			displayText="Cartella salvataggio log:" 
+			defaultValueWin="C:\tmp\log"
+			create="true" 
+			defaultValue="/home/log" /> 
+		<comment
+			explanatoryText="E' la cartella in cui verranno salvati i file di log" />
+		<comment
+			explanatoryText="(es: C:\tmp\log o /var/log/freesbee)" />
+   	</page>
+	 
+   	<page
+		type="progress"
+		name="progress"
+		showTargets="true"
+		displayText="Installation progress"/>
+</installer>

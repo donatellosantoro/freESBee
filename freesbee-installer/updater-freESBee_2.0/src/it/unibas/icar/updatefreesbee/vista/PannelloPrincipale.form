@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel3" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel3" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel3">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="textFieldPercorso" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="bottoneSelezionaPercorso" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="checkBoxCartellaTemporanea" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="checkBoxFileConfig" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="checkBoxWar" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="textFieldCartellaFileConfig" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="textiFieldPercorsoWar" max="32767" attributes="0"/>
+                                      <Component id="textFieldCartellaTemporanea" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="bottoneSelezionaPercorsoCartellaTemporanea" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bottoneSelezionaPercorsoCartellaFileConfig" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bottoneSelezionaPercorsoCartellaWar" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel1" min="-2" pref="399" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="labelStatus" min="-2" pref="273" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jProgressBar1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="bottoneAggiorna" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="textFieldPercorso" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bottoneSelezionaPercorso" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="checkBoxCartellaTemporanea" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textFieldCartellaTemporanea" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bottoneSelezionaPercorsoCartellaTemporanea" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="checkBoxFileConfig" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textFieldCartellaFileConfig" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bottoneSelezionaPercorsoCartellaFileConfig" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="checkBoxWar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textiFieldPercorsoWar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bottoneSelezionaPercorsoCartellaWar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="51" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jProgressBar1" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="bottoneAggiorna" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="labelStatus" min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="textFieldPercorso">
+        </Component>
+        <Component class="javax.swing.JButton" name="bottoneSelezionaPercorso">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleziona"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Selezionare la cartella webapps di tomcat o inserire il percorso"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxCartellaTemporanea">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleziona cartella temporanea"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxFileConfig">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Salva file cofigurazione"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="checkBoxWar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Salva war precedenti"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textiFieldPercorsoWar">
+        </Component>
+        <Component class="javax.swing.JTextField" name="textFieldCartellaFileConfig">
+        </Component>
+        <Component class="javax.swing.JTextField" name="textFieldCartellaTemporanea">
+        </Component>
+        <Component class="javax.swing.JButton" name="bottoneSelezionaPercorsoCartellaTemporanea">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleziona"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bottoneSelezionaPercorsoCartellaFileConfig">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleziona"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bottoneSelezionaPercorsoCartellaWar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleziona"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+        </Component>
+        <Component class="javax.swing.JButton" name="bottoneAggiorna">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Aggiorna"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelStatus">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Selezionare prima la cartella webApps"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

@@ -1,0 +1,4 @@
+hibernate.connection.driver_class = org.postgresql.Driver
+hibernate.connection.url = jdbc:postgresql://172.18.18.225:5432/pdd_pddupg
+hibernate.connection.username = pdd_pddupg
+hibernate.connection.password= upgrade

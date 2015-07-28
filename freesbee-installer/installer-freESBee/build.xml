@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="installer" name="freesbee">
+	<property file="./project.properties" />
+	<property file="./build.properties" />
+  	<!--CREATORE INSTALLER freESBee-->
+	<property name="home.dir" location=""  />  
+	<property name="installer.dir" location="./installer"  />
+	<property name="installer.dist.dir" location="${home.dir}/dist"  />
+	
+	<!--<property name="freesbee.dir" location="../../codice/freesbee"  />-->
+	<property name="freesbee.dir" location="${freesbee.project.dir}"  />
+	<property name="freesbee.dist.dir" location="${freesbee.dir}/dist" />
+	<property name="freesbee.misc.dir" location="${freesbee.dir}/varie" />
+	<property name="freesbee.certificato.dir" location="${freesbee.misc.dir}/certificato" />	
+	<property name="freesbeeTest.dir" location="../../codice/freESBeeTest"  />
+	<property name="freesbeeTest.build.dir" location="${freesbeeTest.dir}/build/test/classes" />
+	<property name="freesbeeTest.lib.dir" location="${freesbeeTest.dir}/lib" />
+	
+	<!--<property name="freesbeeweb.dir" location="../../codice/freesbeeWeb"  />-->
+	<property name="freesbeeweb.dir" location="${freesbeeWeb.project.dir}"  />
+	<property name="freesbeeweb.dist.dir" location="${freesbeeweb.dir}/dist" />
+	<property name="freesbeeweb.misc.dir" location="${freesbeeweb.dir}/dist" />
+
+	<!--<target name="-init-version" depends="">
+		<delete dir="${home.dir}/build.properties" failonerror="false" />
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbee.dir}" includes="build.properties" />
+		</copy>
+		
+		<buildnumber file="build.properties" />
+		<property file="build.properties" />
+	</target>-->
+	
+	<target name="installer" depends="" description="create installer freESBee">
+		<!--<delete dir="${home.dir}/build.properties" failonerror="false" />
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbee.dir}" includes="build.properties" />
+		</copy>-->
+
+		<ant antfile="${freesbee.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freesbee.dir}/build.xml" target="schemaexport" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freesbee.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>	
+		
+		<ant antfile="${freesbeeweb.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>		
+		<ant antfile="${freesbeeweb.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>
+		<delete dir="${installer.dist.dir}" failonerror="false" />
+		<mkdir dir="${installer.dist.dir}" />
+
+		<copy todir="${installer.dir}/template/certificato" overwrite="true" >
+			<fileset dir="${freesbee.certificato.dir}" includes="**/*.*" />
+		</copy> 
+		
+		<copy todir="${installer.dir}/template/db" overwrite="true" >
+			<fileset dir="${freesbee.misc.dir}" includes="freesbee.sql" />
+			<fileset dir="${freesbee.misc.dir}" includes="insert.sql" />
+		</copy>  		
+
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbee.dist.dir}" includes="freesbee.war" />
+		</copy>
+
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbeeweb.dist.dir}" includes="freesbeeWeb.war" />
+		</copy>
+
+		<delete file="${installer.dir}/template/freesbee.war" failonerror="false" />
+		<delete file="${installer.dir}/template/freesbeeweb.war" failonerror="false" />
+		<delete file="${installer.dir}/build.xml" failonerror="false" />
+
+		<copy todir="${installer.dir}" overwrite="true" >
+			<fileset dir="${home.dir}" includes="build-solo-freesbee.xml" />
+		</copy>
+		<move file="${installer.dir}/build-solo-freesbee.xml" tofile="${installer.dir}/build.xml"/>
+
+		<zip destfile="${installer.dir}/template/freesbee.war" >
+		  <!--<zipfileset src="${home.dir}/freesbee.war" excludes="WEB-INF/classes/hibernate.properties, WEB-INF/classes/freesbee.properties, WEB-INF/classes/log4j.properties" >-->
+		  <zipfileset src="${home.dir}/freesbee.war" excludes="WEB-INF/classes/hibernate.properties, WEB-INF/classes/freesbee.properties, WEB-INF/classes/logback.xml" >
+		  </zipfileset>
+		</zip>
+
+		<delete file="${home.dir}/freesbee.war" failonerror="false" />
+
+		<echo message="zip installer freESBee" />
+		<zip destfile="${installer.dist.dir}/installer-freESBee-${major.version}.${minor.version}-build${build.number}.zip" update="true" >
+			<fileset dir="${installer.dir}" includes="**/*.*" />
+		</zip>	
+		
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbeeweb.dist.dir}" includes="freesbeeWeb.war" />
+		</copy>  
+		
+		<zip destfile="${installer.dir}/template/freesbeeWeb.war" >
+		  <!--<zipfileset src="${home.dir}/freesbeeWeb.war" excludes="WEB-INF/classes/log4j.properties" >-->
+		  <zipfileset src="${home.dir}/freesbeeWeb.war" excludes="WEB-INF/classes/logback.xml" >
+		  </zipfileset>
+		</zip>
+
+		<delete file="${installer.dir}/build-solo-freesbee.xml" failonerror="false" />
+
+		<copy todir="${installer.dir}" overwrite="true" >
+			<fileset dir="${home.dir}" includes="build-freesbee-completo.xml" />
+		</copy>
+		<move file="${installer.dir}/build-freesbee-completo.xml" tofile="${installer.dir}/build.xml"/>
+
+		<delete file="${home.dir}/freesbeeWeb.war" failonerror="false" />
+		<echo message="zip installer completo" />
+		<zip destfile="${installer.dist.dir}/installer-freESBee-completo${major.version}.${minor.version}-build${build.number}.zip" update="true" >
+			<fileset dir="${installer.dir}" includes="**/*.*" />
+		</zip>
+
+		<delete file="${installer.dir}/build-freesbee-completo.xml" failonerror="false" />
+	</target>
+
+</project>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="thc" name="freesbee-SP">
+  	<!--CREATORE INSTALLER freesbee-SP-->
+	<property name="home.dir" location=""  />  
+	<property name="installer.dir" location="./installer"  />
+	<property name="installer.dist.dir" location="${home.dir}/dist"  />
+	
+	<property name="freesbee-SP.dir" location="../../codice/freesbeesp"  />
+	<property name="freesbee-SP.dist.dir" location="${freesbee-SP.dir}/dist" />
+	<property name="freesbee-SP.misc.dir" location="${freesbee-SP.dir}/varie" />
+	<property name="freesbee-SP.certificato.sp.dir" location="${freesbee-SP.dir}/src/certificati/sp" />	
+	<property name="freesbee-SP.certificato.idp.dir" location="${freesbee-SP.dir}/src/certificati/idp" />		
+
+	<target name="thc" depends="installer">
+	<!--CREATORE INSTALLER freesbee-SP-->
+	</target>
+	
+	<target name="installer" depends="-init-version" description="create installer freesbee-SP">  
+		<ant antfile="${freesbee-SP.dir}/build.xml" target="clean-all" inheritAll="false" inheritRefs="false"/>
+		<ant antfile="${freesbee-SP.dir}/build.xml" target="war" inheritAll="false" inheritRefs="false"/>	
+
+		<delete dir="${installer.dist.dir}" failonerror="false" />
+		<mkdir dir="${installer.dist.dir}" />
+
+		<copy todir="${installer.dir}/template/certificati/sp" overwrite="true" >
+			<fileset dir="${freesbee-SP.certificato.sp.dir}" includes="**/*.*" />
+		</copy> 
+		
+		<copy todir="${installer.dir}/template/certificati/idp" overwrite="true" >
+			<fileset dir="${freesbee-SP.certificato.idp.dir}" includes="**/*.*" />
+		</copy>
+		
+		<copy todir="${installer.dir}/template/configurazione" overwrite="true" >
+			<fileset dir="${freesbee-SP.misc.dir}" includes="configurazione.xml" />
+		</copy> 
+
+		<copy todir="${home.dir}" overwrite="true" >
+			<fileset dir="${freesbee-SP.dist.dir}" includes="freesbeesp.war" />
+		</copy>  
+
+		<zip destfile="${installer.dir}/template/freesbeesp.war" >
+		  <zipfileset src="${home.dir}/freesbeesp.war" excludes="WEB-INF/classes/freesbeesp.properties, WEB-INF/classes/log4j.properties" >
+		  </zipfileset>
+		</zip>
+
+		<delete file="${home.dir}/freesbeesp.war" failonerror="false" />
+
+		<echo message="zip installer" />
+		<zip destfile="${installer.dist.dir}/installer-freesbee-SP${major.version}.${minor.version}-build${build.number}.zip" update="true" >
+			<fileset dir="${installer.dir}" includes="**/*.*" />
+		</zip>			
+	</target>
+
+	<target name="-init-version" depends="">
+		<buildnumber file="build.properties" />
+		<property file="build.properties" />    
+	</target>
+
+</project>

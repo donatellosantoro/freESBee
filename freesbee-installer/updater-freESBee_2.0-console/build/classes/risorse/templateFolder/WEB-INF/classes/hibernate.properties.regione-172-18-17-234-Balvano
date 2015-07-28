@@ -1,0 +1,4 @@
+hibernate.connection.driver_class = org.postgresql.Driver
+hibernate.connection.url = jdbc:postgresql://172.18.18.225:5432/pdd_cm_balvano
+hibernate.connection.username = pdd_user
+hibernate.connection.password= pdd67baba
