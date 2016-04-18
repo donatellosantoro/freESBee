@@ -152,10 +152,13 @@ public class SOAPProcessorReader implements Processor {
         StringTokenizer tokenizer = new StringTokenizer(contentType, ";");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
+            if (token.contains("\"")) {
+                token = token.replace("\"", "");
+            }
             if (token.contains("charset=")) {
                 return token.replace("charset=", "").trim();
-                }
             }
+        }
         return null;
     }
 

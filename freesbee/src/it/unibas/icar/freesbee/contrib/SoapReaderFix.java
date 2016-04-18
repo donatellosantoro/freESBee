@@ -17,18 +17,13 @@
 
 package it.unibas.icar.freesbee.contrib;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.SequenceInputStream;
 import java.net.URI;
-import java.util.Properties;
-import javax.mail.Session;
 import javax.mail.internet.ContentType;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
@@ -164,9 +159,11 @@ public class SoapReaderFix {
         SoapMessage message = new SoapMessage();
         XMLStreamReader reader = null;
         if ((charset == null) || (charset.trim().equalsIgnoreCase("utf-8"))) {
+//        if ((charset == null) || (charset.trim().equals(StandardCharsets.UTF_8))) {  // Versione alternativa >= JDK 7
             reader = marshaler.getInputFactory().createXMLStreamReader(is);
         } else {
             reader = marshaler.getInputFactory().createXMLStreamReader(is,charset.trim());
+//            reader = marshaler.getInputFactory().createXMLStreamReader(is,charset.trim().toUpperCase());
         }
         reader = new ExtendedXMLStreamReader(reader);
         reader.nextTag();
