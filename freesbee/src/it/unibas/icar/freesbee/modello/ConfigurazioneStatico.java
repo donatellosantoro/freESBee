@@ -1,6 +1,5 @@
 package it.unibas.icar.freesbee.modello;
 
-import it.unibas.icar.freesbee.utilita.FreesbeeUtil;
 import it.unibas.icar.freesbee.xml.ValidatoreXSDBustaEGov;
 import it.unibas.icar.freesbee.xml.XmlException;
 import java.io.InputStream;
@@ -95,7 +94,7 @@ public class ConfigurazioneStatico {
             this.freesbeeVersion = majorVersion + "." + minorVersion + "." + buildNumber;
             caricaValidatore();
         } catch (Exception ex) {
-            logger.error("Impossibile caricare la configurazione statica " + ex);
+            logger.error("Impossibile caricare la configurazione statica " + ex, ex);
         }
     }
 
@@ -277,17 +276,24 @@ public class ConfigurazioneStatico {
 
     private void caricaValidatore() throws XmlException {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        logger.debug("Carico il file IntestazioniEGov.xsd");
         InputStream streamXSD = ValidatoreXSDBustaEGov.class.getResourceAsStream("/IntestazioniEGov.xsd");
         if (streamXSD == null) {
             throw new XmlException("Impossibile caricare il file IntestazioniEGov.xsd");
         }
+        InputStream streamSOAPXSD = ValidatoreXSDBustaEGov.class.getResourceAsStream("/schemas.xmlsoap.org.xsd");
+        if (streamSOAPXSD == null) {
+            throw new XmlException("Impossibile caricare il file schemas.xmlsoap.org.xsd");
+        }
         StreamSource ss = new StreamSource(streamXSD);
+        StreamSource ssSOAP = new StreamSource(streamSOAPXSD);
         Schema xmlSchema;
         try {
-            xmlSchema = schemaFactory.newSchema(ss);
+            xmlSchema = schemaFactory.newSchema(new StreamSource[]{ssSOAP, ss});
+            logger.debug("File caricato con successo");
         } catch (SAXException ex) {
-            if (logger.isDebugEnabled()) ex.printStackTrace();
-            throw new XmlException("Il file IntestazioniEGov.xsd non è valido.");
+            logger.error("Il file IntestazioniEGov.xsd non e' valido", ex);
+            throw new XmlException("Il file IntestazioniEGov.xsd non e' valido.");
         }
         this.xmlSchema = xmlSchema;
     }

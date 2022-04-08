@@ -5,8 +5,9 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:SOAP_ENV="http://schemas.xmlsoap.org/soap/envelope/" elementFormDefault="qualified"
     attributeFormDefault="unqualified">
-    <xsd:import namespace="http://schemas.xmlsoap.org/soap/envelope/"
-        schemaLocation="http://schemas.xmlsoap.org/soap/envelope/"/>
+    
+    <xsd:import namespace="http://schemas.xmlsoap.org/soap/envelope/" schemaLocation="schemas.xmlsoap.org.xsd"/>
+    
     <xsd:element name="Azione" type="xsd:string"/>
     <xsd:element name="Collaborazione" type="xsd:string"/>
     <xsd:element name="ConfermaRicezione">
